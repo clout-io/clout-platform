@@ -1,5 +1,5 @@
-ICO NG
-======
+Clout Network
+=============
 
 
 ## Requirements
@@ -43,6 +43,7 @@ src/                         project source code
 
 Tasks                         | Description
 ------------------------------|---------------------------------------------------------------------------------------
+npm run start:server_ng       | Run production version
 npm start                     | Run development server on `http://localhost:4200/`
 npm test                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
 npm run e2e                   | Run e2e tests using [Protractor](http://www.protractortest.org)
