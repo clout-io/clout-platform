@@ -1,0 +1,42 @@
+@import './src/theme/theme-variables';
+
+.feature-list-component {
+  border: 1px solid $border-color;
+  font-size: .9286rem;
+  border-radius: $border-radius;
+  white-space: nowrap;
+
+  .project-details,
+  .project-links {
+    display: inline-block;
+    width: 50%;
+    padding: $gutter;
+    white-space: normal;
+    vertical-align: top;
+
+    @media (max-width: 575px) {
+      display: block;
+      width: 100%;
+    }
+  }
+
+  .project-details {
+    border-right: 1px solid $border-color;
+    white-space: nowrap;
+
+    ul {
+      li {
+        label {
+          display: inline-block;
+          width: 50%;
+          color: $text-highlight-color;
+        }
+
+        span {
+          display: inline-block;
+          width: 50%;
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+@import './src/theme/theme-variables';
+
+.links-component {
+  .right {
+    text-align: right;
+
+    li {
+      a {
+        color: $text-highlight-color;
+      }
+    }
+  }
+}

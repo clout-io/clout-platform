@@ -1,0 +1,134 @@
+/*
+* Global application theme.
+* Framework overrides and customization goes here.
+*/
+
+html {
+  font-size: 14px;
+}
+
+body {
+  background-color: $bg-color;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+
+  &, 
+  &:visited, 
+  &:focus {
+    color: $blue;
+  }
+}
+
+a,
+.btn, 
+.nav-item,
+.ico-list-item {
+  transition: color ease-in 200ms, background-color ease-in 200ms;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+// below not applying to components, that's why they are moved here
+
+.filter {
+  padding: $gutter;
+  border-bottom: 1px solid $border-color;
+
+  .dropdown-toggle {
+
+    &::after {
+      margin-top: -8px;
+      margin-right: 2px;
+      color: $blue;
+      float: right;
+    }
+  }
+
+  ul {
+
+    li {
+      color: $text-highlight-color;
+    }
+  }
+
+  h5 {
+    font-size: 1rem;
+    font-weight: 600;
+
+    a {
+      display: block;
+      color: $text-color;
+
+      &:hover {
+        text-decoration: none;
+      }
+    }
+  }
+}
+
+.filters-component {
+
+  .unsubscribe-filter {
+    text-align: center;
+  }
+
+  .calendar-component {
+
+    .dropdown-menu {
+      position: unset;
+      width: 100%;
+      margin-top: 5px;
+      font-size: 1rem;
+      outline: 0;
+    }
+
+    .ngb-dp-header {
+      border-bottom: 0;
+      background-color: transparent;
+    }
+
+    .ngb-dp-month-name {
+      color: $text-highlight-color;
+      font-size: 1rem;
+    }
+
+    .ngb-dp-weekday {
+      &.text-info {
+        color: $blue;
+        font-style: normal;
+      }
+    }
+
+    .ngb-dp-navigation-chevron {
+      &::before {
+        width: .5em;
+        height: .5em;
+        color: $input-text-color;
+        border-width: .1em .1em 0 0;
+      }
+    }
+
+    .form-control {
+      &:focus {
+        color: $blue;
+      }
+    }
+
+    .btn-secondary {
+      color: $text-highlight-color;
+
+      &:hover {
+        color: $text-color-inverse;
+        background-color: $blue;
+      }
+    }
+
+  }
+}

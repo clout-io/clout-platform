@@ -1,0 +1,14 @@
+<div class="calendar-component filter">
+  <div role="tab" id="calendar">
+    <h5 class="dropdown-toggle bottom">
+      <a data-toggle="collapse" data-parent="#accordion" href="#calendarfilter" aria-expanded="true" aria-controls="calendarfilter">
+        Calendar
+      </a>
+    </h5>
+  </div>
+
+  <div id="calendarfilter" class="pick-date collapse show clearfix" role="tabpanel" aria-labelledby="calendar">
+    <input class="form-control" placeholder="MM/DD/YY" name="dp-start" navigation="arrows" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+    <input class="form-control" placeholder="MM/DD/YY" name="dp-end" navigation="arrows" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()">
+  </div>
+</div>

@@ -1,0 +1,39 @@
+@import './src/theme/theme-variables';
+
+.ico-detail-component {
+  padding: 0 $gutter / 2 0 0;
+  margin-top: $gutter / 2;
+  float: left;
+
+  @media (max-width: 767px) {
+    padding: 0 $gutter / 2;
+  }
+
+  .ico-detail-component-container {
+    padding: $gutter * 1.5;
+    background-color: $text-color-inverse;
+    border-radius: $border-radius;
+    box-shadow: 0 1px 2px 0 $border-color;
+  }
+
+  .ico-info {
+    clear: both;
+    min-height: $gutter * 6;
+
+    h1 {
+      font-size: 2.571rem;
+      font-weight: 400;
+    }
+
+    p {
+      color: $text-highlight-color;
+    }
+
+    img {
+      width: $gutter * 5.5;
+      height: $gutter * 5.5;
+      margin-right: $gutter * 1.5;
+      float: left;
+    }
+  }
+}

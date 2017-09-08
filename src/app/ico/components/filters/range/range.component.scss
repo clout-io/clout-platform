@@ -1,0 +1,109 @@
+@import './src/theme/theme-variables';
+
+.range-component {
+
+  .range-value {
+    color: $text-highlight-color;
+    font-weight: 300;
+  }
+
+  .range-start {
+    float: left;
+  }
+
+  .range-current {
+    float: right;
+  }
+
+  input {
+
+    &[type=range] {
+      width: 100%;
+      border: 1px solid $text-color-inverse;
+
+      &:focus {
+        outline: none;
+      }
+      /*
+      &::-webkit-slider-runnable-track {
+        width: 100%;
+        height: 5px;
+        border: 0;
+        background: $blue;
+        border-radius: $border-radius;
+      }
+
+      &::-webkit-slider-thumb {
+        width: 20px;
+        height: 20px;
+        border: 1px solid $border-color;
+        margin-top: -8px;
+        background: $text-color-inverse;
+        border-radius: 50%;
+      }
+
+      &:focus::-webkit-slider-runnable-track {
+        background: $border-color;
+      }
+
+      &::-moz-range-track {
+        width: 100%;
+        height: 5px;
+        border: 0;
+        background: $border-color;
+        border-radius: $border-radius;
+      }
+
+      &::-moz-range-thumb {
+        width: 20px;
+        height: 20px;
+        border: 1px solid $border-color;
+        background: $text-color-inverse;
+        border-radius: 50%;
+      }
+
+
+      &::-moz-focusring {
+        outline: 1px solid $text-color-inverse;
+        outline-offset: -1px;
+      }
+
+      &::-ms-track {
+        width: 100%;
+        height: 5px;
+        background: transparent;
+        color: transparent;
+        border-color: transparent;
+        border-width: 6px 0;
+      }
+
+      &::-ms-fill-lower {
+        background: $blue;
+        border-radius: 10px;
+      }
+
+      &::-ms-fill-upper {
+        background: $blue;
+        border-radius: 10px;
+      }
+
+      &::-ms-thumb {
+        width: 20px;
+        height: 20px;
+        border: 1px solid $border-color;
+        background: $text-color-inverse;
+        border-radius: 50%;
+      }
+
+      &:focus::-ms-fill-lower {
+        background: $blue;
+      }
+
+      &:focus::-ms-fill-upper {
+        background: $blue-active;
+      }
+      */
+  }
+}
+}
+

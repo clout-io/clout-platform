@@ -1,0 +1,77 @@
+@import './src/theme/theme-variables';
+
+.ico-list-component {
+  padding: $gutter / 2;
+  float: left;
+
+  .ico-list-item {
+    padding: $gutter / 2;
+    margin-bottom: $gutter / 2;
+    background-color: $text-color-inverse;
+    box-shadow: 0 1px 2px 0 $border-color;
+    border-radius: $border-radius;
+
+    // clearfix
+    &::after {
+      display: block;
+      content: '';
+      clear: both;
+    }
+
+    &:hover,
+    &.active {
+      background-color: $blue;
+
+      h2,
+      time {
+        color: $text-color-inverse;
+      }
+    }
+
+    h2 {
+      margin-bottom: 0;
+      font-size: 1.143rem;
+    }
+
+    time {
+      color: $text-highlight-color;
+      font-size: .7143rem;
+    }
+
+    .ico-img {
+      width: 15%;
+      max-width: 36px;
+      margin-right: $gutter / 2;
+      float: left;
+
+      img {
+        width: 100%;
+      }
+    }
+
+    .ico-details {
+      width: 78%;
+      line-height: 1;
+      float: left;
+    }
+
+    .ico-status {
+      position: absolute;
+      right: 20px;
+      font-size: .7143rem;
+      text-align: right;
+
+      &.upcoming {
+        color: $orange;
+      }
+
+      &.running {
+        color: $green;
+      }
+
+      &.finished {
+        color: $red;
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+@import './src/theme/theme-variables';
+
+.search-component {
+  margin: auto $gutter / 2;
+  clear: both;
+
+  @media (max-width: 991px) {
+    margin: $gutter / 2;
+  }
+
+  input {
+    display: block;
+    width: 100%;
+    padding: 18px 40px;
+    border-width: 0 0 1px;
+    border-style: solid;
+    border-color: $border-color;
+    box-shadow: 1px 1px 1px 0 $border-color;
+
+    @media (max-width: 991px) {
+      width: 85%;
+      height: 56px;
+      padding: 8px 20px;
+      float: left;
+    }
+  }
+
+  .navbar-toggler {
+    display: inline-block;
+    width: 15%;
+    height: 56px;
+    padding: 8px 0;
+    color: $text-color-inverse;
+    line-height: 0;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    float: left;
+    background-color: $blue;
+    box-shadow: 0 1px 2px 0 $text-color-inverse;
+
+    &::after {
+      position: absolute;
+      width: 12px;
+      height: 12px;
+      margin-top: -4px;
+      margin-left: -4px;
+      font-size: .714rem;
+      line-height: 1.333;
+      content: '1';
+      background-color: $red;
+      font-weight: 600;
+      border-radius: 99px;
+      letter-spacing: 0;
+    }
+
+    @media (min-width: 992px) {
+      display: none;
+    }
+  }
+}

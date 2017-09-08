@@ -1,0 +1,129 @@
+@import './src/theme/theme-variables';
+$bitbucket: #036;
+$bitbucket-square: $bitbucket;
+$bitcoin: #f7931a;
+$btc: $bitcoin;
+$dropbox: #018bd3;
+$facebook: #3c599f;
+$facebook-square: $facebook;
+$foursquare: #0086be;
+$github: #070709;
+$github-alt: $github;
+$github-square: $github;
+$google-plus: #cf3d2e;
+$google-plus-square: $google-plus;
+$instagram: #a1755c;
+$linkedin: #0085ae;
+$linkedin-square: $linkedin;
+$skype: #01aef2;
+$tumblr: #314e6c;
+$tumblr-square: $tumblr;
+$twitter: #32ccfe;
+$twitter-square: $twitter;
+$vimeo-square: #229acc;
+$vk: #375474;
+$weibo: #d72b2b;
+$youtube: #c52f30;
+$youtube-square: $youtube;
+$youtube-play: $youtube;
+
+
+.social-networks-component {
+  margin-bottom: $gutter;
+
+  ul {
+    li {
+      display: inline-block;
+    }
+  }
+
+  .fa {
+    width: $gutter;
+    height: $gutter;
+    margin-right: $gutter / 2;
+    margin-bottom: $gutter / 4;
+    color: $text-color-inverse;
+    font-size: .7857rem;
+    line-height: 1.75;
+    text-align: center;
+    vertical-align: middle;
+    border-radius: 99px;
+
+    &:hover {
+      text-decoration: none;
+      background-color: $text-color;
+    }
+  }
+
+
+  .fa-bitbucket,
+  .fa-bitbucket-square {
+    background-color: $bitbucket;
+  }
+
+  .fa-bitcoin,
+  .fa-btc {
+    background-color: $bitcoin;
+  }
+
+  .fa-dropbox {
+    background-color: $dropbox;
+  }
+
+  .fa-facebook,
+  .fa-facebook-square {
+    background-color: $facebook;
+  } 
+
+  .fa-github,
+  .fa-github-alt,
+  .fa-github-square {
+    background-color: $github;
+  }
+
+  .fa-google-plus,
+  .fa-google-plus-square {
+    background-color: $google-plus;
+  }
+
+  .fa-instagram {
+    background-color: $instagram;
+  }
+
+  .fa-linkedin,
+  .fa-linkedin-square {
+    background-color: $linkedin;
+  }
+
+  .fa-skype {
+    background-color: $skype;
+  }
+
+  .fa-tumblr,
+  .fa-tumblr-square {
+    background-color: $tumblr;
+  }
+
+  .fa-twitter,
+  .fa-twitter-square {
+    background-color: $twitter;
+  }
+
+  .fa-vimeo-square {
+    background-color: $vimeo-square;
+  }
+
+  .fa-vk {
+    background-color: $vk;
+  }
+
+  .fa-weibo {
+    background-color: $weibo;
+  }
+
+  .fa-youtube,
+  .fa-youtube-play,
+  .fa-youtube-square {
+    background-color: $youtube;
+  }
+}
