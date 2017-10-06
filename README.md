@@ -26,6 +26,8 @@ dist/                        compiled version
 e2e/                         end-to-end tests
 node_modules/                node packages
 src/                         project source code
+api/                         api source code
+config/                      api configs 
 |- app/                      app components
 |- assets/                   app assets (images, fonts, sounds...)
 |- environments/             values for various build environments
@@ -48,12 +50,15 @@ npm start                     | Run development server on `http://localhost:4200
 npm test                      | Run unit tests via [Karma](https://karma-runner.github.io) in watch mode
 npm run e2e                   | Run e2e tests using [Protractor](http://www.protractortest.org)
 npm run lint                  | Lint code
+npm run start_server          | Run server only
 
 
 ### Development server
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change
 any of the source files.
+
+Run `npm run start_server` for a api server. Default api server host `http://localhost:1337`. 
 
 
 ### Code scaffolding
