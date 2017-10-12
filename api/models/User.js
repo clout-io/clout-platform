@@ -45,6 +45,11 @@ module.exports = {
       defaultsTo: false
     },
 
+    socialNetworks: {
+      collection: 'SocialNetwork',
+      via: 'user'
+    },
+
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;

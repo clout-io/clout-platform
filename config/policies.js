@@ -30,6 +30,10 @@ module.exports.policies = {
   'SignInController': {
     'index': true
   },
+  'SocialController': {
+    'facebookAuth': true,
+    'facebookUrl': true
+  },
 
   'SignUpController': {
     'index': true,

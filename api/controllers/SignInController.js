@@ -1,5 +1,10 @@
 //https://thesabbir.com/how-to-use-json-web-token-authentication-with-sails-js/
 module.exports = {
+  /***
+   * Authorization: Token [token]
+   * @param req
+   * @param res
+   */
   index: function (req, res) {
     var email = req.param('email');
     var password = req.param('password');
@@ -8,7 +13,7 @@ module.exports = {
       return res.json(401, {err: 'email and password required'});
     }
 
-    User.findOne({email: email}, function (err, user) {
+    User.findOne({email: email, isActive: true}, function (err, user) {
       if (!user) {
         return res.json(401, {err: 'invalid email or password'});
       }

@@ -44,14 +44,15 @@
     "expect": "^21.2.1",
     "expect.js": "^0.3.1",
     "express": "^4.15.3",
+    "fbgraph": "^1.4.1",
     "jsonwebtoken": "^8.1.0",
     "rxjs": "^5.4.1",
     "sails": "^0.12.14",
     "sails-hook-autoreload": "^0.14.3",
     "sails-mongo": "^0.12.2",
     "sails-swagger": "^0.5.1",
-    "swagger-ui": "^2.2.10",
     "sendgrid": "^5.2.3",
+    "swagger-ui": "^2.2.10",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {
