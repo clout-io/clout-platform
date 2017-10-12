@@ -26,34 +26,17 @@ module.exports.policies = {
    *                                                                          *
    ***************************************************************************/
 
-  // '*': true,
-
-  '*': ['isAuthorized'], // Everything resctricted here
+  '*': ['isAuthorized'],
   'SignInController': {
-    'index': true // We dont need authorization here, allowing public access
+    'index': true
   },
 
   'SignUpController': {
-    'index': true, // We dont need authorization here, allowing public access
+    'index': true,
     'activate': true
   },
 
   'SwaggerController': {
-    '*': true,
+    '*': true
   }
-
-  // RabbitController: {
-
-  // Apply the `false` policy as the default for all of RabbitController's actions
-  // (`false` prevents all access, which ensures that nothing bad happens to our rabbits)
-  // '*': false,
-
-  // For the action `nurture`, apply the 'isRabbitMother' policy
-  // (this overrides `false` above)
-  // nurture	: 'isRabbitMother',
-
-  // Apply the `isNiceToAnimals` AND `hasRabbitFood` policies
-  // before letting any users feed our rabbits
-  // feed : ['isNiceToAnimals', 'hasRabbitFood']
-  // }
 };

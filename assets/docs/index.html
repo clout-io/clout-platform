@@ -38,7 +38,7 @@
       if (url && url.length > 1) {
         url = decodeURIComponent(url[1]);
       } else {
-        url = "http://localhost:1337/swagger/doc";
+        url = "/swagger/doc";
       }
 
       hljs.configure({
@@ -73,9 +73,9 @@
           log("Unable to Load SwaggerUI");
         },
         docExpansion: "none",
-        jsonEditor: false,
+        jsonEditor: true,
         defaultModelRendering: 'schema',
-        showRequestHeaders: false,
+        showRequestHeaders: true,
         showOperationIds: false
       });
 

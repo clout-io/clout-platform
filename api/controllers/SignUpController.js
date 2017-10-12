@@ -1,5 +1,11 @@
 module.exports = {
+
   index: function (req, res) {
+    /***
+     *
+     * @param req
+     * @param res
+     */
     if (req.method.toUpperCase() !== "POST") {
       return res.send(405)
     }
