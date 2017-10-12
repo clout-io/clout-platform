@@ -36,6 +36,10 @@ module.exports.policies = {
   'SignUpController': {
     'index': true, // We dont need authorization here, allowing public access
     'activate': true
+  },
+
+  'SwaggerController': {
+    '*': true,
   }
 
   // RabbitController: {
