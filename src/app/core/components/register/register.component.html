@@ -1,0 +1,94 @@
+<form class="auth-form" novalidate (ngSubmit)="register()" [formGroup]="account">
+  <div class="form-group"
+       [ngClass]="{
+       'has_error': (account.get('email').hasError('required') ||
+       account.get('email').hasError('emailFormat')) &&
+       account.get('email').touched}">
+    <input type="email"
+           placeholder="Email"
+           formControlName="email"/>
+    <div *ngIf="account.get('email').hasError('required') &&
+                account.get('email').touched"
+         class="validation-err-msg">
+      Email is required
+    </div>
+    <div *ngIf="!account.get('email').hasError('required') &&
+                account.get('email').hasError('emailFormat') &&
+                account.get('email').touched" class="validation-err-msg">
+      The entered email is invalid.
+    </div>
+  </div>
+  <div class="form-group"
+       [ngClass]="{
+       'has_error': (account.get('password').hasError('required')) &&
+       account.get('password').touched}">
+    <input type="password"
+           placeholder="Password"
+           formControlName="password"/>
+  </div>
+  <div>
+    <span *ngIf="!account.get('password').hasError('required') &&
+                account.get('password').touched && account.get('password').hasError('uppercaseLetters') &&
+                account.get('password').hasError('numbers')"
+          class="validation-err-msg">
+      Passwords must contain at least one uppercase letter and one number
+    </span>
+    <span *ngIf="!account.get('password').hasError('required') &&
+                account.get('password').touched && account.get('password').hasError('uppercaseLetters') &&
+                !account.get('password').hasError('numbers')"
+          class="validation-err-msg">
+      Passwords must contain at least one uppercase letter
+    </span>
+    <span *ngIf="!account.get('password').hasError('required') &&
+                account.get('password').touched && !account.get('password').hasError('uppercaseLetters') &&
+                account.get('password').hasError('numbers')"
+          class="validation-err-msg">
+      Passwords must contain at least one number
+    </span>
+  </div>
+  <div class="form-group"
+       [ngClass]="{
+       'has_error': (account.get('password_confirm').hasError('required')) &&
+       account.get('password_confirm').touched}">
+    <input type="password"
+           placeholder="Confirm Password"
+           formControlName="password_confirm"/>
+  </div>
+  <div>
+    <span *ngIf="!account.get('password_confirm').hasError('required') &&
+                account.get('password_confirm').touched && account.get('password_confirm').hasError('uppercaseLetters') &&
+                account.get('password_confirm').hasError('numbers')"
+          class="validation-err-msg">
+      Passwords must contain at least one uppercase letter and one number
+    </span>
+    <span *ngIf="!account.get('password_confirm').hasError('required') &&
+                account.get('password_confirm').touched && account.get('password_confirm').hasError('uppercaseLetters') &&
+                !account.get('password_confirm').hasError('numbers')"
+          class="validation-err-msg">
+      Passwords must contain at least one uppercase letter
+    </span>
+    <span *ngIf="!account.get('password_confirm').hasError('required') &&
+                account.get('password_confirm').touched && !account.get('password_confirm').hasError('uppercaseLetters') &&
+                account.get('password_confirm').hasError('numbers')"
+          class="validation-err-msg">
+      Passwords must contain at least one number
+    </span>
+    <div *ngIf="(account.get('password').value !=
+              account.get('password_confirm').value) &&
+              account.get('password_confirm').touched" class="validation-err-msg">
+      Passwords are different
+    </div>
+  </div>
+  <button type="submit" class="btn btn--block btn--primary" disabled>
+    Register
+  </button>
+  <div class="auth-form__or"><span>or</span></div>
+  <button type="button" class="btn btn--block btn--fb">
+    Sign Up with Facebook
+  </button>
+  <div class="auth-form__hint">
+    <span>Do you have a profile?</span>
+
+    <a routerLink="/login">Login &raquo;</a>
+  </div>
+</form>

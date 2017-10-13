@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { IcoModule } from './ico/ico.module';
+import { AuthService } from './services';
 
 // components
 import { AppComponent } from './app.component';
@@ -25,7 +26,7 @@ import { AppComponent } from './app.component';
     // base routing modules
     AppRoutingModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

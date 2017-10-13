@@ -10,3 +10,188 @@
 
 // Theme customization
 @import 'theme/theme';
+
+.validation-err-msg {
+  color: red;
+}
+
+.has_error {
+  input {
+    border: 1px solid red;
+  }
+}
+
+
+/*
+Button Styles
+_________________________________*/
+.btn {
+  border-radius: $border-radius;
+  text-align: center;
+  font-weight: 600;
+  cursor: pointer;
+  outline: none;
+  box-shadow: none;
+  padding: 13px 15px;
+  color: $text-color-inverse;
+
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
+}
+
+.btn--block {
+  display: block;
+  width: 100%;
+}
+
+.btn--primary {
+  background: $color-primary;
+
+  &:hover {
+    background: darken($color-primary, 5%);
+  }
+  &:active {
+    background: lighten($color-primary, 5%);
+  }
+}
+
+.btn--fb {
+  background: $color-fb;
+
+  &:hover {
+    background: darken($color-fb, 5%);
+  }
+  &:active {
+    background: lighten($color-fb, 5%);
+  }
+}
+
+.btn[disabled] {
+  background: $text-color-alt;
+  opacity: 1;
+
+  &:hover,
+  &:active,
+  &:focus {
+    background: $text-color-alt;
+    opacity: 1;
+  }
+}
+/*
+END Button Styles
+_________________________________*/
+
+/*
+Authorization Styles
+_________________________________*/
+.auth-form {
+  margin: 50px 15px 0 15px;
+  background: $text-color-inverse;
+  border-radius: $border-radius;
+  border: 1px solid $border-color-alt;
+  padding: 20px;
+  font-size: $default-font-size;
+
+  @media #{$phone-lg} {
+    width: 450px;
+    padding: 50px;
+    margin: 50px auto 0 auto;
+  }
+
+  &__or {
+    padding: 14px 0 13px 0;
+    text-align: center;
+    font-size: $default-font-size - 2;
+    position: relative;
+    z-index: 1;
+
+    &:before {
+      display: block;
+      content: "";
+      width: auto;
+      height: 1px;
+      background: $border-color-alt;
+      position: absolute;
+      top: 50%;
+      left: 0;
+      right: 0;
+      margin-top: -1px;
+    }
+
+    span {
+      display: block;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      border: 1px solid $border-color-alt;
+      margin: 0 auto;
+      background: $text-color-inverse;
+      position: relative;
+      z-index: 5;
+      color: $text-color-alt;
+    }
+  }
+
+  &__hint {
+    text-align: center;
+    color: $text-color-alt;
+    padding: 22px 0 0 0;
+
+    i {
+      display: inline-block;
+      vertical-align: top;
+      padding: 0 5px;
+    }
+
+    a {
+      color: $color-primary;
+    }
+  }
+
+  &__error-title {
+    font-weight: 600;
+    color: $color-warning;
+    text-align: center;
+    font-size: $default-font-size;
+    margin: -3px 0 29px 0;
+  }
+
+}
+
+.form-group {
+  margin-bottom: $gutter;
+  
+  input {
+    display: block;
+    border: 1px solid $border-color-alt;
+    border-radius: $border-radius;
+    width: 100%;
+    font-size: $default-font-size;
+    line-height: 20px;
+    color: $text-color-alt;
+    outline: none;
+    padding: 12px 12px 11px 12px;
+  }
+}
+
+.has_error {
+  
+  input {
+    border-color: $color-warning;
+    background: transparent url('#{$img-path}/close-rounded.svg') no-repeat right 13px top 13px;
+    background-size: 18px 18px;
+  }
+
+  .validation-err-msg {
+    padding: 6px 0 0 0;
+    color: $color-warning;
+  }
+}
+/*
+END Authorization Styles
+_________________________________*/
+
+

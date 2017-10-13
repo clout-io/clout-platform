@@ -5,15 +5,36 @@ $gutter: 20px;
 $font-stack: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol';
 $bg-color: #f4f5f9;
 $border-color: #e0e3ea;
+$border-color-alt: #EFEFEF;
 $blue: #1799dd;
 $blue-active: #37a9e7;
 $green: #7ace4c;
 $orange: #fb4;
 $red: #f33155;
 $text-color: #23282c;
+$text-color-alt: #A9A8A8;
 $text-color-inverse: #fff;
 $text-highlight-color: #697782;
 $input-text-color: #9aa6af;
 $white-opacity-25: rgba(255, 255, 255, .25);
 $border-radius: 3px;
 
+$color-primary: #008F8D;
+$color-fb: #547BBD;
+$color-warning: #E04F4F;
+
+$default-font-size: 15px;
+
+/*
+Paths
+_________________________________*/
+$img-path: "img/";
+
+/*
+Breakpoints
+_________________________________*/
+$phone: "(min-width: 375px)";
+$phone-lg: "(min-width: 480px)";
+$tablet: "(min-width: 768px)";
+$desktop-sm: "(min-width: 992px)";
+$desktop-md: "(min-width: 1200px)";

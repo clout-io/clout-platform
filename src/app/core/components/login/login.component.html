@@ -1,0 +1,67 @@
+<form class="auth-form" novalidate (ngSubmit)="login()" [formGroup]="account">
+  <div class="validation-err-msg auth-form__error-title" [hidden]="!errorLogin">
+    Invalid Email or Password.
+  </div>
+  <div class="form-group"
+       [ngClass]="{
+       'has_error': (account.get('email').hasError('required') ||
+       account.get('email').hasError('emailFormat')) &&
+       account.get('email').touched}">
+    <input type="email"
+           placeholder="Email"
+           formControlName="email"/>
+    <div *ngIf="account.get('email').hasError('required') &&
+                account.get('email').touched"
+         class="validation-err-msg">
+      Email is required
+    </div>
+    <div *ngIf="!account.get('email').hasError('required') &&
+                account.get('email').hasError('emailFormat') &&
+                account.get('email').touched" class="validation-err-msg">
+      The entered email is invalid.
+    </div>
+
+    <ng-template #invalid>The entered email is invalid.</ng-template>
+    <ng-template #required>Email is required</ng-template>
+  </div>
+  <div class="form-group"
+       [ngClass]="{
+       'has_error': (account.get('password').hasError('required')) &&
+       account.get('password').touched}">
+    <input type="password"
+           placeholder="Password"
+           formControlName="password"/>
+  </div>
+  <div>
+    <span *ngIf="!account.get('password').hasError('required') &&
+                account.get('password').touched && account.get('password').hasError('uppercaseLetters') &&
+                account.get('password').hasError('numbers')"
+         class="validation-err-msg">
+      Passwords must contain at least one uppercase letter and one number
+    </span>
+    <span *ngIf="!account.get('password').hasError('required') &&
+                account.get('password').touched && account.get('password').hasError('uppercaseLetters') &&
+                !account.get('password').hasError('numbers')"
+         class="validation-err-msg">
+      Passwords must contain at least one uppercase letter
+    </span>
+    <span *ngIf="!account.get('password').hasError('required') &&
+                account.get('password').touched && !account.get('password').hasError('uppercaseLetters') &&
+                account.get('password').hasError('numbers')"
+         class="validation-err-msg">
+      Passwords must contain at least one number
+    </span>
+  </div>
+  <button type="submit" class="btn btn--block btn--primary">
+    Sign In
+  </button>
+  <div class="auth-form__or"><span>or</span></div>
+  <button type="button" class="btn btn--block btn--fb">
+    Sign In with Facebook
+  </button>
+  <div class="auth-form__hint">
+    <span>Forgot password?</span>
+    <i>&bull;</i>
+    <a routerLink="/register">Registration</a>
+  </div>
+</form>
