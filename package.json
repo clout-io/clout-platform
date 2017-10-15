@@ -52,7 +52,7 @@
     "sails-hook-autoreload": "^0.14.3",
     "sails-hook-schedule": "git+https://github.com/maikschneider/sails-hook-schedule.git",
     "sails-mongo": "^0.12.2",
-    "sails-swagger": "^0.5.1",
+    "sails-swagger": "git+https://github.com/mobyinc/sails-magik-swagger.git",
     "sendgrid": "^5.2.3",
     "swagger-ui": "^2.2.10",
     "zone.js": "^0.8.14"

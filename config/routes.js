@@ -2,12 +2,121 @@ const util = require('util');
 
 
 var routes = [
-  {method: "GET", path: "/activate", target: "SignUpController.activate"},
-  {method: "POST", path: "/signup", target: "SignUpController.index"},
-  {method: "POST", path: "/signin", target: "SignInController.index"},
-  {method: "GET", path: "/facebook/url", target: "SocialController.facebookUrl"},
-  {method: "GET", path: "/auth/facebook", target: "SocialController.facebookAuth"},
-  {method: "GET", path: "/altcoins", target: "AltcoinController.index"},
+  {
+    method: "GET", path: "/activate", target:
+    {
+      controller: "SignUpController",
+      action: "activate",
+      swagger: {
+        methods: ['GET'],
+        summary: 'Activate user by code',
+        description: 'Activate user by code',
+        produces: [
+          'application/json'
+        ],
+        tags: [
+          'SignUp'
+        ],
+        parameters: [{in: "query", name: "code"}]
+      }
+    }
+  },
+  {
+    method: "POST", path: "/signup", target: {
+    controller: "SignUpController",
+    action: "index",
+    swagger: {
+      methods: ['POST'],
+      summary: 'Singup user',
+      description: 'Singup user',
+      produces: [
+        'application/json'
+      ],
+      tags: [
+        'SignUp'
+      ],
+      parameters: [{in: "body", name: "data"}]
+    }
+  }
+  },
+  {
+    method: "POST", path: "/signin", target: {
+    controller: "SignInController",
+    action: "index",
+    swagger: {
+      methods: ['POST'],
+      summary: 'SingIn user',
+      description: 'SingIn user',
+      produces: [
+        'application/json'
+      ],
+      tags: [
+        'SignIn'
+      ],
+      parameters: [
+        {
+          in: "body", name: "data"
+        }
+      ]
+    }
+  }
+  },
+  {
+    method: "GET", path: "/facebook/url", target: {
+    controller: "SocialController",
+    action: "facebookUrl",
+    swagger: {
+      methods: ['GET'],
+      summary: 'Retrieve url for SingIn/SingUp',
+      description: 'SingIn user',
+      tags: [
+        'SignIn', "SignUp"
+      ]
+    }
+  }
+  },
+  {
+    method: "GET", path: "/auth/facebook", target: {
+    controller: "SocialController",
+    action: "facebookAuth",
+    swagger: {
+      methods: ['GET'],
+      summary: 'SingIn/SingUp user',
+      description: 'SingIn user',
+      tags: [
+        'SignIn', "SignUp"
+      ]
+    }
+  }
+  },
+  {
+    method: "GET", path: "/altcoins", target:
+    {
+      controller: 'AltcoinController',
+      action: 'index',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: ' Get Altcoins',
+        description: 'List of Altcoins',
+        produces: [
+          'application/json'
+        ],
+        tags: [
+          'Altcoins'
+        ],
+        responses: {
+          '200': {
+            description: 'List of Altcoins',
+            schema: 'Altcoin',
+            type: 'array'
+          }
+        },
+        parameters: []
+
+      }
+    }
+  },
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
   {method: "GET", path: "/altcoins/history", target: "AltcoinController.history"}
 ];
