@@ -8,9 +8,16 @@
 module.exports = {
 
   index: function (req, res) {
-    Altcoin.find().sort('rank ASC').populate('priceHistory').exec(function (err, data) {
+    Altcoin.find().sort('rank ASC').exec(function (err, data) {
       if (err) return res.json(err);
       res.json(data)
+    })
+  },
+
+  info: function (req, res) {
+    var name = req.param("name")
+    AltcoinPrice.find({altcoin: name}).sort('timestamp DESC').exec(function (err, info) {
+      res.json(info)
     })
   },
 

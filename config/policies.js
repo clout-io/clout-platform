@@ -42,7 +42,8 @@ module.exports.policies = {
   'AltcoinController': {
     'index': true,
     'sync': true,//temp
-    'history': true
+    'history': true,
+    'info': true
   },
 
   'SwaggerController': {

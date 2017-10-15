@@ -107,15 +107,25 @@ var routes = [
         ],
         responses: {
           '200': {
-            description: 'List of Altcoins',
-            schema: 'Altcoin',
-            type: 'array'
+            description: 'List of Altcoins'
           }
         },
         parameters: []
 
       }
     }
+  },
+  {
+    method: "GET", path: "/altcoin/:name", target: {
+    controller: "AltcoinController", action: "info", swagger: {
+      methods: ['GET'],
+      summary: 'History info about altcoin',
+      description: 'History info about altcoin',
+      tags: [
+        'Altcoins',
+      ]
+    }
+  }
   },
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
   {method: "GET", path: "/altcoins/history", target: "AltcoinController.history"}
