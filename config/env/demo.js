@@ -16,7 +16,7 @@ module.exports = {
    * Set the default database connection for models in the development       *
    * environment (see config/connections.js and config/models.js )           *
    ***************************************************************************/
-  appUrl:"http://localhost:1337",
+  appUrl:"http://haumea.bvblogic.net:8103",
   models: {
     connection: 'cloutMongodbServer'
   }

@@ -51,6 +51,7 @@
     "sails": "^0.12.14",
     "sails-hook-autoreload": "^0.14.3",
     "sails-hook-schedule": "git+https://github.com/maikschneider/sails-hook-schedule.git",
+    "sails-hook-validation": "^0.4.7",
     "sails-mongo": "^0.12.2",
     "sails-swagger": "git+https://github.com/mobyinc/sails-magik-swagger.git",
     "sendgrid": "^5.2.3",
