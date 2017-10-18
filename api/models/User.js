@@ -57,7 +57,7 @@ module.exports = {
       return obj;
     },
     getActivateLink: function () {
-      var url = sails.getBaseURL() + sails.getUrlFor('SignUpController.activate') + '?code=' + this.activationCode;
+      var url = sails.config.appUrl + sails.getUrlFor('SignUpController.activate') + '?code=' + this.activationCode;
       return url
     }
   },
