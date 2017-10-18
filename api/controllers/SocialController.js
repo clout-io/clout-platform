@@ -32,18 +32,18 @@ module.exports = {
       var r = JSON.parse(data);
       var token = r.access_token;
       Facebook.profile(token, function (err, profileData) {
-        if (err) return res.json(JSON.parse(err));
+        if (err) return res.json(400, Errors.build(JSON.parse(err), Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
 
         email = profileData.email || email;
 
         if (!email) {
-          return res.json(400, {"error": "'email' is required."})
+          return res.json(400, Errors.build({"error": "'email' is required."}, Errors.ERROR_SOCIAL_FACEBOOK_AUTH))
         }
 
         var socialId = profileData.id;
 
         SocialNetwork.findOne({socialId: socialId}).populate('user').exec(function (err, social) {
-          if (err) return res.json(400, err);
+          if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
           if (!social) {
             User.findOne({
               activationCode: req.param("code")
@@ -57,13 +57,13 @@ module.exports = {
                   password: cryptoRandomString(16),
                   isActive: true
                 }).exec(function (err, user) {
-                  if (err) return res.json(400, err);
+                  if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
                   SocialNetwork.create({
                     socialId: socialId,
                     user: user,
                     socialData: profileData
                   }).exec(function (err, social) {
-                    if (err) return res.json(400, err);
+                    if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
                     return res.json({
                       user: user,
                       token: Token.issue({id: user.id})
@@ -76,7 +76,7 @@ module.exports = {
                 user: user,
                 socialData: profileData
               }).exec(function (err, social) {
-                if (err) return res.json(400, err);
+                if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
                 return res.json({
                   user: user,
                   token: Token.issue({id: user.id})

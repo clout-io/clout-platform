@@ -12,15 +12,15 @@ module.exports = {
 
     SignUp.validate(req.body, function (err, data) {
       if (err) {
-        return res.json(err.invalidAttributes)
+        return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_REGISTER_VALIDATION))
       }
 
       if (req.body.password !== req.body.confirmPassword) {
-        return res.json(401, {"non_field_error": 'Password doesn\'t match!'});
+        return res.json(400, Errors.build({"non_field_error": 'Password doesn\'t match!'}, Errors.ERROR_REGISTER_VALIDATION));
       }
       User.create(req.body).exec(function (err, user) {
         if (err) {
-          return res.json(err.status, err.invalidAttributes);
+          return res.json(err.status, Errors.build(err.invalidAttributes, Errors.ERROR_REGISTER_VALIDATION));
         }
         if (user) {
           SendGrid.send(
@@ -55,7 +55,8 @@ module.exports = {
           res.json(err.status, {err: err});
         }
         res.json(200, {
-          "isActive": user.isActive
+          "isActive": user.isActive,
+          token: Token.issue({id: user.id})
         })
       })
     });

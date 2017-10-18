@@ -36,25 +36,27 @@ module.exports = {
 
     Authentication.validate(req.body, function (err, data) {
       if (err) {
-        return res.json(err.invalidAttributes)
-    }
+        return res.json(401, Errors.build(err.invalidAttributes, Errors.ERROR_AUTH_VALIDATION))
+      }
 
       User.findOne({email: email}, function (err, user) {
         if (!user) {
-          return res.json(401, defaultUserErrorMsg);
+          return res.json(401, Errors.build(defaultUserErrorMsg, Errors.ERROR_AUTH_VALIDATION));
         }
 
         User.comparePassword(password, user, function (err, valid) {
-          if (err) {
-            return res.json(401, defaultUserErrorMsg);
-          }
-
-          if (!valid) {
-            return res.json(401, defaultUserErrorMsg);
+          if (err || !valid) {
+            return res.json(
+              401,
+              Errors.build(defaultUserErrorMsg, Errors.ERROR_AUTH_VALIDATION)
+            );
           }
 
           if (!user.isActive) {
-            return res.json(401, {"non_field_error": "User is not active."})
+            return res.json(
+              401,
+              Errors.build({"non_field_error": "User is not active."}, Errors.ERROR_USER_IS_NOT_ACTIVE)
+            )
           }
           return res.json({
             user: user,
