@@ -85,6 +85,10 @@ var routes = [
       description: 'SingIn user',
       tags: [
         'SignIn', "SignUp"
+      ],
+      parameters: [
+        {in: "query", name: "code"},
+        {in: "query", name: "redirectUri"}
       ]
     }
   }
@@ -110,7 +114,10 @@ var routes = [
             description: 'List of Altcoins'
           }
         },
-        parameters: []
+        parameters: [
+          {in: "query", name: "code"},
+          {in: "query", name: "redirectUri"}
+        ]
 
       }
     }

@@ -34,9 +34,9 @@ module.exports.confirm = function (code, redirectUri, callback) {
   request
     .get(url, function (e, r, body) {
       if (r.statusCode === 200) {
-        callback(null, body)
+        callback(null, JSON.parse(body))
       } else {
-        callback(body, null)
+        callback(JSON.parse(body), null)
       }
     })
 };

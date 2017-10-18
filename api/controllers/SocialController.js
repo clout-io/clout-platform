@@ -27,15 +27,24 @@ module.exports = {
     var redirectUri = req.param("redirectUri");
     var email = req.param("email");
 
-    Facebook.confirm(code, redirectUri, function (err, data) {
-      if (err) return res.json(400, Errors.build(JSON.parse(err)), Errors.ERROR_SOCIAL_FACEBOOK_AUTH);
-      var r = JSON.parse(data);
-      var token = r.access_token;
+
+    if (!redirectUri) {
+      return res.json(400, Errors.build({
+        "redirectUri": {
+          "rule": "required",
+          "message": "\"required\" validation rule failed for input: null\nSpecifically, it threw an error.  Details:\n undefined"
+        }
+      }, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+    }
+
+    Facebook.confirm(code, redirectUri, function (err, response) {
+      if (err) {
+        return res.json(400, Errors.build(err, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+      }
+      var token = response.access_token;
       Facebook.profile(token, function (err, profileData) {
         if (err) return res.json(400, Errors.build(JSON.parse(err), Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
-
         email = profileData.email || email;
-
         if (!email) {
           return res.json(400, Errors.build({"error": "'email' is required."}, Errors.ERROR_SOCIAL_FACEBOOK_AUTH))
         }
@@ -43,27 +52,32 @@ module.exports = {
         var socialId = profileData.id;
 
         SocialNetwork.findOne({socialId: socialId}).populate('user').exec(function (err, social) {
-          if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+          if (err) {
+            return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+          }
+
           if (!social) {
-            User.findOne({
-              activationCode: req.param("code")
-            }).exec(function (err, user) {
+            User.findOne({email: email}, function (err, user) {
               if (err) {
-                return res.json(err);
+                return res.json(400, Errors.build(err, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
               }
               if (!user) {
                 User.create({
-                  email: profileData.email,
+                  email: email,
                   password: cryptoRandomString(16),
                   isActive: true
                 }).exec(function (err, user) {
-                  if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                  if (err) {
+                    return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                  }
                   SocialNetwork.create({
                     socialId: socialId,
                     user: user,
                     socialData: profileData
                   }).exec(function (err, social) {
-                    if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                    if (err) {
+                      return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                    }
                     return res.json({
                       user: user,
                       token: Token.issue({id: user.id})
@@ -71,27 +85,32 @@ module.exports = {
                   })
                 });
               }
+
               SocialNetwork.create({
                 socialId: socialId,
                 user: user,
                 socialData: profileData
               }).exec(function (err, social) {
-                if (err) return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                if (err) {
+                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                }
                 return res.json({
                   user: user,
                   token: Token.issue({id: user.id})
                 })
               })
             })
-          }
-          social.token = token;
-          social.socialData = profileData;
-          social.save();
+          } else {
+            social.token = token;
+            social.socialData = profileData;
+            social.save();
 
-          res.json({
-            user: social.user,
-            token: Token.issue({id: social.user.id})
-          })
+            res.json({
+              user: social.user,
+              token: Token.issue({id: social.user.id})
+            })
+          }
+
         });
       });
     });

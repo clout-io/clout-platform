@@ -9,9 +9,6 @@ var bcrypt = require('bcrypt');
 var cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
-
-  writeFields: ["email", "password", "firstName", "lastName"],
-
   attributes: {
     uid: {
       type: 'string'
