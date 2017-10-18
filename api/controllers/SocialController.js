@@ -28,7 +28,7 @@ module.exports = {
     var email = req.param("email");
 
     Facebook.confirm(code, redirectUri, function (err, data) {
-      if (err) return res.json(JSON.parse(err));
+      if (err) return res.json(400, Errors.build(JSON.parse(err)), Errors.ERROR_SOCIAL_FACEBOOK_AUTH);
       var r = JSON.parse(data);
       var token = r.access_token;
       Facebook.profile(token, function (err, profileData) {
