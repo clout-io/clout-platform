@@ -10,7 +10,14 @@ import {
   HeaderComponent,
   ShellComponent
 } from './shell';
-import { LoginComponent, RegisterComponent } from './components';
+import {
+  LoginComponent,
+  RegisterComponent,
+  ConfirmUserComponent,
+  SocialFacebookComponent,
+  ResetInputBtnComponent,
+  FacebookAuthBtnComponent
+} from './components';
 
 @NgModule({
   imports: [
@@ -24,7 +31,11 @@ import { LoginComponent, RegisterComponent } from './components';
     HeaderComponent,
     ShellComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    ConfirmUserComponent,
+    SocialFacebookComponent,
+    ResetInputBtnComponent,
+    FacebookAuthBtnComponent
   ]
 })
 export class CoreModule { }

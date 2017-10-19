@@ -11,17 +11,6 @@
 // Theme customization
 @import 'theme/theme';
 
-.validation-err-msg {
-  color: red;
-}
-
-.has_error {
-  input {
-    border: 1px solid red;
-  }
-}
-
-
 /*
 Button Styles
 _________________________________*/
@@ -163,7 +152,11 @@ _________________________________*/
 
 .form-group {
   margin-bottom: $gutter;
-  
+
+  .input-group {
+    position: relative;
+  }
+
   input {
     display: block;
     border: 1px solid $border-color-alt;
@@ -175,14 +168,34 @@ _________________________________*/
     outline: none;
     padding: 12px 12px 11px 12px;
   }
+
+  .close-icon {
+    display: none;
+  }
+
+  .close-icon:hover, .close-icon:active, .close-icon:focus {
+    outline: none;
+  }
 }
 
 .has_error {
-  
+
   input {
-    border-color: $color-warning;
+    border: 1px solid $color-warning;
+  }
+
+  .close-icon {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    cursor: pointer;
     background: transparent url('#{$img-path}/close-rounded.svg') no-repeat right 13px top 13px;
+    background-position: center;
     background-size: 18px 18px;
+    top: 13px;
+    right: 10px;
+    border: 1px solid transparent;
   }
 
   .validation-err-msg {

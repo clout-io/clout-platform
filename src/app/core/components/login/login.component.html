@@ -3,62 +3,48 @@
     Invalid Email or Password.
   </div>
   <div class="form-group"
-       [ngClass]="{
-       'has_error': (account.get('email').hasError('required') ||
-       account.get('email').hasError('emailFormat')) &&
-       account.get('email').touched}">
-    <input type="email"
-           placeholder="Email"
-           formControlName="email"/>
-    <div *ngIf="account.get('email').hasError('required') &&
-                account.get('email').touched"
-         class="validation-err-msg">
-      Email is required
+       [ngClass]="{'has_error': account.get('email').invalid && account.get('email').touched}">
+    <div class="input-group">
+      <input type="email"
+             placeholder="Email"
+             formControlName="email"/>
+      <app-reset-input-btn [inputName]="'email'"></app-reset-input-btn>
     </div>
-    <div *ngIf="!account.get('email').hasError('required') &&
-                account.get('email').hasError('emailFormat') &&
-                account.get('email').touched" class="validation-err-msg">
-      The entered email is invalid.
+    <div *ngIf="account.get('email').invalid && account.get('email').touched" class="validation-err-msg">
+      <div *ngIf="account.get('email').hasError('required')">Email is required</div>
+      <div *ngIf="!account.get('email').hasError('required')">The entered email is invalid.</div>
     </div>
-
-    <ng-template #invalid>The entered email is invalid.</ng-template>
-    <ng-template #required>Email is required</ng-template>
   </div>
   <div class="form-group"
-       [ngClass]="{
-       'has_error': (account.get('password').hasError('required')) &&
-       account.get('password').touched}">
-    <input type="password"
-           placeholder="Password"
-           formControlName="password"/>
+       [ngClass]="{'has_error': account.get('password').invalid && account.get('password').touched}">
+    <div class="input-group">
+      <input type="password"
+             placeholder="Password"
+             formControlName="password"/>
+      <app-reset-input-btn [inputName]="'password'"></app-reset-input-btn>
+    </div>
   </div>
-  <div>
-    <span *ngIf="!account.get('password').hasError('required') &&
-                account.get('password').touched && account.get('password').hasError('uppercaseLetters') &&
-                account.get('password').hasError('numbers')"
-         class="validation-err-msg">
-      Passwords must contain at least one uppercase letter and one number
-    </span>
-    <span *ngIf="!account.get('password').hasError('required') &&
-                account.get('password').touched && account.get('password').hasError('uppercaseLetters') &&
-                !account.get('password').hasError('numbers')"
-         class="validation-err-msg">
-      Passwords must contain at least one uppercase letter
-    </span>
-    <span *ngIf="!account.get('password').hasError('required') &&
-                account.get('password').touched && !account.get('password').hasError('uppercaseLetters') &&
-                account.get('password').hasError('numbers')"
-         class="validation-err-msg">
-      Passwords must contain at least one number
-    </span>
+  <div *ngIf="account.get('password').invalid && account.get('password').touched" class="has_error">
+    <div class="validation-err-msg">
+      <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
+                account.get('password').hasError('numbers')">
+        Passwords must contain at least one uppercase letter and one number
+      </div>
+      <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
+                !account.get('password').hasError('numbers')">
+        Passwords must contain at least one uppercase letter
+      </div>
+      <div *ngIf="!account.get('password').hasError('uppercaseLetters') &&
+                account.get('password').hasError('numbers')">
+        Passwords must contain at least one number
+      </div>
+    </div>
   </div>
   <button type="submit" class="btn btn--block btn--primary">
     Sign In
   </button>
   <div class="auth-form__or"><span>or</span></div>
-  <button type="button" class="btn btn--block btn--fb">
-    Sign In with Facebook
-  </button>
+  <app-facebook-auth-btn [textButton]="'Sign In with Facebook'"></app-facebook-auth-btn>
   <div class="auth-form__hint">
     <span>Forgot password?</span>
     <i>&bull;</i>

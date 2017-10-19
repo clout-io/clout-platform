@@ -7,7 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { IcoModule } from './ico/ico.module';
-import { AuthService } from './services';
+import { AuthService, ApiService, ApiHelperService, BroadcastService } from './services';
+import { HttpModule } from '@angular/http';
 
 // components
 import { AppComponent } from './app.component';
@@ -24,9 +25,10 @@ import { AppComponent } from './app.component';
     CoreModule,
     IcoModule,
     // base routing modules
-    AppRoutingModule
+    AppRoutingModule,
+    HttpModule
   ],
-  providers: [AuthService],
+  providers: [AuthService, ApiService, ApiHelperService, BroadcastService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
