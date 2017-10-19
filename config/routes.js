@@ -94,6 +94,23 @@ var routes = [
   }
   },
   {
+    method: "GET", path: "/auth/mobile/facebook", target: {
+    controller: "SocialController",
+    action: "facebookMobileAuth",
+    swagger: {
+      methods: ['GET'],
+      summary: 'SingIn/SingUp user',
+      description: 'SingIn user with access token',
+      tags: [
+        'SignIn', "SignUp"
+      ],
+      parameters: [
+        {in: "query", name: "accessToken"}
+      ]
+    }
+  }
+  },
+  {
     method: "GET", path: "/altcoins", target:
     {
       controller: 'AltcoinController',

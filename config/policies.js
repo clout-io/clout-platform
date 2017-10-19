@@ -32,7 +32,8 @@ module.exports.policies = {
   },
   'SocialController': {
     'facebookAuth': true,
-    'facebookUrl': true
+    'facebookUrl': true,
+    'facebookMobileAuth': true
   },
 
   'SignUpController': {
