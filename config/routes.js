@@ -162,4 +162,7 @@ for (var key in routes) {
   routeObject[util.format('%s %s%s', routes[key].method, prefix, routes[key].path)] = routes[key].target
 }
 
+routeObject["GET /admin/login"] = "AdminController.login";
+routeObject["POST /admin/login"] = "AdminController.login";
+
 module.exports.routes = routeObject;

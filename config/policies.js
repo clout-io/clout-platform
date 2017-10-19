@@ -49,5 +49,8 @@ module.exports.policies = {
 
   'SwaggerController': {
     '*': true
+  },
+  'AdminController': {
+    'login': true
   }
 };

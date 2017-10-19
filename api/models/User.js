@@ -10,9 +10,6 @@ var cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
   attributes: {
-    uid: {
-      type: 'string'
-    },
     email: {
       type: 'string',
       email: true,
@@ -41,6 +38,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
+    isAdmin: {
+      type: 'boolean',
+      defaultsTo: false
+    },
 
     socialNetworks: {
       collection: 'SocialNetwork',
@@ -58,7 +59,6 @@ module.exports = {
       return url
     }
   },
-  types: {},
 
   // Here we encrypt password before creating a User
   beforeCreate: function (values, next) {
