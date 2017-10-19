@@ -36,19 +36,19 @@ module.exports = {
 
     Authentication.validate(req.body, function (err, data) {
       if (err) {
-        return res.json(401, Errors.build(err.invalidAttributes, Errors.ERROR_AUTH_VALIDATION))
+        return res.json(401, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION))
       }
 
       User.findOne({email: email}, function (err, user) {
         if (!user) {
-          return res.json(401, Errors.build(defaultUserErrorMsg, Errors.ERROR_AUTH_VALIDATION));
+          return res.json(401, Errors.build(defaultUserErrorMsg, Errors.ERROR_VALIDATION));
         }
 
         User.comparePassword(password, user, function (err, valid) {
           if (err || !valid) {
             return res.json(
               401,
-              Errors.build(defaultUserErrorMsg, Errors.ERROR_AUTH_VALIDATION)
+              Errors.build(defaultUserErrorMsg, Errors.ERROR_VALIDATION)
             );
           }
 

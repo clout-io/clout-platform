@@ -26,7 +26,7 @@ module.exports = {
           "rule": "required",
           "message": "\"required\" validation rule failed for input: null\nSpecifically, it threw an error.  Details:\n undefined"
         }
-      }, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+      }, Errors.ERROR_VALIDATION));
     }
 
     Facebook.profile(accessToken, function (err, profileData) {
@@ -56,7 +56,7 @@ module.exports = {
                 isActive: true
               }).exec(function (err, user) {
                 if (err) {
-                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
                 }
                 SocialNetwork.create({
                   socialId: socialId,
@@ -64,7 +64,7 @@ module.exports = {
                   socialData: profileData
                 }).exec(function (err, social) {
                   if (err) {
-                    return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                    return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
                   }
                   return res.json({
                     user: user,
@@ -80,7 +80,7 @@ module.exports = {
                 socialData: profileData
               }).exec(function (err, social) {
                 if (err) {
-                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
                 }
                 return res.json({
                   user: user,
@@ -123,7 +123,7 @@ module.exports = {
           "rule": "required",
           "message": "\"required\" validation rule failed for input: null\nSpecifically, it threw an error.  Details:\n undefined"
         }
-      }, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+      }, Errors.ERROR_VALIDATION));
     }
 
     Facebook.confirm(code, redirectUri, function (err, response) {
@@ -142,13 +142,13 @@ module.exports = {
 
         SocialNetwork.findOne({socialId: socialId}).populate('user').exec(function (err, social) {
           if (err) {
-            return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+            return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
           }
 
           if (!social) {
             User.findOne({email: email}, function (err, user) {
               if (err) {
-                return res.json(400, Errors.build(err, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                return res.json(400, Errors.build(err, Errors.ERROR_VALIDATION));
               }
               if (!user) {
                 User.create({
@@ -157,7 +157,7 @@ module.exports = {
                   isActive: true
                 }).exec(function (err, user) {
                   if (err) {
-                    return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                    return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
                   }
                   SocialNetwork.create({
                     socialId: socialId,
@@ -165,7 +165,7 @@ module.exports = {
                     socialData: profileData
                   }).exec(function (err, social) {
                     if (err) {
-                      return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                      return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
                     }
                     return res.json({
                       user: user,
@@ -181,7 +181,7 @@ module.exports = {
                 socialData: profileData
               }).exec(function (err, social) {
                 if (err) {
-                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_SOCIAL_FACEBOOK_AUTH));
+                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
                 }
                 return res.json({
                   user: user,

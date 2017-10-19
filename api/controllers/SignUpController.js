@@ -12,7 +12,7 @@ module.exports = {
 
     SignUp.validate(req.body, function (err, data) {
       if (err) {
-        return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_REGISTER_VALIDATION))
+        return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION))
       }
 
       if (req.body.password !== req.body.confirmPassword) {
@@ -20,7 +20,7 @@ module.exports = {
       }
       User.create(req.body).exec(function (err, user) {
         if (err) {
-          return res.json(err.status, Errors.build(err.invalidAttributes, Errors.ERROR_REGISTER_VALIDATION));
+          return res.json(err.status, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
         }
         if (user) {
           SendGrid.send(
