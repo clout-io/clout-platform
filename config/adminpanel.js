@@ -38,6 +38,11 @@ module.exports.adminpanel = {
     altcoins: {
       title: 'Altcoins',
       model: 'Altcoin',
+      list: {
+        fields: {
+          priceHistory: false
+        }
+      }
     },
     AltcoinPrices: {
       title: 'AltcoinPrices',
