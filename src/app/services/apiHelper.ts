@@ -25,4 +25,8 @@ export class ApiHelperService {
   removeTokenFromLocalStorage(tokenName: string) {
     window.localStorage.removeItem(tokenName);
   }
+
+  removeEmailFromLocalStorage(key: string) {
+    window.localStorage.removeItem(key);
+  }
 }

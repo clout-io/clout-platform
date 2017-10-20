@@ -29,10 +29,17 @@ export class AuthService {
     this.api.setHeaders({[this.authorization]: `${this.token} ${token}`});
   }
 
+  setEmail(email: string) {
+    window.localStorage.setItem('clout_user', email);
+  }
+
   authenticate(credits): Observable<any> {
     return this.api.post(`/${this.api.signup_url}`, credits)
       .do((res: any) => {
-        if (res.token) { this.setToken(res.token); }
+        if (res.token) {
+          this.setToken(res.token);
+          this.setEmail(res.user.email);
+        }
       })
       .map((res: any) => res);
   }
@@ -40,7 +47,10 @@ export class AuthService {
   activate(code: string) {
     return this.api.get(`/${this.api.activate_url}${code}`)
       .do((res: any) => {
-        if (res.token) { this.setToken(res.token); }
+        if (res.token) {
+          this.setToken(res.token);
+          this.setEmail(res.user.email);
+        }
       })
       .map((res: any) => res);
   }
@@ -48,7 +58,10 @@ export class AuthService {
   signin(data: any): Observable<any> {
     return this.api.post(`/${this.api.signin_url}`, data)
       .do((res: any) => {
-        if (res.token) { this.setToken(res.token); }
+        if (res.token) {
+          this.setToken(res.token);
+          this.setEmail(res.user.email);
+        }
       })
       .map((res: any) => res);
   }
@@ -70,7 +83,10 @@ export class AuthService {
   facebookAuthenticate(code: string): Observable<any> {
     return this.api.get(`/${this.api.facebook_auth_url}?code=${code}&redirectUri=${this.api.redirect_uri}`)
       .do((res: any) => {
-        if (res.token) { this.setToken(res.token); }
+        if (res.token) {
+          this.setToken(res.token);
+          this.setEmail(res.user.email);
+        }
       });
   }
 

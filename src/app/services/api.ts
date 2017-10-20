@@ -103,5 +103,6 @@ export class ApiService {
   deactivate() {
     this.removeHeader('Authorization');
     this.apiHelper.removeTokenFromLocalStorage('auth_token');
+    this.apiHelper.removeEmailFromLocalStorage('clout_user');
   }
 }

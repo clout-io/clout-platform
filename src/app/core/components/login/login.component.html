@@ -23,20 +23,20 @@
              formControlName="password"/>
       <app-reset-input-btn [inputName]="'password'"></app-reset-input-btn>
     </div>
-  </div>
-  <div *ngIf="account.get('password').invalid && account.get('password').touched" class="has_error">
-    <div class="validation-err-msg">
-      <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
+    <div *ngIf="account.get('password').invalid && account.get('password').touched" class="has_error">
+      <div class="validation-err-msg">
+        <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
                 account.get('password').hasError('numbers')">
-        Passwords must contain at least one uppercase letter and one number
-      </div>
-      <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
+          Passwords must contain at least one uppercase letter and one number
+        </div>
+        <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
                 !account.get('password').hasError('numbers')">
-        Passwords must contain at least one uppercase letter
-      </div>
-      <div *ngIf="!account.get('password').hasError('uppercaseLetters') &&
+          Passwords must contain at least one uppercase letter
+        </div>
+        <div *ngIf="!account.get('password').hasError('uppercaseLetters') &&
                 account.get('password').hasError('numbers')">
-        Passwords must contain at least one number
+          Passwords must contain at least one number
+        </div>
       </div>
     </div>
   </div>

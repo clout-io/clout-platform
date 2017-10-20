@@ -23,21 +23,21 @@
              formControlName="password"/>
       <app-reset-input-btn [inputName]="'password'"></app-reset-input-btn>
     </div>
-  </div>
-  <div *ngIf="account.get('password').invalid && account.get('password').touched" class="has_error">
-    <div class="validation-err-msg">
+    <div *ngIf="account.get('password').invalid && account.get('password').touched" class="has_error">
+      <div class="validation-err-msg">
       <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
                 account.get('password').hasError('numbers')">
         Passwords must contain at least one uppercase letter and one number
       </span>
-      <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
+        <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
                 !account.get('password').hasError('numbers')">
         Passwords must contain at least one uppercase letter
       </span>
-      <span *ngIf="!account.get('password').hasError('uppercaseLetters') &&
+        <span *ngIf="!account.get('password').hasError('uppercaseLetters') &&
                 account.get('password').hasError('numbers')">
         Passwords must contain at least one number
       </span>
+      </div>
     </div>
   </div>
   <div class="form-group" [ngClass]="{'has_error': account.get('password_confirm').invalid &&
@@ -48,31 +48,31 @@
              formControlName="password_confirm"/>
       <app-reset-input-btn [inputName]="'password_confirm'"></app-reset-input-btn>
     </div>
-  </div>
-  <div *ngIf="account.get('password_confirm').invalid && account.get('password_confirm').touched" class="has_error">
-    <div class="validation-err-msg">
+    <div *ngIf="account.get('password_confirm').invalid && account.get('password_confirm').touched" class="has_error">
+      <div class="validation-err-msg">
       <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
                 account.get('password_confirm').hasError('numbers')">
         Passwords must contain at least one uppercase letter and one number
       </span>
-      <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
+        <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
                 !account.get('password_confirm').hasError('numbers')">
         Passwords must contain at least one uppercase letter
       </span>
-      <span *ngIf="!account.get('password_confirm').hasError('uppercaseLetters') &&
+        <span *ngIf="!account.get('password_confirm').hasError('uppercaseLetters') &&
                 account.get('password_confirm').hasError('numbers')">
         Passwords must contain at least one number
       </span>
+      </div>
     </div>
-  </div>
-  <div class="has_error">
-    <span *ngIf="(account.get('password').value != account.get('password_confirm').value) &&
-              account.get('password_confirm').touched && !account.get('password').hasError('required') &&
-              !account.get('password_confirm').hasError('required')" class="validation-err-msg">
-      Passwords doesn't match
-    </span>
-    <div *ngIf="showVerificationMessage" class="validation-err-msg">
-      We have sent a verification link to your email address. Please check.
+    <div class="has_error">
+      <span *ngIf="(account.get('password').value != account.get('password_confirm').value) &&
+                account.get('password_confirm').touched && !account.get('password').hasError('required') &&
+                !account.get('password_confirm').hasError('required')" class="validation-err-msg">
+        Passwords doesn't match
+      </span>
+      <div *ngIf="showVerificationMessage" class="varification-msg">
+        We have sent a verification link to your email address. Please check.
+      </div>
     </div>
   </div>
   <button type="submit" class="btn btn--block btn--primary">
