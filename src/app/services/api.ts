@@ -15,6 +15,7 @@ export class ApiService {
   activate_url = 'api/v1/activate?code=';
   facebook_url = 'api/v1/facebook/url';
   facebook_auth_url = 'api/v1/auth/facebook';
+  altcoins = 'api/v1/altcoins';
   redirect_uri = window.location.hostname === 'localhost' ?
     'http://localhost:4200/social/facebook' : `${this.api_url}/social/facebook`;
   headers: Headers = new Headers({

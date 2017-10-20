@@ -11,7 +11,8 @@ import {
   FeatureDetailComponent,
   FeatureTabsComponent,
   FeatureCommentListComponent,
-  FeatureCommentItemComponent
+  FeatureCommentItemComponent,
+  AltcoinItemComponent
 } from './components';
 
 @NgModule({
@@ -21,6 +22,15 @@ import {
     NgbModule,
     AltcoinRoutingModule
   ],
-  declarations: [AltcoinComponent, AltcoinListComponent, AltcoinDetailComponent, FeatureDetailComponent, FeatureTabsComponent, FeatureCommentListComponent, FeatureCommentItemComponent]
+  declarations: [
+    AltcoinComponent,
+    AltcoinListComponent,
+    AltcoinDetailComponent,
+    FeatureDetailComponent,
+    FeatureTabsComponent,
+    FeatureCommentListComponent,
+    FeatureCommentItemComponent,
+    AltcoinItemComponent
+  ]
 })
 export class AltcoinModule { }

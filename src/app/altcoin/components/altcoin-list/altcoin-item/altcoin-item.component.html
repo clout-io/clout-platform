@@ -1,0 +1,14 @@
+<li class="coin-list-item">
+  <a href="#">
+      <span class="coin-list-item__img">
+        <img src="../../../../assets/coin-img.png" alt="">
+      </span>
+    <span class="coin-list-item__content" [ngClass]="{'coin-list-item--negative' : altcoin.percent_change_24h < 0}">
+        <strong>{{altcoin.name}}</strong>
+        <span class="coin-list-item__details">
+          <span>$ {{altcoin.price_usd}}</span>
+          <span>{{altcoin.percent_change_24h}} %</span>
+        </span>
+      </span>
+  </a>
+</li>
