@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.adminpanel = {
-  // policies: ['sessionAuth', 'isAdmin'],
+  policies: ['sessionAuth', 'isAdmin'],
   instances: {
     users: {
 
