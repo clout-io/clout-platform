@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { IcoModule } from './ico/ico.module';
+import { AltcoinModule } from './altcoin/altcoin.module';
 import { AuthService, ApiService, ApiHelperService, BroadcastService } from './services';
 import { HttpModule } from '@angular/http';
 
@@ -23,6 +24,7 @@ import { AppComponent } from './app.component';
     NgbModule.forRoot(),
     // internal modules
     CoreModule,
+    AltcoinModule,
     IcoModule,
     // base routing modules
     AppRoutingModule,

@@ -1,37 +1,37 @@
-<nav class="navbar navbar-toggleable-md fixed-top d-flex">
-  <button class="navbar-toggler hamburger" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="icon"></span>
-  </button>
-  <div class="navbar-brand col-lg-2 col-xl-3">Clout Network</div>
-
-  <div class="collapse navbar-collapse col-lg-9 col-xl-10" id="navbar-main">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">All Projects <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Submit a Project</a>
-      </li>
-    </ul>
-
-    <div class="user-item nav-item dropdown clearfix">
-      <div class="nav-link dropdown-toggle bottom" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-        <div class="user-details">
-          <div class="user-name">Nick Smith</div>
-          <div class="user-title">CEO</div>
+<header class="header">
+  <div class="container">
+    <div class="header__start">
+      <a href="/" class="header__logo"></a>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{currentUrl}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" routerLink="/altcoins">Altcoins</a>
+          <a class="dropdown-item" routerLink="/icos">Icos</a>
         </div>
-
-        <div class="user-image">
-          <img src="https://addons.cdn.mozilla.net/user-media/userpics/0/0/45.png" class="rounded-circle">
-        </div>
-
       </div>
-
+    </div><!-- .header__start -->
+    <div class="header__search">
+      <form>
+        <input type="search" placeholder="Search" class="header__search-field">
+        <button type="submit" class="header__search-btn"></button>
+      </form>
+    </div><!-- .header__search -->
+    <div class="header__actions">
+      <div class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a href="#" class="header__user" style="background-image: url('http://cdn.cavemancircus.com//wp-content/uploads/images/2017/jan/rachel_cook/rachel_cook_6.jpg')" title="{{userEmail}}"></a>
+      </div>
+      <div class="action">
+        <a href="#"></a>
+      </div>
+      <div class="action">
+        <a href="#"></a>
+      </div>
       <div class="dropdown-menu" aria-labelledby="dropdown-settings">
         <a class="dropdown-item" href="#" (click)="logout($event)">Log Out</a>
       </div>
-    </div>
-
-  </div>
-</nav>
+    </div><!-- .header__actions -->
+  </div><!-- .container -->
+</header><!-- .header -->
