@@ -14,14 +14,14 @@ module.exports = {
 
       User.findOne({email: email}, function (err, user) {
         if (!user) {
-          return res.json(401, Errors.build(defaultUserErrorMsg, Errors.ERROR_AUTH_VALIDATION));
+          return res.json(401, Errors.build({}, Errors.ERROR_AUTH_VALIDATION));
         }
 
         User.comparePassword(password, user, function (err, valid) {
           if (err || !valid) {
             return res.json(
               401,
-              Errors.build(defaultUserErrorMsg, Errors.ERROR_AUTH_VALIDATION)
+              Errors.build({}, Errors.ERROR_AUTH_VALIDATION)
             );
           }
 

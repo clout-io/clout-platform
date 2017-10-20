@@ -147,6 +147,57 @@ var routes = [
       ]
     }
   }
+  }, {
+    method: "GET", path: "/icos", target:
+      {
+        controller: 'IcoController',
+        action: 'index',
+        skipAssets: 'true',
+        swagger: {
+          methods: ['GET'],
+          summary: ' Get Ico list',
+          description: 'List of ICO',
+          produces: [
+            'application/json'
+          ],
+          tags: [
+            'Ico'
+          ],
+          responses: {
+            '200': {
+              description: 'List of Ico'
+            }
+          }
+
+
+        }
+      }
+  },
+  {
+    method: "GET", path: "/ico/:id", target:
+    {
+      controller: 'IcoController',
+      action: 'info',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: ' Get Ico detail',
+        description: 'Details of ICO',
+        produces: [
+          'application/json'
+        ],
+        tags: [
+          'Ico'
+        ],
+        responses: {
+          '200': {
+            description: 'Details of Ico'
+          }
+        }
+
+
+      }
+    }
   },
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
   {method: "GET", path: "/altcoins/history", target: "AltcoinController.history"}

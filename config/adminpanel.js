@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.adminpanel = {
-  policies: ['sessionAuth', 'isAdmin'],
+  // policies: ['sessionAuth', 'isAdmin'],
   instances: {
     users: {
 
@@ -32,7 +32,7 @@ module.exports.adminpanel = {
       }
     },
     SocialNetworks: {
-      title: 'SocialNetworks',
+      title: 'User Social Networks',
       model: 'SocialNetwork',
     },
     altcoins: {
@@ -45,8 +45,93 @@ module.exports.adminpanel = {
       }
     },
     AltcoinPrices: {
-      title: 'AltcoinPrices',
+      title: 'Altcoin Prices',
       model: 'AltcoinPrice',
+    },
+    Ico: {
+      title: 'Ico\'s',
+      model: 'Ico',
+      list: {
+        fields: {
+          image: false,
+          projectStage: false,
+
+          hypeScore: false,
+          riskScore: false,
+          investScore: false,
+          categories: {
+            displayField: 'name'
+          },
+          founded: false,
+          site: false,
+          blog: false,
+          primaryGeography: false,
+          features: false,
+          tokenType: false,
+          tokenTechnology: false,
+          jurisdiction: false,
+          tokensDistribution: false,
+          tokenSales: false,
+          technicalDetails: false,
+          sourceCode: false,
+          proofOfDeveloper: false,
+          similarProjects: {
+            displayField: 'name'
+          },
+          team: {
+            displayField: 'name'
+          },
+          socials: {
+            displayField: 'link'
+          }
+        }
+      },
+      add: {
+        fields: {
+          team: {
+            displayField: 'name'
+          },
+          socials: {
+            displayField: 'link'
+          },
+          categories: {
+            displayField: 'name'
+          },
+          similarProjects: {
+            displayField: 'name'
+          },
+        }
+      },
+      edit: {
+        fields: {
+          startDate: false,
+          endDate: false,
+          team: {
+            displayField: 'name'
+          },
+          socials: {
+            displayField: 'link'
+          },
+          similarProjects: {
+            displayField: 'name'
+          },
+          categories: {
+            displayField: 'name'
+          },
+        }
+      }
+    },
+    IcoTeam: {
+      title: 'Ico Team',
+      model: 'IcoTeam',
+    },
+    IcoSocial: {
+      title: 'Ico Social',
+      model: 'IcoSocial',
+    },
+    IcoCategory: {
+      title: 'Ico Category',
+      model: 'IcoCategory',
     }
   }
 };

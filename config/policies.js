@@ -46,6 +46,10 @@ module.exports.policies = {
     'history': true,
     'info': true
   },
+  'IcoController': {
+    'index': true,
+    'info': true
+  },
 
   'SwaggerController': {
     '*': true
