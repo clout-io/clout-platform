@@ -34,7 +34,7 @@ export class CoreRoute {
         component: RegisterComponent
       },
       {
-        path: 'api/v1/activate',
+        path: 'activate',
         component: ConfirmUserComponent
       },
       {
