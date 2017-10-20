@@ -130,11 +130,8 @@ var routes = [
           '200': {
             description: 'List of Altcoins'
           }
-        },
-        parameters: [
-          {in: "query", name: "code"},
-          {in: "query", name: "redirectUri"}
-        ]
+        }
+
 
       }
     }
@@ -164,5 +161,6 @@ for (var key in routes) {
 
 routeObject["GET /admin/login"] = "AdminController.login";
 routeObject["POST /admin/login"] = "AdminController.login";
+routeObject["GET /activate"] = "SignUpController.activate";
 
 module.exports.routes = routeObject;

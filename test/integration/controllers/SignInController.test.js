@@ -12,13 +12,13 @@ describe('SignInController', function () {
   describe('#index()', function () {
     it('should create and login user', function (done) {
       request(sails.hooks.http.app)
-        .post('/signup')
+        .post('/api/v1/signup')
         .send(validUserData)
         .expect(201)
         .end(function (err, res) {
           if (err) return done(err);
           request(sails.hooks.http.app)
-            .post('/signin')
+            .post('/api/v1/signin')
             .send(validUserData)
             .end(function (err, res) {
             if (err) return done(err);
