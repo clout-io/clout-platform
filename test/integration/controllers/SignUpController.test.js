@@ -5,7 +5,7 @@ var validUserData = {
   email: 'kloniys@gmail.com',
   password: 'test',
   confirmPassword: "test"
-}
+};
 
 describe('SignUpController', function () {
 
@@ -20,12 +20,15 @@ describe('SignUpController', function () {
           done();
         });
     });
+  })
+  describe('#index()', function () {
     it('should return 400 error when exist user', function (done) {
       request(sails.hooks.http.app)
         .post('/api/v1/signup')
         .send(validUserData)
         .expect(201)
         .end(function (err, res) {
+          console.log(res.body)
           if (err) return done(err);
           request(sails.hooks.http.app)
             .post('/api/v1/signup')

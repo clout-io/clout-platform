@@ -2,7 +2,7 @@ var sails = require('sails');
 var async = require('async');
 
 before(function (done) {
-  this.timeout(15000);
+  this.timeout(5000);
   // db.createUser({user:"clout_test_user", pwd:"12345", roles: [ { role: "readWrite", db: "clout_test_db" } ]})
   sails.lift({
     connections: {
@@ -30,16 +30,16 @@ after(function (done) {
 });
 
 beforeEach(function (done) {
-  var destroyFuncs = [];
-  for (var modelName in sails.models) {
-    destroyFuncs.push(function (callback) {
-      sails.models[modelName].destroy({})
-        .exec(function (err) {
+  var destroy = [];
+  Object.keys(sails.models).map(function (model) {
+    destroy.push(function (callback) {
+      sails.models[model].destroy({})
+        .exec(function (err, data) {
           callback(null, err)
         });
     })
-  }
-  async.parallel(destroyFuncs, function (err, results) {
+  });
+  async.parallel(destroy, function (err, results) {
     done(err);
   });
-})
+});

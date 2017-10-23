@@ -130,7 +130,11 @@ var routes = [
           '200': {
             description: 'List of Altcoins'
           }
-        }
+        },
+        parameters: [
+          {in: "query", name: "page"},
+          {in: "query", name: "per_page"}
+        ]
 
 
       }
@@ -167,7 +171,11 @@ var routes = [
             '200': {
               description: 'List of Ico'
             }
-          }
+          },
+          parameters: [
+            {in: "query", name: "page"},
+            {in: "query", name: "per_page"}
+          ]
 
 
         }

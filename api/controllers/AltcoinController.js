@@ -5,13 +5,20 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
+var pager = require('sails-pager');
+
 module.exports = {
 
   index: function (req, res) {
-    Altcoin.find().sort('rank ASC').exec(function (err, data) {
-      if (err) return res.json(err);
-      res.json(data)
-    })
+
+    var perPage = req.query.per_page || 20;
+    var currentPage = req.query.page || 1;
+    var conditions = {};
+    pager.paginate(Altcoin, conditions, currentPage, perPage, [], 'rank ASC').then(function (records) {
+      res.json(records)
+    }).catch(function (err) {
+      res.send(err)
+    });
   },
 
   info: function (req, res) {

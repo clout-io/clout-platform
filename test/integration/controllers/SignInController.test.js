@@ -2,7 +2,7 @@ var request = require('supertest');
 var expect = require('expect.js');
 
 var validUserData = {
-  email: 'kloniys@gmail.com',
+  email: 'test@gmail.com',
   password: 'test',
   confirmPassword: "test"
 }
@@ -22,7 +22,6 @@ describe('SignInController', function () {
             .send(validUserData)
             .end(function (err, res) {
             if (err) return done(err);
-            console.log(res.body)
             done();
           });
 
