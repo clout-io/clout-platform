@@ -1,6 +1,8 @@
 <div class="content__list">
   <ul class="coin-list">
-    <app-altcoin-item *ngFor="let item of altcoinList" [altcoin]="item"></app-altcoin-item>
+    <app-altcoin-item *ngFor="let item of altcoinList" [altcoin]="item"
+                      [selectItemId]="selectedId" (notify)="onNotify($event)">
+    </app-altcoin-item>
     <li class="coin-list-item" style="visibility: hidden">
       <a href="#">
       <span class="coin-list-item__img">

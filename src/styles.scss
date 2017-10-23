@@ -673,6 +673,11 @@ ___________________________*/
     &:hover {
       background-color: $color-ac-coin-hover;
     }
+
+    &.active {
+      background-color: #f0f0f0;
+      transition: color ease-in 0ms;
+    }
   }
 
   &__img {
@@ -1116,7 +1121,7 @@ table {
     color: $color-ac-text-alt;
 
     display: block;
-    text-align: left;
+    text-align: left!important;
     position: relative;
 
     @media #{$desktop-sm} {

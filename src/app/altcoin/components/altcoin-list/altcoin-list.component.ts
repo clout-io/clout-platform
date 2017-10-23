@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from '../../../services';
+import { ApiService, BroadcastService } from '../../../services';
 
 @Component({
   selector: 'app-altcoin-list',
@@ -9,8 +9,10 @@ import { ApiService } from '../../../services';
 export class AltcoinListComponent implements OnInit {
   public url = '../../../assets/coin-img.png';
   public altcoinList;
+  public selectedId: string;
 
-  constructor(private apiService: ApiService) { }
+  constructor(private apiService: ApiService,
+              private broadcastService: BroadcastService) { }
 
   ngOnInit() {
     this.apiService.get(`/${this.apiService.altcoins}`)
@@ -21,7 +23,14 @@ export class AltcoinListComponent implements OnInit {
       })
       .subscribe(altcoins => {
         this.altcoinList = altcoins;
+        const firstAltcoin = this.altcoinList[0];
+        this.selectedId = firstAltcoin.id;
+        this.broadcastService.broadcast('altcoinInfo', firstAltcoin);
       });
+  }
+
+  onNotify(selectedId) {
+    this.selectedId = selectedId;
   }
 
 }

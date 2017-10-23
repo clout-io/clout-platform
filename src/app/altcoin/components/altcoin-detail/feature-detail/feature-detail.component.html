@@ -13,27 +13,27 @@
   </div>
 </div><!-- .coin-description -->
 <div class="coin-details">
-  <ul class="coin-details-list">
+  <ul class="coin-details-list" *ngIf="altcoin">
     <li>
       <span>Market Cap:</span>
-      <span>$ 10,123,199,994<br>2,115,760 BTC</span>
+      <span>$ {{altcoin.market_cap_usd | number}}</span><!--<br>2,115,760 {{altcoin.symbol}}</span>-->
     </li>
     <li>
       <span>Volume (24h):</span>
-      <span>$ 320,364,000<br>66,956 BTC</span>
+      <span>$ {{altcoin['24h_volume_usd'] | number}}</span><!--<br>66,956 {{altcoin.symbol}}</span>-->
     </li>
-    <li>
+    <!--<li>
       <span>Circulating Supply:</span>
       <span>38,600,451,446 XRP</span>
-    </li>
+    </li>-->
     <li>
       <span>Total Supply:</span>
-      <span>99,993,285,884 XRP</span>
+      <span>{{altcoin.total_supply | number}} XRP</span>
     </li>
-    <li>
+    <!--<li>
       <span>Max Supply:</span>
       <span>100,000,000,000 XRP</span>
-    </li>
+    </li>-->
   </ul>
   <div class="coin-details__share">
     <ul class="social-links">

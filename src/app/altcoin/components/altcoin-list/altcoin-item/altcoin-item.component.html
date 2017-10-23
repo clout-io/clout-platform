@@ -1,5 +1,5 @@
 <li class="coin-list-item">
-  <a href="#">
+  <a href="javascript:void(0)" (click)="selectItem(altcoin.id)" [ngClass]="{'active': selectItemId === altcoin.id}">
       <span class="coin-list-item__img">
         <img src="../../../../assets/coin-img.png" alt="">
       </span>
