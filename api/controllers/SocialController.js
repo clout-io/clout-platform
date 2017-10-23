@@ -173,21 +173,21 @@ module.exports = {
                     })
                   })
                 });
-              }
-
-              SocialNetwork.create({
-                socialId: socialId,
-                user: user,
-                socialData: profileData
-              }).exec(function (err, social) {
-                if (err) {
-                  return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
-                }
-                return res.json({
+              } else {
+                SocialNetwork.create({
+                  socialId: socialId,
                   user: user,
-                  token: Token.issue({id: user.id})
+                  socialData: profileData
+                }).exec(function (err, social) {
+                  if (err) {
+                    return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
+                  }
+                  return res.json({
+                    user: user,
+                    token: Token.issue({id: user.id})
+                  })
                 })
-              })
+              }
             })
           } else {
             social.token = token;
