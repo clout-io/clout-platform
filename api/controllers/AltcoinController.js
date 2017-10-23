@@ -15,10 +15,10 @@ module.exports = {
   },
 
   info: function (req, res) {
-    var name = req.param("name")
-    AltcoinPrice.find({altcoin: name}).sort('timestamp DESC').exec(function (err, info) {
-      res.json(info)
-    })
+    var name = req.param("name");
+    Altcoin.findOne({id: name}).populateAll().exec(function (err, coin) {
+      return res.json(coin);
+    });
   },
 
   sync: function (req, res) {
