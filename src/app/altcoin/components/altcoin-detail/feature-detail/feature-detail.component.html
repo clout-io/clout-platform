@@ -3,7 +3,7 @@
     <img src="../../../../../assets/coin-img.png" alt="">
   </div>
   <div class="coin-description__text">
-    <h2>Ripple</h2>
+    <h2>{{altcoin ? altcoin.name : ' '}}</h2>
     <p>
       Ripple provides one frictionless experience to send money globally using the power of blockchain. By
       joining Ripple’s growing, global network, financial institutions can process their customers’ payments
@@ -13,22 +13,18 @@
   </div>
 </div><!-- .coin-description -->
 <div class="coin-details">
-  <ul class="coin-details-list" *ngIf="altcoin">
+  <ul class="coin-details-list">
     <li>
       <span>Market Cap:</span>
-      <span>$ {{altcoin.market_cap_usd | number}}</span><!--<br>2,115,760 {{altcoin.symbol}}</span>-->
+      <span>{{altcoin ? '$ ' + (altcoin.market_cap_usd | number) : ''}}</span><!--<br>2,115,760 {{altcoin.symbol}}</span>-->
     </li>
     <li>
       <span>Volume (24h):</span>
-      <span>$ {{altcoin['24h_volume_usd'] | number}}</span><!--<br>66,956 {{altcoin.symbol}}</span>-->
+      <span>{{altcoin ? '$ ' + (altcoin['24h_volume_usd'] | number) : ''}}</span><!--<br>66,956 {{altcoin.symbol}}</span>-->
     </li>
-    <!--<li>
-      <span>Circulating Supply:</span>
-      <span>38,600,451,446 XRP</span>
-    </li>-->
     <li>
       <span>Total Supply:</span>
-      <span>{{altcoin.total_supply | number}} XRP</span>
+      <span>{{altcoin ? (altcoin.total_supply | number) + ' XRP' : ''}}</span>
     </li>
     <!--<li>
       <span>Max Supply:</span>
