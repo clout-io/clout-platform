@@ -1,70 +1,45 @@
 /**
- * Created by jaumard on 27/02/2015.
+ *
  */
-
-var async = require('async');
-
 module.exports.schedule = {
-  sailsInContext: true, //If sails is not as global and you want to have it in your task
   tasks: {
-    syncAltcoins: {
-      cron: "0 */1 * * *",
-      task: function (context, sails) {
-        CoinMarketCap.getTicker(function (err, data) {
-          var callFunctions = [];
-          data.map(function (item) {
-            callFunctions.push(
-              function () {
-                item.id = item.id.toLowerCase();
-                Altcoin.findOrCreate({id: item.id}, item).exec(function createFindCB(err, createdOrFoundRecords) {
-                });
-              }
-            )
-          });
-          async.parallel(callFunctions, function (err, results) {
-            console.log("complete")
-          });
+    syncAltcoinHystory: {
+      cron: "0 */2 * * *",
+      task: function () {
+        Altcoin.findOne({history_sync: {not: true}}).exec(function (err, altcoin) {
+          if (err) return err;
+          CoinMarketCap.getHistory(altcoin.id).then(function (data) {
+            for (var key in data.price_usd) {
+              AltcoinPrice.findOrCreate({
+                altcoin: altcoin.id,
+                timestamp: data.price_usd[key][0],
+              }, {
+                altcoin: altcoin.id,
+                timestamp: data.price_usd[key][0],
+                price_usd: data.price_usd[key][1],
+                volume_usd: data.volume_usd[key][1],
+                price_btc: data.price_btc[key][1],
+                market_cap_by_available_supply: data.market_cap_by_available_supply[key][1]
+              }).exec(function createFindCB(error, createdOrFoundRecords) {
+
+              })
+            }
+            altcoin.history_sync = true;
+            altcoin.save();
+          })
         })
-      },
-      context: {}
+      }
     },
-    syncAltcoinHistory: {
-      cron: "0 1 */1 * *",
-      task: function (context, sails) {
-        Altcoin.find().exec(function (err, data) {
-          var callFunctions = [];
-          data.map(function (item) {
-            callFunctions.push(
-              function () {
-                var toDate = new Date();
-                var fromDate = new Date();
-                fromDate.setDate(toDate.getDate() - 1);
-
-                CoinMarketCap.getHistory(item.id, fromDate.getTime(), toDate.getTime()).then(function (historyData) {
-                  for (var key in historyData.price_usd) {
-                    AltcoinPrice.create({
-                      altcoin: item.id,
-                      timestamp: historyData.price_usd[key][0],
-                      price_usd: historyData.price_usd[key][1],
-                      volume_usd: historyData.volume_usd[key][1],
-                      price_btc: historyData.price_btc[key][1]
-                    }).exec(function (err, price) {
-                    });
-                  }
-                });
-
-              }
-            )
-          });
-          async.parallel(callFunctions, function (err, results) {
-          });
-
-
+    syncAltcoin: {
+      cron: "0 */1 * * *",
+      task: function () {
+        CoinMarketCap.getTicker(function (err, data) {
+          for (var key in data) {
+            Altcoin.updateOrCreate({id: data[key].id}, data[key]).then(function createFindCB(createdOrFoundRecords) {
+            });
+          }
         })
-
-
-      },
-      context: {}
+      }
     }
   }
 };

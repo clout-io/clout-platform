@@ -18,7 +18,7 @@ module.exports.getTicker = function (callback) {
   })
 };
 
-module.exports.getHistory = function (id, from, to, callback) {
+module.exports.getHistory = function (id, from, to) {
   var url = util.format("%s/%s", graphUrl, id);
 
   if (from && to) {
@@ -35,7 +35,7 @@ module.exports.getHistory = function (id, from, to, callback) {
         var jsData = JSON.parse(body);
         return resolve(jsData)
       }
-      reject(body)
+      return reject(body)
     })
   })
 };

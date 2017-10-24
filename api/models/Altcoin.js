@@ -50,6 +50,11 @@ module.exports = {
       type: 'float'
     },
 
+    history_sync: {
+      type: "boolean",
+      defaultsTo: false
+    },
+
     priceHistory: {
       collection: 'AltcoinPrice',
       via: 'altcoin'
