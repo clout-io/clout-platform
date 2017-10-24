@@ -61,7 +61,8 @@ module.exports = {
                 SocialNetwork.create({
                   socialId: socialId,
                   user: user,
-                  socialData: profileData
+                  socialData: profileData,
+                  type: "facebook"
                 }).exec(function (err, social) {
                   if (err) {
                     return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
@@ -77,7 +78,8 @@ module.exports = {
               SocialNetwork.create({
                 socialId: socialId,
                 user: user,
-                socialData: profileData
+                socialData: profileData,
+                type: "facebook"
               }).exec(function (err, social) {
                 if (err) {
                   return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
@@ -162,7 +164,8 @@ module.exports = {
                   SocialNetwork.create({
                     socialId: socialId,
                     user: user,
-                    socialData: profileData
+                    socialData: profileData,
+                    type: "facebook"
                   }).exec(function (err, social) {
                     if (err) {
                       return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
@@ -177,7 +180,8 @@ module.exports = {
                 SocialNetwork.create({
                   socialId: socialId,
                   user: user,
-                  socialData: profileData
+                  socialData: profileData,
+                  type: "facebook"
                 }).exec(function (err, social) {
                   if (err) {
                     return res.json(400, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
