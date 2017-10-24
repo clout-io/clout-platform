@@ -31,17 +31,22 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   login() {
-    if (this.account.valid) {
-      const {email, password} = this.account.value;
-      this.auth.signin({email, password})
-        .subscribe(
-          data => {
-            this.errorLogin = false;
-            this.router.navigateByUrl('/');
-          },
-          error => this.errorLogin = true
-        );
+    if (this.account.invalid) {
+      for (let inputName in this.account.controls) {
+        this.account.get(inputName).markAsTouched();
+      }
+      return;
     }
+
+    const {email, password} = this.account.value;
+    this.auth.signin({email, password})
+      .subscribe(
+        data => {
+          this.errorLogin = false;
+          this.router.navigateByUrl('/');
+        },
+        error => this.errorLogin = true
+      );
   }
 
   resetInputField(inputName) {

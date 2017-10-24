@@ -33,20 +33,25 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   register() {
-    if (this.account.valid) {
-      const {email, password, password_confirm} = this.account.value;
-      const user = {email, password, confirmPassword: password_confirm};
-      this.auth.authenticate(user)
-        .subscribe(data => {
+    if (this.account.invalid) {
+      for (let inputName in this.account.controls) {
+        this.account.get(inputName).markAsTouched();
+      }
+      return;
+    }
+
+    const {email, password, password_confirm} = this.account.value;
+    const user = {email, password, confirmPassword: password_confirm};
+    this.auth.authenticate(user)
+      .subscribe(data => {
           this.manageErrorRegister(false, '');
           this.showVerificationMessage = true;
         },
-          errorData => {
-            if (errorData.error.body.email[0].rule === 'unique') {
-              this.manageErrorRegister(true, 'A record with that email already exists.');
-            }
-          });
-    }
+        errorData => {
+          if (errorData.error.body.email[0].rule === 'unique') {
+            this.manageErrorRegister(true, 'A record with that email already exists.');
+          }
+        });
   }
 
   resetInputField(inputName) {
