@@ -3,7 +3,7 @@
     <app-altcoin-item *ngFor="let item of altcoinList" [altcoin]="item"
                       [selectItemId]="selectedId" (notify)="onNotify($event)">
     </app-altcoin-item>
-    <li class="coin-list-item" style="visibility: hidden">
+    <li class="coin-list-item" style="visibility: hidden; height: 0; overflow: hidden">
       <a href="#">
       <span class="coin-list-item__img">
         <img src="//via.placeholder.com/50x50/FF3737/fff" alt="">

@@ -15,12 +15,8 @@ export class AltcoinListComponent implements OnInit {
               private broadcastService: BroadcastService) { }
 
   ngOnInit() {
-    this.apiService.get(`/${this.apiService.altcoins}`)
-      .map(data => {
-        return data.filter((item, i) => {
-          return i < 9;
-        });
-      })
+    this.apiService.get(`/${this.apiService.altcoins}?page=1&per_page=11`)
+      .map(responce => responce.data)
       .subscribe(altcoins => {
         this.altcoinList = altcoins;
         const firstAltcoin = this.altcoinList[0];

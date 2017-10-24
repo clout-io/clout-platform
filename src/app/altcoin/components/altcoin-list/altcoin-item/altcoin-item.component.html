@@ -7,7 +7,7 @@
         <strong>{{altcoin.name}}</strong>
         <span class="coin-list-item__details">
           <span>$ {{altcoin.price_usd}}</span>
-          <span>{{altcoin.percent_change_24h}} %</span>
+          <span>{{altcoin.percent_change_24h | percentPipe}}</span>
         </span>
       </span>
   </a>
