@@ -509,6 +509,19 @@ ___________________________*/
     display: flex;
     flex-flow: row-reverse nowrap;
     justify-content: flex-start;
+    position: relative;
+
+    .dropdown-menu {
+      top: 49px;
+
+      @media (max-width: 768px) {
+        top: 44px;
+      }
+
+      @media (min-width: 768px) and (max-width: 1028px) {
+        top: 49px;
+      }
+    }
 
     .action {
       a {
