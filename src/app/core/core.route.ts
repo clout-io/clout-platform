@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+import { AuthService } from '../services/auth';
 import { ShellComponent } from './shell/shell.component';
 import {
   LoginComponent,
@@ -27,11 +28,17 @@ export class CoreRoute {
       },
       {
         path: 'login',
-        component: LoginComponent
+        component: LoginComponent,
+        canActivate: [
+          AuthService
+        ]
       },
       {
         path: 'register',
-        component: RegisterComponent
+        component: RegisterComponent,
+        canActivate: [
+          AuthService
+        ]
       },
       {
         path: 'activate',

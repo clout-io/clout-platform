@@ -6,11 +6,10 @@ import { ApiService, BroadcastService } from '../../../../services';
   templateUrl: './altcoin-item.component.html',
   styleUrls: ['./altcoin-item.component.scss']
 })
-export class AltcoinItemComponent implements OnInit, OnDestroy {
+export class AltcoinItemComponent implements OnInit {
   @Input() altcoin;
   @Input() selectItemId: string;
   @Output() notify = new EventEmitter<string>();
-  private subscription: any;
 
   constructor(private apiService: ApiService,
               private broadcastService: BroadcastService) { }
@@ -24,10 +23,6 @@ export class AltcoinItemComponent implements OnInit, OnDestroy {
       .subscribe(altcoin => {
         this.broadcastService.broadcast('altcoinInfo', altcoin);
       });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
 }

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from './api';
 import 'rxjs/Rx';
 
 @Injectable()
-export class AuthService {
+export class AuthService implements CanActivate {
   JWT = 'auth_token';
   authorization = 'Authorization';
   token = 'Token';
@@ -18,6 +18,14 @@ export class AuthService {
     if (auth_token) {
       this.setToken(auth_token);
     }
+  }
+
+  canActivate(): boolean {
+    if (this.isAuthorized()) {
+      this.router.navigateByUrl('/');
+      return false;
+    }
+    return true;
   }
 
   isAuthorized() {
