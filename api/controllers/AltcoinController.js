@@ -23,7 +23,7 @@ module.exports = {
 
   info: function (req, res) {
     var name = req.param("name");
-    Altcoin.findOne({id: name}).populateAll().exec(function (err, coin) {
+    Altcoin.findOne({id: name}).populate('priceHistory', {sort: 'timestamp ASC'}).exec(function (err, coin) {
       return res.json(coin);
     });
   },
