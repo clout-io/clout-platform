@@ -58,9 +58,11 @@ module.exports = {
               Errors.build({"non_field_error": "User is not active."}, Errors.ERROR_USER_IS_NOT_ACTIVE)
             )
           }
+
+          var token = Token.issue({id: user.id});
           return res.json({
             user: user,
-            token: Token.issue({id: user.id})
+            token: token
           });
         });
       })

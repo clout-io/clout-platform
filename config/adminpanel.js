@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.adminpanel = {
-  policies: ['sessionAuth', 'isAdmin'],
+  // policies: ['sessionAuth', 'isAdmin'],
   instances: {
     users: {
 
@@ -132,6 +132,10 @@ module.exports.adminpanel = {
     IcoCategory: {
       title: 'Ico Category',
       model: 'IcoCategory',
+    },
+    Likes: {
+      title: 'Likes',
+      model: 'Like'
     }
   }
 };

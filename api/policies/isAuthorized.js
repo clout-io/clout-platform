@@ -27,9 +27,14 @@ module.exports = function (req, res, next) {
     return res.json(401, {err: 'No Authorization header was found'});
   }
 
-  Token.verify(token, function (err, token) {
+  Token.verify(token, function (err, encodedToken) {
     if (err) return res.json(401, {err: 'Invalid Token!'});
-    req.token = token;
-    next();
+
+    req.token = encodedToken;
+    User.findOne(encodedToken.id).exec(function (err, user) {
+      if (err) return res.json(401, {err: 'No Authorization header was found'});
+      req.user = user.toJSON();
+      next();
+    });
   });
 };

@@ -22,10 +22,34 @@ module.exports = {
 
   info: function (req, res) {
     var id = req.param("id");
-    Ico.findOne({id: id}).populateAll().exec(function (err, icos) {
-      if (err) return res.send(404);
-      return res.json(icos);
-    })
+
+    async.parallel(
+      [function (callback) {
+        Ico.findOne({id: id}).populateAll().then(function (ico) {
+          callback(null, ico);
+        }).catch(function (error) {
+          callback(error);
+        })
+
+      },
+        function (callback) {
+          Like.count({objectId: id}).populateAll().then(function (count) {
+            callback(null, count);
+          }).catch(function (error) {
+            callback(error);
+          })
+        }
+      ],
+      function (err, result) {
+        if (err) res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+        var ico = result[0];
+        var count = result[1];
+        ico.likes = count || 0;
+        res.json(ico);
+      }
+    )
+
+
   }
 
 };

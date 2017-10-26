@@ -56,7 +56,6 @@
     "sails-hook-adminpanel": "^1.0.15",
     "sails-hook-autoreload": "^0.14.3",
     "sails-hook-update-or-create": "^0.1.4",
-    "sails-hook-validation": "^0.4.7",
     "sails-mongo": "^0.12.2",
     "sails-pager": "^2.1.0",
     "sails-swagger": "git+https://github.com/mobyinc/sails-magik-swagger.git",

@@ -35,7 +35,30 @@ var routes = [
       tags: [
         'SignUp'
       ],
-      parameters: [{in: "body", name: "data"}]
+      parameters: [{
+        in: "body", name: "data", schema: {
+          "required": [
+            "email",
+            "password",
+            "confirmPassword"
+          ],
+          "type": "object",
+          "properties": {
+            "email": {
+              "type": "string",
+              "description": ""
+            },
+            "password": {
+              "type": "string",
+              "description": ""
+            },
+            "confirmPassword": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+      }]
     }
   }
   },
@@ -55,7 +78,24 @@ var routes = [
       ],
       parameters: [
         {
-          in: "body", name: "data"
+          in: "body", name: "data",
+          schema: {
+            "required": [
+              "email",
+              "password",
+            ],
+            "type": "object",
+            "properties": {
+              "email": {
+                "type": "string",
+                "description": ""
+              },
+              "password": {
+                "type": "string",
+                "description": ""
+              }
+            }
+          }
         }
       ]
     }
@@ -206,6 +246,28 @@ var routes = [
 
       }
     }
+  },
+  {
+    method: "POST", path: "/like/:objectId", target: {
+    controller: "LikeController", action: "index", swagger: {
+      methods: ['POST'],
+      summary: 'History info about altcoin',
+      description: 'History info about altcoin',
+      tags: [
+        'Like',
+      ],
+      parameters: [
+        {
+          in: "path", name: "objectId",
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Like is created'
+        }
+      }
+    }
+  }
   },
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
   {method: "GET", path: "/altcoins/history", target: "AltcoinController.history"}

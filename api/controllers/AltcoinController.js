@@ -23,9 +23,32 @@ module.exports = {
 
   info: function (req, res) {
     var name = req.param("name");
-    Altcoin.findOne({id: name}).populate('priceHistory', {sort: 'timestamp ASC'}).exec(function (err, coin) {
-      return res.json(coin);
-    });
+
+    async.parallel(
+      [function (callback) {
+        Altcoin.findOne({id: name}).populate('priceHistory', {sort: 'timestamp ASC'}).then(function (altcoin) {
+          callback(null, altcoin);
+        }).catch(function (error) {
+          callback(error);
+        })
+
+      },
+        function (callback) {
+          Like.count({objectId: name}).populateAll().then(function (count) {
+            callback(null, count);
+          }).catch(function (error) {
+            callback(error);
+          })
+        }
+      ],
+      function (err, result) {
+        if (err) res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN))
+        var altcoin = result[0];
+        var count = result[1];
+        altcoin.likes = count || 0;
+        res.json(altcoin);
+      }
+    )
   },
 
   sync: function (req, res) {

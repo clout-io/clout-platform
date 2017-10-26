@@ -6,10 +6,19 @@
  */
 
 var enumScore = ["low", "medium", "hight"];
+var cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
 
   attributes: {
+    id: {
+      type: "string",
+      unique: true,
+      primaryKey: true,
+      defaultsTo: function () {
+        return "ico_" + cryptoRandomString(32);
+      }
+    },
     name: {
       type: "string"
     },

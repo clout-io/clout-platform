@@ -48,19 +48,25 @@ module.exports = {
       via: 'user'
     },
 
+    likes: {
+      collection: 'like',
+      via: 'owner',
+      dominant: true
+    },
+
     toJSON: function () {
       var obj = this.toObject();
       delete obj.password;
       delete obj.activationCode;
+      delete obj.confirmPassword;
       return obj;
     },
     getActivateLink: function () {
       return sails.config.appUrl + "/activate" + '?code=' + this.activationCode;
     }
   },
-
-  // Here we encrypt password before creating a User
   beforeCreate: function (values, next) {
+    delete values.confirmPassword;
     bcrypt.genSalt(10, function (err, salt) {
       if (err) return next(err);
       bcrypt.hash(values.password, salt, function (err, hash) {
