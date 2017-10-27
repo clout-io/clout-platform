@@ -21,7 +21,10 @@ export class AltcoinListComponent implements OnInit {
         this.altcoinList = altcoins;
         const firstAltcoin = this.altcoinList[0];
         this.selectedId = firstAltcoin.id;
-        this.broadcastService.broadcast('altcoinInfo', firstAltcoin);
+        this.apiService.get(`/${this.apiService.altcoin}/${firstAltcoin.id}`)
+          .subscribe(altcoin => {
+            this.broadcastService.broadcast('altcoinInfo', altcoin);
+          });
       });
   }
 
