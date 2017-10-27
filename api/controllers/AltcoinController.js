@@ -62,6 +62,7 @@ module.exports = {
       function (err, result) {
         if (err) res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
         var altcoin = result[0];
+        if (!altcoin) return res.json(404, Errors.build(err, Errors.ERROR_NOT_FOUND));
         var count = result[1];
         var comments = result[2];
         var isLiked = result[3];

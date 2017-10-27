@@ -40,12 +40,17 @@ module.exports.http = {
       } else if (req.param('token')) {
         token = req.param('token');
       }
+      if (!token) {
+        next()
+      }
 
       Token.verify(token, function (err, encodedToken) {
         if (err) return next;
         User.findOne(encodedToken.id).exec(function (err, user) {
-          if (err) return res.json(401, {err: 'No Authorization header was found'});
-          req.user = user.toJSON();
+          if (err) return next();
+          if (user) {
+            req.user = user.toJSON();
+          }
           next();
         });
       });
@@ -68,7 +73,6 @@ module.exports.http = {
       'handleBodyParserError',
       'compress',
       'methodOverride',
-      'poweredBy',
       '$custom',
       'router',
       'www',
