@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports.adminpanel = {
-  // policies: ['sessionAuth', 'isAdmin'],
+  policies: ['sessionAuth', 'isAdmin'],
   instances: {
     users: {
 
@@ -136,6 +136,10 @@ module.exports.adminpanel = {
     Likes: {
       title: 'Likes',
       model: 'Like'
+    },
+    Comments: {
+      title: 'Comments',
+      model: 'Comment'
     }
   }
 };

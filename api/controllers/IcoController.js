@@ -38,13 +38,22 @@ module.exports = {
           }).catch(function (error) {
             callback(error);
           })
+        },
+        function (callback) {
+          Comment.count({root: id}).then(function (count) {
+            callback(null, count);
+          }).catch(function (error) {
+            callback(error);
+          })
         }
       ],
       function (err, result) {
         if (err) res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
         var ico = result[0];
         var count = result[1];
+        var comments = result[2];
         ico.likes = count || 0;
+        ico.comments = comments || 0;
         res.json(ico);
       }
     )

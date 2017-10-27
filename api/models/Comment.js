@@ -17,6 +17,30 @@ module.exports = {
       defaultsTo: function () {
         return "comment_" + cryptoRandomString(32);
       }
+    },
+    text: {
+      type: "string",
+      required: true
+    },
+    children: {
+      collection: 'comment',
+      via: 'parent'
+    },
+
+    parent: {
+      model: "comment",
+    },
+    objectId: {
+      type: "string",
+      required: true
+    },
+    root: {
+      type: "string",
+      required: true
+    },
+    owner: {
+      model: "user",
+      required: true
     }
 
   }

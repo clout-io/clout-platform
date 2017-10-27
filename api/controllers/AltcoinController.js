@@ -39,13 +39,22 @@ module.exports = {
           }).catch(function (error) {
             callback(error);
           })
+        },
+        function (callback) {
+          Comment.count({root: name}).then(function (count) {
+            callback(null, count);
+          }).catch(function (error) {
+            callback(error);
+          })
         }
       ],
       function (err, result) {
-        if (err) res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN))
+        if (err) res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
         var altcoin = result[0];
         var count = result[1];
+        var comments = result[2];
         altcoin.likes = count || 0;
+        altcoin.comments = comments || 0;
         res.json(altcoin);
       }
     )
@@ -53,43 +62,14 @@ module.exports = {
 
   sync: function (req, res) {
     CoinMarketCap.getTicker(function (err, data) {
-
-
       for (var key in data) {
-        Altcoin.findOrCreate({id: data[key].id}, data[key]).exec(function createFindCB(error, createdOrFoundRecords) {
-        });
+        Altcoin.findOrCreate({id: data[key].id}, data[key]).exec(
+          function createFindCB(error, createdOrFoundRecords) {
+          });
       }
       return res.json(data)
 
     })
-  },
-
-  history: function (req, res) {
-    Altcoin.find().exec(function (err, data) {
-      var callFunctions = [];
-      data.map(function (item) {
-        CoinMarketCap.getHistory(item.id).then(function (historyData) {
-          for (var key in historyData.price_usd) {
-            AltcoinPrice.create({
-              altcoin: item.id,
-              timestamp: historyData.price_usd[key][0],
-              price_usd: historyData.price_usd[key][1],
-              volume_usd: historyData.volume_usd[key][1],
-              price_btc: historyData.price_btc[key][1]
-            }).exec(function (err, price) {
-
-            })
-          }
-
-        }, function (err) {
-
-        })
-      });
-      res.send(200);
-    })
-
   }
-
-
 };
 

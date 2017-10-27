@@ -56,5 +56,8 @@ module.exports.policies = {
   },
   'AdminController': {
     'login': true
+  },
+  'CommentController': {
+    'list': true
   }
 };
