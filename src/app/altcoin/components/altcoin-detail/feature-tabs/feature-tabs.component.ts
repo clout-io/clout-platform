@@ -12,24 +12,26 @@ export class FeatureTabsComponent implements OnInit, OnDestroy {
   currentTabNumber: number = 1;
   subscription: any;
   chart: any;
-  chartDataPriceUsd: any = [];
-  chartDataMarketCap: any = [];
-  chartDataVolumeUsd: any = [];
 
   constructor(private broadcastService: BroadcastService) { }
 
   ngOnInit() {
     this.subscription = this.broadcastService.subscribe(
       'altcoinInfo', (altcoin) => {
+        let chartDataPriceUsd = [],
+            chartDataMarketCap = [],
+            chartDataVolumeUsd = [];
         altcoin.priceHistory.map((item, i) => {
-          this.chartDataPriceUsd.push([Number(item.timestamp), Number(item.price_usd)]);
-          this.chartDataMarketCap.push([Number(item.timestamp), Number(item.market_cap_by_available_supply)]);
-          this.chartDataVolumeUsd.push([Number(item.timestamp), Number(item.volume_usd)]);
+          chartDataPriceUsd.push([Number(item.timestamp), Number(item.price_usd)]);
+          chartDataMarketCap.push([Number(item.timestamp), Number(item.market_cap_by_available_supply)]);
+          chartDataVolumeUsd.push([Number(item.timestamp), Number(item.volume_usd)]);
         });
-        this.chartDataPriceUsd.sort(this.sortChartData);
-        this.chartDataMarketCap.sort(this.sortChartData);
-        this.chartDataVolumeUsd.sort(this.sortChartData);
-        this.initCharts();
+        chartDataPriceUsd.sort(this.sortChartData);
+        chartDataMarketCap.sort(this.sortChartData);
+        chartDataVolumeUsd.sort(this.sortChartData);
+        this.initCharts(chartDataPriceUsd,
+                        chartDataMarketCap,
+                        chartDataVolumeUsd);
       });
   }
 
@@ -39,7 +41,7 @@ export class FeatureTabsComponent implements OnInit, OnDestroy {
     return 0;
   }
 
-  initCharts () {
+  initCharts (chartDataPriceUsd, chartDataMarketCap, chartDataVolumeUsd) {
     const groupingUnits = [[
       'week',                         // unit name
       [1]                             // allowed multiples
@@ -165,7 +167,7 @@ export class FeatureTabsComponent implements OnInit, OnDestroy {
         {
           name: 'Market Cap',
           type: 'line',
-          data: this.chartDataMarketCap,
+          data: chartDataMarketCap,
           color: '#7cb5ec',
           yAxis: 0,
           lineWidth: 2,
@@ -180,21 +182,21 @@ export class FeatureTabsComponent implements OnInit, OnDestroy {
           color: '#009933',
           yAxis: 1,
           lineWidth: 2,
-          data: this.chartDataPriceUsd,
+          data: chartDataPriceUsd,
         },
         {
           type: 'column',
           name: '24h Vol',
           id: 'volume',
           color: '#777777',
-          data: this.chartDataVolumeUsd,
+          data: chartDataVolumeUsd,
           yAxis: 2,
           tooltip: {
             valueSuffix: ' USD'
           }
         },
 
-        {
+        /*{
           type: 'sma',
           linkedTo: 'price_usd',
           zIndex: -1,
@@ -203,9 +205,10 @@ export class FeatureTabsComponent implements OnInit, OnDestroy {
           tooltip: {
             pointFormat: '<span></span>'
           }
-        }
+        }*/
       ]
     });
+    this.chart.reflow();
   }
 
   selectTab(tabNumber) {
