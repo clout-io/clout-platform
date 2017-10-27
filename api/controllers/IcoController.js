@@ -45,6 +45,17 @@ module.exports = {
           }).catch(function (error) {
             callback(error);
           })
+        },
+        function (callback) {
+          if (!req.user) {
+            callback(null, false);
+          } else {
+            Like.count({objectId: id, owner: req.user.id}).then(function (count) {
+              callback(null, count > 0);
+            }).catch(function (error) {
+              callback(error);
+            })
+          }
         }
       ],
       function (err, result) {
@@ -52,8 +63,10 @@ module.exports = {
         var ico = result[0];
         var count = result[1];
         var comments = result[2];
+        var isLiked = result[3];
         ico.likes = count || 0;
         ico.comments = comments || 0;
+        ico.isLiked = isLiked;
         res.json(ico);
       }
     )

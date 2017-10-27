@@ -46,6 +46,17 @@ module.exports = {
           }).catch(function (error) {
             callback(error);
           })
+        },
+        function (callback) {
+          if (!req.user) {
+            callback(null, false);
+          } else {
+            Like.count({objectId: name, owner: req.user.id}).then(function (count) {
+              callback(null, count > 0);
+            }).catch(function (error) {
+              callback(error);
+            })
+          }
         }
       ],
       function (err, result) {
@@ -53,8 +64,10 @@ module.exports = {
         var altcoin = result[0];
         var count = result[1];
         var comments = result[2];
+        var isLiked = result[3];
         altcoin.likes = count || 0;
         altcoin.comments = comments || 0;
+        altcoin.isLiked = isLiked;
         res.json(altcoin);
       }
     )
