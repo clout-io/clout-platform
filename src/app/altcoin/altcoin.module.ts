@@ -32,8 +32,7 @@ import { PercentPipe, NumberSeparator } from '../pipes';
     FeatureCommentListComponent,
     FeatureCommentItemComponent,
     AltcoinItemComponent,
-    PercentPipe,
-    NumberSeparator
+    PercentPipe
   ]
 })
 export class AltcoinModule { }

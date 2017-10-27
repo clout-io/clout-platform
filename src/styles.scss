@@ -620,27 +620,46 @@ ___________________________*/
 
   &__list {
     flex: 0 0 100%;
+    width: 100%;
 
     @media #{$tablet} {
       flex: 0 0 270px;
+      width: 270px;
 
       border-right: 1px solid $color-ac-border;
     }
 
     @media #{$desktop-sm} {
       flex: 0 0 320px;
+      width: 320px;
     }
   }
 
   &__main {
-    padding: 15px;
+    padding: 0 15px;
 
     @media #{$tablet} {
-      padding: 20px;
+      padding: 0 20px;
+
+      width: calc(100% - 320px);
+
+      flex: 1 1 auto;
     }
 
     @media #{$desktop-sm} {
-      padding: 30px;
+      padding: 0 30px;
+    }
+
+    &__inner {
+      padding: 15px 0;
+
+      @media #{$tablet} {
+        padding: 20px 0;
+      }
+
+      @media #{$desktop-sm} {
+        padding: 30px 0;
+      }
     }
   }
 }
@@ -708,8 +727,8 @@ ___________________________*/
 
     img {
       display: block;
-      max-width: 100%;
-      max-height: 100%;
+      max-width: 50px;
+      max-height: 50px;
     }
   }
 
@@ -841,7 +860,7 @@ ___________________________*/
     border-bottom: 1px solid $color-ac-border;
 
     @media #{$desktop-md} {
-      flex: 0 0 50%;
+      flex: 1 1 50%;
       width: 50%;
 
       border-bottom: 0;
@@ -862,7 +881,7 @@ ___________________________*/
     justify-content: flex-start;
 
     @media #{$desktop-md} {
-      flex: 0 0 50%;
+      flex: 1 1 50%;
       width: 50%;
     }
   }
@@ -887,12 +906,13 @@ ___________________________*/
   }
 
   &__share-subscribe {
-    align-self: flex-end;
-    margin-top: auto;
     width: 100%;
 
     @media #{$phone-lg} {
       width: auto;
+
+      align-self: flex-end;
+      margin-top: auto;
     }
   }
 }
