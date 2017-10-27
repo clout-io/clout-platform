@@ -14,7 +14,7 @@ import {
   FeatureCommentItemComponent,
   AltcoinItemComponent
 } from './components';
-import { PercentPipe } from '../pipes/percentPipe';
+import { PercentPipe, NumberSeparator } from '../pipes';
 
 @NgModule({
   imports: [
@@ -32,7 +32,8 @@ import { PercentPipe } from '../pipes/percentPipe';
     FeatureCommentListComponent,
     FeatureCommentItemComponent,
     AltcoinItemComponent,
-    PercentPipe
+    PercentPipe,
+    NumberSeparator
   ]
 })
 export class AltcoinModule { }

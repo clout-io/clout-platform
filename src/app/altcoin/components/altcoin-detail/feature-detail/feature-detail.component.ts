@@ -14,7 +14,9 @@ export class FeatureDetailComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.subscription = this.broadcastService.subscribe(
-      'altcoinInfo', (altcoin) => this.altcoin = altcoin);
+      'altcoinInfo', (altcoin) => {
+        this.altcoin = altcoin;
+      });
   }
 
   ngOnDestroy(): void {

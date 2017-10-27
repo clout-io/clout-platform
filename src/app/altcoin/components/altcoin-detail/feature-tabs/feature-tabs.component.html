@@ -1,14 +1,22 @@
 <div class="coin-tabs">
   <div class="coin-tabs__links">
-    <a href="#">Markets</a>
-    <a href="#">Project</a>
-    <a href="#">ICO</a>
-    <a href="#">Assessment</a>
-    <a href="#">Tech</a>
-    <a href="#">Team</a>
+    <a href="javascript:void(0)" (click)="selectTab(1)" [ngClass]="{'active': currentTabNumber === 1}">Charts</a>
+    <a href="javascript:void(0)" (click)="selectTab(2)" [ngClass]="{'active': currentTabNumber === 2}">Markets</a>
+    <!--<a href="javascript:void(0)" (click)="selectTab(3)" [ngClass]="{'active': currentTabNumber === 3}">Project</a>
+    <a href="javascript:void(0)" (click)="selectTab(4)" [ngClass]="{'active': currentTabNumber === 4}">ICO</a>
+    <a href="javascript:void(0)" (click)="selectTab(5)" [ngClass]="{'active': currentTabNumber === 5}">Assessment</a>
+    <a href="javascript:void(0)" (click)="selectTab(6)" [ngClass]="{'active': currentTabNumber === 6}">Tech</a>
+    <a href="javascript:void(0)" (click)="selectTab(7)" [ngClass]="{'active': currentTabNumber === 7}">Team</a>-->
   </div>
   <div class="coin-tabs__panes">
-    <div>
+    <div [ngClass]="{'active': currentTabNumber === 1}">
+      <div style="position: relative; height: 400px">
+        <div id="container_charts" style="height: 400px; position: absolute; width: calc(100% - 1px);">
+
+        </div>
+      </div>
+    </div>
+    <div [ngClass]="{'active': currentTabNumber === 2}">
       <div class="text-right">
         Native
       </div>
@@ -100,7 +108,7 @@
         </tbody>
       </table>
     </div>
-    <div>
+    <!--<div [ngClass]="{'active': currentTabNumber === 3}">
       <ul class="coin-details-list">
         <li>
           <span>Project Stage:</span>
@@ -128,17 +136,17 @@
         </li>
       </ul>
     </div>
-    <div>
+    <div [ngClass]="{'active': currentTabNumber === 4}">
       Ico
     </div>
-    <div>
+    <div [ngClass]="{'active': currentTabNumber === 5}">
       Assessment
     </div>
-    <div>
+    <div [ngClass]="{'active': currentTabNumber === 6}">
       Tech
     </div>
-    <div>
+    <div [ngClass]="{'active': currentTabNumber === 7}">
       Team
-    </div>
+    </div>-->
   </div>
 </div><!-- .coin-tabs -->
