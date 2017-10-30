@@ -34,14 +34,12 @@ module.exports.http = {
           if (/^Token$/i.test(scheme)) {
             token = credentials;
           }
-        } else {
-
         }
       } else if (req.param('token')) {
         token = req.param('token');
       }
       if (!token) {
-        next()
+        return next()
       }
 
       Token.verify(token, function (err, encodedToken) {
@@ -66,7 +64,6 @@ module.exports.http = {
      ***************************************************************************/
 
     order: [
-      'lazyUser',
       'startRequestTimer',
       'cookieParser',
       'session',
@@ -80,7 +77,8 @@ module.exports.http = {
       'www',
       'favicon',
       '404',
-      '500'
+      '500',
+      'lazyUser'
     ],
 
     /****************************************************************************
