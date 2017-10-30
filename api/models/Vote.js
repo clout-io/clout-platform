@@ -5,7 +5,7 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
-var cryptoRandomString = require('crypto-random-string');
+const cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
 
@@ -15,8 +15,21 @@ module.exports = {
       unique: true,
       primaryKey: true,
       defaultsTo: function () {
-        return "upvote_" + cryptoRandomString(32);
+        return "vote_" + cryptoRandomString(32);
       }
+    },
+    objectId: {
+      type: "string",
+      required: true
+    },
+    owner: {
+      model: "user",
+      required: true
+    },
+    vote: {
+      type: "string",
+      required: true,
+      enum: ["+", "-"]
     }
 
   }
