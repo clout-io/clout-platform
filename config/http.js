@@ -45,9 +45,11 @@ module.exports.http = {
       }
 
       Token.verify(token, function (err, encodedToken) {
-        if (err) return next;
+        if (err) return next();
         User.findOne(encodedToken.id).exec(function (err, user) {
-          if (err) return next();
+          if (err) {
+            return next();
+          }
           if (user) {
             req.user = user.toJSON();
           }
