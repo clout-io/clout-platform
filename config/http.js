@@ -38,6 +38,7 @@ module.exports.http = {
       } else if (req.param('token')) {
         token = req.param('token');
       }
+
       if (!token) {
         return next()
       }
@@ -73,12 +74,12 @@ module.exports.http = {
       'compress',
       'methodOverride',
       '$custom',
+      'lazyUser',
       'router',
       'www',
       'favicon',
       '404',
       '500',
-      'lazyUser'
     ],
 
     /****************************************************************************

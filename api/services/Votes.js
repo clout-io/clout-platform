@@ -19,11 +19,12 @@ function voteCount(objectId) {
       if (err) return reject(err);
       var up = result[0] || 0;
       var down = result[1] || 0;
-      return resolve({"success": true, upvote: up, downvote: down});
+      return resolve({upvote: up, downvote: down});
     })
   })
 }
 
+module.exports.count = voteCount;
 
 module.exports.give = function (userId, objectId, inputVote) {
 

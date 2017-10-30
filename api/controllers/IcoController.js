@@ -56,6 +56,28 @@ module.exports = {
               callback(error);
             })
           }
+        },
+        function (callback) {
+          Votes.count(id).then(function (data) {
+            callback(null, data)
+          }, function (err) {
+            callback(err)
+          })
+        },
+        function (callback) {
+          if (!req.user) {
+            callback(null, false);
+          } else {
+            Vote.findOne({objectId: id, owner: req.user.id}).then(function (vote) {
+              if (vote) {
+                callback(null, vote.vote);
+              } else {
+                callback(null, false)
+              }
+            }).catch(function (error) {
+              callback(error);
+            })
+          }
         }
       ],
       function (err, result) {
@@ -65,9 +87,13 @@ module.exports = {
         var count = result[1];
         var comments = result[2];
         var isLiked = result[3];
+        var votes = result[4];
+        var voted = result[5];
         ico.likes = count || 0;
         ico.comments = comments || 0;
         ico.isLiked = isLiked;
+        ico.votes = votes;
+        ico.voted = voted;
         res.json(ico);
       }
     )

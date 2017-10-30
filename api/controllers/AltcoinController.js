@@ -22,11 +22,11 @@ module.exports = {
   },
 
   info: function (req, res) {
-    var name = req.param("name");
+    var id = req.param("name");
 
     async.parallel(
       [function (callback) {
-        Altcoin.findOne({id: name}).populate('priceHistory', {sort: 'timestamp ASC'}).then(function (altcoin) {
+        Altcoin.findOne({id: id}).populate('priceHistory', {sort: 'timestamp ASC'}).then(function (altcoin) {
           callback(null, altcoin);
         }).catch(function (error) {
           callback(error);
@@ -34,14 +34,14 @@ module.exports = {
 
       },
         function (callback) {
-          Like.count({objectId: name}).populateAll().then(function (count) {
+          Like.count({objectId: id}).populateAll().then(function (count) {
             callback(null, count);
           }).catch(function (error) {
             callback(error);
           })
         },
         function (callback) {
-          Comment.count({root: name}).then(function (count) {
+          Comment.count({root: id}).then(function (count) {
             callback(null, count);
           }).catch(function (error) {
             callback(error);
@@ -51,8 +51,30 @@ module.exports = {
           if (!req.user) {
             callback(null, false);
           } else {
-            Like.count({objectId: name, owner: req.user.id}).then(function (count) {
+            Like.count({objectId: id, owner: req.user.id}).then(function (count) {
               callback(null, count > 0);
+            }).catch(function (error) {
+              callback(error);
+            })
+          }
+        },
+        function (callback) {
+          Votes.count(id).then(function (data) {
+            callback(null, data)
+          }, function (err) {
+            callback(err)
+          })
+        },
+        function (callback) {
+          if (!req.user) {
+            callback(null, false);
+          } else {
+            Vote.findOne({objectId: id, owner: req.user.id}).then(function (vote) {
+              if (vote) {
+                callback(null, vote.vote);
+              } else {
+                callback(null, false)
+              }
             }).catch(function (error) {
               callback(error);
             })
@@ -66,9 +88,13 @@ module.exports = {
         var count = result[1];
         var comments = result[2];
         var isLiked = result[3];
+        var votes = result[4];
+        var voted = result[5];
         altcoin.likes = count || 0;
         altcoin.comments = comments || 0;
         altcoin.isLiked = isLiked;
+        altcoin.votes = votes;
+        altcoin.voted = voted;
         res.json(altcoin);
       }
     )
