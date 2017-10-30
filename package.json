@@ -20,10 +20,7 @@
     "start_server": "node ./app.js",
     "server_test": "node ./node_modules/mocha/bin/mocha test/bootstrap.test.js test/integration/**/*.test.js"
   },
-  "pre-commit": [
-    "precommit-msg",
-    "lint"
-  ],
+  "pre-commit": [],
   "private": true,
   "dependencies": {
     "@angular/animations": "^4.3.2",
