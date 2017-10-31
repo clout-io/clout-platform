@@ -17,6 +17,7 @@ export class ApiService {
   facebook_auth_url = 'api/v1/auth/facebook';
   altcoins = 'api/v1/altcoins';
   altcoin = 'api/v1/altcoin';
+  like_url = 'api/v1/like';
   redirect_uri = window.location.hostname === 'localhost' ?
     'http://localhost:4200/social/facebook' : `${this.api_url}/social/facebook`;
   headers: Headers = new Headers({
@@ -70,7 +71,7 @@ export class ApiService {
       this.broadcastService.broadcast('error', this.SERVER_ERROR);
     }
     if (err.status == 401) {
-      this.deactivate();
+      this.broadcastService.broadcast('showPopup', 'popupCheckAccess');
     }
 
     let errors: any = this.apiHelper.getJson(err);

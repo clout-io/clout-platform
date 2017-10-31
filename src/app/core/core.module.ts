@@ -16,7 +16,8 @@ import {
   ConfirmUserComponent,
   SocialFacebookComponent,
   ResetInputBtnComponent,
-  FacebookAuthBtnComponent
+  FacebookAuthBtnComponent,
+  ModalComponent
 } from './components';
 
 @NgModule({
@@ -35,7 +36,8 @@ import {
     ConfirmUserComponent,
     SocialFacebookComponent,
     ResetInputBtnComponent,
-    FacebookAuthBtnComponent
+    FacebookAuthBtnComponent,
+    ModalComponent
   ]
 })
 export class CoreModule { }

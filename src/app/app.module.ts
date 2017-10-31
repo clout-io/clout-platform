@@ -8,7 +8,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { IcoModule } from './ico/ico.module';
 import { AltcoinModule } from './altcoin/altcoin.module';
-import { AuthService, ApiService, ApiHelperService, BroadcastService } from './services';
+import { AuthService, ApiService, ApiHelperService, BroadcastService, ModalService } from './services';
 import { NumberSeparator } from './pipes';
 import { HttpModule } from '@angular/http';
 
@@ -31,7 +31,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     HttpModule
   ],
-  providers: [AuthService, ApiService, ApiHelperService, BroadcastService, NumberSeparator],
+  providers: [AuthService, ApiService, ApiHelperService, BroadcastService, NumberSeparator, ModalService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

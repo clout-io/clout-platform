@@ -1435,3 +1435,9 @@ ___________________________*/
 .icon_youtube:before {
   content:"\f10c";
 }
+
+.modal {
+  &.open {
+    display: block;
+  }
+}

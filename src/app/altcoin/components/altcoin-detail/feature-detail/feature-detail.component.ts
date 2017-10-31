@@ -19,6 +19,10 @@ export class FeatureDetailComponent implements OnInit, OnDestroy {
       });
   }
 
+  subscribe() {
+    this.broadcastService.broadcast('showPopup', 'popupCheckAccess');
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
