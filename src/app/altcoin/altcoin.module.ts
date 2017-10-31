@@ -12,7 +12,8 @@ import {
   FeatureTabsComponent,
   FeatureCommentListComponent,
   FeatureCommentItemComponent,
-  AltcoinItemComponent
+  AltcoinItemComponent,
+  ChartTabComponent
 } from './components';
 import { PercentPipe, NumberSeparator } from '../pipes';
 
@@ -32,7 +33,8 @@ import { PercentPipe, NumberSeparator } from '../pipes';
     FeatureCommentListComponent,
     FeatureCommentItemComponent,
     AltcoinItemComponent,
-    PercentPipe
+    PercentPipe,
+    ChartTabComponent
   ]
 })
 export class AltcoinModule { }
