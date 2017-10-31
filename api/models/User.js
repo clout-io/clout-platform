@@ -48,6 +48,13 @@ module.exports = {
       via: 'user'
     },
 
+    followedAltcoins: {
+      collection: 'Altcoin',
+      via: 'user',
+      through: 'follow'
+
+    },
+
     likes: {
       collection: 'like',
       via: 'owner',

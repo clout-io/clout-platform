@@ -191,35 +191,48 @@ var routes = [
       ]
     }
   }
-  }, {
+  },
+  {
+    method: "POST", path: "/follow/:id", target: {
+    controller: "AltcoinController", action: "follow", swagger: {
+      methods: ['POST'],
+      summary: 'History info about altcoin',
+      description: 'History info about altcoin',
+      tags: [
+        'Altcoins'
+      ]
+    }
+  }
+  },
+  {
     method: "GET", path: "/icos", target:
-      {
-        controller: 'IcoController',
-        action: 'index',
-        skipAssets: 'true',
-        swagger: {
-          methods: ['GET'],
-          summary: ' Get Ico list',
-          description: 'List of ICO',
-          produces: [
-            'application/json'
-          ],
-          tags: [
-            'Ico'
-          ],
-          responses: {
-            '200': {
-              description: 'List of Ico'
-            }
-          },
-          parameters: [
-            {in: "query", name: "page"},
-            {in: "query", name: "per_page"}
-          ]
+    {
+      controller: 'IcoController',
+      action: 'index',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: ' Get Ico list',
+        description: 'List of ICO',
+        produces: [
+          'application/json'
+        ],
+        tags: [
+          'Ico'
+        ],
+        responses: {
+          '200': {
+            description: 'List of Ico'
+          }
+        },
+        parameters: [
+          {in: "query", name: "page"},
+          {in: "query", name: "per_page"}
+        ]
 
 
-        }
       }
+    }
   },
   {
     method: "GET", path: "/ico/:id", target:

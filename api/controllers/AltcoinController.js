@@ -13,12 +13,53 @@ module.exports = {
 
     var perPage = req.query.per_page || 20;
     var currentPage = req.query.page || 1;
-    var conditions = {};
-    pager.paginate(Altcoin, conditions, currentPage, perPage, [], 'rank ASC').then(function (records) {
-      res.json(records)
-    }).catch(function (err) {
-      res.send(err)
-    });
+
+
+    async.waterfall([
+        function (callback) {
+          if (req.user) {
+            User.findOne(req.user.id).populate('followedAltcoins').then(function (user) {
+              async.map(user.followedAltcoins, function (item, callback) {
+                callback(null, item.id)
+              }, function (err, results) {
+                var data = {
+                  ids: results,
+                  items: user.followedAltcoins
+                };
+                callback(null, data);
+              });
+
+            }).catch(function (err) {
+              callback(err)
+            })
+          } else {
+            callback(null, {})
+          }
+        }
+      ],
+
+      function (err, result) {
+        var conditions = {};
+
+        if (result.ids) {
+          conditions.id = {"!": result.ids}
+        }
+
+        pager.paginate(Altcoin, conditions, currentPage, perPage, []).then(function (records) {
+
+          var resultData = records;
+          if (currentPage === 1 && result.items) {
+            resultData.data = result.items.concat(resultData.data)
+          }
+          res.json(resultData)
+        }).catch(function (err) {
+          res.send(err)
+        });
+
+      }
+    );
+
+
   },
 
   info: function (req, res) {
@@ -110,6 +151,39 @@ module.exports = {
       return res.json(data)
 
     })
+  },
+
+  follow: function (req, res) {
+    var userId = req.user.id;
+    var altcoinId = req.param("id");
+    var data = {altcoin: altcoinId, user: userId};
+    Altcoin.findOne(altcoinId).then(function (altcoin) {
+      if (!altcoin) return res.json(404, Errors.build({}, Errors.ERROR_NOT_FOUND));
+
+
+      Follow.findOne(data).then(function (followed) {
+        if (!followed) {
+          Follow.create(data).then(function (followed) {
+            return res.json(followed);
+          }).catch(function (err) {
+            return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+          })
+        } else {
+          Follow.destroy(followed.id).then(function () {
+            return res.json({});
+          }).catch(function (err) {
+            return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+          })
+        }
+
+      }).catch(function (err) {
+        return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+      })
+    }).catch(function (err) {
+      if (err) res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+    });
+
+
   }
 };
 

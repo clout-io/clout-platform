@@ -58,6 +58,12 @@ module.exports = {
     priceHistory: {
       collection: 'AltcoinPrice',
       via: 'altcoin'
+    },
+
+    followByUsers:{
+      collection: 'user',
+      via: 'altcoin',
+      through: 'follow'
     }
   }
 };
