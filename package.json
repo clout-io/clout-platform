@@ -48,6 +48,8 @@
     "highcharts-more": "^0.1.2",
     "jsonwebtoken": "^8.1.0",
     "node-cron": "^1.2.1",
+    "normalize-range": "^0.1.2",
+    "num2fraction": "^1.2.2",
     "polymer": "^0.5.0",
     "promise": "^8.0.1",
     "rxjs": "^5.4.1",
@@ -62,6 +64,7 @@
     "sendgrid": "^5.2.3",
     "striptags": "^3.1.0",
     "swagger-ui": "^2.2.10",
+    "tsickle": "^0.24.1",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

@@ -47,6 +47,11 @@ module.exports = {
       collection: 'SocialNetwork',
       via: 'user'
     },
+    uploadedPhoto: {
+      collection: 'Img',
+      via: 'user'
+    },
+
 
     followedAltcoins: {
       collection: 'Altcoin',

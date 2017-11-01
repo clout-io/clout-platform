@@ -17,6 +17,24 @@ module.exports = {
       defaultsTo: function () {
         return "post_" + cryptoRandomString(32);
       }
+    },
+    text: {
+      type: "string"
+    },
+    video: {
+      type: "string",
+      url: true
+    },
+    "link": {
+      type: "string",
+      url: true
+    },
+    "attachment": {
+      collection: "Img"
+    },
+    owner: {
+      model: "user",
+      required: true
     }
 
   }

@@ -59,5 +59,8 @@ module.exports.policies = {
   },
   'CommentController': {
     'list': true
+  },
+  'ImgController': {
+    'getPhoto': true
   }
 };

@@ -376,7 +376,100 @@ var routes = [
     }
   }
   },
-  {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"}
+  {
+    method: "POST", path: "/img/upload", target: {
+    controller: "ImgController", action: "upload", swagger: {
+      methods: ['POST'],
+      summary: 'Upload img ',
+      description: 'Upload img ',
+      tags: [
+        'Img'
+      ],
+      parameters: [
+        {
+          in: "formData",
+          name: "img",
+          description: "The uploaded file data",
+          required: true,
+          type: "file",
+          allowMultiple: true
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Upload img'
+        }
+      }
+    }
+  }
+  },
+  {
+    method: "POST", path: "/news/create", target: {
+    controller: "PostController", action: "create", swagger: {
+      methods: ['POST'],
+      summary: 'Create Post for newsfeed ',
+      description: 'Create Post for newsfeed',
+      tags: [
+        'Post'
+      ],
+      parameters: [
+        {
+          in: "body", name: "data", schema: {
+          "required": [
+            "content",
+          ],
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "text of post"
+            },
+            "video": {
+              "type": "string",
+              "description": "youtube link"
+            },
+            "link": {
+              "type": "string",
+              "description": "link for preview"
+            },
+            "attachment": {
+              "type": "array",
+              "description": "attachment ids",
+              "items": {type: "string"}
+            }
+
+          }
+        }
+        }
+      ],
+      responses: {
+        '201': {
+          description: 'Created post'
+        }
+      }
+    }
+  }
+  },
+  {
+    method: "GET", path: "/news", target: {
+    controller: "PostController", action: "index", swagger: {
+      methods: ['GET'],
+      summary: 'newsfeed ',
+      description: 'newsfeed',
+      tags: [
+        'Post'
+      ],
+      responses: {
+        '200': {
+          description: 'newsfeed'
+        }
+      }
+    }
+  }
+  },
+
+  {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
+  // {method: "GET", path: "/image/:imgName", target: "ImgController.getPhoto"}
 ];
 
 var prefix = "/api/v1";
@@ -389,5 +482,6 @@ for (var key in routes) {
 routeObject["GET /admin/login"] = "AdminController.login";
 routeObject["POST /admin/login"] = "AdminController.login";
 routeObject["GET /activate"] = "SignUpController.activate";
+routeObject["GET /image/:imgName"] = "ImgController.getPhoto";
 
 module.exports.routes = routeObject;
