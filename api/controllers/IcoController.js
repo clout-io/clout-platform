@@ -13,7 +13,7 @@ module.exports = {
     var perPage = req.query.per_page || 20;
     var currentPage = req.query.page || 1;
     var conditions = {};
-    pager.paginate(Ico, conditions, currentPage, perPage, [], 'name ASC').then(function (records) {
+    pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"], 'name ASC').then(function (records) {
       res.json(records)
     }).catch(function (err) {
       res.send(err)
@@ -99,6 +99,65 @@ module.exports = {
     )
 
 
+  },
+  sync: function (req, res) {
+    var type = req.param("type");
+    CoinhillsAPI.getICOs(type).then(function (response) {
+      var data = response.data;
+      async.map(data, function (item, cb) {
+        var members = item.members;
+        var links = item.links;
+        delete item.members;
+        delete item.links;
+        delete item.id;
+        item.status = type;
+
+        async.waterfall([
+          function (callback) {
+            Ico.findOrCreate({slug: item.slug}, item).then(function (ico) {
+              callback(null, ico);
+            }).catch(function (err) {
+              callback(err)
+            })
+          },
+          function (ico, callback) {
+            IcoSocial.findOrCreate(links, links).then(function (created) {
+              callback(null, ico, created)
+            }).catch(function (err) {
+              cb(err)
+            })
+          },
+          function (ico, links, callback) {
+            if (members.length) {
+              IcoTeam.findOrCreate(members, members).then(function (created) {
+                callback(null, ico, links, created)
+              }).catch(function (err) {
+                cb(err)
+              })
+            } else {
+              callback(null, ico, links, [])
+            }
+          },
+          function (ico, links, member, callback) {
+            ico.socials.add(links);
+            ico.team.add(member);
+            ico.status = type;
+            ico.save(function (err, r) {
+              callback(null, ico)
+            })
+          }
+        ], function (err, result) {
+          cb(null, result)
+        });
+      }, function (err, finalRes) {
+        if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+        return res.json(finalRes)
+      });
+
+
+    }, function (err) {
+      return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+    })
   }
 
 };

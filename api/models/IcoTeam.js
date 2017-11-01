@@ -8,11 +8,9 @@
 module.exports = {
 
   attributes: {
-    position: {type: "string"},
+    role: {type: "string"},
     name: {type: "string"},
-    toString:function () {
-      return this.name;
-    }
+    link: {type: "string"}
   }
 };
 

@@ -48,7 +48,8 @@ module.exports.policies = {
   },
   'IcoController': {
     'index': true,
-    'info': true
+    'info': true,
+    'sync':true
   },
 
   'SwaggerController': {

@@ -469,7 +469,7 @@ var routes = [
   },
 
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
-  // {method: "GET", path: "/image/:imgName", target: "ImgController.getPhoto"}
+  {method: "GET", path: "/icos/sync/:type", target: "IcoController.sync"}
 ];
 
 var prefix = "/api/v1";

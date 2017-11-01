@@ -22,12 +22,16 @@ module.exports = {
     name: {
       type: "string"
     },
+    slug: {
+      type: "string",
+      unique: true
+    },
     description: {
       type: "string"
     },
     status: {
       type: "string",
-      enum: ["upcoming", "running", "finished"]
+      enum: ["upcoming", "ongoing", "closed"]
     },
     startDate: {
       type: "date"
