@@ -6,6 +6,7 @@
  */
 const util = require('util');
 const striptags = require('striptags');
+const extend = require('util')._extend;
 
 module.exports = {
   create: function (req, res) {
@@ -92,33 +93,43 @@ module.exports = {
 
     var ownerCriteria = {select: ['id', 'email']};
 
+    var userId = null;
+    if (req.user) {
+      userId = req.user.id;
+    }
+
     function _getChildren(searchComment, done) {
       try {
         var resCmd = searchComment;
-        Comment.find({parent: resCmd.id}).populate('owner', ownerCriteria).sort('updatedAt DESC').exec(function (err, childINodes) {
-          if (err) {
-            return done(err);
-          }
-          resCmd.child = childINodes;
-          async.each(resCmd.child, function (childINode, next) {
-            if (err) {
-              return next(err);
-            }
-            childINode.child = [];
-            _getChildren(childINode, function (err, childNodes) {
-              if (err) {
-                return next(err);
-              }
-              childINode.child.concat(childNodes);
-              return next();
-            });
-          }, function afterCheckingEachChildINode(err) {
+        Insights.get(resCmd.id, userId).then(function (data) {
+          extend(resCmd, data);
+          Comment.find({parent: resCmd.id}).populate('owner', ownerCriteria).sort('updatedAt DESC').exec(function (err, childINodes) {
             if (err) {
               return done(err);
             }
-            return done(undefined, resCmd);
+            resCmd.child = childINodes;
+            async.each(resCmd.child, function (childINode, next) {
+              if (err) {
+                return next(err);
+              }
+              childINode.child = [];
+              _getChildren(childINode, function (err, childNodes) {
+                if (err) {
+                  return next(err);
+                }
+                childINode.child.concat(childNodes);
+                return next();
+              });
+            }, function afterCheckingEachChildINode(err) {
+              if (err) {
+                return done(err);
+              }
+              return done(undefined, resCmd);
+            });
           });
-        });
+        }, function (err) {
+          return done(err);
+        })
       } catch (e) {
         return done(e);
       }

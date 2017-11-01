@@ -6,7 +6,7 @@
  */
 
 const pager = require('sails-pager');
-const extend = require('util')._extend
+const extend = require('util')._extend;
 
 module.exports = {
 
