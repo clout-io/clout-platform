@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-ico-item',
@@ -6,10 +6,17 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./ico-item.component.scss']
 })
 export class IcoItemComponent implements OnInit {
+  @Input() ico;
+  @Input() selectedId;
+  @Output() notify = new EventEmitter();
 
   constructor() { }
 
   ngOnInit() {
+  }
+
+  selectItem() {
+    this.notify.emit(this.ico.id);
   }
 
 }

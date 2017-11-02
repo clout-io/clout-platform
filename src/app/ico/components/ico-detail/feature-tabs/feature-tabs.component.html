@@ -1,15 +1,15 @@
 <div class="feature-tabs-component coin-tabs">
   <!-- Tab Nav -->
   <ul class="coin-tabs__links" role="tablist">
-    <li class="nav-item">
+    <!--<li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#project-details" role="tab">Project Details</a>
-    </li>
+    </li>-->
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#ico-details" role="tab">ICO Details</a>
+      <a class="nav-link active" data-toggle="tab" href="#ico-details" role="tab">ICO Details</a>
     </li>
-    <li class="nav-item">
+    <!--<li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#tech" role="tab">Tech</a>
-    </li>
+    </li>-->
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#team" role="tab">Team</a>
     </li>
@@ -17,7 +17,7 @@
 
   <!-- Tab panes -->
   <div class="tab-content coin-tabs__panes">
-    <div class="tab-pane active" id="project-details" role="tabpanel">
+    <!--<div class="tab-pane" id="project-details" role="tabpanel">
       <ul class="coin-details-list">
         <li>
           <span>Project Stage</span>
@@ -25,7 +25,7 @@
         </li>
         <li>
           <span>Primary Geography</span>
-          <span>Europe</span>
+          <span>{{icoData.country}}</span>
         </li>
         <li>
           <span>Features:</span>
@@ -45,18 +45,20 @@
           <span>Blocktix</span>
         </li>
       </ul>
-    </div>
-    <div class="tab-pane" id="ico-details" role="tabpanel">
+    </div>-->
+    <div class="tab-pane active" id="ico-details" role="tabpanel">
         <ul class="coin-details-list">
             <li>
               <span>ICO date:</span>
-              <span>Sep 22, 2017 – Oct 22, 2017</span>
+              <span>
+                {{icoData.startedW3c | date: 'MMM dd, yyyy'}} – {{icoData.endedW3c | date: 'MMM dd, yyyy'}}
+              </span>
             </li>
             <li>
               <span>Token Type:</span>
-              <span>App token</span>
+              <span>{{icoData.tokenTypeBlockchain}}</span>
             </li>
-            <li>
+           <!-- <li>
               <span>Token Technology:</span>
               <span>ERC20</span>
             </li>
@@ -67,12 +69,13 @@
             <li>
               <span>ICO Jurisdiction:</span>
               <span>Estonia</span>
-            </li>
+            </li>-->
             <li>
               <span>Tokens distribution:</span>
-              <span>Total token supply: 10,000,000 AVT</span>
+              <span>{{icoData.tokenSupplyAmount}}</span>
+              <!--<span>Total token supply: 10,000,000 AVT</span>-->
             </li>
-            <li>
+            <!--<li>
               <span>Token crowdsale supply:</span>
               <span>6,000,000 AVT (The pre-sale will be capped at 30%, e.g. 50% of the total crowdsale percentage).</span>
             </li>
@@ -87,10 +90,10 @@
             <li>
               <span>Team, advisors, and corporate partners:</span>
               <span>1,800,000 AVT</span>
-            </li>
+            </li>-->
           </ul>
       </div>
-      <div class="tab-pane" id="tech" role="tabpanel">
+      <!--<div class="tab-pane" id="tech" role="tabpanel">
         <ul class="coin-details-list">
           <li>
             <span>Technical details:</span>
@@ -119,14 +122,12 @@
             </span>
           </li>
         </ul>
-        </div>
+        </div>-->
         <div class="tab-pane" id="team" role="tabpanel">
             <ul class="coin-details-list">
-              <li>
-                <span>CEO:</span>
-                <span>
-                    CEO: Nick Smith
-                </span>
+              <li *ngFor="let team of icoData.team">
+                <span>{{team.role}}:</span>
+                <span>{{team.name}}</span>
               </li>
             </ul>
         </div>

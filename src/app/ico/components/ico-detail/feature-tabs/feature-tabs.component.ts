@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-feature-tabs',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./feature-tabs.component.scss']
 })
 export class FeatureTabsComponent implements OnInit {
+  @Input() icoData;
 
   constructor() { }
 

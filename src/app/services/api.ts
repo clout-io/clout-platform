@@ -17,6 +17,8 @@ export class ApiService {
   facebook_auth_url = 'api/v1/auth/facebook';
   altcoins = 'api/v1/altcoins';
   altcoin = 'api/v1/altcoin';
+  icos = 'api/v1/icos';
+  ico = 'api/v1/ico';
   like_url = 'api/v1/like';
   redirect_uri = window.location.hostname === 'localhost' ?
     'http://localhost:4200/social/facebook' : `${this.api_url}/social/facebook`;

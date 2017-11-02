@@ -1,3 +1,13 @@
-<p>
-  ico-item works!
-</p>
+<li class="coin-list-item">
+  <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico.id === selectedId}">
+    <div class="coin-list-item__img">
+      <img src="{{ico.image}}">
+    </div>
+    <div class="coin-list-item__content">
+      <strong>{{ico.name}}</strong>
+      <div class="coin-list-item__details">
+        {{ico.startedW3c  | date: 'MMM dd, yyyy'}} – {{ico.endedW3c | date: 'MMM dd, yyyy'}}
+      </div>
+    </div>
+  </a>
+</li>

@@ -994,38 +994,43 @@ ___________________________*/
     align-items: center;
   }
 
-  .icon_twitter {
-    background: #79CCF0;
+  .fa {
     font-size: 12px;
+  }
+
+  .fa-twitter {
+    background: #79CCF0;
     padding-top: 1px
   }
-  .icon_facebook {
+  .fa-facebook {
     background: #547BBD;
-    font-size: 12px;
   }
-  .icon_youtube {
+  .fa-youtube-play {
     background: #E9644B;
-    font-size: 8px;
   }
-  .icon_linkedin {
+  .fa-linkedin {
     background: #1385C8;
-    font-size: 10px;
   }
-  .icon_slack {
+  .fa-slack {
     background: #77D4B6;
-    font-size: 12px;
   }
-  .icon_github {
+  .fa-github-alt {
     background: #2F4556;
-    font-size: 11px;
   }
-  .icon_telegram {
+  .fa-telegram {
     background: #61A8DE;
-    font-size: 11px;
   }
-  .icon_bitcoin {
+  .fa-btc {
     background: #F7931A;
-    font-size: 12px;
+  }
+  .fa-reddit {
+    background: #FF4500;
+  }
+  .fa-google {
+    background: #4285F4;
+  }
+  .fa-dot-circle-o {
+    background: #547BBD;
   }
 }
 

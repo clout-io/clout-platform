@@ -1,5 +1,7 @@
 <div class="coin-details__share-links">
-  <a href="#" class="underline">https://ripple.com/</a>
-  <a href="#">Whitepaper</a>
-  <a href="#">Blog</a>
+  <span *ngFor="let social of socialList">
+    <a href="{{'http://'+social.url}}" [ngClass]="{'underline': social.network === 'homepage'}" target="_blank">
+      {{social.network === 'homepage' ? social.url : social.network}}
+    </a>
+  </span>
 </div>

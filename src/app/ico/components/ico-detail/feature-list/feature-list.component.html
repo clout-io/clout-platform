@@ -1,6 +1,6 @@
 <div class="coin-details">
   <ul class="coin-details-list">
-    <li>
+    <!--<li>
       <span>Project Stage:</span>
       <span>Useable Product</span>
     </li>
@@ -19,17 +19,17 @@
     <li>
       <span>Category:</span>
       <span>Service</span>
-    </li>
+    </li>-->
     <li>
         <span>Founded:</span>
-        <span>2017</span>
+        <span>{{icoData.startedW3c | date: 'yyyy'}}</span>
       </li>
   </ul>
   <div class="coin-details__share">
-    <app-social-networks></app-social-networks>
-    <app-links></app-links>
+    <app-social-networks *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-social-networks>
+    <app-links *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-links>
     <a href="#" class="coin-details__share-subscribe btn btn--primary-outline">
-      Subscribe
+      Follow
     </a>
   </div>
 </div>
