@@ -1,18 +1,7 @@
-<ul class="coin-list">
-  <app-ico-item *ngFor="let ico of icoList" [ico]="ico" [selectedId]="selectedId"
-                (notify)="selectedItem($event)">
-  </app-ico-item>
-  <!--<li class="coin-list-item">
-    <a href="javascript:void(0)">
-      <div class="coin-list-item__img">
-        <img src="https://cdn-images-1.medium.com/fit/c/120/120/1*bioDONakHSSgOxqCHthw3A.png">
-      </div>
-      <div class="coin-list-item__content">
-        <strong>Kin</strong>
-        <div class="coin-list-item__details">
-          Sep 22, 2017 – Oct 22, 2017
-        </div>
-      </div>
-    </a>
-  </li>-->
-</ul>
+<div id="altcoin-list-sticky">
+  <ul class="coin-list" id="altcoin-list-scroll" style="height: 90vh;">
+    <app-ico-item *ngFor="let ico of icoList" [ico]="ico"
+                  [selectedId]="selectedId" (notify)="onNotify($event)">
+    </app-ico-item>
+  </ul>
+</div>
