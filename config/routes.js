@@ -194,12 +194,12 @@ var routes = [
   },
   {
     method: "POST", path: "/follow/:id", target: {
-    controller: "AltcoinController", action: "follow", swagger: {
+    controller: "FollowController", action: "index", swagger: {
       methods: ['POST'],
       summary: 'History info about altcoin',
       description: 'History info about altcoin',
       tags: [
-        'Altcoins'
+        'Follow'
       ]
     }
   }

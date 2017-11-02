@@ -51,13 +51,16 @@ module.exports = {
       collection: 'Img',
       via: 'user'
     },
-
-
     followedAltcoins: {
       collection: 'Altcoin',
       via: 'user',
       through: 'follow'
 
+    },
+    followedIcos: {
+      collection: 'Ico',
+      via: 'user',
+      through: 'followedico'
     },
 
     likes: {

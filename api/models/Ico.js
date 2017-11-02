@@ -118,6 +118,11 @@ module.exports = {
     socials: {
       collection: "IcoSocial",
       via: 'id'
+    },
+    followByUsers:{
+      collection: 'user',
+      via: 'altcoin',
+      through: 'followedico'
     }
   }
 };

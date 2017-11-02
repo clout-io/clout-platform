@@ -12,20 +12,60 @@ module.exports = {
   index: function (req, res) {
     var perPage = req.query.per_page || 20;
     var currentPage = req.query.page || 1;
-    var conditions = {};
-    pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"], 'name ASC').then(function (records) {
-      res.json(records)
-    }).catch(function (err) {
-      res.send(err)
-    });
+
+    async.waterfall([
+        function (callback) {
+          if (req.user) {
+            User.findOne(req.user.id).populate('followedIcos', {select: "id"}).then(function (user) {
+              async.map(user.followedIcos, function (item, callback) {
+                callback(null, item.id)
+              }, function (err, results) {
+
+                Ico.find({id: results}).populateAll().then(function (icos) {
+                  var data = {
+                    ids: results,
+                    items: icos
+                  };
+                  callback(null, data);
+                }).catch(function (err) {
+                  callback(err)
+                })
+              });
+
+            }).catch(function (err) {
+              callback(err)
+            })
+          } else {
+            callback(null, {})
+          }
+        }
+      ],
+
+      function (err, result) {
+        if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+        var conditions = {};
+        if (result.ids) {
+          conditions.id = {"!": result.ids}
+        }
+
+        pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"], 'name ASC').then(function (records) {
+          var resultData = records;
+          if (currentPage === 1 && result.items) {
+            resultData.data = result.items.concat(resultData.data)
+          }
+          res.json(resultData)
+        }).catch(function (err) {
+          res.send(err)
+        });
+      })
   },
 
   info: function (req, res) {
-    var id = req.param("id");
+    var objectId = req.param("id");
 
     async.parallel(
       [function (callback) {
-        Ico.findOne({id: id}).populateAll().then(function (ico) {
+        Ico.findOne({id: objectId}).populateAll().then(function (ico) {
           callback(null, ico);
         }).catch(function (error) {
           callback(error);
@@ -33,14 +73,14 @@ module.exports = {
 
       },
         function (callback) {
-          Like.count({objectId: id}).populateAll().then(function (count) {
+          Like.count({objectId: objectId}).populateAll().then(function (count) {
             callback(null, count);
           }).catch(function (error) {
             callback(error);
           })
         },
         function (callback) {
-          Comment.count({root: id}).then(function (count) {
+          Comment.count({root: objectId}).then(function (count) {
             callback(null, count);
           }).catch(function (error) {
             callback(error);
@@ -50,7 +90,7 @@ module.exports = {
           if (!req.user) {
             callback(null, false);
           } else {
-            Like.count({objectId: id, owner: req.user.id}).then(function (count) {
+            Like.count({objectId: objectId, owner: req.user.id}).then(function (count) {
               callback(null, count > 0);
             }).catch(function (error) {
               callback(error);
@@ -58,7 +98,7 @@ module.exports = {
           }
         },
         function (callback) {
-          Votes.count(id).then(function (data) {
+          Votes.count(objectId).then(function (data) {
             callback(null, data)
           }, function (err) {
             callback(err)
@@ -68,7 +108,7 @@ module.exports = {
           if (!req.user) {
             callback(null, false);
           } else {
-            Vote.findOne({objectId: id, owner: req.user.id}).then(function (vote) {
+            Vote.findOne({objectId: objectId, owner: req.user.id}).then(function (vote) {
               if (vote) {
                 callback(null, vote.vote);
               } else {
@@ -77,6 +117,15 @@ module.exports = {
             }).catch(function (error) {
               callback(error);
             })
+          }
+        },
+        function (callback) {
+          if (req.user) {
+            FollowedIco.count({ico: objectId, user: req.user.id}).then(function (count) {
+              callback(null, count > 0)
+            })
+          } else {
+            callback(null, false);
           }
         }
       ],
@@ -89,11 +138,13 @@ module.exports = {
         var isLiked = result[3];
         var votes = result[4];
         var voted = result[5];
+        var isFollow = result[6] || false;
         ico.likes = count || 0;
         ico.comments = comments || 0;
         ico.isLiked = isLiked;
         ico.votes = votes;
         ico.voted = voted;
+        ico.isFollow = isFollow;
         res.json(ico);
       }
     )
