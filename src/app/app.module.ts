@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { IcoModule } from './ico/ico.module';
+import { FeedModule } from './feed/feed.module';
 import { AltcoinModule } from './altcoin/altcoin.module';
 import { AuthService, ApiService, ApiHelperService, BroadcastService, ModalService, CommentService } from './services';
 import { NumberSeparator } from './pipes';
@@ -27,6 +28,7 @@ import { AppComponent } from './app.component';
     CoreModule,
     AltcoinModule,
     IcoModule,
+    FeedModule,
     // base routing modules
     AppRoutingModule,
     HttpModule

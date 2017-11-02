@@ -1006,6 +1006,7 @@ ___________________________*/
   }
   .fa-facebook {
     background: #547BBD;
+    font-size: 12px;
   }
   .fa-youtube-play {
     background: #E9644B;
@@ -1433,7 +1434,7 @@ ___________________________*/
 .btn:focus {
   font-size: $font-size-default;
   height: 35px;
-  line-height: 37px;
+  line-height: 35px;
   color: $color-ac-white;
   text-align: center;
   display: inline-block;
@@ -1602,4 +1603,248 @@ ___________________________*/
       opacity: 1 !important;
     }
   }
+}
+
+
+
+/*
+Page Links
+___________________________*/
+.page-links {
+  text-align: center;
+  height: 75px;
+  margin: -25px 0;
+
+  a {
+    display: inline-block;
+    vertical-align: top;
+    height: 75px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 75px;
+    padding: 0 15px;
+    border-bottom: 2px solid transparent;
+    color: $color-ac-text;
+    margin: 0 8px;
+    text-decoration: none;
+
+
+    &:hover {
+
+    }
+  }
+
+  .active {
+    color: $color-ac-text-alt;
+    border-color: $color-ac-link;
+  }
+}
+
+
+
+/*
+Widget
+___________________________*/
+.widget {
+  background: #fff;
+  border: 1px solid $color-ac-border;
+  border-radius: 4px;
+  padding: 20px 30px;
+  margin-bottom: 30px;
+
+  &__title {
+    margin: 0 0 20px 0;
+    padding: 7px 0 25px 0;
+    font-size: 15px;
+    line-height: 17px;
+    color: $color-ac-text-alt;
+    border-bottom: 1px solid $color-ac-border;
+  }
+
+  img {
+    max-width: 100%;
+  }
+}
+
+
+/*
+Feed Layout
+___________________________*/
+.feed-content {
+  margin: 30px 0;
+
+  @media #{$tablet} {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-flow: row wrap;
+  }
+}
+
+.feed-main {
+
+  @media #{$tablet} {
+    flex: 0 0 100%;
+  }
+  @media #{$desktop-sm} {
+    padding: 0 30px;
+
+    flex: 0 0 51.46444%;
+    order: 2;
+  }
+}
+
+.feed-aside {
+
+  @media #{$tablet} {
+    flex: 0 0 48%;
+  }
+
+  @media #{$desktop-sm} {
+    flex: 0 0 24.26778%;
+  }
+
+
+  &:nth-of-type(1) {
+
+
+    @media #{$tablet} {
+
+    }
+
+    @media #{$desktop-sm} {
+      order: 1;
+    }
+  }
+
+  &:nth-of-type(2) {
+
+
+    @media #{$tablet} {
+
+    }
+
+    @media #{$desktop-sm} {
+      order: 3;
+    }
+  }
+}
+
+
+/*
+Add post
+___________________________*/
+.add-post {
+  background: #fff;
+  border: 1px solid $color-ac-border;
+  border-radius: 4px;
+  padding: 26px 30px 15px 30px;
+  margin-bottom: 30px;
+
+  &__head {
+    display: flex;
+    justify-content: space-between;
+    box-shadow: inset 0 -1px 0 $color-ac-border;
+
+    a {
+      text-decoration: none;
+      color: $color-ac-text;
+      font-size: 15px;
+      line-height: 19px;
+      font-weight: 500;
+      position: relative;
+      border-bottom: 1px solid transparent;
+      text-align: center;
+      padding: 0 5px 24px 5px;
+
+      @media #{$phone-lg} {
+        padding: 0 5px 24px 28px;
+        text-align: left;
+      }
+
+      &:before {
+
+        @media #{$phone-lg} {
+          content: "";
+          display: block;
+          width: 18px;
+          height: 18px;
+          border-radius: 3px;
+          background: #EFEFEF;
+          position: absolute;
+          left: 0;
+          top: 0;
+        }
+      }
+    }
+
+    .active {
+      border-bottom: 1px solid $color-ac-link;
+    }
+  }
+
+  &__text {
+    margin-top: 35px;
+    outline: none;
+    color: $color-ac-text;
+
+    &:focus {
+      color: $color-ac-text-alt;
+    }
+  }
+
+  &__img {
+    margin-top: 18px;
+    display: flex;
+    justify-content: flex-start;
+    flex-flow: row wrap;
+  }
+
+
+
+  &__footer {
+    text-align: right;
+    border-top: 1px solid $color-ac-border;
+    padding: 15px 30px 0 30px;
+    margin: 20px -30px 0 -30px;
+
+    .btn {
+      width: 100px;
+    }
+  }
+}
+
+.upload-img {
+  width: 90px;
+  height: 90px;
+  display: block;
+  background: $color-ac-link;
+  background-size: cover;
+  background-position: center center;
+  margin-right: 15px;
+  position: relative;
+
+  a {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjczNDUuMTQ2IDMzMzQuMTQ2IDkuNzA3IDkuNzA3Ij4gIDxkZWZzPiAgICA8c3R5bGU+ICAgICAgLmNscy0xIHsgICAgICAgIGZpbGw6IG5vbmU7ICAgICAgICBzdHJva2U6ICNlZmVmZWY7ICAgICAgfSAgICA8L3N0eWxlPiAgPC9kZWZzPiAgPGcgaWQ9Ikdyb3VwXzEwMiIgZGF0YS1uYW1lPSJHcm91cCAxMDIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcxODAgMTY3MikiPiAgICA8bGluZSBpZD0iTGluZV8xNzUiIGRhdGEtbmFtZT0iTGluZSAxNzUiIGNsYXNzPSJjbHMtMSIgeDI9IjkiIHkyPSI5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjUuNSAxNjYyLjUpIi8+ICAgIDxsaW5lIGlkPSJMaW5lXzE3NiIgZGF0YS1uYW1lPSJMaW5lIDE3NiIgY2xhc3M9ImNscy0xIiB5MT0iOSIgeDI9IjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2NS41IDE2NjIuNSkiLz4gIDwvZz48L3N2Zz4=);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: 10px 10px;
+    display: block;
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+  }
+}
+
+.upload-new {
+  width: 90px;
+  height: 90px;
+  display: block;
+  border: 1px solid $color-ac-border;
+  background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ijc0MDQgMjk1NiA0MCA0MCI+ICA8ZGVmcz4gICAgPHN0eWxlPiAgICAgIC5jbHMtMSB7ICAgICAgICBmaWxsOiBub25lOyAgICAgICAgc3Ryb2tlOiAjZWZlZmVmOyAgICAgIH0gICAgPC9zdHlsZT4gIDwvZGVmcz4gIDxnIGlkPSJHcm91cF8xMDEiIGRhdGEtbmFtZT0iR3JvdXAgMTAxIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSg2ODM2LjUgMTU0Ny41KSI+ICAgIDxsaW5lIGlkPSJMaW5lXzE3MiIgZGF0YS1uYW1lPSJMaW5lIDE3MiIgY2xhc3M9ImNscy0xIiB5Mj0iNDAiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDU4Ni41IDE0MDguNSkiLz4gICAgPGxpbmUgaWQ9IkxpbmVfMTczIiBkYXRhLW5hbWU9IkxpbmUgMTczIiBjbGFzcz0iY2xzLTEiIHgyPSI0MCIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNTY3LjUgMTQyOC41KSIvPiAgPC9nPjwvc3ZnPg==);
+  background-size: 40px 40px;
+  background-position: center center;
+  background-repeat: no-repeat;
 }
