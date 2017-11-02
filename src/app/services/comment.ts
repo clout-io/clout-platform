@@ -20,6 +20,11 @@ export class CommentService {
       .map((res: any) => res);
   }
 
+  addComment(objectId, text): Observable<any> {
+    return this.api.post(`${this.path}/comment/${objectId}`, {text: text})
+      .map((res: any) => res);
+  }
+
   toggleLike(objectId): Observable<any> {
     return this.api.post(`${this.path}/like/${objectId}`, {objectId: objectId})
       .map((res: any) => res);

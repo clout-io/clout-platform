@@ -1222,7 +1222,7 @@ a.comments__add {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-bottom: 1px solid $color-ac-border;
+    // border-bottom: 1px solid $color-ac-border;
     padding: 15px 0 14px 0;
 
     span {
@@ -1234,6 +1234,10 @@ a.comments__add {
       color: $color-ac-text;
       margin-left: 10px;
     }
+
+    i {
+      vertical-align: top;
+    }
   }
 
   &__body {
@@ -1242,8 +1246,8 @@ a.comments__add {
     align-items: flex-start;
 
     padding: 20px 0 19px 0;
-    margin: 0 0 22px 0;
-    border-bottom: 1px solid $color-ac-border;
+    margin: 0;
+    border-top: 1px solid $color-ac-border;
   }
 
   &__img {
@@ -1267,11 +1271,23 @@ a.comments__add {
     p {
       margin: 0;
     }
+
+    .comments__add {
+      margin-top: 18px;
+      padding-bottom: 2px;
+    }
   }
 
   &__add {
     text-decoration: none;
     color: $color-ac-text;
+
+    display: block;
+    width: 100%;
+    border: 0;
+    border-top: 1px solid $color-ac-border;
+    outline: none;
+    padding: 20px 0 2px 0;
   }
 
   &__time {
@@ -1282,6 +1298,10 @@ a.comments__add {
     a {
       color: $color-ac-text;
       text-decoration: none;
+    }
+
+    i {
+      vertical-align: top;
     }
 
     span {
@@ -1296,6 +1316,85 @@ a.comments__add {
           margin-left: 10px;
         }
       }
+    }
+  }
+
+  &__reply {
+    // flex: 0 0 100%;
+    padding-left: 55px;
+  }
+}
+
+
+
+.single-post {
+  padding-bottom: 9px;
+  margin-bottom: 30px;
+
+  &__text {
+    border-bottom: 1px solid $color-ac-border;
+    padding: 19px 0 18px 0;
+  }
+
+  .comments__head {
+    flex-flow: column nowrap;
+    align-items: flex-start;
+    padding: 20px 0 19px 0;
+
+    @media #{$phone-lg} {
+      flex-flow: row nowrap;
+    }
+
+    a {
+      margin-right: 10px;
+
+      @media #{$phone-lg} {
+        margin-right: 0;
+        margin-left: 10px;
+      }
+    }
+
+    div {
+      padding: 10px 0;
+
+      @media #{$phone-lg} {
+        padding: 0;
+      }
+    }
+  }
+
+  .comments__body {
+    border-top: 0;
+    border-bottom: 1px solid $color-ac-border;
+    padding: 19px 0 18px 0;
+
+    flex-flow: row wrap;
+
+    @media #{$phone-lg} {
+      flex-flow: row nowrap;
+    }
+  }
+
+  .comments__time {
+    padding-left: 55px;
+    flex: 0 0 100%;
+
+    @media #{$phone-lg} {
+      padding: 0;
+      flex: 0 0 auto;
+      align-self: center;
+    }
+  }
+
+  > .comments__add {
+    margin-bottom: 13px;
+  }
+
+   &__comments {
+
+    .comments__body {
+      border-top: 1px solid $color-ac-border;
+      border-bottom: 0;
     }
   }
 }

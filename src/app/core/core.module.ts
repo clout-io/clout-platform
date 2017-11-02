@@ -20,6 +20,9 @@ import {
   ModalComponent,
   CommentListComponent
 } from './components';
+import {
+  CommentItemComponent
+} from './components/comment-list/components';
 
 @NgModule({
   imports: [
@@ -39,7 +42,8 @@ import {
     ResetInputBtnComponent,
     FacebookAuthBtnComponent,
     ModalComponent,
-    CommentListComponent
+    CommentListComponent,
+    CommentItemComponent
   ],
   exports: [CommentListComponent]
 })

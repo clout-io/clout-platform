@@ -1,7 +1,7 @@
 <div class="comments">
   <div class="comments__head">
     <div>
-      <span (click)="onToggleLike()"><i class="icon icon_fav"  [ngClass]="{'icon_active': item?.isLiked}"></i> {{item?.likes || 0}}</span>
+      <span (click)="onToggleLike(item?.id)"><i class="icon icon_fav"  [ngClass]="{'icon_active': item?.isLiked}"></i> {{item?.likes || 0}}</span>
       <span><i class="icon icon_quote"></i> {{item?.comments || 0}}</span>
     </div>
     <div>
@@ -11,24 +11,6 @@
         <i class="icon icon_thumb-dn" [ngClass]="{'icon_active': item?.voted == '-'}"></i> {{item?.votes?.downvote || 0}}</a>
     </div>
   </div>
-  <div class="comments__body" *ngFor="let comment of comments">
-    <div class="comments__img"
-         style="background-image: url('http://cdn.cavemancircus.com//wp-content/uploads/images/2017/jan/rachel_cook/rachel_cook_6.jpg')"></div>
-    <div class="comments__details">
-      <strong>{{comment?.owner?.email}}</strong>
-      <p>
-        {{comment?.text}}
-      </p>
-      <div class="comments__time">
-        <span>
-          3 hours ago
-          <a href="javascript:void(0)">Answer</a>
-        </span>
-        <a href="#">
-          <i class="icon icon_fav"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-  <a href="javascript:void(0)" class="comments__add">Add comment</a>
+  <app-comment-item *ngFor="let comment of comments" [item]="comment" [level]="level"></app-comment-item>
+  <input #textcomment type="text" (keyup.enter)="addComment(textcomment.value); textcomment.value=''; textcomment.blur();" class="comments__add" placeholder="Add comment">
 </div>

@@ -1,18 +1,30 @@
-import { Component, OnInit, OnChanges, Input, SimpleChanges} from '@angular/core';
-import { CommentService } from '../../../services';
+import { Component, OnInit, OnChanges, Input, SimpleChanges, OnDestroy } from '@angular/core';
+import { CommentService, BroadcastService } from '../../../services';
 
 @Component({
   selector: 'app-comment-list',
   templateUrl: './comment-list.component.html',
-  styleUrls: ['./comment-item.component.scss']
+  styleUrls: ['./comment-list.component.scss']
 })
-export class CommentListComponent implements OnInit, OnChanges {
+export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() item;
   comments: any;
+  subscription: any;
+  level: number = 1;
 
-  constructor(private service: CommentService) { }
+  constructor(private service: CommentService, private broadcastService: BroadcastService) { }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.subscription = this.broadcastService.subscribe(
+      'commentsCount', (count) => {
+        this.loadComments(this.item.id);
+        this.item.comments = count ? count : this.item.comments;
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     const {item} = changes;
@@ -24,8 +36,11 @@ export class CommentListComponent implements OnInit, OnChanges {
     }
   }
 
-  onToggleLike() {
-    this.service.toggleLike(this.item.id)
+  onToggleLike(id) {
+    if (!id)
+      return false;
+
+    this.service.toggleLike(id)
       .subscribe(
         response => {
           const { count, like } = response;
@@ -59,5 +74,14 @@ export class CommentListComponent implements OnInit, OnChanges {
           this.comments = response;
         }
       )
+  }
+
+  addComment(text) {
+    this.service.addComment(this.item.id, text).subscribe(
+      response => {
+        this.loadComments(this.item.id);
+        this.item.comments = response.count;
+      }
+    )
   }
 }
