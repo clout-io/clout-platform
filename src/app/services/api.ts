@@ -73,6 +73,7 @@ export class ApiService {
       this.broadcastService.broadcast('error', this.SERVER_ERROR);
     }
     if (err.status == 401) {
+      this.deactivate();
       this.broadcastService.broadcast('showPopup', 'popupCheckAccess');
     }
 

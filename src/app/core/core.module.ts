@@ -45,6 +45,6 @@ import {
     CommentListComponent,
     CommentItemComponent
   ],
-  exports: [CommentListComponent]
+  exports: [CommentListComponent, ModalComponent]
 })
 export class CoreModule { }
