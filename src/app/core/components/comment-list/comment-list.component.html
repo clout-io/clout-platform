@@ -1,7 +1,7 @@
 <div class="comments">
   <div class="comments__head">
     <div>
-      <span (click)="onToggleLike(item?.id)"><i class="icon icon_fav"  [ngClass]="{'icon_active': item?.isLiked}"></i> {{item?.likes || 0}}</span>
+      <a href="javascript:void(0)" (click)="onToggleLike(item?.id)"><i class="icon icon_fav"  [ngClass]="{'icon_active': item?.isLiked}"></i> {{item?.likes || 0}}</a>
       <span><i class="icon icon_quote"></i> {{item?.comments || 0}}</span>
     </div>
     <div>

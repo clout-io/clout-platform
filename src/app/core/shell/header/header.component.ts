@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.currentUrl = this.router.url === '/altcoins' ? 'Altcoins' : 'ICOs';
+    this.currentUrl = this.router.url === '/allcoins' ? 'Allcoins' : 'ICOs';
   }
 
   logout(event) {

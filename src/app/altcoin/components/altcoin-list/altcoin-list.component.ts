@@ -55,7 +55,7 @@ export class AltcoinListComponent implements OnInit, AfterViewInit {
     const me = this;
 
     if (window.matchMedia("(min-width: 768px)").matches) {
-      $('#altcoin-list-sticky').sticky({ topSpacing: 20, bottomSpacing: 0 });
+      $('#altcoin-list-sticky').sticky({ topSpacing: 0, bottomSpacing: 31 });
     } else {
       $('#altcoin-list-sticky').unstick();
     }

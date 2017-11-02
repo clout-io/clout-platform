@@ -676,6 +676,7 @@ ___________________________*/
 
   @media #{$tablet} {
     margin: 0;
+    height: 100vh;
   }
 }
 
@@ -988,6 +989,7 @@ ___________________________*/
     color: $color-ac-white;
     font-size: 12px;
     font-weight: 400;
+    text-decoration: none;
 
     display: flex;
     justify-content: center;
@@ -1230,14 +1232,28 @@ a.comments__add {
     // border-bottom: 1px solid $color-ac-border;
     padding: 15px 0 14px 0;
 
-    span {
-      margin-right: 10px;
-    }
-
     a {
       text-decoration: none;
       color: $color-ac-text;
-      margin-left: 10px;
+    }
+
+    div {
+
+      &:first-child {
+
+        a,
+        span {
+          margin-left: 0;
+          margin-right: 10px;
+        }
+      }
+
+      &:last-child {
+
+        a {
+          margin-left: 10px;
+        }
+      }
     }
 
     i {
@@ -1543,5 +1559,44 @@ ___________________________*/
 .modal {
   &.open {
     display: block;
+  }
+}
+
+
+
+/*
+Custom Scroll
+___________________________*/
+.mCSB_inside {
+
+  > .mCSB_container {
+    margin-right: 0;
+  }
+}
+
+.mCSB_scrollTools {
+  opacity: 1;
+  right: -8px;
+
+  .mCSB_draggerRail {
+    background: $color-ac-border-1;
+  }
+
+  .mCSB_dragger {
+    margin-left: -2px;
+
+    &:hover {
+      opacity: 1 !important;
+
+      .mCSB_dragger_bar {
+        opacity: 1 !important;
+        background: $color-ac-link !important;
+      }
+    }
+
+    .mCSB_dragger_bar {
+      background: $color-ac-link !important;
+      opacity: 1 !important;
+    }
   }
 }
