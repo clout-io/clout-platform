@@ -49,7 +49,8 @@ module.exports.policies = {
   'IcoController': {
     'index': true,
     'info': true,
-    'sync':true
+    'sync': true,
+    'syncPhoto': true
   },
 
   'SwaggerController': {
@@ -62,6 +63,7 @@ module.exports.policies = {
     'list': true
   },
   'ImgController': {
-    'getPhoto': true
+    'getPhoto': true,
+    'getIcoPhoto': true
   }
 };

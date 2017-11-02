@@ -6,6 +6,7 @@
  */
 
 var pager = require('sails-pager');
+const util = require('util');
 
 module.exports = {
 
@@ -209,6 +210,39 @@ module.exports = {
     }, function (err) {
       return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
     })
+  },
+
+  syncPhoto: function (req, res) {
+    Ico.find().then(function (icos) {
+      async.map(icos, function (item, cb) {
+        if (!item.logoId) {
+          return cb(null, null);
+        }
+
+        var template = "https://www.coinhills.com/images/uploaded/ico/%s/%s/%s/%s/%s-s";
+        var lId = item.logoId;
+        var url = util.format(template, lId.slice(0, 2), lId.slice(2, 4), lId.slice(4, 6), lId.slice(6, 8), lId);
+        var path = sails.config.appPath + "/public/ico/" + item.slug + ".png";
+
+        File.download(url, path, function (data) {
+          item.image = "/image/ico/" + item.slug + ".png";
+
+          item.save(function (err) {
+            if (err) return res.json(400, err);
+            return cb(null, item);
+          })
+        });
+
+      }, function (err, result) {
+        if (err) return res.json(400, {});
+        return res.json(result)
+      })
+
+    }).catch(function (err) {
+      return res.json(400, err)
+    });
+
+
   }
 
 };

@@ -10,6 +10,24 @@ const SkipperDisk = require('skipper-disk');
 
 module.exports = {
 
+  getIcoPhoto:
+    function (req, res) {
+      var imageId = req.param("imgName");
+      if (!imageId) {
+        return res.notFound();
+      }
+
+
+      var fileAdapter = SkipperDisk();
+      var path = sails.config.appPath + "/public/ico/" + imageId;
+      res.set("Content-Type", "image/png");
+      fileAdapter.read(path)
+        .on('error', function (err) {
+          return res.notFound();
+        })
+        .pipe(res);
+    },
+
   getPhoto: function (req, res) {
     var imageId = req.param("imgName");
     req.validate({

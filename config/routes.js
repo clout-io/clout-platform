@@ -469,7 +469,8 @@ var routes = [
   },
 
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
-  {method: "GET", path: "/icos/sync/:type", target: "IcoController.sync"}
+  {method: "GET", path: "/icos/sync/:type", target: "IcoController.sync"},
+  {method: "GET", path: "/icos/syncphoto/", target: "IcoController.syncPhoto"}
 ];
 
 var prefix = "/api/v1";
@@ -482,6 +483,7 @@ for (var key in routes) {
 routeObject["GET /admin/login"] = "AdminController.login";
 routeObject["POST /admin/login"] = "AdminController.login";
 routeObject["GET /activate"] = "SignUpController.activate";
+routeObject["GET /image/ico/:imgName"] = "ImgController.getIcoPhoto";
 routeObject["GET /image/:imgName"] = "ImgController.getPhoto";
 
 module.exports.routes = routeObject;
