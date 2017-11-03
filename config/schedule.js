@@ -4,7 +4,7 @@
 module.exports.schedule = {
   tasks: {
     syncAltcoinHystory: {
-      cron: "0 */2 * * *",
+      cron: "*/2 * * * *",
       task: function () {
         Altcoin.findOne({history_sync: {not: true}}).exec(function (err, altcoin) {
           if (err) return err;
@@ -22,6 +22,7 @@ module.exports.schedule = {
                 market_cap_by_available_supply: data.market_cap_by_available_supply[key][1]
               }).exec(function createFindCB(error, createdOrFoundRecords) {
 
+
               })
             }
             altcoin.history_sync = true;
@@ -31,13 +32,31 @@ module.exports.schedule = {
       }
     },
     syncAltcoin: {
-      cron: "0 */1 * * *",
+      cron: "*/30 * * * *",
       task: function () {
+        var moment = require('moment');
+        var mmtMidnight = moment().clone().startOf('day');
+        var midnight = mmtMidnight.valueOf();
+        sails.log.debug("Start fetch data");
+
         CoinMarketCap.getTicker(function (err, data) {
-          for (var key in data) {
-            Altcoin.updateOrCreate({id: data[key].id}, data[key]).then(function createFindCB(createdOrFoundRecords) {
+          async.map(data, function (item, cb) {
+            Altcoin.updateOrCreate({id: item.id}, item).then(function createFindCB(createdOrFoundRecords) {
+              AltcoinPrice.updateOrCreate({timestamp: new String(midnight), altcoin: createdOrFoundRecords.id}, {
+                altcoin: createdOrFoundRecords.id,
+                timestamp: midnight,
+                price_btc: item.price_btc,
+                price_usd: item.price_usd,
+                market_cap_by_available_supply: item.total_supply,
+                "24h_volume_usd": item["24h_volume_usd"]
+              }).then(function createFindCB(rdata) {
+
+              });
             });
-          }
+
+          }, function (err, result) {
+            console.log(err)
+          });
         })
       }
     }

@@ -6,6 +6,7 @@
  */
 
 var pager = require('sails-pager');
+var moment = require('moment');
 
 module.exports = {
 
@@ -152,16 +153,32 @@ module.exports = {
   },
 
   sync: function (req, res) {
-    CoinMarketCap.getTicker(function (err, data) {
-      for (var key in data) {
-        Altcoin.findOrCreate({id: data[key].id}, data[key]).exec(
-          function createFindCB(error, createdOrFoundRecords) {
-          });
-      }
-      return res.json(data)
 
+    var mmtMidnight = moment().clone().startOf('day');
+    var midnight = mmtMidnight.valueOf();
+
+    CoinMarketCap.getTicker(function (err, data) {
+      if (err) res.json(400, err)
+      async.map(data, function (item, cb) {
+        Altcoin.updateOrCreate({id: item.id}, item).then(function createFindCB(createdOrFoundRecords) {
+          AltcoinPrice.updateOrCreate({timestamp: new String(midnight), altcoin: createdOrFoundRecords.id}, {
+            altcoin: createdOrFoundRecords.id,
+            timestamp: midnight,
+            price_btc: item.price_btc,
+            price_usd: item.price_usd,
+            market_cap_by_available_supply: item.total_supply,
+            "24h_volume_usd": item["24h_volume_usd"]
+          }).then(function createFindCB(rdata) {
+
+          });
+        });
+
+      }, function (err, result) {
+        if (err) res.json(400, err);
+        res.json(result)
+      });
     })
-  },
+  }
 
 
 };
