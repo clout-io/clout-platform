@@ -65,5 +65,8 @@ module.exports.policies = {
   'ImgController': {
     'getPhoto': true,
     'getIcoPhoto': true
+  },
+  'PostController': {
+    'index': true
   }
 };
