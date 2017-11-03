@@ -33,7 +33,7 @@ export class FeedListComponent implements OnInit, OnDestroy {
 
     this.feedService.getFeeds(this.meta)
     .subscribe(responce => {
-      if (responce.meta.nextPage) {
+      if (responce.page === 1 || responce.meta.nextPage) {
         this.meta = responce.meta;
         responce.data.map((item) => {
           this.feeds.push(item);
