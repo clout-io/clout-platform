@@ -196,21 +196,17 @@ module.exports = {
 
       if (!objectIsExist) return res.json(404, Errors.build({"message": "object not found."}, Errors.ERROR_NOT_FOUND));
 
-      Comment.find({objectId: objectId}).populate('owner', ownerCriteria).sort('createdAt DESC').then(function (comments) {
-        var finalResult = [];
-        async.each(comments, function (comment, nextParent) {
+      Comment.find({objectId: objectId}).populate('owner', ownerCriteria).sort('updatedAt DESC').then(function (comments) {
+        async.map(comments, function (comment, cb) {
           _getChildren(comment, function afterwards(err, result) {
             if (err) {
-              return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+              cb(err)
             }
-            finalResult.push(result);
-            nextParent()
+            cb(null, result)
           });
-        }, function afterCheckingEachChildINode(err) {
-          return res.json(finalResult)
+        }, function afterCheckingEachChildINode(err, result) {
+          return res.json(result)
         });
-
-
       }).catch(function (err) {
         return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
       })
