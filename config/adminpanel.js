@@ -140,6 +140,10 @@ module.exports.adminpanel = {
     Comments: {
       title: 'Comments',
       model: 'Comment'
+    },
+    Img: {
+      title: 'Images',
+      model: 'Img'
     }
   }
 };
