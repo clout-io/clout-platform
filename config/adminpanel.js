@@ -144,6 +144,10 @@ module.exports.adminpanel = {
     Img: {
       title: 'Images',
       model: 'Img'
+    },
+    Posts: {
+      title: 'Posts',
+      model: 'Post'
     }
   }
 };
