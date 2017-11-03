@@ -32,7 +32,7 @@ module.exports.schedule = {
     //   }
     // },
     syncAltcoin: {
-      cron: "*/30 * * * *",
+      cron: "0 */4 * * *",
       task: function () {
         var moment = require('moment');
         var mmtMidnight = moment().clone().startOf('day');
