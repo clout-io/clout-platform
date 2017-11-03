@@ -48,8 +48,12 @@ module.exports = {
       if (err) {
         return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
       }
+      var object = null;
 
       var objectIsExist = results.some(function (element, index, array) {
+        if (!util.isNullOrUndefined(element)) {
+          object = element;
+        }
         return !util.isNullOrUndefined(element);
       });
 
@@ -71,19 +75,47 @@ module.exports = {
         createData.root = objectId;
       }
 
-      Comment.create(createData).then(function (comment) {
-        Comment.count(
-          {root: rootNode}
-        ).then(function (count) {
-          return res.json(
-            {comment: comment, count: count}
-          )
-        }).catch(function (err) {
-          return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-        })
-      }).catch(function (err) {
-        return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-      })
+      async.waterfall([
+          function (cb) {
+            Comment.create(createData).then(function (comment) {
+              cb(null, comment);
+            }).catch(function (err) {
+              cb(err);
+            })
+
+          },
+          function (comment, cb) {
+            CLC.calc(objectId).then(function (result) {
+              cb(null, result, comment)
+            }).catch(function (err) {
+              cb(err);
+            })
+          },
+          function (clcData, comment, cb) {
+            extend(object, clcData);
+            object.save(function (err) {
+              if (err) cb(err);
+              cb(null, comment, clcData)
+            })
+
+          },
+          function (comment, clcData, cb) {
+            Comment.count(
+              {root: rootNode}
+            ).then(function (count) {
+              var result = {comment: comment, count: count};
+              extend(result, clcData);
+              cb(null, result)
+            }, function (err) {
+              cb(err)
+            });
+          }
+        ],
+        function (err, result) {
+          if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+          return res.json(result);
+        }
+      );
     });
   },
 
@@ -103,7 +135,7 @@ module.exports = {
         var resCmd = searchComment;
         Insights.get(resCmd.id, userId).then(function (data) {
           extend(resCmd, data);
-          Comment.find({parent: resCmd.id}).populate('owner', ownerCriteria).sort('updatedAt DESC').exec(function (err, childINodes) {
+          Comment.find({parent: resCmd.id}).populate('owner', ownerCriteria).sort('createdAt DESC').exec(function (err, childINodes) {
             if (err) {
               return done(err);
             }
@@ -164,7 +196,7 @@ module.exports = {
 
       if (!objectIsExist) return res.json(404, Errors.build({"message": "object not found."}, Errors.ERROR_NOT_FOUND));
 
-      Comment.find({objectId: objectId}).populate('owner', ownerCriteria).sort('updatedAt DESC').then(function (comments) {
+      Comment.find({objectId: objectId}).populate('owner', ownerCriteria).sort('createdAt DESC').then(function (comments) {
         var finalResult = [];
         async.each(comments, function (comment, nextParent) {
           _getChildren(comment, function afterwards(err, result) {

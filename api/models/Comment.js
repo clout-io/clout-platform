@@ -41,6 +41,10 @@ module.exports = {
     owner: {
       model: "user",
       required: true
+    },
+    clc: {
+      type: "integer",
+      defaultsTo: 0
     }
 
   }

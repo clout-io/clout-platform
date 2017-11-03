@@ -6,6 +6,7 @@
  */
 
 const util = require('util');
+const extend = require('util')._extend;
 
 module.exports = {
 
@@ -52,17 +53,49 @@ module.exports = {
           return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
         }
 
+        var object = null;
+
         var objectIsExist = results.some(function (element, index, array) {
+          if (!util.isNullOrUndefined(element)) {
+            object = element;
+          }
           return !util.isNullOrUndefined(element);
         });
 
         if (!objectIsExist) return res.json(404, Errors.build({"message": "object not found."}, Errors.ERROR_NOT_FOUND));
 
-        Votes.give(userId, objectId, vote).then(function (data) {
-          return res.json(data);
-        }, function (err) {
-          return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-        })
+
+        async.waterfall([
+            function (cb) {
+              Votes.give(userId, objectId, vote).then(function (data) {
+                cb(null, data);
+              }, function (err) {
+                cb(err);
+              })
+            },
+            function (voteData, cb) {
+              CLC.calc(objectId).then(function (clcData) {
+                cb(null, clcData, voteData)
+              }).catch(function (err) {
+                cb(err);
+              })
+            },
+            function (clcData, voteData, cb) {
+              extend(object, clcData);
+              extend(voteData, clcData);
+              object.save(function (err) {
+                if (err) cb(err);
+                cb(null, voteData)
+              })
+
+            }
+          ],
+          function (err, result) {
+            if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+            return res.json(result);
+          }
+        );
+
 
       });
     });
