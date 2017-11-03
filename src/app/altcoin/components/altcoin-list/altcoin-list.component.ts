@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import { ApiService, BroadcastService } from '../../../services';
 declare const $: any;
 
@@ -7,7 +7,8 @@ declare const $: any;
   templateUrl: './altcoin-list.component.html',
   styleUrls: ['./altcoin-list.component.scss']
 })
-export class AltcoinListComponent implements OnInit, AfterViewInit {
+export class AltcoinListComponent implements OnInit, OnDestroy, AfterViewInit {
+  private follow$;
   public url = '../../../assets/coin-img.png';
   public altcoinList;
   public selectedId: string;
@@ -18,6 +19,15 @@ export class AltcoinListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadCoinList(true);
+
+    this.follow$ = this.broadcastService.subscribe('follow', coin => {
+      coin.isFollow = !coin.isFollow;
+      const index = this.altcoinList.findIndex(item => item.id === coin.id);
+      if (coin.isFollow && index > 0) {
+        const followedElement = this.altcoinList.splice(index, 1);
+        this.altcoinList.unshift(...followedElement);
+      }
+    });
   }
 
   loadCoinList(isFirst = false) {
@@ -75,5 +85,9 @@ export class AltcoinListComponent implements OnInit, AfterViewInit {
         scrollTop: 0
       }, 1000);
     }, 0);
+  }
+
+  ngOnDestroy(): void {
+    this.follow$.unsubscribe();
   }
 }

@@ -32,8 +32,6 @@
   <div class="coin-details__share">
     <app-social-networks *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-social-networks>
     <app-links *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-links>
-    <a href="#" class="coin-details__share-subscribe btn btn--primary-outline">
-      Follow
-    </a>
+    <app-follow-btn [coin]="icoData"></app-follow-btn>
   </div>
 </div>

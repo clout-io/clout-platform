@@ -9,7 +9,15 @@ import { CoreModule } from './core/core.module';
 import { IcoModule } from './ico/ico.module';
 import { FeedModule } from './feed/feed.module';
 import { AltcoinModule } from './altcoin/altcoin.module';
-import { AuthService, ApiService, ApiHelperService, BroadcastService, ModalService, CommentService } from './services';
+import {
+  AuthService,
+  ApiService,
+  ApiHelperService,
+  BroadcastService,
+  ModalService,
+  CommentService,
+  FollowService
+} from './services';
 import { NumberSeparator } from './pipes';
 import { HttpModule } from '@angular/http';
 
@@ -33,7 +41,16 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     HttpModule
   ],
-  providers: [AuthService, ApiService, ApiHelperService, BroadcastService, NumberSeparator, ModalService, CommentService],
+  providers: [
+    AuthService,
+    ApiService,
+    ApiHelperService,
+    BroadcastService,
+    NumberSeparator,
+    ModalService,
+    CommentService,
+    FollowService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

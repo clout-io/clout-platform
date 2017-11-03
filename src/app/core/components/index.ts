@@ -6,3 +6,4 @@ export * from './reset-input-btn';
 export * from './facebook-auth-btn';
 export * from './modal';
 export * from './comment-list';
+export * from './follow-btn/follow-btn.component';

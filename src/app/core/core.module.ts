@@ -18,7 +18,8 @@ import {
   ResetInputBtnComponent,
   FacebookAuthBtnComponent,
   ModalComponent,
-  CommentListComponent
+  CommentListComponent,
+  FollowBtnComponent
 } from './components';
 import {
   CommentItemComponent
@@ -43,8 +44,9 @@ import {
     FacebookAuthBtnComponent,
     ModalComponent,
     CommentListComponent,
-    CommentItemComponent
+    CommentItemComponent,
+    FollowBtnComponent
   ],
-  exports: [CommentListComponent, ModalComponent]
+  exports: [CommentListComponent, ModalComponent, FollowBtnComponent]
 })
 export class CoreModule { }
