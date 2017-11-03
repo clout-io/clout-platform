@@ -10,9 +10,12 @@
     {{date}}
     <a href="javascript:void(0)" *ngIf="!isAnswer && level <= maxLevel" (click)="showAnswer()">Answer</a>
   </span>
-      <a href="javascript:void(0)" (click)="onToggleLike(item?.id)">
-        <i [ngClass]="{'icon_active': item?.isLiked}" class="icon icon_fav"></i> {{item?.likes > 0 ? item?.likes : ''}}
-      </a>
+      <div>
+        {{item?.clc ? item?.clc + ' CLC' : ''}}&nbsp;
+        <a href="javascript:void(0)" (click)="onToggleLike(item?.id)">
+          <i [ngClass]="{'icon_active': item?.isLiked}" class="icon icon_fav"></i> {{item?.likes > 0 ? item?.likes : ''}}
+        </a>
+      </div>
     </div>
     <input *ngIf="isAnswer" (blur)="hideAnswer()" #textcomment type="text" (keyup.enter)="addComment(textcomment.value); textcomment.value=''; textcomment.blur();"
       class="comments__add" placeholder="Add comment">

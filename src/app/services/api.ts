@@ -3,6 +3,7 @@ import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
 import 'rxjs/add/observable/throw';
+import 'rxjs/add/operator/toPromise';
 import { Router } from '@angular/router';
 import { ApiHelperService } from './apiHelper';
 import { BroadcastService } from './broadcastService';
@@ -54,6 +55,15 @@ export class ApiService {
       JSON.stringify(body),
       {headers: this.headers}
       )
+      .map(this.checkForError)
+      .catch(this.showError)
+      .map(this.getJson);
+  }
+
+  image(path: string, formData: FormData ): Observable<any> {
+    const headers = this.headers;
+    headers.delete('Content-Type');
+    return this.http.post(`${this.api_url}${path}`, formData, {headers: headers})
       .map(this.checkForError)
       .catch(this.showError)
       .map(this.getJson);

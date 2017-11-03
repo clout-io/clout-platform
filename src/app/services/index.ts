@@ -5,4 +5,5 @@ export { BroadcastService } from './broadcastService';
 export { ModalService } from './modalService';
 export { CommentService } from './comment';
 export { FollowService } from './follow';
+export { FeedService } from './feed';
 

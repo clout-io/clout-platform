@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
 import { CommentService, BroadcastService } from '../../../../../services';
-import * as moment from 'moment'
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-comment-item',

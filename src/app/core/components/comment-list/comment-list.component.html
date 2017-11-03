@@ -1,8 +1,29 @@
-<div class="comments">
+<div *ngIf="type != 'feed'" class="comments">
   <div class="comments__head">
     <div>
       <a href="javascript:void(0)" (click)="onToggleLike(item?.id)"><i class="icon icon_fav"  [ngClass]="{'icon_active': item?.isLiked}"></i> {{item?.likes || 0}}</a>
       <span><i class="icon icon_quote"></i> {{item?.comments || 0}}</span>
+    </div>
+    <div>
+      <a href="javascript:void(0)" (click)="onVote('+')">
+        <i class="icon icon_thumb-up" [ngClass]="{'icon_active': item?.voted == '+'}"></i> {{item?.votes?.upvote || 0}}</a>
+      <a href="javascript:void(0)" (click)="onVote('-')">
+        <i class="icon icon_thumb-dn" [ngClass]="{'icon_active': item?.voted == '-'}"></i> {{item?.votes?.downvote || 0}}</a>
+    </div>
+  </div>
+  <app-comment-item *ngFor="let comment of comments" [item]="comment" [level]="level"></app-comment-item>
+  <input #textcomment type="text" (keyup.enter)="addComment(textcomment.value); textcomment.value=''; textcomment.blur();" class="comments__add" placeholder="Add comment">
+</div>
+
+
+<div *ngIf="type == 'feed'" class="single-post__comments">
+  <div class="comments__head">
+    <div>
+      <a href="javascript:void(0)" (click)="onToggleLike(item?.id)"><i class="icon icon_fav"  [ngClass]="{'icon_active': item?.isLiked}"></i> {{item?.likes || 0}}</a>
+      <span><i class="icon icon_quote"></i> {{item?.comments || 0}}</span>
+    </div>
+    <div>
+      {{item?.clc ? item?.clc + ' CLC' : ''}}
     </div>
     <div>
       <a href="javascript:void(0)" (click)="onVote('+')">

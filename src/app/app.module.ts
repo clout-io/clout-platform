@@ -16,8 +16,10 @@ import {
   BroadcastService,
   ModalService,
   CommentService,
-  FollowService
+  FollowService,
+  FeedService
 } from './services';
+
 import { NumberSeparator } from './pipes';
 import { HttpModule } from '@angular/http';
 
@@ -41,16 +43,7 @@ import { AppComponent } from './app.component';
     AppRoutingModule,
     HttpModule
   ],
-  providers: [
-    AuthService,
-    ApiService,
-    ApiHelperService,
-    BroadcastService,
-    NumberSeparator,
-    ModalService,
-    CommentService,
-    FollowService
-  ],
+  providers: [AuthService, ApiService, ApiHelperService, BroadcastService, NumberSeparator, ModalService, CommentService, FollowService, FeedService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

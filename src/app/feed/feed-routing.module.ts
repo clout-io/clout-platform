@@ -7,8 +7,8 @@ import { CoreRoute } from '../core/core.route';
 import { FeedComponent } from './feed.component';
 
 const routes: Routes = CoreRoute.withShell([
-  { path: '', redirectTo: '/feeds', pathMatch: 'full' },
-  { path: 'feeds', component: FeedComponent }
+  { path: '', redirectTo: '/news', pathMatch: 'full' },
+  { path: 'news', component: FeedComponent,  data: { title: 'News' } }
 ]);
 
 @NgModule({

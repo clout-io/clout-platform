@@ -8,6 +8,7 @@ import { CommentService, BroadcastService } from '../../../services';
 })
 export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() item;
+  @Input() type;
   comments: any;
   subscription: any;
   level: number = 1;

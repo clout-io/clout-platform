@@ -8,7 +8,7 @@ import { AltcoinComponent } from './altcoin.component';
 
 const routes: Routes = CoreRoute.withShell([
   { path: '', redirectTo: '/allcoins', pathMatch: 'full' },
-  { path: 'allcoins', component: AltcoinComponent },
+  { path: 'allcoins', component: AltcoinComponent, data: {title: 'Allcoins'} },
 ]);
 
 @NgModule({
