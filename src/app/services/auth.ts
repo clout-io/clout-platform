@@ -80,8 +80,8 @@ export class AuthService implements CanActivate {
         const authorizeUrl = data.url;
         const url = `${authorizeUrl}&redirect_uri=${this.api.redirect_uri}`;
         this.openDialog(url, 'auth window', 'width=640,height=480,resizable=1', () => {
-          console.log('authorized', this.isAuthorized());
           if (this.isAuthorized()) {
+            this.setToken(window.localStorage.getItem(this.JWT));
             this.router.navigateByUrl('/');
           }
         });
