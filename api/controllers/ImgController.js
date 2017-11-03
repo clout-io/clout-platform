@@ -79,15 +79,16 @@ module.exports = {
             cb(err)
           })
         }, function (err, result) {
+          if (err) callback(err);
           callback(null, result)
         });
 
 
       }
     ], function (err, result) {
+      if (err) return res.json(400, err);
       return res.json(result)
     })
-
 
   }
 
