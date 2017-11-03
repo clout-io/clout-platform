@@ -12,7 +12,7 @@ module.exports = {
 
   index: function (req, res) {
     var perPage = req.query.per_page || 20;
-    var currentPage = req.query.page || 1;
+    var currentPage = parseInt(req.query.page, 10) || 1;
 
     async.waterfall([
         function (callback) {

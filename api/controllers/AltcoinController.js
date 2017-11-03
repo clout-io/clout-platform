@@ -12,7 +12,7 @@ module.exports = {
   index: function (req, res) {
 
     var perPage = req.query.per_page || 20;
-    var currentPage = req.query.page || 1;
+    var currentPage = parseInt(req.query.page, 10) || 1;
 
     async.waterfall([
         function (callback) {
@@ -46,6 +46,7 @@ module.exports = {
         pager.paginate(Altcoin, conditions, currentPage, perPage, [], 'rank ASC').then(function (records) {
 
           var resultData = records;
+
           if (currentPage === 1 && result.items) {
             resultData.data = result.items.concat(resultData.data)
           }
