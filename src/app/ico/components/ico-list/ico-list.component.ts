@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { ApiService, BroadcastService } from '../../../services';
 declare const $: any;
@@ -8,7 +8,8 @@ declare const $: any;
   templateUrl: './ico-list.component.html',
   styleUrls: ['./ico-list.component.scss']
 })
-export class IcoListComponent implements OnInit, AfterViewInit {
+export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
+  private follow$;
   public icoList: Array<any>;
   public selectedId: string;
   private meta = {
@@ -21,6 +22,15 @@ export class IcoListComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.loadCoinList(true);
+
+    this.follow$ = this.broadcastService.subscribe('follow', coin => {
+      coin.isFollow = !coin.isFollow;
+      const index = this.icoList.findIndex(item => item.id === coin.id);
+      if (coin.isFollow && index > 0) {
+        const followedElement = this.icoList.splice(index, 1);
+        this.icoList.unshift(...followedElement);
+      }
+    });
   }
 
   loadCoinList(isFirst = false) {
@@ -79,5 +89,9 @@ export class IcoListComponent implements OnInit, AfterViewInit {
         scrollTop: 0
       }, 1000);
     }, 0);
+  }
+
+  ngOnDestroy(): void {
+    this.follow$.unsubscribe();
   }
 }
