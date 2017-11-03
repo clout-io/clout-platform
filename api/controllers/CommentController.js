@@ -135,7 +135,7 @@ module.exports = {
         var resCmd = searchComment;
         Insights.get(resCmd.id, userId).then(function (data) {
           extend(resCmd, data);
-          Comment.find({parent: resCmd.id}).populate('owner', ownerCriteria).sort('createdAt DESC').exec(function (err, childINodes) {
+          Comment.find({parent: resCmd.id}).populate('owner', ownerCriteria).sort('updatedAt DESC').exec(function (err, childINodes) {
             if (err) {
               return done(err);
             }
