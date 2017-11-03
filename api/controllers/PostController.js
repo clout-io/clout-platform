@@ -7,6 +7,7 @@
 
 const pager = require('sails-pager');
 const extend = require('util')._extend;
+const striptags = require('striptags');
 
 module.exports = {
 
@@ -45,6 +46,8 @@ module.exports = {
 
     var data = req.body;
     data.owner = req.user.id;
+
+    data.text = striptags(data.text);
 
     Post.create(data).then(function (post) {
       return res.json(post)
