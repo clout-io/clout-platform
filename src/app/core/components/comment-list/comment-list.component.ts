@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, Input, SimpleChanges, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnChanges, Input, SimpleChanges } from '@angular/core';
 import { CommentService, BroadcastService } from '../../../services';
 
 @Component({
@@ -6,26 +6,17 @@ import { CommentService, BroadcastService } from '../../../services';
   templateUrl: './comment-list.component.html',
   styleUrls: ['./comment-list.component.scss']
 })
-export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
+export class CommentListComponent implements OnInit, OnChanges {
   @Input() item;
   @Input() type;
+
   comments: any;
   subscription: any;
   level: number = 1;
 
   constructor(private service: CommentService, private broadcastService: BroadcastService) { }
 
-  ngOnInit() {
-    this.subscription = this.broadcastService.subscribe(
-      'commentsCount', (count) => {
-        this.loadComments(this.item.id);
-        this.item.comments = count ? count : this.item.comments;
-      });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
+  ngOnInit() {}
 
   ngOnChanges(changes: SimpleChanges) {
     const {item} = changes;
@@ -37,6 +28,12 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  onNotify(response) {
+    this.loadComments(this.item.id);
+    this.item.comments = response.count;
+    this.item.clc = response.clc ? response.clc : this.item.clc;
+  }
+
   onToggleLike(id) {
     if (!id)
       return false;
@@ -44,9 +41,10 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
     this.service.toggleLike(id)
       .subscribe(
         response => {
-          const { count, like } = response;
+          const { count, like, clc } = response;
           this.item.likes = count;
           this.item.isLiked = like ? true : false;
+          this.item.clc = clc;
         }
       )
   }
@@ -55,7 +53,8 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
     this.service.vote(this.item.id, vote)
       .subscribe(
         response => {
-          const { downvote, upvote } = response;
+          const { downvote, upvote, clc } = response;
+          this.item.clc = clc;
           this.item.votes = { downvote: downvote, upvote: upvote };
           this.item.voted = this.item.voted ?
             (this.item.voted === '+' && vote === '+' || this.item.voted === '-' && vote === '-' ?
@@ -82,6 +81,7 @@ export class CommentListComponent implements OnInit, OnChanges, OnDestroy {
       response => {
         this.loadComments(this.item.id);
         this.item.comments = response.count;
+        this.item.clc = response.clc;
       }
     )
   }

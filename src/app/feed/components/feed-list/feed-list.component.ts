@@ -7,15 +7,16 @@ import { FeedService, BroadcastService } from '../../../services';
   templateUrl: './feed-list.component.html'
 })
 export class FeedListComponent implements OnInit, OnDestroy {
-  public feeds;
+  public feeds = [];
   private subscription: any;
-  private meta = { nextPage: 1, perPage: 20 };
+  private meta = { nextPage: 1, perPage: 10 };
 
   constructor(private feedService: FeedService, private broadcastService: BroadcastService) { }
 
   ngOnInit() {
-    this.subscription = this.broadcastService.subscribe(
-      'updateNewsList', (response) => { this.loadFeedList(); });
+    this.subscription = this.broadcastService.subscribe('updateNewsList', (response) => {
+      this.loadFeedList(true)
+    });
 
     this.loadFeedList();
   }
@@ -24,27 +25,20 @@ export class FeedListComponent implements OnInit, OnDestroy {
     this.subscription.unsubscribe();
   }
 
-  loadFeedList() {
-    const { nextPage, perPage } = this.meta;
-    this.feedService.getFeeds()
-      .subscribe(responce => {
-        this.feeds = responce.data;
-    });
+  loadFeedList(forse = false) {
+    if (forse) {
+      this.feeds = [];
+      this.meta = { nextPage: 1, perPage: 10 };
+    }
 
-    // this.apiService.get(`/${this.apiService.altcoins}?page=${nextPage}&per_page=${perPage}`)
-    //   .subscribe(responce => {
-    //     if (isFirst) {
-    //       this.meta = responce.meta;
-    //       this.altcoinList = responce.data;
-    //       this.loadCoin(this.altcoinList[0]['id']);
-    //     } else {
-    //       if (responce.meta.nextPage !== this.meta.nextPage) {
-    //         this.meta = responce.meta;
-    //         responce.data.map((item) => {
-    //           this.altcoinList.push(item);
-    //         });
-    //       }
-    //     }
-    //   });
+    this.feedService.getFeeds(this.meta)
+    .subscribe(responce => {
+      if (responce.meta.nextPage) {
+        this.meta = responce.meta;
+        responce.data.map((item) => {
+          this.feeds.push(item);
+        });
+      }
+    });
   }
 }

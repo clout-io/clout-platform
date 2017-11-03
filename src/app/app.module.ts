@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 // modules
 import { AppRoutingModule } from './app-routing.module';
@@ -41,7 +42,8 @@ import { AppComponent } from './app.component';
     FeedModule,
     // base routing modules
     AppRoutingModule,
-    HttpModule
+    HttpModule,
+    InfiniteScrollModule
   ],
   providers: [AuthService, ApiService, ApiHelperService, BroadcastService, NumberSeparator, ModalService, CommentService, FollowService, FeedService],
   bootstrap: [AppComponent]

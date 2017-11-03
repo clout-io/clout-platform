@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild, ElementRef } from '@angular/core';
+import { Component, Output, OnInit, Input, EventEmitter, ViewChild, ElementRef } from '@angular/core';
 import { CommentService, BroadcastService } from '../../../../../services';
 import * as moment from 'moment';
 
@@ -10,6 +10,8 @@ import * as moment from 'moment';
 export class CommentItemComponent implements OnInit {
   @Input() item;
   @Input() level;
+
+  @Output() notify = new EventEmitter<any>();
 
   child: any;
   maxLevel: number = 3;
@@ -31,7 +33,8 @@ export class CommentItemComponent implements OnInit {
     this.service.toggleLike(id)
       .subscribe(
         response => {
-          const { count, like } = response;
+          const { count, like, clc } = response;
+          this.item.clc = clc;
           this.item.likes = count;
           this.item.isLiked = like ? true : false;
         }
@@ -51,11 +54,15 @@ export class CommentItemComponent implements OnInit {
     this.isAnswer = !!value ? true : false;
   }
 
+  notifyParent(response) {
+    this.notify.emit(response);
+  }
+
   addComment(text) {
     this.service.addComment(this.item.id, text).subscribe(
       response => {
-        this.broadcastService.broadcast('commentsCount', response.count);
-      }
-    )
+       let update = { count: response.count };
+       this.notify.emit(update);
+      });
   }
 }

@@ -48,6 +48,7 @@
     "highcharts-more": "^0.1.2",
     "jsonwebtoken": "^8.1.0",
     "moment": "^2.19.1",
+    "ngx-infinite-scroll": "^0.6.1",
     "node-cron": "^1.2.1",
     "normalize-range": "^0.1.2",
     "num2fraction": "^1.2.2",

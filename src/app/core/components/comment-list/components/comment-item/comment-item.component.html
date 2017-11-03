@@ -11,7 +11,7 @@
     <a href="javascript:void(0)" *ngIf="!isAnswer && level <= maxLevel" (click)="showAnswer()">Answer</a>
   </span>
       <div>
-        {{item?.clc ? item?.clc + ' CLC' : ''}}&nbsp;
+        {{item?.clc ? item?.clc + ' CLC': ''}}&nbsp;
         <a href="javascript:void(0)" (click)="onToggleLike(item?.id)">
           <i [ngClass]="{'icon_active': item?.isLiked}" class="icon icon_fav"></i> {{item?.likes > 0 ? item?.likes : ''}}
         </a>
@@ -22,5 +22,5 @@
   </div>
 </div>
 <div class="comments__reply" *ngIf="level <= maxLevel">
-  <app-comment-item *ngFor="let comment of item.child" [level]="level+1" [item]="comment"></app-comment-item>
+  <app-comment-item  (notify)="notifyParent($event)" *ngFor="let comment of item.child" [level]="level+1" [item]="comment"></app-comment-item>
 </div>

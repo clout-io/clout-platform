@@ -15,8 +15,9 @@ export class FeedService {
     private api: ApiService,
   ) {}
 
-  getFeeds(): Observable<any> {
-    return this.api.get(`${this.path}/news`)
+  getFeeds(options): Observable<any> {
+    let { nextPage, perPage } = options;
+    return this.api.get(`${this.path}/news?page=${nextPage}&per_page=${perPage}`)
       .map((res: any) => res);
   }
 
