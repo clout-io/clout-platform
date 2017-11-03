@@ -50,9 +50,14 @@ module.exports.schedule = {
                 market_cap_by_available_supply: item.total_supply,
                 "24h_volume_usd": item["24h_volume_usd"]
               }).then(function createFindCB(rdata) {
-
+                cb();
+              }).catch(function (err) {
+                cb();
               });
+            }).catch(function (err) {
+              cb();
             });
+
 
           }, function (err, result) {
             console.log(err)
