@@ -19,7 +19,8 @@ import {
   FacebookAuthBtnComponent,
   ModalComponent,
   CommentListComponent,
-  FollowBtnComponent
+  FollowBtnComponent,
+  LoaderLineComponent
 } from './components';
 import {
   CommentItemComponent
@@ -45,8 +46,14 @@ import {
     ModalComponent,
     CommentListComponent,
     CommentItemComponent,
-    FollowBtnComponent
+    FollowBtnComponent,
+    LoaderLineComponent
   ],
-  exports: [CommentListComponent, ModalComponent, FollowBtnComponent]
+  exports: [
+    CommentListComponent,
+    ModalComponent,
+    FollowBtnComponent,
+    LoaderLineComponent
+  ]
 })
 export class CoreModule { }

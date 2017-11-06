@@ -50,6 +50,7 @@ export class ApiService {
   }
 
   post(path: string, body): Observable<any> {
+    this.showLoader(true);
     return this.http.post(
       `${this.api_url}${path}`,
       JSON.stringify(body),
@@ -57,23 +58,28 @@ export class ApiService {
       )
       .map(this.checkForError)
       .catch(this.showError)
-      .map(this.getJson);
+      .map(this.getJson)
+      .finally(() => this.showLoader(false));
   }
 
   image(path: string, formData: FormData ): Observable<any> {
+    this.showLoader(true);
     const headers = this.headers;
     headers.delete('Content-Type');
     return this.http.post(`${this.api_url}${path}`, formData, {headers: headers})
       .map(this.checkForError)
       .catch(this.showError)
-      .map(this.getJson);
+      .map(this.getJson)
+      .finally(() => this.showLoader(false));
   }
 
   get(path: string): Observable<any> {
+    this.showLoader(true);
     return this.http.get(`${this.api_url}${path}`, {headers: this.headers})
       .map(this.checkForError)
       .catch(this.showError)
-      .map(this.getJson);
+      .map(this.getJson)
+      .finally(() => this.showLoader(false));
   }
 
   showError = (err) => {
@@ -94,7 +100,6 @@ export class ApiService {
       errorValue += '\n';
     }
     if (err.status !== 0 && errorValue.length !== 0 ) {
-      console.log(errorValue);
       this.broadcastService.broadcast('error', errorValue);
     }
 
@@ -114,6 +119,10 @@ export class ApiService {
 
   removeHeader(headerName: string) {
     this.headers.delete(headerName);
+  }
+
+  private showLoader(show: boolean) {
+    this.broadcastService.broadcast('showLoaderLine', show);
   }
 
   deactivate() {

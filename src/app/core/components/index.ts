@@ -7,3 +7,4 @@ export * from './facebook-auth-btn';
 export * from './modal';
 export * from './comment-list';
 export * from './follow-btn/follow-btn.component';
+export * from './loader-line/loader-line.component';
