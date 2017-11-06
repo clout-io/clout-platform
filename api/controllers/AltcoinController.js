@@ -203,7 +203,7 @@ module.exports = {
 
               File.download(url, path, function (data) {
 
-                altcoin.image = "/image/altcoins/" + altcoin.id + "." + ext;
+                altcoin.image = "/media/altcoin/" + altcoin.id + "." + ext;
 
                 altcoin.save(function (err) {
                   if (err) return mapCB(err);
