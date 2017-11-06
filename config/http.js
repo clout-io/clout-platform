@@ -65,6 +65,7 @@ module.exports.http = {
      ***************************************************************************/
 
     order: [
+      '_startRequestTime',
       'startRequestTimer',
       'cookieParser',
       'session',
@@ -79,8 +80,12 @@ module.exports.http = {
       'www',
       'favicon',
       '404',
-      '500',
+      '500'
     ],
+    _startRequestTime: function (req, res, next) {
+      req._startRequestTime = process.hrtime();
+      next();
+    }
 
     /****************************************************************************
      *                                                                           *
