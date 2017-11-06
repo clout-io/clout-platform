@@ -19,6 +19,9 @@ module.exports = {
     "symbol": {
       type: 'string'
     },
+    "image": {
+      type: 'string'
+    },
     "rank": {
       type: 'integer'
     },
@@ -60,7 +63,7 @@ module.exports = {
       via: 'altcoin'
     },
 
-    followByUsers:{
+    followByUsers: {
       collection: 'user',
       via: 'altcoin',
       through: 'follow'

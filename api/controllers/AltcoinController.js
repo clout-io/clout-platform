@@ -178,6 +178,54 @@ module.exports = {
         res.json(result)
       });
     })
+  },
+  syncPhoto: function (req, res) {
+
+    async.waterfall([
+        function (cb) {
+          CryptoCompare.coinList().then(function (data) {
+            cb(null, data);
+          }, function (err) {
+            cb(err);
+          });
+        },
+        function (coins, cb) {
+          var coinsData = coins.Data;
+
+          async.map(Object.values(coinsData), function (item, mapCB) {
+            var url = "https://www.cryptocompare.com" + item.ImageUrl;
+            if (!item.ImageUrl) {
+              return mapCB()
+            }
+            Altcoin.findOne({symbol: item.Symbol}).then(function (altcoin) {
+              var ext = item.ImageUrl.split(".")[1];
+              var path = sails.config.appPath + "/public/altcoin/" + altcoin.id + "." + ext;
+
+              File.download(url, path, function (data) {
+
+                altcoin.image = "/image/altcoins/" + altcoin.id + "." + ext;
+
+                altcoin.save(function (err) {
+                  if (err) return mapCB(err);
+                  console.log(item.Symbol.toLowerCase());
+                  return mapCB(null, altcoin.id);
+                })
+
+              });
+            }).catch(function (err) {
+              return mapCB(err)
+            })
+          }, function (err, data) {
+            cb(null, data)
+          });
+
+        }
+      ],
+      function (err, data) {
+        res.json(data)
+      });
+
+
   }
 
 
