@@ -1,6 +1,7 @@
 <div class="coin-description">
   <div class="coin-description__img">
-    <img src="../../../../../assets/coin-img.png" alt="">
+    <img src="{{altcoin.image}}"
+         onerror="this.src='../../../../../assets/defaultCoin.png'" alt="">
   </div>
   <div class="coin-description__text">
     <h2>{{altcoin ? altcoin.name : ' '}}</h2>
