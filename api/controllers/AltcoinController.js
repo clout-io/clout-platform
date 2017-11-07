@@ -155,28 +155,45 @@ module.exports = {
   sync: function (req, res) {
 
     var mmtMidnight = moment().clone().startOf('day');
-    var midnight = mmtMidnight.valueOf();
+    var midnight = mmtMidnight.valueOf().toString();
 
-    CoinMarketCap.getTicker(function (err, data) {
-      if (err) res.json(400, err)
-      async.map(data, function (item, cb) {
-        Altcoin.updateOrCreate({id: item.id}, item).then(function createFindCB(createdOrFoundRecords) {
-          AltcoinPrice.updateOrCreate({timestamp: new String(midnight), altcoin: createdOrFoundRecords.id}, {
-            altcoin: createdOrFoundRecords.id,
-            timestamp: midnight,
-            price_btc: item.price_btc,
-            price_usd: item.price_usd,
-            market_cap_by_available_supply: item.total_supply,
-            "24h_volume_usd": item["24h_volume_usd"]
-          }).then(function createFindCB(rdata) {
 
-          });
-        });
-
+    Altcoin.find().sort("updatedAt ASC").limit(20).then(function (altcoins) {
+      async.map(altcoins, function (item, cb) {
+        CoinMarketCap.getSingleTicker(item.id).then(function (info) {
+          info = info[0];
+          item.price_btc = info.price_btc;
+          item.price_usd = info.price_usd;
+          item["24h_volume_usd"] = item["info.24h_volume_usd"];
+          item.market_cap_usd = info.market_cap_usd;
+          item.available_supply = info.available_supply;
+          item.total_supply = info.total_supply;
+          item.percent_change_1h = info.percent_change_1h;
+          item.percent_change_24h = info.percent_change_24h;
+          item.percent_change_7d = info.percent_change_7d;
+          item.save(function (err) {
+            if (err) cb(err);
+            AltcoinPrice.updateOrCreate({timestamp: midnight, altcoin: item.id}, {
+              altcoin: item.id,
+              timestamp: midnight,
+              price_btc: item.price_btc,
+              price_usd: item.price_usd,
+              market_cap_by_available_supply: item.total_supply,
+              "24h_volume_usd": item["24h_volume_usd"]
+            }).then(function (rdata) {
+              cb(null, item.id)
+            });
+          })
+        }, function (err) {
+          cb(null, err);
+        })
       }, function (err, result) {
-        if (err) res.json(400, err);
-        res.json(result)
-      });
+        if (err) return res.json(400, err);
+        return res.json(result)
+      })
+    }).catch(function (err) {
+      console.log(err)
+      return res.json(400, err)
     })
   },
   syncPhoto: function (req, res) {

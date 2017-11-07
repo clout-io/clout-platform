@@ -18,6 +18,22 @@ module.exports.getTicker = function (callback) {
   })
 };
 
+module.exports.getSingleTicker = function (coin) {
+  return new Promise(function (resolve, reject) {
+    var url = util.format("%s%s%s/%s", apiUrl, apiVersion, tickerUrl, coin);
+    request.get(url, function (e, r, body) {
+      if (e) return reject(e);
+      if (r.statusCode === 200) {
+        var jsData = JSON.parse(body);
+        return resolve(jsData)
+      }
+      return reject(body)
+    })
+  })
+
+};
+
+
 module.exports.getHistory = function (id, from, to) {
   var url = util.format("%s/%s", graphUrl, id);
 
