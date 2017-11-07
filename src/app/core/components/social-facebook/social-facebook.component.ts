@@ -20,7 +20,12 @@ export class SocialFacebookComponent implements OnInit, OnDestroy {
     this.subscribeRoute = this.route.queryParams.subscribe((params: Params) => {
       const { code } = params;
       this.authService.facebookAuthenticate(code)
-        .subscribe(data => window.close());
+        .subscribe(
+          data => window.close(),
+          error => {
+            window.close();
+            this.router.navigateByUrl('/login');
+          });
     });
   }
 
