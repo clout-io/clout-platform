@@ -27,15 +27,15 @@
       <div class="validation-err-msg">
         <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
                 account.get('password').hasError('numbers')">
-          Passwords must contain at least one uppercase letter and one number
+          Password must contain at least one uppercase letter and one number
         </div>
         <div *ngIf="account.get('password').hasError('uppercaseLetters') &&
                 !account.get('password').hasError('numbers')">
-          Passwords must contain at least one uppercase letter
+          Password must contain at least one uppercase letter
         </div>
         <div *ngIf="!account.get('password').hasError('uppercaseLetters') &&
                 account.get('password').hasError('numbers')">
-          Passwords must contain at least one number
+          Password must contain at least one number
         </div>
       </div>
     </div>

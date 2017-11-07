@@ -25,11 +25,22 @@ export class RegisterComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.account = this.formBuilder.group({
       email: ['', [Validators.required, emailValidator(/\S+@\S+\.\S+/)]],
-      password: ['', [Validators.required, uppercaseValidator(/[A-Z]+/), numbersValidator(/[0-9]+/)]],
-      password_confirm: ['', [Validators.required, uppercaseValidator(/[A-Z]+/), numbersValidator(/[0-9]+/)]]
+      password: this.createPasswordValidation(),
+      password_confirm: this.createPasswordValidation()
     });
     this.resetInputSubscription = this.broadcastService.subscribe('resetInput',
         inputName => this.resetInputField(inputName));
+  }
+
+  createPasswordValidation() {
+    return ['',
+      Validators.compose([
+        Validators.required,
+        uppercaseValidator(/[A-Z]+/),
+        numbersValidator(/[0-9]+/),
+        Validators.minLength(6)
+      ])
+    ];
   }
 
   register() {

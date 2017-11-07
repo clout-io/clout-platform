@@ -24,7 +24,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.account = this.formBuilder.group({
       email: ['', [Validators.required, emailValidator(/\S+@\S+\.\S+/)]],
-      password: ['', [Validators.required, uppercaseValidator(/[A-Z]+/), numbersValidator(/[0-9]+/)]]
+      password: ['',
+        Validators.compose([
+          Validators.required,
+          uppercaseValidator(/[A-Z]+/),
+          numbersValidator(/[0-9]+/)
+        ])
+      ]
     });
     this.resetInputSubscription = this.broadcastService.subscribe('resetInput',
         inputName => this.resetInputField(inputName));

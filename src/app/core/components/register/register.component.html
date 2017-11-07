@@ -25,18 +25,21 @@
     </div>
     <div *ngIf="account.get('password').invalid && account.get('password').touched" class="has_error">
       <div class="validation-err-msg">
-      <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
-                account.get('password').hasError('numbers')">
-        Passwords must contain at least one uppercase letter and one number
-      </span>
         <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
-                !account.get('password').hasError('numbers')">
-        Passwords must contain at least one uppercase letter
-      </span>
-        <span *ngIf="!account.get('password').hasError('uppercaseLetters') &&
-                account.get('password').hasError('numbers')">
-        Passwords must contain at least one number
-      </span>
+                  account.get('password').hasError('numbers')">
+          Password must contain at least one uppercase letter and one number
+        </span>
+          <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
+                  !account.get('password').hasError('numbers')">
+          Password must contain at least one uppercase letter
+        </span>
+          <span *ngIf="!account.get('password').hasError('uppercaseLetters') &&
+                  account.get('password').hasError('numbers')">
+          Password must contain at least one number
+        </span>
+        <div *ngIf="account.get('password').hasError('minlength')">
+          Password must be of minimum 6 characters length
+        </div>
       </div>
     </div>
   </div>
@@ -50,18 +53,21 @@
     </div>
     <div *ngIf="account.get('password_confirm').invalid && account.get('password_confirm').touched" class="has_error">
       <div class="validation-err-msg">
-      <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
-                account.get('password_confirm').hasError('numbers')">
-        Passwords must contain at least one uppercase letter and one number
-      </span>
         <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
-                !account.get('password_confirm').hasError('numbers')">
-        Passwords must contain at least one uppercase letter
-      </span>
-        <span *ngIf="!account.get('password_confirm').hasError('uppercaseLetters') &&
-                account.get('password_confirm').hasError('numbers')">
-        Passwords must contain at least one number
-      </span>
+                  account.get('password_confirm').hasError('numbers')">
+          Password must contain at least one uppercase letter and one number
+        </span>
+          <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
+                  !account.get('password_confirm').hasError('numbers')">
+          Password must contain at least one uppercase letter
+        </span>
+          <span *ngIf="!account.get('password_confirm').hasError('uppercaseLetters') &&
+                  account.get('password_confirm').hasError('numbers')">
+          Password must contain at least one number
+        </span>
+        <div *ngIf="account.get('password_confirm').hasError('minlength')">
+          Password must be of minimum 6 characters length
+        </div>
       </div>
     </div>
     <div class="has_error">
