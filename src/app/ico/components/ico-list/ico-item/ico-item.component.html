@@ -1,7 +1,7 @@
 <li class="coin-list-item">
   <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico.id === selectedId}">
     <div class="coin-list-item__img">
-      <img src="{{ico.image}}">
+      <img src="{{ico?.image}}">
     </div>
     <div class="coin-list-item__content">
       <strong>{{ico.name}}</strong>
