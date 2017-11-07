@@ -41,7 +41,7 @@ module.exports.schedule = {
         var midnight = date.valueOf().toString();
 
 
-        Altcoin.find().sort("updatedAt ASC").limit(30).then(function (altcoins) {
+        Altcoin.find().sort("updatedAt ASC").limit(50).then(function (altcoins) {
           async.map(altcoins, function (item, cb) {
             CoinMarketCap.getSingleTicker(item.id).then(function (info) {
               info = info[0];
@@ -68,10 +68,10 @@ module.exports.schedule = {
                 });
               })
             }, function (err) {
-              cb(null, err);
+              cb(null, "Not found: " + item.id);
             })
           }, function (err, result) {
-            sails.log(result)
+            sails.log(result);
             return result;
           })
         }).catch(function (err) {

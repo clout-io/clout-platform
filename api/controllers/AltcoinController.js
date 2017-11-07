@@ -159,7 +159,7 @@ module.exports = {
     console.log(midnight)
 
 
-    Altcoin.find().sort("updatedAt ASC").limit(20).then(function (altcoins) {
+    Altcoin.find().sort("updatedAt ASC").limit(50).then(function (altcoins) {
       async.map(altcoins, function (item, cb) {
         CoinMarketCap.getSingleTicker(item.id).then(function (info) {
           info = info[0];
