@@ -154,8 +154,9 @@ module.exports = {
 
   sync: function (req, res) {
 
-    var mmtMidnight = moment().clone().startOf('day');
+    var mmtMidnight = moment().utc().clone();
     var midnight = mmtMidnight.valueOf().toString();
+    console.log(midnight)
 
 
     Altcoin.find().sort("updatedAt ASC").limit(20).then(function (altcoins) {

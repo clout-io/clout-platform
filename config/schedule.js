@@ -6,42 +6,42 @@ var moment = require('moment');
 
 module.exports.schedule = {
   tasks: {
-    syncAltcoinHystory: {
-      cron: "*/3 * * * *",
-      task: function () {
-        Altcoin.findOne({history_sync: {not: true}}).exec(function (err, altcoin) {
-          if (err) return err;
-          CoinMarketCap.getHistory(altcoin.id).then(function (data) {
-            for (var key in data.price_usd) {
-              AltcoinPrice.findOrCreate({
-                altcoin: altcoin.id,
-                timestamp: data.price_usd[key][0],
-              }, {
-                altcoin: altcoin.id,
-                timestamp: data.price_usd[key][0],
-                price_usd: data.price_usd[key][1],
-                volume_usd: data.volume_usd[key][1],
-                price_btc: data.price_btc[key][1],
-                market_cap_by_available_supply: data.market_cap_by_available_supply[key][1]
-              }).exec(function createFindCB(error, createdOrFoundRecords) {
-
-
-              })
-            }
-            altcoin.history_sync = true;
-            altcoin.save();
-          })
-        })
-      }
-    },
+    // syncAltcoinHystory: {
+    //   cron: "*/3 * * * *",
+    //   task: function () {
+    //     Altcoin.findOne({history_sync: {not: true}}).exec(function (err, altcoin) {
+    //       if (err) return err;
+    //       CoinMarketCap.getHistory(altcoin.id).then(function (data) {
+    //         for (var key in data.price_usd) {
+    //           AltcoinPrice.findOrCreate({
+    //             altcoin: altcoin.id,
+    //             timestamp: data.price_usd[key][0],
+    //           }, {
+    //             altcoin: altcoin.id,
+    //             timestamp: data.price_usd[key][0],
+    //             price_usd: data.price_usd[key][1],
+    //             volume_usd: data.volume_usd[key][1],
+    //             price_btc: data.price_btc[key][1],
+    //             market_cap_by_available_supply: data.market_cap_by_available_supply[key][1]
+    //           }).exec(function createFindCB(error, createdOrFoundRecords) {
+    //
+    //
+    //           })
+    //         }
+    //         altcoin.history_sync = true;
+    //         altcoin.save();
+    //       })
+    //     })
+    //   }
+    // },
     syncAltcoin: {
       cron: "*/2 * * * *",
       task: function () {
-        var mmtMidnight = moment().clone().startOf('day');
-        var midnight = mmtMidnight.valueOf().toString();
+        var date = moment().utc().clone();
+        var midnight = date.valueOf().toString();
 
 
-        Altcoin.find().sort("updatedAt ASC").limit(20).then(function (altcoins) {
+        Altcoin.find().sort("updatedAt ASC").limit(30).then(function (altcoins) {
           async.map(altcoins, function (item, cb) {
             CoinMarketCap.getSingleTicker(item.id).then(function (info) {
               info = info[0];
