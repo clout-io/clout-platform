@@ -467,6 +467,68 @@ var routes = [
     }
   }
   },
+  {
+    method: "GET", path: "/user/password/reset", target: {
+    controller: "UserController", action: "resetPasswordRequest", swagger: {
+      methods: ['GET'],
+      summary: 'Reset password ',
+      description: 'Reset password',
+      tags: [
+        'User'
+      ],
+      parameters: [
+        {
+          in: "query", name: "email"
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Reset password'
+        }
+      }
+    }
+  }
+  },
+  {
+    method: "POST", path: "/user/password/reset/:code", target: {
+    controller: "UserController", action: "resetPassword", swagger: {
+      methods: ['POST'],
+      summary: 'Reset password ',
+      description: 'Reset password',
+      tags: [
+        'User'
+      ],
+      parameters: [
+        {
+          in: "path", name: "code"
+        },
+        {
+          in: "body", name: "data", schema: {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "password": {
+              "type": "string",
+              "description": ""
+            },
+            "confirmPassword": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Reset password'
+        }
+      }
+    }
+  }
+  },
 
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
   {method: "GET", path: "/icos/sync/:type", target: "IcoController.sync"},

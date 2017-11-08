@@ -6,8 +6,17 @@
  */
 
 module.exports = {
-  create: function (req, res) {
+  resetPasswordRequest: function (req, res) {
+
     return res.json({});
+  },
+  resetPassword: function (req, res) {
+
+    return res.json({
+      user: {},
+      token: {}
+    });
   }
+
 };
 

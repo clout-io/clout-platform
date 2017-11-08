@@ -70,5 +70,9 @@ module.exports.policies = {
   },
   'PostController': {
     'index': true
+  },
+  'UserController': {
+    'resetPasswordRequest': true,
+    'resetPassword': true
   }
 };
