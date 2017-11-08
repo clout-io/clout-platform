@@ -18,6 +18,10 @@ module.exports = {
       if (req.body.password !== req.body.confirmPassword) {
         return res.json(400, Errors.build({"non_field_error": 'Password doesn\'t match!'}, Errors.ERROR_REGISTER_VALIDATION));
       }
+      var result = User.types.password(req.body.password);
+      if (!result) {
+        return res.json(400, Errors.build({"non_field_error": 'Invalid password!'}, Errors.ERROR_REGISTER_VALIDATION));
+      }
       User.create(req.body).exec(function (err, user) {
         if (err) {
           return res.json(err.status, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION));
