@@ -20,7 +20,8 @@ import {
   ModalComponent,
   CommentListComponent,
   FollowBtnComponent,
-  LoaderLineComponent
+  LoaderLineComponent,
+  ResetPasswordComponent
 } from './components';
 import {
   CommentItemComponent
@@ -47,7 +48,8 @@ import {
     CommentListComponent,
     CommentItemComponent,
     FollowBtnComponent,
-    LoaderLineComponent
+    LoaderLineComponent,
+    ResetPasswordComponent,
   ],
   exports: [
     CommentListComponent,

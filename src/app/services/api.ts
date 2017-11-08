@@ -21,6 +21,7 @@ export class ApiService {
   icos = 'api/v1/icos';
   ico = 'api/v1/ico';
   like_url = 'api/v1/like';
+  reset_user_password = 'api/v1/user/password/reset';
   redirect_uri = window.location.hostname === 'localhost' ?
     'http://localhost:4200/social/facebook' : `${this.api_url}/social/facebook`;
   headers: Headers = new Headers({

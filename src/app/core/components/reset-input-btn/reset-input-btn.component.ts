@@ -8,6 +8,7 @@ import { BroadcastService } from '../../../services/broadcastService';
 })
 export class ResetInputBtnComponent implements OnInit {
   @Input() inputName: string;
+  @Input() inputField: any;
 
   constructor(private broadcastService: BroadcastService) { }
 
@@ -15,6 +16,9 @@ export class ResetInputBtnComponent implements OnInit {
   }
 
   reset() {
+    if (this.inputField) {
+      this.inputField.reset();
+    }
     this.broadcastService.broadcast('resetInput', this.inputName);
   }
 

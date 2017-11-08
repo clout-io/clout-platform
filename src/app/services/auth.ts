@@ -119,6 +119,20 @@ export class AuthService implements CanActivate {
     }, 0);
   }
 
+  resetUserPassword(email: string): Observable<any>  {
+    return this.api.get(`/${this.api.reset_user_password}?email=${email}`);
+  }
+
+  resetUserPasswordCode(code, credits): Observable<any> {
+    return this.api.post(`/${this.api.reset_user_password}/${code}`, credits)
+      .do((res: any) => {
+        if (res.token) {
+          this.setToken(res.token);
+          this.setEmail(res.user.email);
+        }
+      });
+  }
+
   signout() {
     this.api.deactivate();
     this.router.navigateByUrl('login');

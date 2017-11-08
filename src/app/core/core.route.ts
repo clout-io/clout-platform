@@ -6,7 +6,8 @@ import {
   LoginComponent,
   RegisterComponent,
   ConfirmUserComponent,
-  SocialFacebookComponent
+  SocialFacebookComponent,
+  ResetPasswordComponent
 } from './components';
 
 /**
@@ -47,6 +48,10 @@ export class CoreRoute {
       {
         path: 'social/facebook',
         component: SocialFacebookComponent
+      },
+      {
+        path: 'reset',
+        component: ResetPasswordComponent,
       }
     ];
   }
