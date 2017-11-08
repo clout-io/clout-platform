@@ -26,7 +26,8 @@ module.exports = {
     },
     password: {
       type: 'string',
-      required: true
+      required: true,
+      password: true
     },
     activationCode: {
       type: 'string',
@@ -78,6 +79,18 @@ module.exports = {
     },
     getActivateLink: function () {
       return sails.config.appUrl + "/activate" + '?code=' + this.activationCode;
+    },
+    getResetPasswordLink: function () {
+      var token = Token.issue({id: this.id}, '5m');
+      return {
+        url: sails.config.appUrl + "/reset" + '?code=' + token,
+        token: token
+      }
+    }
+  },
+  types: {
+    password: function (value) {
+      return _.isString(value) && value.length >= 6 && value.match(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g);
     }
   },
   beforeCreate: function (values, next) {
