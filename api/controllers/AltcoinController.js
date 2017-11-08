@@ -159,7 +159,7 @@ module.exports = {
     var midnight = mmtMidnight.valueOf();
     sails.log.debug("Start fetch data");
 
-    CoinMarketCap.getTicker(function (err, data) {
+    CoinMarketCap.getTicker().then(function (data) {
       async.map(data, function (item, cb) {
         Altcoin.updateOrCreate({id: item.id}, item).then(function createFindCB(createdOrFoundRecords) {
           cb(null, item.id)
@@ -169,6 +169,8 @@ module.exports = {
         res.json(result)
         console.log(err)
       });
+    }, function (err) {
+      return res.json(400, err)
     });
 
     // var mmtMidnight = moment().utc().clone();

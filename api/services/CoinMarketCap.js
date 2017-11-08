@@ -10,11 +10,17 @@ const graphUrl = "https://graphs.coinmarketcap.com/currencies";
 //https://www.npmjs.com/package/sails-hook-schedule
 
 module.exports.getTicker = function (callback) {
-  var url = util.format("%s%s%s", apiUrl, apiVersion, tickerUrl);
-  request.get(url, function (e, r, body) {
-    if (e) callback(e, null);
-    var jsData = JSON.parse(body);
-    callback(null, jsData)
+
+  return new Promise(function (resolve, reject) {
+    var url = util.format("%s%s%s", apiUrl, apiVersion, tickerUrl);
+    request.get(url, function (e, r, body) {
+      if (e) return reject(e);
+      if (r.statusCode === 200) {
+        var jsData = JSON.parse(body);
+        return resolve(jsData)
+      }
+      return reject(body)
+    })
   })
 };
 
