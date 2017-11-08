@@ -471,7 +471,8 @@ var routes = [
   {method: "GET", path: "/altcoins/sync", target: "AltcoinController.sync"},
   {method: "GET", path: "/icos/sync/:type", target: "IcoController.sync"},
   {method: "GET", path: "/icos/syncphoto/", target: "IcoController.syncPhoto"},
-  {method: "GET", path: "/altcoins/syncphoto/", target: "AltcoinController.syncPhoto"}
+  {method: "GET", path: "/altcoins/syncphoto/", target: "AltcoinController.syncPhoto"},
+  {method: "GET", path: "/altcoins/synchistory/", target: "AltcoinController.syncHistory"}
 ];
 
 var prefix = "/api/v1";

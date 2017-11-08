@@ -7,6 +7,7 @@
 
 var pager = require('sails-pager');
 var moment = require('moment');
+var async = require('async');
 
 module.exports = {
 
@@ -244,6 +245,34 @@ module.exports = {
       });
 
 
+  },
+
+  syncHistory: function (req, res) {
+    Altcoin.findOne({history_sync: {not: true}}).exec(function (err, altcoin) {
+      if (err) return err;
+      CoinMarketCap.getHistory(altcoin.id).then(function (info) {
+
+        async.mapValues(info.price_usd, function (data, key, cb) {
+          AltcoinPrice.findOrCreate({
+            altcoin: altcoin.id,
+            timestamp: data[0],
+          }, {
+            altcoin: altcoin.id,
+            timestamp: data[0],
+            price_usd: data[1],
+            volume_usd: info.volume_usd[key][1],
+            price_btc: info.price_btc[key][1],
+            market_cap_by_available_supply: info.market_cap_by_available_supply[key][1]
+          }).exec(function createFindCB(error, createdOrFoundRecords) {
+            cb(null, altcoin.id)
+          });
+        }, function (err, result) {
+          altcoin.history_sync = true;
+          altcoin.save();
+          return res.json(result);
+        })
+      })
+    })
   }
 
 

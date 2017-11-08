@@ -41,8 +41,7 @@ module.exports.getHistory = function (id, from, to) {
     url = util.format("%s/%s/%s", url, from, to)
   }
   return new Promise(function (resolve, reject) {
-    var r = request;
-    r.get({url: url, /*proxy: 'http://37.143.96.236:8080'*/}, function (e, r, body) {
+    request.get({url: url, /*proxy: 'http://37.143.96.236:8080'*/}, function (e, r, body) {
       if (e) {
         return reject(e);
       }

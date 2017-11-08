@@ -45,7 +45,8 @@ module.exports.policies = {
     'sync': true,//temp
     'history': true,
     'info': true,
-    'syncPhoto': true
+    'syncPhoto': true,
+    'syncHistory': true
   },
   'IcoController': {
     'index': true,
