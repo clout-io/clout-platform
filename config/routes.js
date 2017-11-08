@@ -451,6 +451,74 @@ var routes = [
   }
   },
   {
+    method: "POST", path: "/news/:postId", target: {
+    controller: "PostController", action: "edit", swagger: {
+      methods: ['POST'],
+      summary: 'Edit Post',
+      description: 'Edit Post',
+      tags: [
+        'Post'
+      ],
+      parameters: [
+        {in: "path", name: "postId"},
+        {
+          in: "body", name: "data", schema: {
+          "required": [
+            "content",
+          ],
+          "type": "object",
+          "properties": {
+            "text": {
+              "type": "string",
+              "description": "text of post"
+            },
+            "video": {
+              "type": "string",
+              "description": "youtube link"
+            },
+            "link": {
+              "type": "string",
+              "description": "link for preview"
+            },
+            "attachment": {
+              "type": "array",
+              "description": "attachment ids",
+              "items": {type: "string"}
+            }
+
+          }
+        }
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Edit post'
+        }
+      }
+    }
+  }
+  },
+  {
+    method: "DELETE", path: "/news/:postId", target: {
+    controller: "PostController", action: "delete", swagger: {
+      methods: ['DELETE'],
+      summary: 'Delete Post',
+      description: 'Delete Post',
+      tags: [
+        'Post'
+      ],
+      parameters: [
+        {in: "path", name: "postId"}
+      ],
+      responses: {
+        '204': {
+          description: 'Deleted'
+        }
+      }
+    }
+  }
+  },
+  {
     method: "GET", path: "/news", target: {
     controller: "PostController", action: "index", swagger: {
       methods: ['GET'],

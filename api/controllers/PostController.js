@@ -54,6 +54,24 @@ module.exports = {
     }).catch(function (err) {
       return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
     })
+  },
+
+  edit: function (req, res) {
+
+
+    return res.json({
+      "text": "string",
+      "owner": "59f2219ac48fe41c182ffc4e",
+      "clc": 0,
+      "createdAt": "2017-11-08T11:34:47.332Z",
+      "updatedAt": "2017-11-08T11:34:47.332Z",
+      "id": "post_37607ac28d3220fe891530b5551bb021"
+    });
+  },
+  delete: function (req, res) {
+
+
+    return res.json(204, {});
   }
 
 };
