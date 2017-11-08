@@ -90,7 +90,7 @@ module.exports = {
   },
   types: {
     password: function (value) {
-      return _.isString(value) && value.length >= 6 && value.match(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/g);
+      return _.isString(value) && value.length >= 6 && value.match(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/g);
     }
   },
   beforeCreate: function (values, next) {
