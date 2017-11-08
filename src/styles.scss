@@ -418,6 +418,19 @@ ___________________________*/
       bottom: 3px;
       margin-left: 21px;
     }
+
+    &:after {
+      content: "Alpha";
+      position: absolute;
+      top: 100%;
+      left: 70%;
+      font-size: 12px;
+      line-height: 16px;
+      padding: 3px 0 0 0;
+      display: block;
+      pointer-events: none;
+      color: $color-ac-link;
+    }
   }
 
   &__drop {
@@ -455,18 +468,25 @@ ___________________________*/
       width: 555px;
     }
 
-    &:before {
-      content: "";
-      display: block;
-      width: 18px;
-      height: 18px;
-      border-radius: $border-radius;
-      background: $color-ac-border;
+    // &:before {
+    //   content: "";
+    //   display: block;
+    //   width: 18px;
+    //   height: 18px;
+    //   border-radius: $border-radius;
+    //   background: $color-ac-border;
+    //   position: absolute;
+    //   left: 20px;
+    //   top: 13px;
+    //   z-index: 5;
+    //   pointer-events: none;
+    // }
+
+    i {
       position: absolute;
-      left: 20px;
+      left: 22px;
       top: 13px;
       z-index: 5;
-      pointer-events: none;
     }
 
     ::-webkit-input-placeholder {
@@ -1265,7 +1285,17 @@ a.comments__add {
     }
 
     i {
-      vertical-align: top;
+      // vertical-align: top;
+    }
+
+    .fa-heart-o {
+      font-size: 16px;
+    }
+
+    .fa-comment-o,
+    .fa-thumbs-o-up,
+    .fa-thumbs-o-down {
+      font-size: 18px;
     }
   }
 
@@ -1330,7 +1360,7 @@ a.comments__add {
     }
 
     i {
-      vertical-align: top;
+      // vertical-align: top;
     }
 
     span {

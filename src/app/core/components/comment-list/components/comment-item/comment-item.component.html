@@ -13,7 +13,7 @@
       <div>
         {{item?.clc ? item?.clc + ' CLC': ''}}&nbsp;
         <a href="javascript:void(0)" (click)="onToggleLike(item?.id)">
-          <i [ngClass]="{'icon_active': item?.isLiked}" class="icon icon_fav"></i> {{item?.likes > 0 ? item?.likes : ''}}
+          <i [ngClass]="{'fa-heart icon_active': item?.isLiked, 'fa-heart-o': !item?.isLiked}" class="fa"></i> {{item?.likes > 0 ? item?.likes : ''}}
         </a>
       </div>
     </div>
