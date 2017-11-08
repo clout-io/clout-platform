@@ -14,6 +14,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
   errorMessage: string;
   errorRegister: boolean;
   showVerificationMessage: boolean;
+  disableRegisterBtn = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -55,11 +56,12 @@ export class RegisterComponent implements OnInit, OnDestroy {
     const user = {email, password, confirmPassword: password_confirm};
     this.auth.authenticate(user)
       .subscribe(data => {
+          this.disableRegisterBtn = true;
           this.manageErrorRegister(false, '');
           this.showVerificationMessage = true;
         },
         errorData => {
-          if (errorData.error.body.email[0].rule === 'unique') {
+          if (errorData.error.code === 610) {
             this.manageErrorRegister(true, 'A record with that email already exists.');
           }
         });
