@@ -38,4 +38,10 @@ export class FeedService {
   deleteFeed(id: string): Observable<any> {
     return this.api.delete(`${this.path}/news/${id}`, {postId: id});
   }
+
+  getNews(options): Observable<any> {
+    let { nextPage, perPage } = options;
+    return this.api.get(`${this.path}/press?page=${nextPage}&per_page=${perPage}`)
+      .map((res: any) => res);
+  }
 }

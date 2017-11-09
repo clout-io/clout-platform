@@ -1,0 +1,3 @@
+<div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="loadNewsList()" [infiniteScrollThrottle]="500" >
+  <app-news-item *ngFor="let item of news" [item]="item"></app-news-item>
+</div>

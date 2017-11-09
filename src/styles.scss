@@ -2016,6 +2016,10 @@ ___________________________*/
 
   &__img {
 
+    height: 250px;
+    background-size: cover;
+    background-position: center top;
+
     img {
       max-width: 100%;
       width: 100%;
@@ -2034,6 +2038,7 @@ ___________________________*/
       font-size: 15px;
       line-height: 21px;
       color: $color-ac-text;
+      text-align: justify;
     }
   }
 

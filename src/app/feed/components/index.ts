@@ -5,3 +5,6 @@ export { FeedListComponent } from './feed-list/feed-list.component';
 export { FeedItemComponent } from './feed-list/feed-item/feed-item.component';
 
 export { FeedCreateComponent } from './feed-create/feed-create.component';
+
+//News page
+export * from './news';

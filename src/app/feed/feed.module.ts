@@ -6,11 +6,17 @@ import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 import { CoreModule } from '../core/core.module';
 import { FeedRoutingModule } from './feed-routing.module';
 import { FeedComponent } from './feed.component';
+
 import {
   FeedListComponent,
   FeedItemComponent,
-  FeedCreateComponent
+  FeedCreateComponent,
+  NewsComponent,
+  NewsListComponent,
+  NewsListItemComponent
 } from './components';
+
+import { TruncatePipe } from '../pipes';
 
 @NgModule({
   imports: [
@@ -24,7 +30,11 @@ import {
     FeedComponent,
     FeedListComponent,
     FeedItemComponent,
-    FeedCreateComponent
+    FeedCreateComponent,
+    NewsComponent,
+    NewsListComponent,
+    NewsListItemComponent,
+    TruncatePipe
   ]
 })
 export class FeedModule { }
