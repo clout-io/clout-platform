@@ -34,4 +34,8 @@ export class FeedService {
   editFeed(id: string, options: any): Observable<any> {
     return this.api.post(`${this.path}/news/${id}`, options);
   }
+
+  deleteFeed(id: string): Observable<any> {
+    return this.api.delete(`${this.path}/news/${id}`, {postId: id});
+  }
 }

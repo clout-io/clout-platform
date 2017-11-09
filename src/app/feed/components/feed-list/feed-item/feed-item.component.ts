@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
-import { FeedService, BroadcastService } from '../../../../services';
+import { FeedService } from '../../../../services';
 import * as moment from 'moment';
 
 @Component({
@@ -7,7 +7,6 @@ import * as moment from 'moment';
   templateUrl: './feed-item.component.html'
 })
 export class FeedItemComponent implements OnInit {
-  apiUrl = 'http://haumea.bvblogic.net:8103';
   @Input() feed;
   @Output() onDeletePost = new EventEmitter();
   createDate: string = '';
@@ -24,8 +23,7 @@ export class FeedItemComponent implements OnInit {
 
   constructor(
     private renderer: Renderer,
-    private feedService: FeedService,
-    private broadcastService: BroadcastService,
+    private feedService: FeedService
   ) { }
 
   ngOnInit() {
@@ -91,6 +89,16 @@ export class FeedItemComponent implements OnInit {
   edit() {
     this.editable = true;
     this.imageOldSrc = this.feed.attachment.length ? this.feed.attachment[0].url : null;
+  }
+
+  delete() {
+    const {id} = this.feed;
+    this.feedService.deleteFeed(id)
+      .subscribe(data => {
+        if (data !== 404 && data !== 400) {
+          this.onDeletePost.emit(id);
+        }
+      });
   }
 
   cancel() {

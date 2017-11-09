@@ -83,6 +83,15 @@ export class ApiService {
       .finally(() => this.showLoader(false));
   }
 
+  delete(path: string, options: any): Observable<any> {
+    this.showLoader(true);
+    return this.http.delete(`${this.api_url}${path}`, {headers: this.headers, body: options})
+      .map(this.checkForError)
+      .catch(this.showError)
+      .map(this.getJson)
+      .finally(() => this.showLoader(false));
+  }
+
   showError = (err) => {
     console.log(err);
 

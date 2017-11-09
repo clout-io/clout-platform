@@ -1,3 +1,4 @@
 <div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="loadFeedList()" [infiniteScrollThrottle]="500" >
-  <app-feed-item *ngFor="let feed of feeds" [feed]="feed"></app-feed-item>
+  <app-feed-item *ngFor="let feed of feeds" [feed]="feed" (onDeletePost)="deletePost($event)">
+  </app-feed-item>
 </div>

@@ -41,4 +41,9 @@ export class FeedListComponent implements OnInit, OnDestroy {
       }
     });
   }
+
+  deletePost(id: string): void {
+    const index = this.feeds.findIndex((item) => item.id === id);
+    this.feeds.splice(index, 1);
+  }
 }
