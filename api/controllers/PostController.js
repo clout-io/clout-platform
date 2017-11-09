@@ -57,15 +57,23 @@ module.exports = {
   },
 
   edit: function (req, res) {
+    var postId = req.param("itemId");
 
+    var data = req.body;
+    var userId = req.user.id;
 
-    return res.json({
-      "text": "string",
-      "owner": "59f2219ac48fe41c182ffc4e",
-      "clc": 0,
-      "createdAt": "2017-11-08T11:34:47.332Z",
-      "updatedAt": "2017-11-08T11:34:47.332Z",
-      "id": "post_37607ac28d3220fe891530b5551bb021"
+    data.text = striptags(data.text);
+
+    Post.findOne({id: postId, owner: userId}).populate("owner", "attachment").then(function (post) {
+      if (!post) return res.json(404);
+      Post.update({id: postId, owner: userId}, data).exec(function afterwards(err, updated) {
+        if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+        Post.findOne({id: postId, owner: userId}).populateAll().then(function (post) {
+          return res.json(post);
+        });
+      })
+    }).catch(function (err) {
+      return res.json(400, err)
     });
   },
   delete: function (req, res) {

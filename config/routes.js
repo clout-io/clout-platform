@@ -451,7 +451,7 @@ var routes = [
   }
   },
   {
-    method: "POST", path: "/news/:postId", target: {
+    method: "POST", path: "/news/:itemId", target: {
     controller: "PostController", action: "edit", swagger: {
       methods: ['POST'],
       summary: 'Edit Post',
@@ -460,7 +460,7 @@ var routes = [
         'Post'
       ],
       parameters: [
-        {in: "path", name: "postId"},
+        {in: "path", name: "itemId"},
         {
           in: "body", name: "data", schema: {
           "required": [
@@ -499,7 +499,7 @@ var routes = [
   }
   },
   {
-    method: "DELETE", path: "/news/:postId", target: {
+    method: "DELETE", path: "/news/:itemId", target: {
     controller: "PostController", action: "delete", swagger: {
       methods: ['DELETE'],
       summary: 'Delete Post',
@@ -508,7 +508,7 @@ var routes = [
         'Post'
       ],
       parameters: [
-        {in: "path", name: "postId"}
+        {in: "path", name: "itemId"}
       ],
       responses: {
         '204': {
