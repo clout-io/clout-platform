@@ -54,6 +54,7 @@
     "normalize-range": "^0.1.2",
     "nprogress": "^0.2.0",
     "num2fraction": "^1.2.2",
+    "open-graph-scraper": "^3.1.2",
     "polymer": "^0.5.0",
     "promise": "^8.0.1",
     "rxjs": "^5.4.1",
