@@ -69,9 +69,18 @@ module.exports = {
     });
   },
   delete: function (req, res) {
+    var postId = req.param("postId");
+    var userId = req.user.id;
 
+    Post.findOne({id: postId, owner: userId}).then(function (post) {
+      if (!post) return res.json(404);
+      Post.destroy({id: postId, owner: userId}).then(function (deletedRecords) {
+        return res.json(204, deletedRecords);
+      }).catch(function (err) {
+        return res.json(400, err)
+      });
+    })
 
-    return res.json(204, {});
   }
 
 };
