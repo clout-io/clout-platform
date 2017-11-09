@@ -76,6 +76,7 @@ module.exports.policies = {
     'resetPassword': true
   },
   PressController: {
-    'index': true
+    'index': true,
+    'sync': true
   }
 };

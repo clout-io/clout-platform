@@ -662,7 +662,35 @@ var routes = [
   {method: "GET", path: "/icos/sync/:type", target: "IcoController.sync"},
   {method: "GET", path: "/icos/syncphoto/", target: "IcoController.syncPhoto"},
   {method: "GET", path: "/altcoins/syncphoto/", target: "AltcoinController.syncPhoto"},
-  {method: "GET", path: "/altcoins/synchistory/", target: "AltcoinController.syncHistory"}
+  {method: "GET", path: "/altcoins/synchistory/", target: "AltcoinController.syncHistory"},
+  {
+    method: "GET", path: "/press/sync/", target:
+    {
+      controller: 'PressController',
+      action: 'sync',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: '',
+        description: '',
+        produces: [
+          'application/json'
+        ],
+        tags: [],
+        responses: {
+          '200': {
+            description: ''
+          }
+        },
+        parameters: [
+          {in: "query", name: "url"}
+        ]
+
+
+      }
+    }
+
+  }
 ];
 
 var prefix = "/api/v1";
