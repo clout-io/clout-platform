@@ -30,4 +30,8 @@ export class FeedService {
     return this.api.image(`${this.path}/img/upload`, img)
       .map((res: any) => res);
   }
+
+  editFeed(id: string, options: any): Observable<any> {
+    return this.api.post(`${this.path}/news/${id}`, options);
+  }
 }

@@ -1379,7 +1379,7 @@ a.comments__add {
 
     .dropdown {
       margin: -31px -12px 0 0;
-      
+
       .dropdown-toggle {
         padding: 0 10px 10px 10px;
         cursor: pointer;
@@ -1950,6 +1950,10 @@ ___________________________*/
   margin-right: 15px;
   position: relative;
 
+  &.edit {
+    background-color: transparent;
+  }
+
   a {
     background-image: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjczNDUuMTQ2IDMzMzQuMTQ2IDkuNzA3IDkuNzA3Ij4gIDxkZWZzPiAgICA8c3R5bGU+ICAgICAgLmNscy0xIHsgICAgICAgIGZpbGw6IG5vbmU7ICAgICAgICBzdHJva2U6ICNlZmVmZWY7ICAgICAgfSAgICA8L3N0eWxlPiAgPC9kZWZzPiAgPGcgaWQ9Ikdyb3VwXzEwMiIgZGF0YS1uYW1lPSJHcm91cCAxMDIiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDcxODAgMTY3MikiPiAgICA8bGluZSBpZD0iTGluZV8xNzUiIGRhdGEtbmFtZT0iTGluZSAxNzUiIGNsYXNzPSJjbHMtMSIgeDI9IjkiIHkyPSI5IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxNjUuNSAxNjYyLjUpIi8+ICAgIDxsaW5lIGlkPSJMaW5lXzE3NiIgZGF0YS1uYW1lPSJMaW5lIDE3NiIgY2xhc3M9ImNscy0xIiB5MT0iOSIgeDI9IjkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDE2NS41IDE2NjIuNSkiLz4gIDwvZz48L3N2Zz4=);
     background-repeat: no-repeat;
@@ -2033,5 +2037,5 @@ ___________________________*/
     font-size: 18px;
     line-height: 21px;
   }
-  
+
 }
