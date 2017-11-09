@@ -13,7 +13,8 @@ import {
   FeedCreateComponent,
   NewsComponent,
   NewsListComponent,
-  NewsListItemComponent
+  NewsListItemComponent,
+  CommunityComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -34,6 +35,7 @@ import { TruncatePipe } from '../pipes';
     NewsComponent,
     NewsListComponent,
     NewsListItemComponent,
+    CommunityComponent,
     TruncatePipe
   ]
 })

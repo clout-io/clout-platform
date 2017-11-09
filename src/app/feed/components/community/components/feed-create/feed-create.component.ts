@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, Renderer, ViewChild, ElementRef } from '@angular/core';
-import { FeedService, BroadcastService } from '../../../services';
+import { FeedService, BroadcastService } from '../../../../../services';
 
 
 @Component({
   selector: 'app-feed-create',
-  templateUrl: './feed-create.component.html'
+  templateUrl: 'feed-create.component.html'
 })
 export class FeedCreateComponent implements OnInit, OnDestroy {
 

@@ -19,7 +19,7 @@ export class LoaderLineComponent implements OnInit, OnDestroy {
     $('.header_loader').sticky({ topSpacing: 0});
 
     this.loader$ = this.broadcastService.subscribe('showLoaderLine', show => {
-      this.showLoader(show);
+      this.showLoader(true);
     });
   }
 

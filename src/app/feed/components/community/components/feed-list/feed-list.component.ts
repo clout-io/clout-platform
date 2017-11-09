@@ -1,10 +1,10 @@
 import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { FeedService, BroadcastService } from '../../../services';
+import { FeedService, BroadcastService } from '../../../../../services';
 
 
 @Component({
   selector: 'app-feed-list',
-  templateUrl: './feed-list.component.html'
+  templateUrl: 'feed-list.component.html'
 })
 export class FeedListComponent implements OnInit, OnDestroy {
   public feeds = [];

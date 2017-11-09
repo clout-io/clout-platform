@@ -5,12 +5,29 @@ import { CoreRoute } from '../core/core.route';
 
 // components
 import { FeedComponent } from './feed.component';
-import { NewsComponent } from './components'
+import { NewsComponent, CommunityComponent } from './components'
 
 const routes: Routes = CoreRoute.withShell([
-  { path: '', redirectTo: '/news', pathMatch: 'full' },
-  { path: 'news', component: FeedComponent,  data: { title: 'News' } },
-  { path: 'news/news', component: NewsComponent,  data: { title: 'News' } }
+  {
+    path: 'feed',
+    component: FeedComponent,
+    data: { title: 'News' },
+    children: [
+      {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'news'
+      },
+      {
+        path: 'news',
+        component: NewsComponent
+      },
+      {
+        path: 'community',
+        component: CommunityComponent
+      }
+    ]
+  }
 ]);
 
 @NgModule({

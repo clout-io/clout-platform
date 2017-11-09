@@ -48,7 +48,7 @@
     </div>
     <div *ngIf="!imageSrc && imageOldSrc" class="add-post__img">
       <div class="upload-img edit">
-        <div class="upload-img" [ngStyle]="{'background-image': 'url(http://haumea.bvblogic.net:8103' + feed?.attachment[0]?.url + ')'}">
+        <div class="upload-img" [ngStyle]="{'background-image': 'url(' + feed?.attachment[0]?.url + ')'}">
           <a href="javascript:void(0)" (click)="removeImage()"></a>
         </div>
       </div>
