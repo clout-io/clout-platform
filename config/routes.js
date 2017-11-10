@@ -690,6 +690,29 @@ var routes = [
       }
     }
 
+  },
+  {
+    method: "GET", path: "/altcoins/favorites/", target:
+    {
+      controller: 'AltcoinController',
+      action: 'favorites',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: '',
+        description: '',
+        produces: [
+          'application/json'
+        ],
+        tags: ['Altcoins'],
+        responses: {
+          '200': {
+            description: ''
+          }
+        }
+      }
+    }
+
   }
 ];
 

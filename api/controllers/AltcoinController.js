@@ -152,6 +152,15 @@ module.exports = {
       }
     )
   },
+  favorites: function (req, res) {
+
+    Altcoin.find({id: ['bitcoin', 'ethereum', 'litecoin']}).then(function (result) {
+      res.json({data: result});
+    }).catch(function (err) {
+      res.json(400, err)
+    })
+
+  },
 
   sync: function (req, res) {
     var moment = require('moment');

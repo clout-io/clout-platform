@@ -42,6 +42,7 @@ module.exports.policies = {
   },
   'AltcoinController': {
     'index': true,
+    'favorites': true,
     'sync': true,//temp
     'history': true,
     'info': true,
