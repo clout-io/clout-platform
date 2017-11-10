@@ -4,12 +4,15 @@
 
 var moment = require('moment');
 var async = require('async');
+const cheerio = require('cheerio');
+const parser = require('rss-parser');
 
 module.exports.schedule = {
   tasks: {
     syncAltcoinHystory: {
       cron: "*/1 * * * *",
       name: "syncAltcoinHystory",
+      options: {priority: "default"},
       task: function (job, done) {
         var start = moment();
         sails.log.debug("Start: syncAltcoinHystory");
@@ -45,6 +48,7 @@ module.exports.schedule = {
     syncAltcoin: {
       cron: "*/2 * * * *",
       name: "syncAltcoin",
+      options: {priority: "highest"},
       task: function (job, done) {
         var date = moment().utc().clone();
         var midnight = date.valueOf().toString();
@@ -88,6 +92,65 @@ module.exports.schedule = {
         }).catch(function (err) {
           console.log(err);
           done();
+        })
+      }
+    },
+
+    syncRss: {
+      cron: "*/15 * * * *",
+      name: "syncRss",
+      options: {priority: "default"},
+      task: function (job, done) {
+        sails.log.info("start");
+
+        RSS.find().limit(1).sort("updatedAt ASC").then(function (rss) {
+          sails.log.info(rss);
+
+          async.map(rss, function (rssItem, callback) {
+            var url = rssItem.rssLink;
+
+            var options = {
+              customFields: {
+                item: ['description', 'image']
+              }
+            };
+
+            parser.parseURL(url, options, function (err, parsed) {
+                if (err) return callback(null, err);
+                async.map(parsed.feed.entries, function (item, cb) {
+
+                  const $ = cheerio.load(item.content);
+                  var img = $('img').attr("src");
+
+                  var createData = {
+                    title: item.title,
+                    description: item.contentSnippet,
+                    pubDate: item.pubDate,
+                    image: img,
+                    link: item.link,
+                    guid: item.guid,
+                    rss: rssItem.id
+                  };
+
+                  Press.findOrCreate({guid: item.guid}, createData).then(function (pressItem) {
+                    rssItem.save(function (err) {
+                      cb(null, pressItem);
+                    })
+                  }).catch(function (err) {
+                    console.log(err)
+                    cb(err);
+                  });
+
+                }, function (err, result) {
+                  callback(err, result)
+                })
+              }
+            )
+          }, function (err, result) {
+            done();
+          });
+
+
         })
       }
     }

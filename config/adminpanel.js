@@ -148,6 +148,14 @@ module.exports.adminpanel = {
     Posts: {
       title: 'Posts',
       model: 'Post'
+    },
+    Rss: {
+      title: 'Rss',
+      model: 'RSS'
+    },
+    Press: {
+      title: 'News',
+      model: 'Press'
     }
   }
 };

@@ -44,7 +44,8 @@ module.exports = {
             description: item.contentSnippet,
             pubDate: item.pubDate,
             image: img,
-            link: item.link
+            link: item.link,
+            guid: item.guid
           };
           Press.findOrCreate({guid: item.guid}, createData).then(function (pressItem) {
             cb(null, pressItem)

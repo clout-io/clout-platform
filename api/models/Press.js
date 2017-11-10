@@ -16,9 +16,32 @@ module.exports = {
       primaryKey: true,
       defaultsTo: function () {
         return "press_" + cryptoRandomString(32);
-      }
-    }
+      },
+    },
 
+    title: {
+      type: "string"
+    },
+    description: {
+      type: "string"
+    },
+    pubDate: {
+      type: "string"
+    },
+    image: {
+      type: "string",
+      url: true
+    },
+    link: {
+      type: "string",
+      url: true
+    },
+    guid: {
+      type: "string"
+    },
+    rss: {
+      model: "RSS"
+    }
   }
 };
 
