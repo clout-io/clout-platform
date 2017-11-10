@@ -2152,38 +2152,87 @@ ___________________________*/
 
 
 .page-list {
-   border-top: 1px solid $color-ac-border;
+   //border-top: 1px solid $color-ac-border;
 
   a {
     font-size: 12px;
     line-height: 16px;
     color: $color-ac-text;
     text-decoration: none;
-    padding: 0 16px;
+    padding: 0 18px 0 17px;
     position: relative;
     white-space: nowrap;
 
-    &:first-child {
+    .owl-stage-outer {
+      border-top: 1px solid $color-ac-border;
+    }
+  }
+
+  .owl-carousel {
+    .owl-stage {
+      white-space: nowrap;
+    }
+
+    .owl-item {
+      display: inline-block;
+      vertical-align: top;
+      float: none;
+
+      &:last-child {
+        a {
+          padding-right: 40px;
+        }
+      }
+
+      &:first-child {
+
+        &:before {
+          display: none;
+        }
+      }
+
+      &:hover {
+        color: $color-ac-link;
+      }
 
       &:before {
-        display: none;
+        content: "";
+        display: block;
+        width: 3px;
+        height: 3px;
+        border-radius: 50%;
+        background: $color-ac-text;
+        position: absolute;
+        left: -2px;
+        top: 11px;
       }
     }
 
-    &:hover {
-      color: $color-ac-link;
-    }
-
-    &:before {
-      content: "";
-      display: block;
-      width: 3px;
-      height: 3px;
-      border-radius: 50%;
-      background: $color-ac-text;
+    .owl-nav {
       position: absolute;
-      left: -2px;
-      top: 6px;
+      left: 0;
+      right: 0;
+      bottom: 0;
+
+      .owl-prev {
+        display: none;
+      }
+
+      .owl-next {
+        font-size: 12px;
+        line-height: 16px;
+        color: $color-ac-text;
+        text-decoration: none;
+        padding: 0 10px;
+        position: absolute;
+        right: 0;
+        bottom: 1px;
+        background: linear-gradient(to right, rgba(30, 87, 153, 0) 0%, rgba(255, 255, 255, 1) 14%, rgba(255, 255, 255, 1) 100%);
+
+        &:hover {
+          color: $color-ac-link;
+        }
+      }
     }
   }
 }

@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { OwlModule } from 'ng2-owl-carousel';
 
 // modules
 import { AppRoutingModule } from './app-routing.module';
@@ -43,6 +44,7 @@ import { AppComponent } from './app.component';
     // base routing modules
     AppRoutingModule,
     HttpModule,
+    OwlModule,
     InfiniteScrollModule
   ],
   providers: [AuthService, ApiService, ApiHelperService, BroadcastService, NumberSeparator, ModalService, CommentService, FollowService, FeedService],

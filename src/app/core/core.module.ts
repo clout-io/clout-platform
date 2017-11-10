@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
+import { OwlModule } from 'ng2-owl-carousel';
+
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PercentPipe } from './../pipes';
@@ -34,7 +36,8 @@ import {
     NgbModule,
     RouterModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    OwlModule
   ],
   declarations: [
     HeaderComponent,

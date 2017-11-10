@@ -39,9 +39,44 @@
     </div><!-- .header__actions -->
   </div><!-- .container -->
 
-  <div class="page-list">
+  <!--<div class="page-list">
     <a routerLink="/icos">ICO's</a>
     <a routerLink="/allcoins">All</a>
-  </div>
+  </div>-->
+
+  <owl-carousel class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
+    <a routerLink="/icos">ICO's</a>
+    <a href="javascript:void(0)">Educational Resources</a>
+    <a routerLink="/allcoins">All</a>
+    <a href="javascript:void(0)">Bitcoin</a>
+    <a href="javascript:void(0)">Ethereum</a>
+    <a href="javascript:void(0)">Bitcoin Cash</a>
+    <a href="javascript:void(0)">Ripple</a>
+    <a href="javascript:void(0)">Litecoin</a>
+    <a href="javascript:void(0)">Dash</a>
+    <a href="javascript:void(0)">NEO</a>
+    <a href="javascript:void(0)">NEM</a>
+    <a href="javascript:void(0)">Monero</a>
+    <a href="javascript:void(0)">Ethereum Classic</a>
+    <a href="javascript:void(0)">IOTA</a>
+    <a href="javascript:void(0)">Qtum</a>
+    <a href="javascript:void(0)">Ethereum Classic</a>
+    <a routerLink="/icos">ICO's</a>
+    <a href="javascript:void(0)">Educational Resources</a>
+    <a routerLink="/allcoins">All</a>
+    <a href="javascript:void(0)">Bitcoin</a>
+    <a href="javascript:void(0)">Ethereum</a>
+    <a href="javascript:void(0)">Bitcoin Cash</a>
+    <a href="javascript:void(0)">Ripple</a>
+    <a href="javascript:void(0)">Litecoin</a>
+    <a href="javascript:void(0)">Dash</a>
+    <a href="javascript:void(0)">NEO</a>
+    <a href="javascript:void(0)">NEM</a>
+    <a href="javascript:void(0)">Monero</a>
+    <a href="javascript:void(0)">Ethereum Classic</a>
+    <a href="javascript:void(0)">IOTA</a>
+    <a href="javascript:void(0)">Qtum</a>
+  </owl-carousel>
+
   <app-loader-line></app-loader-line>
 </header><!-- .header -->
