@@ -6,6 +6,7 @@ var moment = require('moment');
 var async = require('async');
 const cheerio = require('cheerio');
 const parser = require('rss-parser');
+const ogs = require('open-graph-scraper');
 
 module.exports.schedule = {
   tasks: {
@@ -119,28 +120,36 @@ module.exports.schedule = {
                 if (err) return callback(null, err);
                 async.map(parsed.feed.entries, function (item, cb) {
 
-                  const $ = cheerio.load(item.content);
+                  var $ = cheerio.load(item.content);
                   var img = $('img').attr("src");
 
-                  var createData = {
-                    title: item.title,
-                    description: item.contentSnippet,
-                    pubDate: item.pubDate,
-                    image: img,
-                    link: item.link,
-                    guid: item.guid,
-                    rss: rssItem.id
-                  };
+                  if (!img) {
+                    $ = cheerio.load(item["content:encoded"]);
+                    img = $('img').attr("src");
+                  }
 
-                  Press.findOrCreate({guid: item.guid}, createData).then(function (pressItem) {
-                    rssItem.save(function (err) {
-                      cb(null, pressItem);
-                    })
-                  }).catch(function (err) {
-                    console.log(err)
-                    cb(err);
+                  const optionsOg = {'url': item.link};
+                  ogs(optionsOg, function (err, results) {
+                    if (err) return res.json(400, err);
+                    if (!img) {
+                      img = results.data.ogImage.url;
+                    }
+                    console.log(img)
+                    var createData = {
+                      title: item.title,
+                      description: item.contentSnippet,
+                      pubDate: item.pubDate,
+                      image: img,
+                      link: item.link,
+                      guid: item.guid,
+                      rss: rssItem.id
+                    };
+                    Press.findOrCreate({guid: item.guid}, createData).then(function (pressItem) {
+                      cb(null, pressItem)
+                    }).catch(function (err) {
+                      cb(err);
+                    });
                   });
-
                 }, function (err, result) {
                   callback(err, result)
                 })
@@ -149,8 +158,6 @@ module.exports.schedule = {
           }, function (err, result) {
             done();
           });
-
-
         })
       }
     }
