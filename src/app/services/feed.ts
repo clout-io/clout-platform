@@ -44,4 +44,8 @@ export class FeedService {
     return this.api.get(`${this.path}/press?page=${nextPage}&per_page=${perPage}`)
       .map((res: any) => res);
   }
+
+  getFavoriteCoins(): Observable<any> {
+    return this.api.get(`${this.path}/altcoins/favorites/`);
+  }
 }

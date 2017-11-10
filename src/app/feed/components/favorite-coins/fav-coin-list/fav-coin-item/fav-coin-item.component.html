@@ -1,0 +1,15 @@
+<li class="coin-list-item favorite-coin-item">
+  <a href="javascript:void(0)">
+      <span class="coin-list-item__img">
+        <img src="{{favCoin?.image}}"
+             onerror="this.src='../../../../../assets/defaultCoin.png'" alt="">
+      </span>
+    <span class="coin-list-item__content" [ngClass]="{'coin-list-item--negative' : favCoin.percent_change_24h < 0}">
+        <strong>{{favCoin.name}}</strong>
+        <span class="coin-list-item__details">
+          <span>$ {{favCoin.price_usd}}</span>
+          <span>{{favCoin.percent_change_24h | percentPipe}}</span>
+        </span>
+      </span>
+  </a>
+</li>

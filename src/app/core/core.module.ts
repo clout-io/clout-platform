@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PercentPipe } from './../pipes';
 
 // components
 import {
@@ -50,12 +51,14 @@ import {
     FollowBtnComponent,
     LoaderLineComponent,
     ResetPasswordComponent,
+    PercentPipe
   ],
   exports: [
     CommentListComponent,
     ModalComponent,
     FollowBtnComponent,
-    LoaderLineComponent
+    LoaderLineComponent,
+    PercentPipe
   ]
 })
 export class CoreModule { }

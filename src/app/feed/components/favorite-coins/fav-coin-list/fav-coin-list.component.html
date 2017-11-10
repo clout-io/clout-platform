@@ -1,0 +1,9 @@
+<div class="widget">
+  <h4 class="widget__title favorite-coin-widget-title">Your favorite coins</h4>
+  <ul>
+    <app-fav-coin-item *ngFor="let coin of coinList" [favCoin]="coin"></app-fav-coin-item>
+  </ul>
+  <div class="add-favorite-coin-block">
+    <a href="javascript:void(0)"><span>+</span> Coin</a>
+  </div>
+</div>

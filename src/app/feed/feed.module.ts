@@ -14,7 +14,13 @@ import {
   NewsComponent,
   NewsListComponent,
   NewsListItemComponent,
-  CommunityComponent
+  CommunityComponent,
+  FavoriteCoinsComponent,
+  FavCoinListComponent,
+  FavCoinItemComponent,
+  CloutDescSidebarComponent,
+  PopularSearchSidebarComponent,
+  AdsBlockSidebarComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -36,7 +42,13 @@ import { TruncatePipe } from '../pipes';
     NewsListComponent,
     NewsListItemComponent,
     CommunityComponent,
-    TruncatePipe
+    TruncatePipe,
+    FavoriteCoinsComponent,
+    FavCoinListComponent,
+    FavCoinItemComponent,
+    CloutDescSidebarComponent,
+    PopularSearchSidebarComponent,
+    AdsBlockSidebarComponent
   ]
 })
 export class FeedModule { }

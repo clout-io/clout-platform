@@ -15,7 +15,6 @@ import {
   AltcoinItemComponent,
   ChartTabComponent
 } from './components';
-import { PercentPipe, NumberSeparator } from '../pipes';
 
 @NgModule({
   imports: [
@@ -33,7 +32,6 @@ import { PercentPipe, NumberSeparator } from '../pipes';
     FeatureCommentListComponent,
     FeatureCommentItemComponent,
     AltcoinItemComponent,
-    PercentPipe,
     ChartTabComponent
   ]
 })

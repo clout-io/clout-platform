@@ -254,6 +254,7 @@ $color-ac-success: #0C9611;
 $color-ac-warning: #CC3232;
 
 $color-ac-link: #008F8D;
+$color-feed-text: #444444;
 
 
 $border-radius: 4px;
@@ -712,6 +713,20 @@ ___________________________*/
   }
 }
 
+.add-favorite-coin-block {
+  padding-top: 20px;
+  text-align: center;
+
+  a {
+    color: $color-ac-link;
+    font-weight: bold;
+
+    span {
+      font-weight: normal;
+    }
+  }
+}
+
 .coin-list-item {
   border-bottom: 1px solid $color-ac-border;
 
@@ -742,6 +757,14 @@ ___________________________*/
     &.active {
       background-color: #f0f0f0;
       transition: color ease-in 0ms;
+    }
+  }
+
+  &.favorite-coin-item {
+    a {
+      @media #{$desktop-sm} {
+        padding: 24px 0;
+      }
     }
   }
 
@@ -1337,6 +1360,7 @@ a.comments__add {
 
     p {
       margin: 0;
+      color: $color-feed-text;
     }
 
     .comments__add {
@@ -1481,6 +1505,7 @@ a.comments__add {
   &__text {
     border-bottom: 1px solid $color-ac-border;
     padding: 19px 0 18px 0;
+    color: $color-feed-text;
   }
 
   .comments__head {
@@ -1773,14 +1798,32 @@ ___________________________*/
   border-radius: 4px;
   padding: 20px 30px;
   margin-bottom: 30px;
+  color: $color-feed-text;
 
   &__title {
+    font-weight: bold;
     margin: 0 0 20px 0;
     padding: 7px 0 25px 0;
     font-size: 15px;
     line-height: 17px;
-    color: $color-ac-text-alt;
+    //color: $color-ac-text-alt;
+    color: $color-feed-text;
     border-bottom: 1px solid $color-ac-border;
+
+    &.favorite-coin-widget-title {
+      margin-bottom: 0;
+    }
+  }
+
+  .popular-search-list {
+    li {
+      line-height: 28px;
+    }
+  }
+
+  a {
+    color: $color-ac-link;
+    font-size: 16px;
   }
 
   img {
@@ -2037,7 +2080,7 @@ ___________________________*/
       padding: 9px 0 0 0;
       font-size: 15px;
       line-height: 21px;
-      color: $color-ac-text;
+      color: $color-feed-text;
       text-align: justify;
     }
   }
