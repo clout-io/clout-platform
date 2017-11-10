@@ -389,7 +389,7 @@ ___________________________*/
   background: $color-ac-white;
   border-bottom: 1px solid $color-ac-border;
 
-  
+
 
   .dropdown {
 
@@ -947,6 +947,15 @@ ___________________________*/
       border-bottom: 0;
       border-right: 1px solid $color-ac-border;
     }
+  }
+
+  .altcoin-details-list {
+    border-bottom: none;
+  }
+
+  .follow-btn-container {
+    display: block;
+    text-align: right;
   }
 
   &__share {

@@ -14,7 +14,7 @@
   </div>
 </div><!-- .coin-description -->
 <div class="coin-details">
-  <ul class="coin-details-list">
+  <ul class="coin-details-list altcoin-details-list">
     <li>
       <span>Market Cap:</span>
       <span>{{altcoin ? '$ ' + (altcoin.market_cap_usd | number) : ''}}</span><!--<br>2,115,760 {{altcoin.symbol}}</span>-->
@@ -31,8 +31,11 @@
       <span>Max Supply:</span>
       <span>100,000,000,000 XRP</span>
     </li>-->
+    <li class="follow-btn-container">
+      <app-follow-btn [coin]="altcoin"></app-follow-btn>
+    </li>
   </ul>
-  <div class="coin-details__share">
+  <!--<div class="coin-details__share">
     <ul class="social-links">
       <li>
         <a href="#" class="icon icon_twitter"></a>
@@ -64,6 +67,5 @@
       <a href="#">Whitepaper</a>
       <a href="#">Blog</a>
     </div>
-    <app-follow-btn [coin]="altcoin"></app-follow-btn>
-  </div>
+  </div>-->
 </div><!-- .coin-details -->
