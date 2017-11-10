@@ -1,14 +1,14 @@
 <header class="header">
   <div class="container">
     <div class="header__start">
-      <a href="/" class="header__logo"></a>
+      <a routerLink="/home" class="header__logo"></a>
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{currentUrl}}
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-          <a class="dropdown-item" routerLink="/feed">News</a>
+          <a class="dropdown-item" routerLink="/home">News</a>
           <a class="dropdown-item" routerLink="/allcoins">Allcoins</a>
           <a class="dropdown-item" routerLink="/icos">Icos</a>
         </div>

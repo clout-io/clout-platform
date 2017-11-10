@@ -37,9 +37,9 @@ import { AppComponent } from './app.component';
     NgbModule.forRoot(),
     // internal modules
     CoreModule,
+    FeedModule,
     AltcoinModule,
     IcoModule,
-    FeedModule,
     // base routing modules
     AppRoutingModule,
     HttpModule,

@@ -5,11 +5,16 @@ import { CoreRoute } from '../core/core.route';
 
 // components
 import { FeedComponent } from './feed.component';
-import { NewsComponent, CommunityComponent } from './components'
+import { NewsComponent, CommunityComponent } from './components';
 
 const routes: Routes = CoreRoute.withShell([
   {
-    path: 'feed',
+    path: '',
+    redirectTo: '/home/news',
+    pathMatch: 'full'
+  },
+  {
+    path: 'home',
     component: FeedComponent,
     data: { title: 'News' },
     children: [
