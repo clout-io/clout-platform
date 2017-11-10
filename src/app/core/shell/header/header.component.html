@@ -2,7 +2,7 @@
   <div class="container">
     <div class="header__start">
       <a routerLink="/home" class="header__logo"></a>
-      <div class="dropdown">
+      <!-- <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink"
            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           {{currentUrl}}
@@ -12,7 +12,7 @@
           <a class="dropdown-item" routerLink="/allcoins">Allcoins</a>
           <a class="dropdown-item" routerLink="/icos">Icos</a>
         </div>
-      </div>
+      </div> -->
     </div><!-- .header__start -->
     <div class="header__search">
       <form>
@@ -23,8 +23,10 @@
     </div><!-- .header__search -->
     <div class="header__actions">
       <div class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <a href="#" class="header__user" style="background-image: url('http://cdn.cavemancircus.com//wp-content/uploads/images/2017/jan/rachel_cook/rachel_cook_6.jpg')" title="{{userEmail}}"></a>
+        <a href="#" class="header__user" title="{{userEmail}}"></a>
       </div>
+
+      <a href="#" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
       <!--<div class="action">
         <a href="#"></a>
       </div>
@@ -36,5 +38,10 @@
       </div>
     </div><!-- .header__actions -->
   </div><!-- .container -->
+
+  <div class="page-list">
+    <a routerLink="/icos">ICO's</a>
+    <a routerLink="/allcoins">All</a>
+  </div>
   <app-loader-line></app-loader-line>
 </header><!-- .header -->
