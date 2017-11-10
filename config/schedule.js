@@ -76,7 +76,7 @@ module.exports.schedule = {
                   price_btc: item.price_btc,
                   price_usd: item.price_usd,
                   market_cap_by_available_supply: item.market_cap_usd,
-                  "24h_volume_usd": item["24h_volume_usd"]
+                  volume_usd: item["24h_volume_usd"]
                 }).then(function (rdata) {
                   cb(null, item.id)
                 });
