@@ -9,7 +9,8 @@ module.exports.schedule = {
   tasks: {
     syncAltcoinHystory: {
       cron: "*/1 * * * *",
-      task: function () {
+      name: "syncAltcoinHystory",
+      task: function (job, done) {
         var start = moment();
         sails.log.debug("Start: syncAltcoinHystory");
         Altcoin.findOne({history_sync: {not: true}}).exec(function (err, altcoin) {
@@ -34,7 +35,8 @@ module.exports.schedule = {
             }, function (err, result) {
               altcoin.history_sync = true;
               altcoin.save();
-              sails.log.debug("Sync complete in:", (moment() - start) / 1000);
+              sails.log.debug("syncAltcoinHystory complete in:", (moment() - start) / 1000);
+              done()
             })
           })
         })
@@ -42,7 +44,8 @@ module.exports.schedule = {
     },
     syncAltcoin: {
       cron: "*/2 * * * *",
-      task: function () {
+      name: "syncAltcoin",
+      task: function (job, done) {
         var date = moment().utc().clone();
         var midnight = date.valueOf().toString();
         var start = moment();
@@ -50,12 +53,11 @@ module.exports.schedule = {
 
         Altcoin.find().sort("updatedAt ASC").limit(50).then(function (altcoins) {
           async.map(altcoins, function (item, cb) {
-            sails.log.debug("Sync: ", item.id);
             CoinMarketCap.getSingleTicker(item.id).then(function (info) {
               info = info[0];
               item.price_btc = info.price_btc;
               item.price_usd = info.price_usd;
-              item["24h_volume_usd"] = item["info.24h_volume_usd"];
+              item["24h_volume_usd"] = info["24h_volume_usd"];
               item.market_cap_usd = info.market_cap_usd;
               item.available_supply = info.available_supply;
               item.total_supply = info.total_supply;
@@ -69,7 +71,7 @@ module.exports.schedule = {
                   timestamp: midnight,
                   price_btc: item.price_btc,
                   price_usd: item.price_usd,
-                  market_cap_by_available_supply: item.total_supply,
+                  market_cap_by_available_supply: item.market_cap_usd,
                   "24h_volume_usd": item["24h_volume_usd"]
                 }).then(function (rdata) {
                   cb(null, item.id)
@@ -79,11 +81,13 @@ module.exports.schedule = {
               cb(null, "Not found: " + item.id);
             })
           }, function (err, result) {
-            sails.log.debug("Sync complete in:", (moment() - start) / 1000);
+            sails.log.debug("syncAltcoin complete in:", (moment() - start) / 1000);
+            done();
             return result;
           })
         }).catch(function (err) {
-          console.log(err)
+          console.log(err);
+          done();
         })
       }
     }
