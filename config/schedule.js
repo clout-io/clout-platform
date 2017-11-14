@@ -19,6 +19,9 @@ module.exports.schedule = {
         sails.log.debug("Start: syncAltcoinHystory");
         Altcoin.findOne({history_sync: {not: true}}).exec(function (err, altcoin) {
           if (err) return err;
+          if (!altcoin) {
+            return done();
+          }
           sails.log.debug("Query complete in:", (moment() - start) / 1000, "->", altcoin.id);
           CoinMarketCap.getHistory(altcoin.id).then(function (info) {
 
