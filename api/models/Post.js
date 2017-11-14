@@ -43,6 +43,10 @@ module.exports = {
     clc: {
       type: "integer",
       defaultsTo: 0
+    },
+    category: {
+      model: "Category",
+      required: true
     }
   },
 
@@ -57,6 +61,20 @@ module.exports = {
     } else {
       next()
     }
+  },
+  beforeValidate: function (values, next) {
+    if(!values.category){
+      return next({"category": "Invalid category"})
+    }
+    Category.findOne(values.category).then(function (category) {
+      if (!category) {
+        next({"category": "Invalid category"})
+      } else {
+        next()
+      }
+    }).catch(function (err) {
+      next(err)
+    })
   },
 
   beforeUpdate: function (values, next) {

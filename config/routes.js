@@ -480,6 +480,10 @@ var routes = [
               "type": "string",
               "description": "link for preview"
             },
+            "category": {
+              "type": "string",
+              "description": "category id required"
+            },
             "attachment": {
               "type": "array",
               "description": "attachment ids",
@@ -527,9 +531,32 @@ var routes = [
       tags: [
         'Post'
       ],
+      parameters: [
+        {in: "query", name: "page"},
+        {in: "query", name: "per_page"},
+        {in: "query", name: "category"}
+      ],
       responses: {
         '200': {
           description: 'newsfeed'
+        }
+      }
+    }
+  }
+  },
+  {
+    method: "GET", path: "/categories", target: {
+    controller: "CategoryController", action: "index",
+    swagger: {
+      methods: ['GET'],
+      summary: 'post categories list ',
+      description: 'post categories list',
+      tags: [
+        'Post'
+      ],
+      responses: {
+        '200': {
+          description: 'post categories list'
         }
       }
     }

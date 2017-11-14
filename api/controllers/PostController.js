@@ -14,7 +14,13 @@ module.exports = {
   index: function (req, res) {
     var perPage = req.query.per_page || 20;
     var currentPage = req.query.page || 1;
+    var category = req.query.category;
     var conditions = {};
+
+    if (category) conditions.category = category;
+    console.log(category)
+
+
     var userId = null;
 
     if (req.user) {
@@ -22,7 +28,7 @@ module.exports = {
     }
 
     pager.paginate(
-      Post, conditions, currentPage, perPage, ["owner", "attachment"], 'createdAt DESC')
+      Post, conditions, currentPage, perPage, ["owner", "attachment", "category"], 'createdAt DESC')
       .then(function (records) {
         async.map(records.data,
           function (item, cb) {

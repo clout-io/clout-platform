@@ -156,6 +156,10 @@ module.exports.adminpanel = {
     Press: {
       title: 'News',
       model: 'Press'
+    },
+    Category: {
+      title: 'Categories',
+      model: 'Category'
     }
   }
 };

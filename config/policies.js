@@ -79,5 +79,9 @@ module.exports.policies = {
   PressController: {
     'index': true,
     'sync': true
+  },
+  CategoryController: {
+    'index': true
+
   }
 };

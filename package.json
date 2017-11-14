@@ -76,6 +76,7 @@
     "sails-pager": "^2.1.0",
     "sails-swagger": "git+https://github.com/mobyinc/sails-magik-swagger.git",
     "sendgrid": "^5.2.3",
+    "slug": "^0.9.1",
     "striptags": "^3.1.0",
     "swagger-ui": "^2.2.10",
     "tsickle": "^0.24.1",
