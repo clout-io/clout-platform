@@ -58,6 +58,7 @@
     "ngx-infinite-scroll": "^0.6.1",
     "node-cron": "^1.2.1",
     "normalize-range": "^0.1.2",
+    "npm-text-parser": "^1.0.8",
     "nprogress": "^0.2.0",
     "num2fraction": "^1.2.2",
     "open-graph-scraper": "^3.1.2",

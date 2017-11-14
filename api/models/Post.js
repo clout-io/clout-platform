@@ -6,6 +6,7 @@
  */
 var cryptoRandomString = require('crypto-random-string');
 const ogs = require('open-graph-scraper');
+const textParser = require("npm-text-parser");
 
 module.exports = {
 
@@ -47,6 +48,10 @@ module.exports = {
     category: {
       model: "Category",
       required: true
+    },
+    tags: {
+      collection: "tag",
+      via: "posts"
     }
   },
 
@@ -63,18 +68,60 @@ module.exports = {
     }
   },
   beforeValidate: function (values, next) {
-    if(!values.category){
-      return next({"category": "Invalid category"})
-    }
-    Category.findOne(values.category).then(function (category) {
-      if (!category) {
-        next({"category": "Invalid category"})
-      } else {
-        next()
+    async.waterfall([
+      function (cb) {
+        var tags = textParser.getHashtags(values.text);
+        if (!tags.length) {
+          values.tags = [];
+          return cb(null)
+        }
+
+
+        var find = [];
+        var parsedTags = [];
+        var create = [];
+
+        for (var i in tags) {
+          var tag = tags[i];
+          tag = tag.toLowerCase().replace("#", "");
+          find.push({
+            id: tag
+          });
+          create.push({
+            id: tag.toLowerCase(),
+            name: tag.toLowerCase()
+          });
+          parsedTags.push(tag)
+        }
+
+        Tag.findOrCreate(find, create).then(function (result) {
+          values.tags = parsedTags;
+          values.text = textParser.parseHashtags(values.text);
+          cb(null)
+        })
+
+
+      },
+      function (cb) {
+        if (!values.category) {
+          return next({"category": "Invalid category"})
+        }
+        Category.findOne(values.category).then(function (category) {
+          if (!category) {
+            cb({"category": "Invalid category"})
+          } else {
+            cb()
+          }
+        }).catch(function (err) {
+          cb(err)
+        });
+
       }
-    }).catch(function (err) {
+    ], function (err, result) {
       next(err)
     })
+
+
   },
 
   beforeUpdate: function (values, next) {
@@ -89,5 +136,6 @@ module.exports = {
       next()
     }
   }
-};
+}
+;
 
