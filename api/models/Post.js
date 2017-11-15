@@ -127,6 +127,10 @@ module.exports = {
   beforeValidate: function (values, next) {
     async.waterfall([
       function (cb) {
+        values.text = textParser.parseUrl(values.text);
+        cb()
+      },
+      function (cb) {
         if (!values.category) {
           return next({"category": "Invalid category"})
         }
