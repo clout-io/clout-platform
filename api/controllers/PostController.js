@@ -83,7 +83,7 @@ module.exports = {
         });
       })
     }).catch(function (err) {
-      return res.json(400, err)
+      return res.json(400, err.errorMessage)
     });
   },
   delete: function (req, res) {

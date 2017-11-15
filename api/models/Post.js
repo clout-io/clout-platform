@@ -6,7 +6,6 @@
  */
 var cryptoRandomString = require('crypto-random-string');
 const ogs = require('open-graph-scraper');
-const textParser = require("npm-text-parser");
 const _ = require("underscore");
 
 
@@ -125,29 +124,20 @@ module.exports = {
     }
   },
   beforeValidate: function (values, next) {
-    async.waterfall([
-      function (cb) {
-        values.text = textParser.parseUrl(values.text);
-        cb()
-      },
-      function (cb) {
-        if (!values.category) {
-          return next({"category": "Invalid category"})
-        }
-        Category.findOne(values.category).then(function (category) {
-          if (!category) {
-            cb({"category": "Invalid category"})
-          } else {
-            cb()
-          }
-        }).catch(function (err) {
-          cb(err)
-        });
+    values.text = textParser.parseUrlAndHash(values.text);
 
+    if (!values.category) {
+      return next({"category": "Invalid category"})
+    }
+    Category.findOne(values.category).then(function (category) {
+      if (!category) {
+        next({"category": "Invalid category"})
+      } else {
+        next()
       }
-    ], function (err, result) {
+    }).catch(function (err) {
       next(err)
-    })
+    });
 
 
   },
