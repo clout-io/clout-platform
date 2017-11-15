@@ -1,5 +1,5 @@
 <div class="comments single-post">
-  <div class="comments__body">
+  <div class="comments__body" [ngClass]="{'no_border': editable}">
     <div class="comments__img"
          style="background-image: url('../../../../../assets/avatar.png')"></div>
     <div class="comments__details">
@@ -23,42 +23,29 @@
       </div>
     </div>
   </div>
-  <div class="single-post__text" *ngIf="!editable">
+  <app-post-head *ngIf="editable" [feed]="feed" (onUploadPhoto)="uploadPhoto($event)"></app-post-head>
+  <div class="attachment_post" *ngIf="!editable && !!feed?.linkData">
+    <div class="attachment_url">
+      <a [href]="feed.linkData?.ogUrl" target="_blank">{{feed.linkData?.ogUrl}}</a>
+    </div>
+  </div>
+
+  <div *ngIf="!editable && !feed?.linkData"
+       class="single-post__text">
     {{feed?.text}}
     <div *ngFor="let file of feed.attachment" style="max-width: 100%; padding: 20px 0px 10px 0px;">
       <img style="width: 100%;" [src]="file.url" />
     </div>
   </div>
-  <div *ngIf="editable">
-    <br>
-    <div class="add-post__head">
-      <a href="javascript:void(0)" class="active">Share an Update</a>
-      <a href="javascript:void(0)" (click)="triggerToInput()" >Upload Photo</a>
-      <!--<a href="#">Write an Article</a>-->
-    </div>
-    <div class="add-post__text edit" contenteditable="true" #feedtext>
-      {{feed?.text}}
-    </div>
-    <input accept="image/gif, image/jpeg, image/png" type="file"
-           (change)="handleUpload($event)" #uploadPicture style="visibility: hidden; height: 0px;"/>
-    <div *ngIf="imageSrc" class="add-post__img">
-      <div class="upload-img" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}">
-        <a href="javascript:void(0)" (click)="removeImage()"></a>
-      </div>
-    </div>
-    <div *ngIf="!imageSrc && imageOldSrc" class="add-post__img">
-      <div class="upload-img edit">
-        <div class="upload-img" [ngStyle]="{'background-image': 'url(' + feed?.attachment[0]?.url + ')'}">
-          <a href="javascript:void(0)" (click)="removeImage()"></a>
-        </div>
-      </div>
-    </div>
-    <div class="comments__footer text-right">
-      <button class="btn btn--secondary" (click)="cancel()">Cancel</button>
-      <button class="btn btn--primary" (click)="save()">Save</button>
-    </div>
+  <div>
+    <app-attachment-post [feed]="feed"
+                         [imageSrc]="imageSrc"
+                         [loadImgId]="loadImgId"
+                         [editable]="editable"
+                         [text]="feed.text"
+                         (onDoAction)="onDoAction($event)">
+    </app-attachment-post>
   </div>
-
   <div class="single-post__comments" *ngIf="!editable">
     <app-comment-list [item]="feed" [type]="'feed'"></app-comment-list>
   </div>

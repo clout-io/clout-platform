@@ -1,6 +1,11 @@
-import { Component, OnInit, Input, Output, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FeedService } from '../../../../../../services';
 import * as moment from 'moment';
+
+class Action {
+  key: string;
+  payload: any;
+}
 
 @Component({
   selector: 'app-feed-item',
@@ -12,83 +17,51 @@ export class FeedItemComponent implements OnInit {
   createDate: string = '';
   editable = false;
 
-  public imageSrc;
-  public imageOldSrc;
-  public hasPublish: boolean = false;
+  public imageSrc: string;
   public loadImgId: string;
-  public formData: FormData = new FormData();
-  @ViewChild('uploadPicture') uploadPicture: ElementRef;
-  @ViewChild('feedtext') feedTextDivEl: ElementRef;
-  private file: any;
 
   constructor(
-    private renderer: Renderer,
-    private feedService: FeedService
+    private feedService: FeedService,
   ) { }
 
   ngOnInit() {
+    this.showLinkData(true);
     this.createDate = moment(this.feed.createdAt).fromNow();
-    this.imageOldSrc = this.feed.attachment.length ? this.feed.attachment[0].url : null;
   }
 
-  /**/
-  triggerToInput() {
-    let event = new MouseEvent('click');
-    this.renderer.invokeElementMethod(
-      this.uploadPicture.nativeElement, 'dispatchEvent', [event]);
+  private showLinkData(show: boolean) {
+    if (!!this.feed.linkData) { this.feed.linkData.show = show; }
   }
 
-  handleUpload($event): void {
-    this.readThis($event.target);
-  }
-
-  readThis(inputValue: any) : void {
-    const file:File = inputValue.files[0];
-    const readerImage:FileReader = new FileReader();
-    readerImage.onloadend = ((event) => {
-      if (!event.returnValue) {
-        return false;
-      }
-      if (file.size > 10*1000000) {
-        return false;
-      }
-      this.loadImagePreview(file);
-    });
-    readerImage.readAsDataURL(file);
-  }
-
-  loadImagePreview(file) {
-    if (!file)
-      return false;
-
-    let formData:FormData = new FormData();
-    formData.append('img', file, file.name);
-
-    this.feedService.loadImage(formData)
-      .subscribe(responce => {
-        this.file = file;
-        this.imageSrc = window.URL.createObjectURL(file);
-        this.hasPublish = true;
-        this.loadImgId = responce[0].id;
-      }, (error) => {
-        this.imageSrc = null;
-        this.file = null;
-        this.loadImgId = null;
-      });
+  uploadPhoto(data) {
+    this.loadImgId = data.loadImgId;
+    this.imageSrc = data.imageSrc;
   }
 
   removeImage() {
     this.imageSrc = null;
-    this.file = null;
     this.loadImgId = null;
-    this.hasPublish = false;
-    this.imageOldSrc = null;
   }
-  /**/
+
+  onDoAction(action: Action) {
+    switch (action.key) {
+      case 'removeImage': this.removeImage(); break;
+      case 'cancel': this.cancel(); break;
+      case 'save': this.save(action.payload); break;
+      case 'showLinkData': this.showLinkData(action.payload); break;
+    }
+  }
+
+  editFlag(edit: boolean) {
+    this.editable = edit;
+  }
 
   edit() {
-    this.editable = true;
-    this.imageOldSrc = this.feed.attachment.length ? this.feed.attachment[0].url : null;
+    this.editFlag(true);
+    if (this.feed.attachment.length) {
+      this.imageSrc = this.feed.attachment[0].url;
+      this.loadImgId = this.feed.attachment[0].id;
+    }
   }
 
   delete() {
@@ -102,33 +75,25 @@ export class FeedItemComponent implements OnInit {
   }
 
   cancel() {
-    this.editable = false;
+    this.removeImage();
+    this.showLinkData(true);
+    this.editFlag(false);
   }
 
-  save() {
-    if (!this.feedTextDivEl.nativeElement.innerText)
-      return false;
-
-    let params = {
-      text: this.feedTextDivEl.nativeElement.innerText
-    };
-
-    if (this.loadImgId) {
-      params['attachment'] = [this.loadImgId];
-    } else if (!this.imageOldSrc) {
-      params['attachment'] = [];
-    }
+  save(data) {
+    const params = {text: data.text, attachment: data.attachment};
+    params['link'] = !!data.linkData ? data.linkData.ogUrl : null;
+    params['category'] = 'opinion';
+    if (!data.linkData) { params['linkData'] = null; }
 
     this.feedService.editFeed(this.feed.id, params)
-      .subscribe(data => {
-        this.feed.attachment = data.attachment;
-        this.feed.text = params.text;
-        this.imageSrc = null;
-        this.imageOldSrc = null;
-        this.file = null;
-        this.hasPublish = false;
-        this.loadImgId = null;
+      .subscribe(responce => {
+        const {text, link, linkData} = responce;
+        this.feed.text = text;
+        this.feed.link = link;
+        this.feed.linkData = linkData;
+        this.feed.attachment = responce.attachment;
         this.cancel();
-      });
+      }, error => this.cancel());
   }
 }

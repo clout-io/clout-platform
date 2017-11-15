@@ -14,9 +14,10 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   public hasPublish: boolean = false;
   public formData: FormData = new FormData();
   public loadImgId: string;
+  public linkData = null;
 
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
-  @ViewChild("feedtext") feedTextDivEl: ElementRef;
+  @ViewChild('feedtext') feedTextDivEl: ElementRef;
 
   private file: any;
 
@@ -30,26 +31,51 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
     this.feedText = this.placeHolder;
   }
 
+  onGetLinkData(responce) {
+    this.linkData = responce.data;
+  }
+
   feedCreate() {
-    if (!this.feedTextDivEl.nativeElement.innerHTML)
-      return false;
+    if (!!this.linkData) {
+      const params = {
+        text: this.linkData.ogDescription,
+        link: this.linkData.ogUrl,
+        category: 'opinion'
+      };
+      if (this.loadImgId) { params['attachment'] = [this.loadImgId]; }
 
-    let params = {
-      text: this.feedTextDivEl.nativeElement.innerHTML == this.placeHolder ? '' : this.feedTextDivEl.nativeElement.innerHTML
-    };
+      this.feedService.feedCreate(params)
+        .subscribe(data => {
+          this.linkData = null;
+          this.feedTextDivEl.nativeElement.innerHTML = this.placeHolder;
+          this.imageSrc = null;
+          this.file = null;
+          this.hasPublish = false;
+          this.loadImgId = null;
+          this.broadcastService.broadcast('updateNewsList', data);
+        });
+    } else {
+      if (!this.feedTextDivEl.nativeElement.innerHTML)
+        return false;
 
-    if (this.loadImgId)
-      params['attachment'] = [this.loadImgId];
+      let params = {
+        text: this.feedTextDivEl.nativeElement.innerHTML == this.placeHolder ? '' : this.feedTextDivEl.nativeElement.innerHTML
+      };
 
-    this.feedService.feedCreate(params)
-      .subscribe(responce => {
-        this.feedTextDivEl.nativeElement.innerHTML = this.placeHolder;
-        this.imageSrc = null;
-        this.file = null;
-        this.hasPublish = false;
-        this.loadImgId = null;
-        this.broadcastService.broadcast('updateNewsList', responce);
-      });
+      if (this.loadImgId)
+        params['attachment'] = [this.loadImgId];
+
+      params['category'] = 'opinion';
+
+      this.feedService.feedCreate(params)
+        .subscribe(responce => {
+          this.feedTextDivEl.nativeElement.innerHTML = this.placeHolder;
+          this.imageSrc = null;
+          this.file = null;
+          this.hasPublish = false;
+          this.loadImgId = null;
+        });
+    }
   }
 
   triggerToInput() {
@@ -61,6 +87,8 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   removeImage() {
     this.imageSrc = null;
     this.file = null;
+    this.linkData = null;
+    this.loadImgId = null;
 
     if (this.feedTextDivEl.nativeElement.innerHTML === this.placeHolder) {
       this.hasPublish = false;

@@ -29,6 +29,7 @@ import {
 import {
   CommentItemComponent
 } from './components/comment-list/components';
+import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data-by-url.directive';
 
 @NgModule({
   imports: [
@@ -54,14 +55,16 @@ import {
     FollowBtnComponent,
     LoaderLineComponent,
     ResetPasswordComponent,
-    PercentPipe
+    PercentPipe,
+    AutomaticGetDataByUrlDirective
   ],
   exports: [
     CommentListComponent,
     ModalComponent,
     FollowBtnComponent,
     LoaderLineComponent,
-    PercentPipe
+    PercentPipe,
+    AutomaticGetDataByUrlDirective
   ]
 })
 export class CoreModule { }

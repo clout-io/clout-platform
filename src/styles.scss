@@ -1576,6 +1576,10 @@ a.comments__add {
 
     flex-flow: row wrap;
 
+    &.no_border {
+      border: none;
+    }
+
     @media #{$phone-lg} {
       flex-flow: row nowrap;
     }
@@ -2070,6 +2074,51 @@ ___________________________*/
   background-size: 40px 40px;
   background-position: center center;
   background-repeat: no-repeat;
+}
+
+.attachment_post {
+
+  &.edit {
+    margin-bottom: 18px;
+  }
+
+  .attachment-img {
+    width: 100%;
+    height: 250px;
+    background-position: center center;
+  }
+
+  .attachment-title {
+    color: $color-ac-text-alt;
+    font-size: 18px;
+    font-weight: 600;
+    transition: none;
+
+    &:hover {
+      color: $color-ac-link;
+      cursor: pointer;
+    }
+  }
+
+  .attachment_desciption {
+    height: 114px;
+    overflow: hidden;
+  }
+
+  .attachment_url {
+    margin: 19px 0 18px 0;
+    color: $color-ac-text-alt;
+
+    a {
+      color: $color-ac-text-alt;
+      transition: none;
+
+      &:hover {
+        color: $color-ac-link;
+        cursor: pointer;
+      }
+    }
+  }
 }
 
 

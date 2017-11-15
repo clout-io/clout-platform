@@ -20,7 +20,11 @@ import {
   FavCoinItemComponent,
   CloutDescSidebarComponent,
   PopularSearchSidebarComponent,
-  AdsBlockSidebarComponent
+  AdsBlockSidebarComponent,
+  PostHeadComponent,
+  AttachmentPostComponent,
+  SinglePostComponent,
+  SaveCancelComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -48,7 +52,11 @@ import { TruncatePipe } from '../pipes';
     FavCoinItemComponent,
     CloutDescSidebarComponent,
     PopularSearchSidebarComponent,
-    AdsBlockSidebarComponent
+    AdsBlockSidebarComponent,
+    PostHeadComponent,
+    AttachmentPostComponent,
+    SinglePostComponent,
+    SaveCancelComponent
   ]
 })
 export class FeedModule { }

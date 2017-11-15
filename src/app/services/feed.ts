@@ -48,4 +48,8 @@ export class FeedService {
   getFavoriteCoins(): Observable<any> {
     return this.api.get(`${this.path}/altcoins/favorites/`);
   }
+
+  urlInfo(url: string): Observable<any> {
+    return this.api.get(`${this.path}/url/og?url=${url}`);
+  }
 }
