@@ -8,22 +8,21 @@
 module.exports = {
 
   attributes: {
+    id: {
+      type: "string",
+      unique: true,
+      required: true,
+      primaryKey: true
+    },
     name: {
       type: "string",
-      required: true,
-      unique: true
+      unique: true,
+      required: true
     },
     posts: {
       collection: 'post',
-      via: 'tags'
+      via: "tags"
     }
-  },
-  beforeValidate: function (values, next) {
-    next()
-  },
-  afterValidate: function (values, next) {
-    values.id = values.name.toLowerCase();
-    next();
   }
 };
 

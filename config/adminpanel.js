@@ -149,6 +149,10 @@ module.exports.adminpanel = {
       title: 'Posts',
       model: 'Post'
     },
+    Tags: {
+      title: 'Tags',
+      model: 'Tag'
+    },
     Rss: {
       title: 'Rss',
       model: 'RSS'

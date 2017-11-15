@@ -133,7 +133,7 @@ module.exports.schedule = {
 
                   const optionsOg = {'url': item.link};
                   ogs(optionsOg, function (err, results) {
-                    if (err) return res.json(400, err);
+                    if (err) cb(null);
                     if (!img) {
                       img = results.data.ogImage.url;
                     }

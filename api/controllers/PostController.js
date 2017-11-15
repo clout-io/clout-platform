@@ -15,13 +15,17 @@ module.exports = {
     var perPage = req.query.per_page || 20;
     var currentPage = req.query.page || 1;
     var category = req.query.category;
+    var tag = req.query.tag;
     var conditions = {};
 
     if (category) conditions.category = category;
-    console.log(category)
 
 
     var userId = null;
+
+    if (tag) {
+      conditions.displayTags = {contains: tag}
+    }
 
     if (req.user) {
       userId = req.user.id

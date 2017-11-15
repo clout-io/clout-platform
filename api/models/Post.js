@@ -7,6 +7,58 @@
 var cryptoRandomString = require('crypto-random-string');
 const ogs = require('open-graph-scraper');
 const textParser = require("npm-text-parser");
+const _ = require("underscore");
+
+
+function buildPostTags(post, cb) {
+  var tags = textParser.getHashtags(post.text);
+  var find = [];
+  var parsedTags = [];
+
+  tags.forEach(function (tag) {
+    tag = tag.toLowerCase().replace("#", "").trim();
+    find.push({
+      name: tag,
+      id: tag
+    });
+    parsedTags.push(tag)
+  });
+
+  var tagsToAdd = _.difference(parsedTags, post.displayTags);
+  var tagsToRemove = _.difference(post.displayTags, parsedTags);
+
+  if (tagsToAdd.length === 0 && tagsToRemove.length === 0) {
+    return cb()
+  }
+
+  Post.findOne(post.id).then(function (post) {
+
+    if (!find.length) {
+      post.tags.remove(tagsToRemove);
+      post.displayTags = [];
+      post.save(function (err) {
+        if (err) return cb(err);
+        cb();
+      })
+    } else {
+      Tag.findOrCreate(find, find).then(function (result) {
+        post.text = textParser.parseHashtags(post.text);
+
+        post.tags.remove(tagsToRemove);
+        post.tags.add(tagsToAdd);
+
+        post.displayTags = parsedTags;
+        post.save(function (err) {
+          if (err) return cb(err);
+          cb();
+        })
+
+      });
+    }
+
+
+  })
+}
 
 module.exports = {
 
@@ -51,7 +103,12 @@ module.exports = {
     },
     tags: {
       collection: "tag",
-      via: "posts"
+      via: "posts",
+      dominant: true
+    },
+    displayTags: {
+      type: "array",
+      defaultsTo: []
     }
   },
 
@@ -69,39 +126,6 @@ module.exports = {
   },
   beforeValidate: function (values, next) {
     async.waterfall([
-      function (cb) {
-        var tags = textParser.getHashtags(values.text);
-        if (!tags.length) {
-          values.tags = [];
-          return cb(null)
-        }
-
-
-        var find = [];
-        var parsedTags = [];
-        var create = [];
-
-        for (var i in tags) {
-          var tag = tags[i];
-          tag = tag.toLowerCase().replace("#", "");
-          find.push({
-            id: tag
-          });
-          create.push({
-            id: tag.toLowerCase(),
-            name: tag.toLowerCase()
-          });
-          parsedTags.push(tag)
-        }
-
-        Tag.findOrCreate(find, create).then(function (result) {
-          values.tags = parsedTags;
-          values.text = textParser.parseHashtags(values.text);
-          cb(null)
-        })
-
-
-      },
       function (cb) {
         if (!values.category) {
           return next({"category": "Invalid category"})
@@ -135,6 +159,13 @@ module.exports = {
     } else {
       next()
     }
+  },
+
+  afterCreate: function (post, next) {
+    buildPostTags(post, next);
+  },
+  afterUpdate: function (post, next) {
+    buildPostTags(post, next);
   }
 }
 ;

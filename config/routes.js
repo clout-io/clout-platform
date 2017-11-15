@@ -428,6 +428,10 @@ var routes = [
               "type": "string",
               "description": "youtube link"
             },
+            "category": {
+              "type": "string",
+              "description": "category id required"
+            },
             "link": {
               "type": "string",
               "description": "link for preview"
@@ -534,7 +538,8 @@ var routes = [
       parameters: [
         {in: "query", name: "page"},
         {in: "query", name: "per_page"},
-        {in: "query", name: "category"}
+        {in: "query", name: "category"},
+        {in: "query", name: "tag"}
       ],
       responses: {
         '200': {
