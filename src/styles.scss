@@ -2093,11 +2093,7 @@ ___________________________*/
     font-size: 18px;
     font-weight: 600;
     transition: none;
-
-    &:hover {
-      color: $color-ac-link;
-      cursor: pointer;
-    }
+    text-decoration: none;
   }
 
   .attachment_desciption {
@@ -2118,6 +2114,13 @@ ___________________________*/
         cursor: pointer;
       }
     }
+  }
+
+  .attachment_link {
+    text-underline: none;
+    color: #000;
+    text-decoration: none;
+    text-underline: none;
   }
 }
 

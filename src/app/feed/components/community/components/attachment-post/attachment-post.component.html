@@ -1,16 +1,13 @@
 <div *ngIf="editable && isLinkData"
      class="add-post__text edit"
      #text_input
-     appAutomaticGetDataByUrl
-     (onSendLinkData)="onGetLinkData($event)"
-     contenteditable="true">{{linkData.ogUrl}}</div>
+     (paste)="onPaste($event)"
+     contenteditable="true" [innerText]="text"></div>
 <div *ngIf="editable && !isLinkData"
      class="add-post__text edit"
      #text_input
-     appAutomaticGetDataByUrl
-     (onSendLinkData)="onGetLinkData($event)"
-     contenteditable="true">
-  {{feed?.text}}
+     (paste)="onPaste($event)"
+     contenteditable="true" [innerText]="text">
 </div>
 
 <div *ngIf="isLinkData" class="attachment_post" [ngClass]="{'edit': editable}">
@@ -19,15 +16,17 @@
       <a href="javascript:void(0)" (click)="removeImage()"></a>
     </div>
   </div>
-  <div *ngIf="linkData.show" class="upload-img attachment-img" [ngStyle]="{'background-image': 'url(' + linkData.ogImage.url + ')'}">
-    <a href="javascript:void(0)" (click)="hideAttachedData()" *ngIf="editable"></a>
-  </div>
-  <div *ngIf="linkData.show" class="news-item__content">
-    <h4><a [href]="linkData.ogUrl" target="_blank" class="attachment-title">{{linkData.ogTitle}}</a></h4>
-    <p class="attachment_desciption">
-      {{text}}
-    </p>
-  </div>
+  <a [href]="linkData.ogUrl" class="attachment_link" target="_blank">
+    <div *ngIf="linkData.show" class="upload-img attachment-img" [ngStyle]="{'background-image': 'url(' + linkData.ogImage.url + ')'}">
+      <a href="javascript:void(0)" (click)="hideAttachedData()" *ngIf="editable"></a>
+    </div>
+    <div *ngIf="linkData.show" class="news-item__content">
+      <h4><a [href]="linkData.ogUrl" target="_blank" class="attachment-title">{{linkData.ogTitle}}</a></h4>
+      <p class="attachment_desciption">
+        {{linkData.ogDescription}}
+      </p>
+    </div>
+  </a>
 </div>
 <div *ngIf="!isLinkData && editable">
   <div *ngIf="imageSrc" class="add-post__img">

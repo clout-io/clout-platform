@@ -25,9 +25,7 @@
   </div>
   <app-post-head *ngIf="editable" [feed]="feed" (onUploadPhoto)="uploadPhoto($event)"></app-post-head>
   <div class="attachment_post" *ngIf="!editable && !!feed?.linkData">
-    <div class="attachment_url">
-      <a [href]="feed.linkData?.ogUrl" target="_blank">{{feed.linkData?.ogUrl}}</a>
-    </div>
+    <div class="attachment_url" [innerHtml]="feed.text"></div>
   </div>
 
   <div *ngIf="!editable && !feed?.linkData"

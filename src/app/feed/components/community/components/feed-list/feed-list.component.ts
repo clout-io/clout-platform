@@ -40,8 +40,8 @@ export class FeedListComponent implements OnInit, OnDestroy {
       this.meta.nextPage = response.meta.page;
       this.meta.perPage = response.meta.perPage;
 
-      //this.feeds = response.meta.page === 1 ? response.data : R.uniq([...this.feeds, ...response.data]);
-      //this.meta = response.meta.nextPage ? response.meta : this.meta;
+      /*this.feeds = response.meta.page === 1 ? response.data : R.uniq([...this.feeds, ...response.data]);
+      this.meta = response.meta.nextPage ? response.meta : this.meta;*/
     });
   }
 

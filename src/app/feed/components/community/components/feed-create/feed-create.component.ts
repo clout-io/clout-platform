@@ -31,14 +31,28 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
     this.feedText = this.placeHolder;
   }
 
-  onGetLinkData(responce) {
-    this.linkData = responce.data;
+  onPaste(data) {
+    let pastedValue = '';
+    if (!data.clipboardData) { // IE11
+      pastedValue = window['clipboardData'].getData('text');
+    } else {
+      pastedValue = data.clipboardData.getData('text/plain');
+    }
+    const regx = /(\b(((https?|ftp):\/\/)|www.)[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
+    if (pastedValue.search(regx) !== -1) {
+      this.feedService.urlInfo(pastedValue)
+        .subscribe(res => {
+          const txt = this.feedTextDivEl.nativeElement.innerText.replace(pastedValue, ' ' + pastedValue);
+          this.feedTextDivEl.nativeElement.innerText = txt;
+          this.linkData = res.data;
+        });
+    }
   }
 
   feedCreate() {
     if (!!this.linkData) {
       const params = {
-        text: this.linkData.ogDescription,
+        text: this.feedTextDivEl.nativeElement.innerHTML == this.placeHolder ? '' : this.feedTextDivEl.nativeElement.innerHTML,
         link: this.linkData.ogUrl,
         category: 'opinion'
       };
@@ -74,6 +88,7 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
           this.file = null;
           this.hasPublish = false;
           this.loadImgId = null;
+          this.broadcastService.broadcast('updateNewsList', responce);
         });
     }
   }

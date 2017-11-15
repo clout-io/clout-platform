@@ -6,8 +6,7 @@
   </div>
   <div #feedtext class="add-post__text"
        contenteditable="true" (click)="focusText()"
-       (onSendLinkData)="onGetLinkData($event)"
-       appAutomaticGetDataByUrl
+       (paste)="onPaste($event)"
        (blur)="blurText()">Write something...</div>
   <input accept="image/gif, image/jpeg, image/png" type="file" (change)="handleUpload($event)" #uploadPicture style="visibility: hidden; height: 0px;"/>
   <div *ngIf="imageSrc" class="add-post__img">
