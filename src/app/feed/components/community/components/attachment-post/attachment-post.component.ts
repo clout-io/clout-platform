@@ -15,10 +15,10 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
   @Input() imageSrc: string;
   @Input() loadImgId: string;
   @Input() editable: boolean;
-  @Input() text: string;
   @ViewChild('text_input') textInput: ElementRef;
   @Output() onDoAction = new EventEmitter();
   public linkData = null;
+  public text: string;
   public isLinkData = false;
   private pastedValue: string;
 
@@ -28,6 +28,7 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
+    this.text = this.editable ? this.parseTextFromHtml(this.feed.text) : this.feed.text;
     const isImageSrc = !!changes['imageSrc'] && !!changes['imageSrc']['currentValue'];
     if (!isImageSrc) {
       this.isLinkData = !!this.feed.linkData;
@@ -35,9 +36,15 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
     }
   }
 
+  parseTextFromHtml(str: string) {
+    const temporalDivElement = document.createElement('div');
+    temporalDivElement.innerHTML = str;
+    // Retrieve the text property of the element (cross-browser support)
+    return temporalDivElement.textContent || temporalDivElement.innerText || '';
+  }
+
   saveOrCancel(flag: boolean) {
     if (!flag) {
-      this.text = this.feed.text;
       this.onDoAction.emit({key: 'cancel', payload: null});
       return;
     }
@@ -60,9 +67,8 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
     if (this.pastedValue.search(regx) !== -1) {
       this.feedService.urlInfo(pastedValue)
         .subscribe(res => {
-          const txt = this.textInput.nativeElement.innerText.replace(this.pastedValue, ' ' + this.pastedValue);
-          this.textInput.nativeElement.innerText = txt;
-          this.text = txt;
+          this.text = this.textInput.nativeElement.innerText.replace(this.pastedValue, ' ' + this.pastedValue);
+          this.textInput.nativeElement.innerText = this.text;
           this.linkData = Object.assign({}, res.data, {show: true});
           this.isLinkData = true;
         });

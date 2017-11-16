@@ -1,3 +1,15 @@
+<div class="attachment_post" *ngIf="!editable && isLinkData">
+  <div class="attachment_url" [innerHtml]="text"></div>
+</div>
+
+<div *ngIf="!editable && !isLinkData"
+     class="single-post__text">
+  {{text}}
+  <div *ngFor="let file of feed.attachment" style="max-width: 100%; padding: 20px 0px 10px 0px;">
+    <img style="width: 100%;" [src]="file.url" />
+  </div>
+</div>
+
 <div *ngIf="editable && isLinkData"
      class="add-post__text edit"
      #text_input

@@ -24,7 +24,7 @@
     </div>
   </div>
   <app-post-head *ngIf="editable" [feed]="feed" (onUploadPhoto)="uploadPhoto($event)"></app-post-head>
-  <div class="attachment_post" *ngIf="!editable && !!feed?.linkData">
+  <!--<div class="attachment_post" *ngIf="!editable && !!feed?.linkData">
     <div class="attachment_url" [innerHtml]="feed.text"></div>
   </div>
 
@@ -34,13 +34,12 @@
     <div *ngFor="let file of feed.attachment" style="max-width: 100%; padding: 20px 0px 10px 0px;">
       <img style="width: 100%;" [src]="file.url" />
     </div>
-  </div>
+  </div>-->
   <div>
     <app-attachment-post [feed]="feed"
                          [imageSrc]="imageSrc"
                          [loadImgId]="loadImgId"
                          [editable]="editable"
-                         [text]="feed.text"
                          (onDoAction)="onDoAction($event)">
     </app-attachment-post>
   </div>
