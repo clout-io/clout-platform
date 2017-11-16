@@ -27,61 +27,66 @@ module.exports.policies = {
    ***************************************************************************/
 
   '*': ['isAuthorized'],
-  'SignInController': {
-    'index': true
+  SignInController: {
+    index: true
   },
-  'SocialController': {
-    'facebookAuth': true,
-    'facebookUrl': true,
-    'facebookMobileAuth': true
-  },
-
-  'SignUpController': {
-    'index': true,
-    'activate': true
-  },
-  'AltcoinController': {
-    'index': true,
-    'favorites': true,
-    'sync': true,//temp
-    'history': true,
-    'info': true,
-    'syncPhoto': true,
-    'syncHistory': true
-  },
-  'IcoController': {
-    'index': true,
-    'info': true,
-    'sync': true,
-    'syncPhoto': true
+  SocialController: {
+    facebookAuth: true,
+    facebookUrl: true,
+    facebookMobileAuth: true
   },
 
-  'SwaggerController': {
+  SignUpController: {
+    index: true,
+    activate: true
+  },
+  AltcoinController: {
+    index: true,
+    favorites: true,
+    sync: true,//temp
+    history: true,
+    info: true,
+    syncPhoto: true,
+    syncHistory: true
+  },
+  IcoController: {
+    index: true,
+    info: true,
+    sync: true,
+    syncPhoto: true
+  },
+  SwaggerController: {
     '*': true
   },
-  'AdminController': {
-    'login': true
+  AdminController: {
+    login: true
   },
-  'CommentController': {
-    'list': true
+  CommentController: {
+    list: true
   },
-  'ImgController': {
-    'getPhoto': true,
-    'getIcoPhoto': true
+  ImgController: {
+    getPhoto: true,
+    getIcoPhoto:
+      true
   },
-  'PostController': {
-    'index': true
+  PostController: {
+    index: true
   },
-  'UserController': {
-    'resetPasswordRequest': true,
-    'resetPassword': true
+  UserController: {
+    resetPasswordRequest: true,
+    resetPassword:
+      true
   },
   PressController: {
-    'index': true,
-    'sync': true
+    index: true,
+    sync:
+      true
   },
   CategoryController: {
-    'index': true
+    index: true
 
+  },
+  TagController: {
+    search: true
   }
 };
