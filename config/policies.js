@@ -88,5 +88,8 @@ module.exports.policies = {
   },
   TagController: {
     search: true
+  },
+  UrlController: {
+    ogInfo: true
   }
 };
