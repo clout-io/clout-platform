@@ -1541,6 +1541,16 @@ a.comments__add {
     border-bottom: 1px solid $color-ac-border;
     padding: 19px 0 18px 0;
     color: $color-feed-text;
+
+    a {
+      color: $color-ac-text-alt;
+      transition: none;
+
+      &:hover {
+        color: $color-ac-link;
+        cursor: pointer;
+      }
+    }
   }
 
   .comments__head {
