@@ -15,7 +15,7 @@ export class FavCoinListComponent implements OnInit {
 
   ngOnInit() {
     this.feedService.getFavoriteCoins()
-      .subscribe(responce => this.coinList = responce.data);
+      .subscribe(responce => this.coinList = responce);
   }
 
 }
