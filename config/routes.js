@@ -768,8 +768,6 @@ var routes = [
         parameters: [
           {in: "query", name: "term"}
         ]
-
-
       }
     }
   },
@@ -799,6 +797,33 @@ var routes = [
 
       }
     }
+  },
+  {
+    method: "GET", path: "/altcoins/search", target:
+    {
+      controller: 'AltcoinController',
+      action: 'search',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: '',
+        description: '',
+        produces: [
+          'application/json'
+        ],
+        tags: ["Altcoins"],
+        responses: {
+          '200': {
+            description: ''
+          }
+        },
+        parameters: [
+          {in: "query", name: "term"}
+        ]
+
+
+      }
+    }
   }
 ];
 
@@ -814,5 +839,6 @@ routeObject["POST /admin/login"] = "AdminController.login";
 routeObject["GET /activate"] = "SignUpController.activate";
 routeObject["GET /image/ico/:imgName"] = "ImgController.getIcoPhoto";
 routeObject["GET /image/:imgName"] = "ImgController.getPhoto";
+routeObject["GET /to"] = "UrlController.redirect";
 
 module.exports.routes = routeObject;
