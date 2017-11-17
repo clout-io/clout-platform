@@ -219,7 +219,7 @@ function getEmails(data) {
  * @name getHashtags
  * @typicalname getHashtags
  * @param {string} text  - Input text
- * @return {array} array
+ * @return {Array} array
  *
  * @usage
  * var textParser = require('npm-text-parser')
@@ -230,7 +230,9 @@ function getEmails(data) {
  *
  */
 function getHashtags(data) {
-  var hashtagArray = data.match(hashtag_regex);
+  var text = String(data).replace(/<[^>]+>/gm, '')
+
+  var hashtagArray = text.match(hashtag_regex);
   return (hashtagArray) ? hashtagArray : [];
 }
 
