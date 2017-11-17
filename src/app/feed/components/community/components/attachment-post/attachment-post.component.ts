@@ -2,13 +2,14 @@ import {
   Component, OnInit, Input, Output, EventEmitter, OnChanges, ViewChild, ElementRef,
   SimpleChanges
 } from '@angular/core';
+import { Router } from '@angular/router';
 
 import { FeedService } from '../../../../../services';
 
 @Component({
   selector: 'app-attachment-post',
   templateUrl: './attachment-post.component.html',
-  styleUrls: ['./attachment-post.component.scss']
+  styleUrls: ['./attachment-post.component.scss'],
 })
 export class AttachmentPostComponent implements OnInit, OnChanges {
   @Input() feed;
@@ -22,13 +23,38 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
   public isLinkData = false;
   private pastedValue: string;
 
-  constructor(private feedService: FeedService) { }
+  constructor(
+    private router: Router,
+    private feedService: FeedService,
+    private elRef: ElementRef) {
+  }
 
   ngOnInit() {
   }
 
+  parseTags() {
+    const tags = this.elRef.nativeElement.querySelectorAll('a');
+    for (let i = 0; i < tags.length; i++) {
+      if (tags[i].href.lastIndexOf('hashtagref') !== -1) {
+        tags[i].addEventListener('click', this.goByTag.bind(this));
+        const tagName = tags[i].innerHTML.trim().slice(1);
+        tags[i].setAttribute('href', `/home/community/hashtag/${tagName}`);
+      }
+    }
+  }
+
+  goByTag($event) {
+    $event.preventDefault();
+    const tagName = $event.target.innerHTML.trim().slice(1);
+    this.router.navigateByUrl(`/home/community/hashtag/${tagName}`);
+  }
+
   ngOnChanges(changes: SimpleChanges): void {
-    this.text = this.editable ? this.parseTextFromHtml(this.feed.text) : this.feed.text;
+    this.text = this.editable ? this.parseTextFromHtml(this.feed.text) : this.parseTagsHref(this.feed.text);
+    if (!this.editable) {
+      setTimeout(() => this.parseTags(), 0);
+    }
+
     const isImageSrc = !!changes['imageSrc'] && !!changes['imageSrc']['currentValue'];
     if (!isImageSrc) {
       this.isLinkData = !!this.feed.linkData;
@@ -36,10 +62,14 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
     }
   }
 
+  parseTagsHref(str) {
+    if (str) { return str.replace(new RegExp('href=\"javascript:;\"', 'g'), 'href="hashtagref"'); }
+    return '';
+  }
+
   parseTextFromHtml(str: string) {
     const temporalDivElement = document.createElement('div');
     temporalDivElement.innerHTML = str;
-    // Retrieve the text property of the element (cross-browser support)
     return temporalDivElement.textContent || temporalDivElement.innerText || '';
   }
 
