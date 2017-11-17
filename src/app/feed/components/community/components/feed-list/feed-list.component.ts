@@ -2,7 +2,6 @@ import {Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges} from '@an
 import { FeedService, BroadcastService } from '../../../../../services';
 import * as R from 'ramda';
 
-
 @Component({
   selector: 'app-feed-list',
   templateUrl: 'feed-list.component.html'
@@ -12,6 +11,7 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
   @Input() filter: string;
   private subscription: any;
   private meta = { nextPage: 1, perPage: 10 };
+  public notfound = false;
 
   constructor(private feedService: FeedService, private broadcastService: BroadcastService) { }
 
@@ -49,6 +49,7 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
     .subscribe(response => {
       this.feeds = response.meta.page === 1 ? response.data : R.unionWith(R.eqBy(R.prop('id')), this.feeds, response.data);
       this.meta = response.meta.nextPage ? response.meta : this.meta;
+      this.notfound = !this.feeds.length;
       /*this.feeds = response.meta.page === 1 ? response.data : R.uniq([...this.feeds, ...response.data]);
       this.meta = response.meta.nextPage ? response.meta : this.meta;*/
     });

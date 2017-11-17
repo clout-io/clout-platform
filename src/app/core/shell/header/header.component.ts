@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthService } from '../../../services';
+import { AuthService, ApiService } from '../../../services';
 import { Router, NavigationEnd } from '@angular/router';
 
 
@@ -12,8 +12,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
   currentUrl: string;
   userEmail: string;
   subscribe: any;
+  topList: any;
+  hashtagUrl = '/home/community/hashtag/';
+  top$: any;
 
-  constructor(private auth: AuthService, private router: Router) {
+  constructor(
+    private auth: AuthService,
+    private router: Router,
+    private apiService: ApiService
+  ) {
     const email = window.localStorage.getItem('clout_user_email');
     this.userEmail = email ? email : null;
   }
@@ -26,6 +33,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.setTitle();
       }
     });
+
+    this.top$ = this.apiService.get('/api/v1/altcoins/top?top=20')
+      .subscribe(responce => this.topList = responce.data);
   }
 
   setTitle() {
@@ -54,5 +64,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     this.subscribe.unsubscribe();
+    this.top$.unsubscribe();
   }
 }

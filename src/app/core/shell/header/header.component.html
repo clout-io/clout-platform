@@ -44,11 +44,11 @@
     <a routerLink="/allcoins">All</a>
   </div>-->
 
-  <owl-carousel class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
+  <owl-carousel *ngIf="topList?.length" class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
     <a routerLink="/icos">ICO's</a>
-    <a href="javascript:void(0)">Educational Resources</a>
     <a routerLink="/allcoins">All</a>
-    <a href="javascript:void(0)">Bitcoin</a>
+    <a href="javascript:void(0)" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
+    <!--<a href="javascript:void(0)">Bitcoin</a>
     <a href="javascript:void(0)">Ethereum</a>
     <a href="javascript:void(0)">Bitcoin Cash</a>
     <a href="javascript:void(0)">Ripple</a>
@@ -75,7 +75,7 @@
     <a href="javascript:void(0)">Monero</a>
     <a href="javascript:void(0)">Ethereum Classic</a>
     <a href="javascript:void(0)">IOTA</a>
-    <a href="javascript:void(0)">Qtum</a>
+    <a href="javascript:void(0)">Qtum</a>-->
   </owl-carousel>
 
   <app-loader-line></app-loader-line>

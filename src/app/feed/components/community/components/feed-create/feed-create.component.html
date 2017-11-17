@@ -15,7 +15,7 @@
     </div>
   </div>
   <div *ngIf="!!linkData" class="attachment_post">
-    <div class="upload-img attachment-img" [ngStyle]="{'background-image': 'url(' + linkData.ogImage.url + ')'}">
+    <div class="upload-img attachment-img" [ngStyle]="{'background-image': 'url(' + linkData?.ogImage?.url + ')'}">
       <a href="javascript:void(0)" (click)="removeImage()"></a>
     </div>
     <div class="news-item__content">
