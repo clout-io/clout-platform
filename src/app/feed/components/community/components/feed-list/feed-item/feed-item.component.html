@@ -12,7 +12,7 @@
       <!--</p>-->
     </div>
     <div class="comments__time">
-      <div class="dropdown">
+      <div class="dropdown" *ngIf="isOwner">
         <button class="dropdown-toggle" id="dropdownPostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i></i>
         </button>
@@ -31,7 +31,7 @@
   <div *ngIf="!editable && !feed?.linkData"
        class="single-post__text">
     {{feed?.text}}
-    <span class="comments__tags"> 
+    <span class="comments__tags">
       <a href="#">#bitcoin</a>,
       <a href="#">#happy</a>,
       <a href="#">#myfirstbitcoin</a>,

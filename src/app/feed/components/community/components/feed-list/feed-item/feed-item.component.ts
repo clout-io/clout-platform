@@ -16,6 +16,7 @@ export class FeedItemComponent implements OnInit {
   @Output() onDeletePost = new EventEmitter();
   createDate: string = '';
   editable = false;
+  isOwner: boolean;
 
   public imageSrc: string;
   public loadImgId: string;
@@ -27,6 +28,7 @@ export class FeedItemComponent implements OnInit {
   ngOnInit() {
     this.showLinkData(true);
     this.createDate = moment(this.feed.createdAt).fromNow();
+    this.isOwner = this.getUserId() === this.feed.owner.id;
   }
 
   private showLinkData(show: boolean) {
