@@ -24,7 +24,7 @@ module.exports = {
     var userId = null;
 
     if (tag) {
-      conditions.displayTags = {contains: tag}
+      conditions.displayTags = {$in: [tag]}
     }
 
     if (req.user) {
