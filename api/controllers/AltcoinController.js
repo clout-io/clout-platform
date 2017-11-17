@@ -153,6 +153,11 @@ module.exports = {
     )
   },
   favorites: function (req, res) {
+
+    if (!req.user) {
+      return res.json(204, []);
+    }
+
     var userId = req.user.id;
 
     User.findOne(userId).populate("followedAltcoins").then(
