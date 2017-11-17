@@ -16,9 +16,14 @@ export class FeedService {
   ) {}
 
   getFeeds(options): Observable<any> {
-    let { nextPage, perPage } = options;
-    return this.api.get(`${this.path}/news?page=${nextPage}&per_page=${perPage}`)
+    return this.api.get(this.toFormFeedsUrl(options))
       .map((res: any) => res);
+  }
+
+  toFormFeedsUrl(options): string {
+    const { nextPage, perPage, filter } = options;
+    const partUrl = `${this.path}/news?page=${nextPage}&per_page=${perPage}`;
+    return filter ? `${partUrl}&tag=${filter}` : partUrl;
   }
 
   feedCreate(feed): Observable<any> {

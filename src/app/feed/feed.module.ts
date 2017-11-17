@@ -24,7 +24,8 @@ import {
   PostHeadComponent,
   AttachmentPostComponent,
   SinglePostComponent,
-  SaveCancelComponent
+  SaveCancelComponent,
+  PostHashtagComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -56,7 +57,8 @@ import { TruncatePipe } from '../pipes';
     PostHeadComponent,
     AttachmentPostComponent,
     SinglePostComponent,
-    SaveCancelComponent
+    SaveCancelComponent,
+    PostHashtagComponent
   ]
 })
 export class FeedModule { }

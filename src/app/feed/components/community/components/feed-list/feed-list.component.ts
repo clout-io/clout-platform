@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import {Component, Input, OnInit, OnChanges, OnDestroy, SimpleChanges} from '@angular/core';
 import { FeedService, BroadcastService } from '../../../../../services';
 import * as R from 'ramda';
 
@@ -7,8 +7,9 @@ import * as R from 'ramda';
   selector: 'app-feed-list',
   templateUrl: 'feed-list.component.html'
 })
-export class FeedListComponent implements OnInit, OnDestroy {
+export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
   public feeds = [];
+  @Input() filter: string;
   private subscription: any;
   private meta = { nextPage: 1, perPage: 10 };
 
@@ -22,6 +23,18 @@ export class FeedListComponent implements OnInit, OnDestroy {
     this.loadFeedList();
   }
 
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!!changes['filter'] && !changes['filter']['firstChange']) {
+      this.loadFeedList(true);
+    }
+  }
+
+  private updateList() {
+    this.subscription = this.broadcastService.subscribe('updateNewsList', (response) => {
+      this.loadFeedList(true);
+    });
+  }
+
   ngOnDestroy(): void {
     this.subscription.unsubscribe();
   }
@@ -32,7 +45,7 @@ export class FeedListComponent implements OnInit, OnDestroy {
       this.meta = { nextPage: 1, perPage: 10 };
     }
 
-    this.feedService.getFeeds(this.meta)
+    this.feedService.getFeeds({...this.meta, filter: this.filter})
     .subscribe(response => {
       this.feeds = response.meta.page === 1 ? response.data : R.unionWith(R.eqBy(R.prop('id')), this.feeds, response.data);
       this.meta = response.meta.nextPage ? response.meta : this.meta;
