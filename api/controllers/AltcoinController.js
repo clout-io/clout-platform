@@ -153,13 +153,16 @@ module.exports = {
     )
   },
   favorites: function (req, res) {
+    var userId = req.user.id;
 
-    Altcoin.find({id: ['bitcoin', 'ethereum', 'litecoin']}).then(function (result) {
-      res.json({data: result});
-    }).catch(function (err) {
-      res.json(400, err)
-    })
-
+    User.findOne(userId).populate("followedAltcoins").then(
+      function (user) {
+        if (!user) {
+          return res.json(204, []);
+        }
+        return res.json(user.followedAltcoins);
+      }
+    )
   },
 
   top: function (req, res) {
