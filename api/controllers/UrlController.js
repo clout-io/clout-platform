@@ -12,7 +12,12 @@ module.exports = {
     var url = req.param("url");
     const options = {'url': url};
     ogs(options, function (err, results) {
-      if (err) return res.json(400, err);
+      if (err) return res.json({
+        data: {
+          ogUrl: url,
+          ogTitle: url.toUpperCase()
+        }
+      });
       return res.json(results)
     });
   },
