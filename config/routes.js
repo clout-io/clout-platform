@@ -768,8 +768,6 @@ var routes = [
         parameters: [
           {in: "query", name: "term"}
         ]
-
-
       }
     }
   },
@@ -794,6 +792,33 @@ var routes = [
         },
         parameters: [
           {in: "query", name: "top"}
+        ]
+
+
+      }
+    }
+  },
+  {
+    method: "GET", path: "/altcoins/search", target:
+    {
+      controller: 'AltcoinController',
+      action: 'search',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: '',
+        description: '',
+        produces: [
+          'application/json'
+        ],
+        tags: ["Altcoins"],
+        responses: {
+          '200': {
+            description: ''
+          }
+        },
+        parameters: [
+          {in: "query", name: "term"}
         ]
 
 

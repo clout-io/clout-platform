@@ -174,6 +174,20 @@ module.exports = {
     })
   },
 
+  search: function (req, res) {
+    var term = req.param('term');
+    Altcoin.find({id: {contains: term}, select: ['id']}).then(
+      function (data) {
+        data = _.map(data, function (item) {
+          return item.id
+        });
+        res.json(data);
+      }
+    ).catch(function (err) {
+      res.json(400, err);
+    })
+  },
+
   sync: function (req, res) {
     var moment = require('moment');
     var mmtMidnight = moment().clone().startOf('day');
