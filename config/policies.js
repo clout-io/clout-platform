@@ -91,6 +91,7 @@ module.exports.policies = {
     search: true
   },
   UrlController: {
-    ogInfo: true
+    ogInfo: true,
+    redirect: true
   }
 };

@@ -839,5 +839,6 @@ routeObject["POST /admin/login"] = "AdminController.login";
 routeObject["GET /activate"] = "SignUpController.activate";
 routeObject["GET /image/ico/:imgName"] = "ImgController.getIcoPhoto";
 routeObject["GET /image/:imgName"] = "ImgController.getPhoto";
+routeObject["GET /to"] = "UrlController.redirect";
 
 module.exports.routes = routeObject;

@@ -123,8 +123,10 @@ function parseUrlAndHash(text) {
 
   text = text ? String(text).replace(/<[^>]+>/gm, '') : ''; // Remove all the html tags
 
+  var url = sails.config.appUrl + "/to?u=";
+
   if (text.match(urls)) {
-    text = text.replace(urls, "<a href=\"$1\" target=\"_blank\">$1</a>");
+    text = text.replace(urls, "<a href=\"" + url + "$1\" target=\"_blank\">$1</a>");
   }
 
   if (text.match(hashTags)) {
