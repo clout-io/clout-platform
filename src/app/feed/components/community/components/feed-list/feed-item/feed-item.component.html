@@ -31,6 +31,17 @@
   <div *ngIf="!editable && !feed?.linkData"
        class="single-post__text">
     {{feed?.text}}
+    <span class="comments__tags"> 
+      <a href="#">#bitcoin</a>,
+      <a href="#">#happy</a>,
+      <a href="#">#myfirstbitcoin</a>,
+      <a href="#">#justanothertag</a>
+    </span>
+    <div class="comments__category">
+      <a href="#" class="active">Trending</a>
+      <a href="#">Breaking News</a>
+      <a href="#">Opinion</a>
+    </div>
     <div *ngFor="let file of feed.attachment" style="max-width: 100%; padding: 20px 0px 10px 0px;">
       <img style="width: 100%;" [src]="file.url" />
     </div>
