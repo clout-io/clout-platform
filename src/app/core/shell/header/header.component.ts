@@ -14,7 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   subscribe: any;
 
   constructor(private auth: AuthService, private router: Router) {
-    const email = window.localStorage.getItem('clout_user');
+    const email = window.localStorage.getItem('clout_user_email');
     this.userEmail = email ? email : null;
   }
 

@@ -56,8 +56,12 @@ export class FeedItemComponent implements OnInit {
     this.editable = edit;
   }
 
+  getUserId(): string {
+    return window.localStorage.getItem('clout_user_id');
+  }
+
   edit() {
-    this.editFlag(true);
+    this.editFlag(this.getUserId() === this.feed.owner.id);
     if (this.feed.attachment.length) {
       this.imageSrc = this.feed.attachment[0].url;
       this.loadImgId = this.feed.attachment[0].id;
@@ -65,6 +69,8 @@ export class FeedItemComponent implements OnInit {
   }
 
   delete() {
+    if (!(this.getUserId() === this.feed.owner.id)) { return; }
+
     const {id} = this.feed;
     this.feedService.deleteFeed(id)
       .subscribe(data => {

@@ -37,8 +37,10 @@ export class AuthService implements CanActivate {
     this.api.setHeaders({[this.authorization]: `${this.token} ${token}`});
   }
 
-  setEmail(email: string) {
-    window.localStorage.setItem('clout_user', email);
+  setUser(user: any) {
+    const {email, id} = user;
+    window.localStorage.setItem('clout_user_email', email);
+    window.localStorage.setItem('clout_user_id', id);
   }
 
   authenticate(credits): Observable<any> {
@@ -46,7 +48,7 @@ export class AuthService implements CanActivate {
       .do((res: any) => {
         if (res.token) {
           this.setToken(res.token);
-          this.setEmail(res.user.email);
+          this.setUser(res.user);
         }
       })
       .map((res: any) => res);
@@ -57,7 +59,7 @@ export class AuthService implements CanActivate {
       .do((res: any) => {
         if (res.token) {
           this.setToken(res.token);
-          this.setEmail(res.user.email);
+          this.setUser(res.user);
         }
       })
       .map((res: any) => res);
@@ -68,7 +70,7 @@ export class AuthService implements CanActivate {
       .do((res: any) => {
         if (res.token) {
           this.setToken(res.token);
-          this.setEmail(res.user.email);
+          this.setUser(res.user);
         }
       })
       .map((res: any) => res);
@@ -93,7 +95,7 @@ export class AuthService implements CanActivate {
       .do((res: any) => {
         if (res.token) {
           this.setToken(res.token);
-          this.setEmail(res.user.email);
+          this.setUser(res.user);
         }
       });
   }
@@ -128,7 +130,7 @@ export class AuthService implements CanActivate {
       .do((res: any) => {
         if (res.token) {
           this.setToken(res.token);
-          this.setEmail(res.user.email);
+          this.setUser(res.user);
         }
       });
   }

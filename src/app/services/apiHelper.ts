@@ -22,11 +22,7 @@ export class ApiHelperService {
     return response;
   }
 
-  removeTokenFromLocalStorage(tokenName: string) {
-    window.localStorage.removeItem(tokenName);
-  }
-
-  removeEmailFromLocalStorage(key: string) {
-    window.localStorage.removeItem(key);
+  removeItemFromLocalStorage(itemName: string) {
+    window.localStorage.removeItem(itemName);
   }
 }
