@@ -162,6 +162,15 @@ module.exports = {
 
   },
 
+  top: function (req, res) {
+    var limit = req.param("top") || 10;
+    Altcoin.find().sort("rank ASC").limit(limit).then(function (result) {
+      res.json({data: result});
+    }).catch(function (err) {
+      res.json(400, err)
+    })
+  },
+
   sync: function (req, res) {
     var moment = require('moment');
     var mmtMidnight = moment().clone().startOf('day');

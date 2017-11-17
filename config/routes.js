@@ -772,7 +772,33 @@ var routes = [
 
       }
     }
+  },
+  {
+    method: "GET", path: "/altcoins/top", target:
+    {
+      controller: 'AltcoinController',
+      action: 'top',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: '',
+        description: '',
+        produces: [
+          'application/json'
+        ],
+        tags: ["Altcoins"],
+        responses: {
+          '200': {
+            description: ''
+          }
+        },
+        parameters: [
+          {in: "query", name: "top"}
+        ]
 
+
+      }
+    }
   }
 ];
 

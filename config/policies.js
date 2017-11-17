@@ -46,6 +46,7 @@ module.exports.policies = {
     sync: true,//temp
     history: true,
     info: true,
+    top: true,
     syncPhoto: true,
     syncHistory: true
   },
