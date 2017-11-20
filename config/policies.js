@@ -93,5 +93,8 @@ module.exports.policies = {
   UrlController: {
     ogInfo: true,
     redirect: true
+  },
+  TrendingController: {
+    index: true
   }
 };
