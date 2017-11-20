@@ -52,7 +52,7 @@ module.exports.schedule = {
     syncAltcoin: {
       cron: "*/2 * * * *",
       name: "syncAltcoin",
-      options: {priority: "highest"},
+      options: {priority: "default"},
       task: function (job, done) {
         var date = moment().utc().clone();
         var midnight = date.valueOf().toString();
@@ -101,12 +101,10 @@ module.exports.schedule = {
     },
 
     syncRss: {
-      cron: "*/5 * * * *",
+      cron: "*/1 * * * *",
       name: "syncRss",
       options: {priority: "default"},
       task: function (job, done) {
-        sails.log.info("start load rss");
-
         RSS.find().limit(1).sort("updatedAt ASC").then(function (rss) {
 
           async.map(rss, function (rssItem, callback) {
@@ -154,7 +152,9 @@ module.exports.schedule = {
                     });
                   });
                 }, function (err, result) {
-                  callback(err, result)
+                  rssItem.save(function () {
+                    callback(err, result)
+                  });
                 })
               }
             )
