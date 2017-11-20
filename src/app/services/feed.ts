@@ -22,8 +22,14 @@ export class FeedService {
 
   toFormFeedsUrl(options): string {
     const { nextPage, perPage, filter } = options;
-    const partUrl = `${this.path}/news?page=${nextPage}&per_page=${perPage}`;
-    return filter ? `${partUrl}&tag=${filter}` : partUrl;
+    let partUrl = `${this.path}/news?page=${nextPage}&per_page=${perPage}`;
+
+    if (!!filter) {
+      for (const i in filter) {
+        partUrl += !!filter[i] ? `&${i}=${filter[i]}` : '';
+      }
+    }
+    return partUrl;
   }
 
   feedCreate(feed): Observable<any> {
@@ -56,5 +62,9 @@ export class FeedService {
 
   urlInfo(url: string): Observable<any> {
     return this.api.get(`${this.path}/url/og?url=${url}`);
+  }
+
+  getCategories(): Observable<any> {
+    return this.api.get(`${this.path}/categories`);
   }
 }

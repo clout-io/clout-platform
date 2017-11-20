@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 
 @Component({
-  selector: 'app-post-hashtag',
-  templateUrl: './post-hashtag.component.html',
-  styleUrls: ['./post-hashtag.component.scss']
+  selector: 'app-post-filter',
+  templateUrl: './post-filter.component.html',
+  styleUrls: ['./post-filter.component.scss']
 })
-export class PostHashtagComponent implements OnInit, OnDestroy {
+export class PostFilterComponent implements OnInit, OnDestroy {
   private routeChange$;
-  public hashtag: string;
+  public filter;
 
   constructor(
     private route: ActivatedRoute
@@ -16,7 +16,8 @@ export class PostHashtagComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.routeChange$ = this.route.params.subscribe((params: Params) => {
-      this.hashtag = params['id'];
+      const { category, tag } = params;
+      this.filter = { category, tag };
     });
   }
 

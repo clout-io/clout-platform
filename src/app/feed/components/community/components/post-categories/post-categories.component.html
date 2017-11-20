@@ -1,0 +1,9 @@
+<div class="comments__category">
+  <a *ngFor="let c of categories" routerLink="{{'/home/community/category/' + c.id}}"
+     [ngClass]="{'active': c.id === categoryId}">
+    {{c.name}}
+  </a>
+  <!--<a href="#" class="active">Trending</a>
+  <a href="#">Breaking News</a>
+  <a href="#">Opinion</a>-->
+</div>
