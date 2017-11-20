@@ -34,26 +34,28 @@ module.exports = {
     };
 
     parser.parseURL(url, options, function (err, parsed) {
-        if (err) return res.json(400, err);
+        if (err) return res.json(400, {"message": err.errorMessage});
         async.map(parsed.feed.entries, function (item, cb) {
           if (err) return cb(null, err);
           var $ = cheerio.load(item.content);
           var img = $('img').attr("src");
 
-          if (!img) {
+          if (!img && item["content:encoded"]) {
             $ = cheerio.load(item["content:encoded"]);
             img = $('img').attr("src");
           }
           const optionsOg = {'url': item.link};
+
           ogs(optionsOg, function (err, results) {
-            if (err) return res.json(400, err);
+            if (err) return cb(null, err);
             if (!img) {
               img = results.data.ogImage.url;
             }
+            var pubDate = new Date(item.pubDate);
             var createData = {
               title: item.title,
               description: item.contentSnippet,
-              pubDate: item.pubDate,
+              pubDate: pubDate,
               image: img,
               link: item.link,
               guid: item.guid
