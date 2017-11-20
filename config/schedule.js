@@ -101,7 +101,7 @@ module.exports.schedule = {
     },
 
     syncRss: {
-      cron: "*/1 * * * *",
+      cron: "*/5 * * * *",
       name: "syncRss",
       options: {priority: "default"},
       task: function (job, done) {
