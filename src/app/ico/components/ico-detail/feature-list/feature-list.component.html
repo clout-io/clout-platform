@@ -1,16 +1,37 @@
-<div class="feature-list-component">
-  <div class="project-details">
-    <ul>
-      <li><label>Project Stage:</label> <span>Useable Product</span></li>
-      <li><label>Hype Score:</label> <span>LOW</span></li>
-      <li><label>Risk score: </label> <span>MEDIUM</span></li>
-      <li><label>Invest score:</label> <span>LOW</span></li>
-      <li><label>Category:</label> <span>Service</span></li>
-      <li><label>Founded:</label> <span>2017</span></li>
-    </ul>
-  </div>
-  <div class="project-links">
-    <app-social-networks></app-social-networks>
-    <app-links></app-links>
+<div class="coin-details">
+  <ul class="coin-details-list">
+    <!--<li>
+      <span>Project Stage:</span>
+      <span>Useable Product</span>
+    </li>
+    <li>
+      <span>Hype Score:</span>
+      <span>LOW</span>
+    </li>
+    <li>
+      <span>Risk score:</span>
+      <span>MEDIUM</span>
+    </li>
+    <li>
+      <span>Invest score:</span>
+      <span>LOW</span>
+    </li>
+    <li>
+      <span>Category:</span>
+      <span>Service</span>
+    </li>-->
+    <li>
+      <span>Status:</span>
+      <span>{{icoData.status}}</span>
+    </li>
+    <li>
+        <span>Founded:</span>
+        <span>{{icoData.startedW3c | date: 'yyyy'}}</span>
+      </li>
+  </ul>
+  <div class="coin-details__share">
+    <app-social-networks *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-social-networks>
+    <app-links *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-links>
+    <app-follow-btn [coin]="icoData"></app-follow-btn>
   </div>
 </div>

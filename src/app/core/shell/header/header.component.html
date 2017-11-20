@@ -1,37 +1,82 @@
-<nav class="navbar navbar-toggleable-md fixed-top d-flex">
-  <button class="navbar-toggler hamburger" type="button" data-toggle="collapse" data-target="#navbar-main" aria-controls="navbar-main" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="icon"></span>
-  </button>
-  <div class="navbar-brand col-lg-2 col-xl-3">Clout Network</div>
-
-  <div class="collapse navbar-collapse col-lg-9 col-xl-10" id="navbar-main">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="#">All Projects <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Submit a Project</a>
-      </li>
-    </ul>
-
-    <div class="user-item nav-item dropdown clearfix">
-      <div class="nav-link dropdown-toggle bottom" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-
-        <div class="user-details">
-          <div class="user-name">Nick Smith</div>
-          <div class="user-title">CEO</div>
+<header class="header">
+  <div class="container">
+    <div class="header__start">
+      <a routerLink="/home" class="header__logo"></a>
+      <!-- <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" id="dropdownMenuLink"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{currentUrl}}
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+          <a class="dropdown-item" routerLink="/home">News</a>
+          <a class="dropdown-item" routerLink="/allcoins">Allcoins</a>
+          <a class="dropdown-item" routerLink="/icos">Icos</a>
         </div>
-
-        <div class="user-image">
-          <img src="https://addons.cdn.mozilla.net/user-media/userpics/0/0/45.png" class="rounded-circle">
-        </div>
-
+      </div> -->
+    </div><!-- .header__start -->
+    <div class="header__search">
+      <form>
+        <i class="fa fa-search"></i>
+        <input type="search" placeholder="Search" class="header__search-field">
+        <button type="submit" class="header__search-btn"></button>
+      </form>
+    </div><!-- .header__search -->
+    <div class="header__actions">
+      <div class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <a href="#" class="header__user" title="{{userEmail}}"></a>
       </div>
 
+      <a href="#" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
+      <!--<div class="action">
+        <a href="#"></a>
+      </div>
+      <div class="action">
+        <a href="#"></a>
+      </div>-->
       <div class="dropdown-menu" aria-labelledby="dropdown-settings">
-        <a class="dropdown-item" href="#">Log Out</a>
+        <a class="dropdown-item" href="#" (click)="logout($event)">Log Out</a>
       </div>
-    </div>
+    </div><!-- .header__actions -->
+  </div><!-- .container -->
 
-  </div>
-</nav>
+  <!--<div class="page-list">
+    <a routerLink="/icos">ICO's</a>
+    <a routerLink="/allcoins">All</a>
+  </div>-->
+
+  <owl-carousel *ngIf="topList?.length" class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
+    <a routerLink="/icos">ICO's</a>
+    <a routerLink="/allcoins">All</a>
+    <a href="javascript:void(0)" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
+    <!--<a href="javascript:void(0)">Bitcoin</a>
+    <a href="javascript:void(0)">Ethereum</a>
+    <a href="javascript:void(0)">Bitcoin Cash</a>
+    <a href="javascript:void(0)">Ripple</a>
+    <a href="javascript:void(0)">Litecoin</a>
+    <a href="javascript:void(0)">Dash</a>
+    <a href="javascript:void(0)">NEO</a>
+    <a href="javascript:void(0)">NEM</a>
+    <a href="javascript:void(0)">Monero</a>
+    <a href="javascript:void(0)">Ethereum Classic</a>
+    <a href="javascript:void(0)">IOTA</a>
+    <a href="javascript:void(0)">Qtum</a>
+    <a href="javascript:void(0)">Ethereum Classic</a>
+    <a routerLink="/icos">ICO's</a>
+    <a href="javascript:void(0)">Educational Resources</a>
+    <a routerLink="/allcoins">All</a>
+    <a href="javascript:void(0)">Bitcoin</a>
+    <a href="javascript:void(0)">Ethereum</a>
+    <a href="javascript:void(0)">Bitcoin Cash</a>
+    <a href="javascript:void(0)">Ripple</a>
+    <a href="javascript:void(0)">Litecoin</a>
+    <a href="javascript:void(0)">Dash</a>
+    <a href="javascript:void(0)">NEO</a>
+    <a href="javascript:void(0)">NEM</a>
+    <a href="javascript:void(0)">Monero</a>
+    <a href="javascript:void(0)">Ethereum Classic</a>
+    <a href="javascript:void(0)">IOTA</a>
+    <a href="javascript:void(0)">Qtum</a>-->
+  </owl-carousel>
+
+  <app-loader-line></app-loader-line>
+</header><!-- .header -->

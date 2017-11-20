@@ -1,0 +1,148 @@
+<div class="coin-tabs">
+  <div class="coin-tabs__links">
+    <a href="javascript:void(0)" (click)="selectTab(1)" [ngClass]="{'active': currentTabNumber === 1}">Charts</a>
+    <a href="javascript:void(0)" (click)="selectTab(2)" [ngClass]="{'active': currentTabNumber === 2}">Markets</a>
+    <!--<a href="javascript:void(0)" (click)="selectTab(3)" [ngClass]="{'active': currentTabNumber === 3}">Project</a>
+    <a href="javascript:void(0)" (click)="selectTab(4)" [ngClass]="{'active': currentTabNumber === 4}">ICO</a>
+    <a href="javascript:void(0)" (click)="selectTab(5)" [ngClass]="{'active': currentTabNumber === 5}">Assessment</a>
+    <a href="javascript:void(0)" (click)="selectTab(6)" [ngClass]="{'active': currentTabNumber === 6}">Tech</a>
+    <a href="javascript:void(0)" (click)="selectTab(7)" [ngClass]="{'active': currentTabNumber === 7}">Team</a>-->
+  </div>
+  <div class="coin-tabs__panes">
+    <div [ngClass]="{'active': currentTabNumber === 1}">
+      <app-chart-tab></app-chart-tab>
+    </div>
+    <div [ngClass]="{'active': currentTabNumber === 2}">
+      <div class="text-right">
+        Native
+      </div>
+      <table class="page-table">
+        <thead>
+        <tr>
+          <th>#</th>
+          <th>Source</th>
+          <th>Pair</th>
+          <th class="text-right">Volume (24h)</th>
+          <th class="text-right">Price</th>
+          <th class="text-right">Volume (%)</th>
+          <th class="text-right">Updated</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td data-title="#">1</td>
+          <td data-title="Source"><a href="#">Bithumb</a></td>
+          <td data-title="Pair"><a href="#">XRP/KRW</a></td>
+          <td data-title="Volume (24h)" class="text-right">$72 678 800</td>
+          <td data-title="Price" class="text-right">$0.261086</td>
+          <td data-title="Volume (%)" class="text-right">45.57%</td>
+          <td data-title="Updated" class="text-right">Recently</td>
+        </tr>
+        <tr>
+          <td data-title="#">2</td>
+          <td data-title="Source"><a href="#">The Rock Trading</a></td>
+          <td data-title="Pair"><a href="#">XRP/KRW</a></td>
+          <td data-title="Volume (24h)" class="text-right">$16 763 300</td>
+          <td data-title="Price" class="text-right">$0.259322</td>
+          <td data-title="Volume (%)" class="text-right">10.51%</td>
+          <td data-title="Updated" class="text-right">Recently</td>
+        </tr>
+        <tr>
+          <td data-title="#">3</td>
+          <td data-title="Source"><a href="#">Tripe Dice Exchange</a></td>
+          <td data-title="Pair"><a href="#">XRP/BTC</a></td>
+          <td data-title="Volume (24h)" class="text-right">$14 545 300</td>
+          <td data-title="Price" class="text-right">$0.253255</td>
+          <td data-title="Volume (%)" class="text-right">9.12%</td>
+          <td data-title="Updated" class="text-right">Recently</td>
+        </tr>
+        <tr>
+          <td data-title="#">4</td>
+          <td data-title="Source"><a href="#">Korbit</a></td>
+          <td data-title="Pair"><a href="#">XRP/KRW</a></td>
+          <td data-title="Volume (24h)" class="text-right">$12 481 000</td>
+          <td data-title="Price" class="text-right">$0.259322</td>
+          <td data-title="Volume (%)" class="text-right">7.82%</td>
+          <td data-title="Updated" class="text-right">Recently</td>
+        </tr>
+        <tr>
+          <td data-title="#">5</td>
+          <td data-title="Source"><a href="#">Stellar Decentralize...</a></td>
+          <td data-title="Pair"><a href="#">XRP/BTC</a></td>
+          <td data-title="Volume (24h)" class="text-right">$10 066 600</td>
+          <td data-title="Price" class="text-right">$0.253104</td>
+          <td data-title="Volume (%)" class="text-right">6.31%</td>
+          <td data-title="Updated" class="text-right">26 hours ago</td>
+        </tr>
+        <tr>
+          <td data-title="#">6</td>
+          <td data-title="Source"><a href="#">Bithumb</a></td>
+          <td data-title="Pair"><a href="#">XRP/KRW</a></td>
+          <td data-title="Volume (24h)" class="text-right">$72 678 800</td>
+          <td data-title="Price" class="text-right">$0.261086</td>
+          <td data-title="Volume (%)" class="text-right">45.57%</td>
+          <td data-title="Updated" class="text-right">Recently</td>
+        </tr>
+        <tr>
+          <td data-title="#">7</td>
+          <td data-title="Source"><a href="#">The Rock Trading</a></td>
+          <td data-title="Pair"><a href="#">XRP/KRW</a></td>
+          <td data-title="Volume (24h)" class="text-right">$16 763 300</td>
+          <td data-title="Price" class="text-right">$0.259322</td>
+          <td data-title="Volume (%)" class="text-right">10.51%</td>
+          <td data-title="Updated" class="text-right">Recently</td>
+        </tr>
+        <tr>
+          <td data-title="#">8</td>
+          <td data-title="Source"><a href="#">Tripe Dice Exchange</a></td>
+          <td data-title="Pair"><a href="#">XRP/BTC</a></td>
+          <td data-title="Volume (24h)" class="text-right">$14 545 300</td>
+          <td data-title="Price" class="text-right">$0.253255</td>
+          <td data-title="Volume (%)" class="text-right">9.12%</td>
+          <td data-title="Updated" class="text-right">Recently</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <!--<div [ngClass]="{'active': currentTabNumber === 3}">
+      <ul class="coin-details-list">
+        <li>
+          <span>Project Stage:</span>
+          <span>Useable Product</span>
+        </li>
+        <li>
+          <span>Hype Score:</span>
+          <span>LOW</span>
+        </li>
+        <li>
+          <span>Risk score: </span>
+          <span>MEDIUM</span>
+        </li>
+        <li>
+          <span>Invest score:</span>
+          <span>LOW</span>
+        </li>
+        <li>
+          <span>Category:</span>
+          <span>Service</span>
+        </li>
+        <li>
+          <span>Founded:</span>
+          <span>2017</span>
+        </li>
+      </ul>
+    </div>
+    <div [ngClass]="{'active': currentTabNumber === 4}">
+      Ico
+    </div>
+    <div [ngClass]="{'active': currentTabNumber === 5}">
+      Assessment
+    </div>
+    <div [ngClass]="{'active': currentTabNumber === 6}">
+      Tech
+    </div>
+    <div [ngClass]="{'active': currentTabNumber === 7}">
+      Team
+    </div>-->
+  </div>
+</div><!-- .coin-tabs -->

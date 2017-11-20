@@ -1,0 +1,15 @@
+<li class="coin-list-item">
+  <a href="javascript:void(0)" (click)="selectItem(altcoin.id)" [ngClass]="{'active': selectItemId === altcoin.id}">
+      <span class="coin-list-item__img">
+        <img src="{{altcoin?.image}}"
+             onerror="this.src='../../../../../assets/defaultCoin.png'" alt="">
+      </span>
+    <span class="coin-list-item__content" [ngClass]="{'coin-list-item--negative' : altcoin.percent_change_24h < 0}">
+        <strong>{{altcoin.name}}</strong>
+        <span class="coin-list-item__details">
+          <span>$ {{altcoin.price_usd}}</span>
+          <span>{{altcoin.percent_change_24h | percentPipe}}</span>
+        </span>
+      </span>
+  </a>
+</li>

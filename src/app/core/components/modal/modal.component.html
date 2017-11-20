@@ -1,0 +1,20 @@
+<div class="modal fade show" [ngClass]="{show: isOpen, open: isOpen}" (click)="onClickWindow($event)">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close" (click)="close()"></button>
+      </div>
+      <div class="modal-body">
+        <div>
+           By joining Clout Network, you can<br>leave comments.
+        </div>
+        <button type="button" class="btn btn-primary" routerLink="/register">
+          Register
+        </button>
+      </div>
+      <div class="modal-footer">
+        Do you have a profile? <a href="javascript:void(0)" routerLink="/login">Login &raquo;</a>
+      </div>
+    </div>
+  </div>
+</div>

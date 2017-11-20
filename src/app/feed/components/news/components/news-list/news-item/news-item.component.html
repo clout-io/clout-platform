@@ -1,0 +1,11 @@
+<!-- .news-item START -->
+<div class="news-item">
+  <a href="{{item?.link ? item?.link : 'javascript:void(0)'}}" target="_blank">
+    <div *ngIf="item?.image" class="news-item__img" [ngStyle]="{'background-image': 'url(' + item?.image + ')'}" ></div>
+    <div class="news-item__content">
+      <h4 class="news-item__title">{{item?.title}}</h4>
+      <p>{{item?.description | truncate : 250 }}</p>
+    </div>
+  </a>
+</div>
+<!-- .news-item END -->

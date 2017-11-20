@@ -1,12 +1,7 @@
-<div class="links-component">
-  <ul class="left">
-    <li><a href="https://aventus.io/">https://aventus.io/</a></li>
-    <li><a href="#">Whitepaper</a></li>
-    <li><a href="#">Blog</a></li>
-  </ul>
-  <ul class="right">
-    <li><a href="#">Help to Project</a></li>
-    <li><a href="#">Funding to Project</a></li>
-    <li><a href="#">Subscribe</a></li>
-  </ul>
+<div class="coin-details__share-links">
+  <span *ngFor="let social of socialList">
+    <a href="{{'http://'+social.url}}" [ngClass]="{'underline': social.network === 'homepage'}" target="_blank">
+      {{social.network === 'homepage' ? social.url : social.network}}
+    </a>
+  </span>
 </div>

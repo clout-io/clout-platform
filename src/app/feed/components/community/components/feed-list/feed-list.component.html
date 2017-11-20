@@ -1,0 +1,9 @@
+<div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="loadFeedList()" [infiniteScrollThrottle]="500" >
+  <div class="comments single-post" *ngIf="notfound">
+    <div class="not-found-posts">
+      Not found.
+    </div>
+  </div>
+  <app-feed-item *ngFor="let feed of feeds" [feed]="feed" (onDeletePost)="deletePost($event)">
+  </app-feed-item>
+</div>

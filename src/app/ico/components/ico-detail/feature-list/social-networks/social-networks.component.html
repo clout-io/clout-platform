@@ -1,12 +1,5 @@
-<div class="social-networks-component">
-  <ul>
-    <li><a href="#" class="fa fa-twitter"></a></li>
-    <li><a href="#" class="fa fa-facebook"></a></li>
-    <li><a href="#" class="fa fa-linkedin"></a></li>
-    <li><a href="#" class="fa fa-youtube"></a></li>
-    <li><a href="#" class="fa fa-github"></a></li>
-    <li><a href="#" class="fa fa-instagram"></a></li>
-    <li><a href="#" class="fa fa-linkedin"></a></li>
-    <li><a href="#" class="fa fa-tumblr"></a></li>
-  </ul>
-</div>
+<ul class="social-links">
+  <li *ngFor="let social of socialList">
+    <a href="{{'http://'+social.url}}" class="{{social.className}}" target="_blank"></a>
+  </li>
+</ul>

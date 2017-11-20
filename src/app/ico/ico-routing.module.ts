@@ -8,7 +8,7 @@ import { IcoComponent } from './ico.component';
 
 const routes: Routes = CoreRoute.withShell([
   { path: '', redirectTo: '/icos', pathMatch: 'full' },
-  { path: 'icos', component: IcoComponent },
+  { path: 'icos', component: IcoComponent, data: {title: 'ICOs' }},
 ]);
 
 @NgModule({

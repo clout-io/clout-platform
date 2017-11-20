@@ -1,0 +1,9 @@
+.header_loader_wrapper {
+  position: relative;
+  z-index: 1;
+
+  .header_loader {
+    height: 2px;
+    width: 100%;
+  }
+}

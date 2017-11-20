@@ -1,0 +1,18 @@
+<div class="container clearfix">
+  <div class="feed-content">
+
+    <main class="feed-main">
+      <!--<app-feed-create></app-feed-create>-->
+      <app-feed-list [filter]="hashtag"></app-feed-list>
+    </main><!-- .feed-main -->
+
+    <aside class="feed-aside">
+      <app-favorite-coins></app-favorite-coins>
+      <app-clout-desc-sidebar></app-clout-desc-sidebar>
+    </aside><!-- .feed-aside -->
+    <aside class="feed-aside">
+      <app-popular-search-sidebar></app-popular-search-sidebar>
+      <app-ads-block-sidebar></app-ads-block-sidebar>
+    </aside><!-- .feed-aside -->
+  </div><!-- .feed-content -->
+</div>

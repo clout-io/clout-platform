@@ -1,0 +1,94 @@
+<form class="auth-form" novalidate (ngSubmit)="register()" [formGroup]="account">
+  <div class="validation-err-msg auth-form__error-title" [hidden]="!errorRegister">
+    {{errorMessage}}
+  </div>
+  <div class="form-group"
+       [ngClass]="{'has_error': account.get('email').invalid && account.get('email').touched}">
+    <div class="input-group">
+      <input type="email"
+             placeholder="Email"
+             formControlName="email"/>
+      <app-reset-input-btn [inputName]="'email'"></app-reset-input-btn>
+    </div>
+    <div *ngIf="account.get('email').invalid && account.get('email').touched" class="validation-err-msg">
+      <div *ngIf="account.get('email').hasError('required')">Email is required</div>
+      <div *ngIf="!account.get('email').hasError('required')">The entered email is invalid.</div>
+    </div>
+  </div>
+  <div class="form-group"
+       [ngClass]="{'has_error': account.get('password').invalid && account.get('password').touched}">
+    <div class="input-group">
+      <input type="password"
+             placeholder="Password"
+             formControlName="password"/>
+      <app-reset-input-btn [inputName]="'password'"></app-reset-input-btn>
+    </div>
+    <div *ngIf="account.get('password').invalid && account.get('password').touched" class="has_error">
+      <div class="validation-err-msg">
+        <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
+                  account.get('password').hasError('numbers')">
+          Password must contain at least one uppercase letter and one number
+        </span>
+          <span *ngIf="account.get('password').hasError('uppercaseLetters') &&
+                  !account.get('password').hasError('numbers')">
+          Password must contain at least one uppercase letter
+        </span>
+          <span *ngIf="!account.get('password').hasError('uppercaseLetters') &&
+                  account.get('password').hasError('numbers')">
+          Password must contain at least one number
+        </span>
+        <div *ngIf="account.get('password').hasError('minlength')">
+          Password must be of minimum 6 characters length
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group" [ngClass]="{'has_error': account.get('password_confirm').invalid &&
+                                      account.get('password_confirm').touched}">
+    <div class="input-group">
+      <input type="password"
+             placeholder="Confirm Password"
+             formControlName="password_confirm"/>
+      <app-reset-input-btn [inputName]="'password_confirm'"></app-reset-input-btn>
+    </div>
+    <div *ngIf="account.get('password_confirm').invalid && account.get('password_confirm').touched" class="has_error">
+      <div class="validation-err-msg">
+        <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
+                  account.get('password_confirm').hasError('numbers')">
+          Password must contain at least one uppercase letter and one number
+        </span>
+          <span *ngIf="account.get('password_confirm').hasError('uppercaseLetters') &&
+                  !account.get('password_confirm').hasError('numbers')">
+          Password must contain at least one uppercase letter
+        </span>
+          <span *ngIf="!account.get('password_confirm').hasError('uppercaseLetters') &&
+                  account.get('password_confirm').hasError('numbers')">
+          Password must contain at least one number
+        </span>
+        <div *ngIf="account.get('password_confirm').hasError('minlength')">
+          Password must be of minimum 6 characters length
+        </div>
+      </div>
+    </div>
+    <div class="has_error">
+      <span *ngIf="(account.get('password').value != account.get('password_confirm').value) &&
+                account.get('password_confirm').touched && !account.get('password').hasError('required') &&
+                !account.get('password_confirm').hasError('required')" class="validation-err-msg">
+        Passwords doesn't match
+      </span>
+      <div *ngIf="showVerificationMessage" class="varification-msg">
+        We have sent a verification link to your email address. Please check.
+      </div>
+    </div>
+  </div>
+  <button type="submit" class="btn btn--block btn--primary" [disabled]="disableRegisterBtn">
+    Register
+  </button>
+  <div class="auth-form__or"><span>or</span></div>
+  <app-facebook-auth-btn [textButton]="'Sign Up with Facebook'"></app-facebook-auth-btn>
+  <div class="auth-form__hint">
+    <span>Do you have a profile?</span>
+
+    <a routerLink="/login">Login &raquo;</a>
+  </div>
+</form>

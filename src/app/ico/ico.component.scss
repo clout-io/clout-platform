@@ -1,13 +1,15 @@
 @import './src/theme/theme-variables';
 
 .ico-component {
-  margin-top: $gutter * 3;
+  // margin-top: $gutter * 3;
+  //padding-top: 30px;
 
   .main-components {
     padding: 0;
-    @media (min-width: 1200px) {
-      max-width: 80%;
-    }
+
+    // @media (min-width: 1200px) {
+    //   max-width: 80%;
+    // }
   }
 
   .filters-container {
@@ -50,5 +52,9 @@
       }
     }
   }
+}
+
+.ico-component[_ngcontent-c3] {
+  padding: 0;
 }
 

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { BroadcastService, ModalService } from '../../services';
 
 @Component({
   selector: 'app-shell',
@@ -7,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ShellComponent implements OnInit {
 
-  constructor() { }
+  constructor(private broadcastService: BroadcastService,
+              private modalService: ModalService) { }
 
   ngOnInit() {
+    this.broadcastService.subscribe('showPopup', (popupName) => {
+      this.modalService.open(popupName);
+    });
   }
 
 }

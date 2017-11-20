@@ -1,76 +1,135 @@
-<div class="feature-tabs-component">
+<div class="feature-tabs-component coin-tabs">
   <!-- Tab Nav -->
-  <ul class="nav nav-tabs flex-wrap" role="tablist">
-    <li class="nav-item">
+  <ul class="coin-tabs__links" role="tablist">
+    <!--<li class="nav-item">
       <a class="nav-link active" data-toggle="tab" href="#project-details" role="tab">Project Details</a>
-    </li>
+    </li>-->
     <li class="nav-item">
-      <a class="nav-link" data-toggle="tab" href="#ico-details" role="tab">ICO Details</a>
+      <a class="nav-link active" data-toggle="tab" href="#ico-details" role="tab">ICO Details</a>
     </li>
-    <li class="nav-item">
+    <!--<li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#tech" role="tab">Tech</a>
-    </li>
+    </li>-->
     <li class="nav-item">
       <a class="nav-link" data-toggle="tab" href="#team" role="tab">Team</a>
     </li>
   </ul>
 
   <!-- Tab panes -->
-  <div class="tab-content">
-    <div class="tab-pane active" id="project-details" role="tabpanel">
-      <div><label>Project Stage:</label> <span>Crypto Investments</span></div>
-      <div><label>Primary Geography:</label> <span>Europe</span></div>
-      <div><label>Features:</label>
-        <span>
-          - Allows event organisers to create,manage and promote their events and tickets with
-          dramatically reduced costs, even letting them set price controls and receive
-          commissions on ticket resales<br>
-          - Gives ticket buyers rewards for promoting events, and identifying fraudulent activity<br>
-          - Secondary Market Control<br>
-          - Promotion and Platform Cost Reduction
-          - The AventCoin is essential for aligning the economic incentives of participants and for
-          ensuring that minimal fraud occurs in the system
-        </span>
+  <div class="tab-content coin-tabs__panes">
+    <!--<div class="tab-pane" id="project-details" role="tabpanel">
+      <ul class="coin-details-list">
+        <li>
+          <span>Project Stage</span>
+          <span>Crypto Investments</span>
+        </li>
+        <li>
+          <span>Primary Geography</span>
+          <span>{{icoData.country}}</span>
+        </li>
+        <li>
+          <span>Features:</span>
+          <span>
+              - Allows event organisers to create,manage and promote their events and tickets with
+              dramatically reduced costs, even letting them set price controls and receive
+              commissions on ticket resales<br>
+              - Gives ticket buyers rewards for promoting events, and identifying fraudulent activity<br>
+              - Secondary Market Control<br>
+              - Promotion and Platform Cost Reduction
+              - The AventCoin is essential for aligning the economic incentives of participants and for
+              ensuring that minimal fraud occurs in the system
+            </span>
+        </li>
+        <li>
+          <span>Similar projects:</span>
+          <span>Blocktix</span>
+        </li>
+      </ul>
+    </div>-->
+    <div class="tab-pane active" id="ico-details" role="tabpanel">
+        <ul class="coin-details-list">
+            <li>
+              <span>ICO date:</span>
+              <span>
+                {{icoData.startedW3c | date: 'MMM dd, yyyy'}} – {{icoData.endedW3c | date: 'MMM dd, yyyy'}}
+              </span>
+            </li>
+            <li>
+              <span>Token Type:</span>
+              <span>{{icoData.tokenTypeBlockchain}}</span>
+            </li>
+           <!-- <li>
+              <span>Token Technology:</span>
+              <span>ERC20</span>
+            </li>
+            <li>
+              <span>ICO Amount:</span>
+              <span> $ 1 000 000</span>
+            </li>
+            <li>
+              <span>ICO Jurisdiction:</span>
+              <span>Estonia</span>
+            </li>-->
+            <li>
+              <span>Tokens distribution:</span>
+              <span>{{icoData.tokenSupplyAmount}}</span>
+              <!--<span>Total token supply: 10,000,000 AVT</span>-->
+            </li>
+            <!--<li>
+              <span>Token crowdsale supply:</span>
+              <span>6,000,000 AVT (The pre-sale will be capped at 30%, e.g. 50% of the total crowdsale percentage).</span>
+            </li>
+            <li>
+              <span>New user incentives:</span>
+              <span>1,950,000 AVT</span>
+            </li>
+            <li>
+              <span>Bounties:</span>
+              <span>250,000 AVT</span>
+            </li>
+            <li>
+              <span>Team, advisors, and corporate partners:</span>
+              <span>1,800,000 AVT</span>
+            </li>-->
+          </ul>
       </div>
-      <div><label>Similar projects:</label> <span>Blocktix</span></div>
-    </div>
-    <div class="tab-pane" id="ico-details" role="tabpanel">
-      <div><label>ICO date:</label> <span>Sep 22, 2017 – Oct 22, 2017</span></div>
-      <div><label>Token Type:</label> <span>App token</span></div>
-      <div><label>Token Technology:</label> <span>ERC20</span></div>
-      <div><label>ICO Amount:</label> <span>$ 1 000 000</span></div>
-      <div><label>ICO Jurisdiction:</label> <span>Estonia</span></div>
-      <div><label>Tokens distribution:</label> <span>
-        Total token supply: 10,000,000 AVT<br>
-        Token crowdsale supply: 6,000,000 AVT (The pre-sale will be capped at 30%, e.g.<br>
-        50% of the total crowdsale percentage).<br>
-        New user incentives: 1,950,000 AVT<br>
-        Bounties: 250,000 AVT<br>
-        Team, advisors, and corporate partners: 1,800,000 AVT<br>
-        <br>
-        A minimum of $6 million (24,000 ETH), with a target of $15 million (60,000 ETH).
-      </span></div>
-      <div><label>Token Sales:</label> <span>92 AVT = 1 ETH<br>
-        Pre-sale to strategic partners and corporate partners will be 20% discounted (max
-        27,273 ETH accepted).</span></div>
-        <div><label>Accepts: </label> <span>ETH</span></div>
-      </div>
-      <div class="tab-pane" id="tech" role="tabpanel">
-        <div><label>Technical details: </label> <span>
-          The overall ecosystem is comprised of 3 layers: the protocol, the service layer, and the
-          application layer.<br>
-          The Protocol is entirely composed of Ethereum smart contracts that allow for the
-          creation and validation of events, the issuance and sale of tickets in primary and
-          secondary ticket markets (customisable by the event organisers), and the
-          distribution of ticket sale revenue and market/event fees between the event
-          organisers, ticket promoters, market matchers, attendees, etc. There will be minimal
-          fees for using these contracts so that the protocol can remain competitive and enjoy
-          maximal adoption.</span></div>
-          <div><label>The source code:</label> <span>Is intended to be a free and open project, the protocol specification being under a Creative Commons license and the code being placed under a FLOSS license.</span></div>
-          <div><label>Proof of developer:</label> <span>Public team</span></div>
-        </div>
+      <!--<div class="tab-pane" id="tech" role="tabpanel">
+        <ul class="coin-details-list">
+          <li>
+            <span>Technical details:</span>
+            <span>
+              The overall ecosystem is comprised of 3 layers: the protocol, the service layer, and the
+                application layer.<br>
+                The Protocol is entirely composed of Ethereum smart contracts that allow for the
+                creation and validation of events, the issuance and sale of tickets in primary and
+                secondary ticket markets (customisable by the event organisers), and the
+                distribution of ticket sale revenue and market/event fees between the event
+                organisers, ticket promoters, market matchers, attendees, etc. There will be minimal
+                fees for using these contracts so that the protocol can remain competitive and enjoy
+                maximal adoption.
+            </span>
+          </li>
+          <li>
+            <span>The source code:</span>
+            <span>
+                Is intended to be a free and open project, the protocol specification being under a Creative Commons license and the code being placed under a FLOSS license.
+            </span>
+          </li>
+          <li>
+            <span>Proof of developer:</span>
+            <span>
+              Public team
+            </span>
+          </li>
+        </ul>
+        </div>-->
         <div class="tab-pane" id="team" role="tabpanel">
-          <div><label>CEO:</label> <span>Nick Smith</span></div>
+            <ul class="coin-details-list">
+              <li *ngFor="let team of icoData.team">
+                <span>{{team.role}}:</span>
+                <span>{{team.name}}</span>
+              </li>
+            </ul>
         </div>
       </div>
     </div>
