@@ -67,4 +67,8 @@ export class FeedService {
   getCategories(): Observable<any> {
     return this.api.get(`${this.path}/categories`);
   }
+
+  getTrendings(): Observable<any> {
+    return this.api.get(`${this.path}/categories`);
+  }
 }

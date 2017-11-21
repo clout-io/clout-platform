@@ -26,7 +26,10 @@ import {
   SinglePostComponent,
   SaveCancelComponent,
   PostCategoriesComponent,
-  PostFilterComponent
+  PostFilterComponent,
+  TrendingComponent,
+  TrendingListComponent,
+  TrendingItemComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -60,7 +63,10 @@ import { TruncatePipe } from '../pipes';
     SinglePostComponent,
     SaveCancelComponent,
     PostCategoriesComponent,
-    PostFilterComponent
+    PostFilterComponent,
+    TrendingComponent,
+    TrendingListComponent,
+    TrendingItemComponent
   ]
 })
 export class FeedModule { }
