@@ -26,7 +26,7 @@ exports.getAll = getAllOccurrences;
  */
 var url_regex = /(\b(((https?|ftp):\/\/)|www.)[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
 var email_regex = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
-var hashtag_regex = /((^|[ ])#[a-zA-Z0-9\d-]{1,500})/gim;
+var hashtag_regex = /((^|[ ])#[a-zA-Z0-9\d-_]{1,500})/gim;
 
 
 /**
