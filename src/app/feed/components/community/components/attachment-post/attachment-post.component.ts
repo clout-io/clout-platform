@@ -13,6 +13,7 @@ import { FeedService } from '../../../../../services';
 })
 export class AttachmentPostComponent implements OnInit, OnChanges {
   @Input() feed;
+  @Input() categories;
   @Input() imageSrc: string;
   @Input() loadImgId: string;
   @Input() editable: boolean;

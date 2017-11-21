@@ -1,11 +1,7 @@
 <div class="single-post__text" *ngIf="!editable">
   <div>
     <span class="comments__tags" [innerHtml]="text"></span>
-    <div class="comments__category">
-      <a href="#" class="active">Trending</a>
-      <a href="#">Breaking News</a>
-      <a href="#">Opinion</a>
-    </div>
+    <app-post-categories [categoryId]="feed.category.id" [categories]="categories"></app-post-categories>
   </div>
   <div *ngIf="!isLinkData">
     <div *ngFor="let file of feed.attachment" style="max-width: 100%; padding: 20px 0px 10px 0px;">
