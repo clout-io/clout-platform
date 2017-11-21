@@ -43,7 +43,12 @@ module.exports = {
         Post.findOne(objectId).exec(function (err, result) {
           callback(err, result)
         });
-      }
+      },
+      function (callback) {
+        Press.findOne(objectId).exec(function (err, result) {
+          callback(err, result)
+        });
+      },
     ], function (err, results) {
       if (err) {
         return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
@@ -185,6 +190,11 @@ module.exports = {
       },
       function (callback) {
         Post.findOne(objectId).exec(function (err, result) {
+          callback(err, result)
+        });
+      },
+      function (callback) {
+        Press.findOne(objectId).exec(function (err, result) {
           callback(err, result)
         });
       }
