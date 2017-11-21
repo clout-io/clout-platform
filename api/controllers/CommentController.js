@@ -118,7 +118,15 @@ module.exports = {
         ],
         function (err, result) {
           if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-          return res.json(result);
+          Insights.getObject(createData.root).then(function (object) {
+            object.save(function () {
+              return res.json(result);
+            })
+          }, function (err) {
+            return res.json(result);
+          });
+
+
         }
       );
     });
