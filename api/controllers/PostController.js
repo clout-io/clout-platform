@@ -32,7 +32,7 @@ module.exports = {
     }
 
     pager.paginate(
-      Post, conditions, currentPage, perPage, ["owner", "attachment", "category"], 'createdAt DESC')
+      Post, conditions, currentPage, perPage, ["owner", "attachment", "category"], 'updatedAt DESC')
       .then(function (records) {
         async.map(records.data,
           function (item, cb) {

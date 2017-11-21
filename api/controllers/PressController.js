@@ -15,7 +15,7 @@ module.exports = {
     var perPage = req.query.per_page || 20;
     var currentPage = parseInt(req.query.page, 10) || 1;
     var conditions = {};
-    pager.paginate(Press, conditions, currentPage, perPage, [], 'pubDate DESC').then(function (records) {
+    pager.paginate(Press, conditions, currentPage, perPage, [], 'updatedAt DESC').then(function (records) {
       res.json(records)
     }).catch(function (err) {
       res.send(err)
