@@ -45,13 +45,13 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
       this.meta = { nextPage: 1, perPage: 10 };
     }
 
+    if (!this.meta.nextPage) { return; }
+
     this.feedService.getFeeds({...this.meta, filter: this.filter})
     .subscribe(response => {
       this.feeds = response.meta.page === 1 ? response.data : R.unionWith(R.eqBy(R.prop('id')), this.feeds, response.data);
-      this.meta = response.meta.nextPage ? response.meta : this.meta;
+      this.meta = response.meta;
       this.notfound = !this.feeds.length;
-      /*this.feeds = response.meta.page === 1 ? response.data : R.uniq([...this.feeds, ...response.data]);
-      this.meta = response.meta.nextPage ? response.meta : this.meta;*/
     });
   }
 
