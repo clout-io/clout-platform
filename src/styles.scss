@@ -1543,6 +1543,10 @@ a.comments__add {
   &__category {
     padding: 18px 0 2px 0;
 
+    &.create-post {
+      padding: 10px 0 10px 0;
+    }
+
     a {
       display: inline-block;
       vertical-align: top;

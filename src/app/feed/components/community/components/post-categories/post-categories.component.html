@@ -1,9 +1,14 @@
-<div class="comments__category">
+<div class="comments__category" *ngIf="createFor === 'displayTagList'">
   <a *ngFor="let c of categories" routerLink="{{'/home/community/category/' + c.id}}"
      [ngClass]="{'active': c.id === categoryId}">
     {{c.name}}
   </a>
-  <!--<a href="#" class="active">Trending</a>
-  <a href="#">Breaking News</a>
-  <a href="#">Opinion</a>-->
+</div>
+<div class="comments__category create-post" *ngIf="createFor === 'createPost'">
+  <a *ngFor="let c of categories"
+     href="javascript:void(0)"
+     (click)="selectCategory(c.id)"
+     [ngClass]="{'active': c.id === categoryId}">
+    {{c.name}}
+  </a>
 </div>
