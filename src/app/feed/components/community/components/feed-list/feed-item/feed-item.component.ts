@@ -13,6 +13,7 @@ class Action {
 })
 export class FeedItemComponent implements OnInit {
   @Input() feed;
+  @Input() categories;
   @Output() onDeletePost = new EventEmitter();
   createDate: string = '';
   editable = false;

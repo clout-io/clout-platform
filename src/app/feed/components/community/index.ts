@@ -10,3 +10,5 @@ export * from './components/post-head/post-head.component';
 export * from './components/attachment-post/attachment-post.component';
 export * from './components/single-post/single-post.component';
 export * from './components/save-cancel/save-cancel.component';
+export * from './components/post-categories/post-categories.component';
+export * from './components/post-filter/post-filter.component';

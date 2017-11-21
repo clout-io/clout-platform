@@ -10,6 +10,8 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
   public feeds = [];
   @Input() filter: string;
   private subscription: any;
+  private categories$: any;
+  public categories;
   private meta = { nextPage: 1, perPage: 10 };
   public notfound = false;
 
@@ -19,6 +21,8 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription = this.broadcastService.subscribe('updateNewsList', (response) => {
       this.loadFeedList(true);
     });
+    this.categories$ = this.feedService.getCategories()
+      .subscribe(res => this.categories = res);
 
     this.loadFeedList();
   }
@@ -33,10 +37,6 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription = this.broadcastService.subscribe('updateNewsList', (response) => {
       this.loadFeedList(true);
     });
-  }
-
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
   }
 
   loadFeedList(forse = false) {
@@ -58,5 +58,10 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
   deletePost(id: string): void {
     const index = this.feeds.findIndex((item) => item.id === id);
     this.feeds.splice(index, 1);
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.categories$.unsubscribe();
   }
 }
