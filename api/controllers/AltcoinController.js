@@ -165,7 +165,8 @@ module.exports = {
         if (!user) {
           return res.json(204, []);
         }
-        return res.json(user.followedAltcoins);
+        var result = _.take(_.shuffle(user.followedAltcoins), 3);
+        return res.json(result);
       }
     )
   },
