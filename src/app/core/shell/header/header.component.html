@@ -46,7 +46,7 @@
 
   <owl-carousel *ngIf="topList?.length" class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
     <a routerLink="/icos">ICO's</a>
-    <a routerLink="/allcoins">All</a>
+    <a routerLink="/home/trending">All</a>
     <a href="javascript:void(0)" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
     <!--<a href="javascript:void(0)">Bitcoin</a>
     <a href="javascript:void(0)">Ethereum</a>
