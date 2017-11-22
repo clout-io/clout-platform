@@ -8,7 +8,8 @@ import { FeedComponent } from './feed.component';
 import {
   NewsComponent,
   CommunityComponent,
-  PostFilterComponent
+  PostFilterComponent,
+  TrendingComponent
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
@@ -42,6 +43,10 @@ const routes: Routes = CoreRoute.withShell([
       {
         path: 'community/category/:category',
         component: PostFilterComponent
+      },
+      {
+        path: 'trending',
+        component: TrendingComponent
       }
     ]
   }

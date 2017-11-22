@@ -94,8 +94,6 @@ export class FeedItemComponent implements OnInit {
     params['link'] = !!data.linkData ? data.linkData.ogUrl : null;
     if (!data.linkData) { params['linkData'] = null; }
 
-    console.log('savef', params);
-
     this.feedService.editFeed(this.feed.id, params)
       .subscribe(responce => {
         const {text, link, linkData, attachment, category} = responce;
