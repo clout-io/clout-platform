@@ -6,6 +6,7 @@
  */
 
 const pager = require('sails-pager');
+const extend = require('util')._extend;
 
 module.exports = {
   index: function (req, res) {
@@ -13,21 +14,47 @@ module.exports = {
     var perPage = req.query.per_page || 20;
     var currentPage = parseInt(req.query.page, 10) || 1;
 
-    var eachPage = Math.round(perPage / 2) ;
+    var eachPage = Math.round(perPage / 2);
+    var userId = req.user.id ? req.user : null;
 
     var conditions = {};
 
     async.parallel([
         function (cb) {
           pager.paginate(Press, conditions, currentPage, eachPage, [], 'updatedAt DESC').then(function (records) {
-            cb(null, records);
+            async.map(records.data,
+              function (item, callback) {
+                Insights.get(item.id, userId).then(function (data) {
+                  extend(item, data);
+                  callback(null, item)
+                }, function (err) {
+                  callback(err);
+                })
+              },
+              function (err, result) {
+                records.data = result
+                cb(null, records);
+              });
+
           }).catch(function (err) {
             cb(err)
           });
         },
         function (cb) {
           pager.paginate(Post, conditions, currentPage, eachPage, ["owner", "attachment", "category"], 'updatedAt DESC').then(function (records) {
-            cb(null, records);
+            async.map(records.data,
+              function (item, callback) {
+                Insights.get(item.id, userId).then(function (data) {
+                  extend(item, data);
+                  callback(null, item)
+                }, function (err) {
+                  callback(err);
+                })
+              },
+              function (err, result) {
+                records.data = result
+                cb(null, records);
+              });
           }).catch(function (err) {
             cb(err)
           });
@@ -44,6 +71,8 @@ module.exports = {
 
         var typed = _.map(treadingData, function (item) {
           item.type = item.id.split("_")[0];
+
+
           return item;
         });
 

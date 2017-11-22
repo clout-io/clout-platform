@@ -9,14 +9,31 @@ const parser = require('rss-parser');
 var pager = require('sails-pager');
 const cheerio = require('cheerio');
 const ogs = require('open-graph-scraper');
+const extend = require('util')._extend;
 
 module.exports = {
   index: function (req, res) {
     var perPage = req.query.per_page || 20;
     var currentPage = parseInt(req.query.page, 10) || 1;
+    var userId = req.user.id ? req.user : null;
+
+
     var conditions = {};
     pager.paginate(Press, conditions, currentPage, perPage, [], 'updatedAt DESC').then(function (records) {
-      res.json(records)
+      async.map(records.data,
+        function (item, cb) {
+          Insights.get(item.id, userId).then(function (data) {
+            extend(item, data);
+            cb(null, item)
+          }, function (err) {
+            cb(err);
+          })
+        },
+        function (err, result) {
+          if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+          records.data = result;
+          return res.json(records);
+        });
     }).catch(function (err) {
       res.send(err)
     });
