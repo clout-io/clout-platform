@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-trending-item',
@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./trending-item.component.scss']
 })
 export class TrendingItemComponent implements OnInit {
+  @Input() trending;
 
   constructor() { }
 

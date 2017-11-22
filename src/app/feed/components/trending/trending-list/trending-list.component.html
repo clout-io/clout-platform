@@ -1,1 +1,13 @@
-<app-trending-item></app-trending-item>
+<div infiniteScroll [infiniteScrollDistance]="2" (scrolled)="loadTrendingsList()" [infiniteScrollThrottle]="500">
+  <div *ngFor="let trending of trendings">
+    <app-feed-item *ngIf="trending.type === 'post'; else press"
+                   [feed]="trending"
+                   [categories]="categories"
+                   (onDeletePost)="deletePost($event)">
+    </app-feed-item>
+    <ng-template #press>
+      <app-news-item [item]="trending"></app-news-item>
+    </ng-template>
+  </div>
+</div>
+
