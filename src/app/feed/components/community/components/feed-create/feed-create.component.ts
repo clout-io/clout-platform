@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, OnDestroy, Renderer, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { FeedService, BroadcastService } from '../../../../../services';
 
 
@@ -15,7 +15,11 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   public formData: FormData = new FormData();
   public loadImgId: string;
   public linkData = null;
+  private category: string;
+  public categories;
+  public disabled = true;
 
+  @ViewChild('inputContainer') inputContainer: ElementRef;
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
   @ViewChild('feedtext') feedTextDivEl: ElementRef;
 
@@ -29,6 +33,42 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.feedText = this.placeHolder;
+
+    this.feedService.getCategories().take(1)
+      .subscribe(res => this.categories = res);
+
+    this.fixIOSDocumentClickBug();
+  }
+
+  onKey() {
+    this.checkBtnDisabling();
+  }
+
+  checkBtnDisabling(): void {
+    const textEl = this.feedTextDivEl.nativeElement;
+    const text = (textEl.textContent || textEl.innerText).trim();
+
+    this.disabled = !((!!text.trim().length || !!this.linkData || !!this.loadImgId) && !!this.category);
+  }
+
+  fixIOSDocumentClickBug() {
+    const iOS = !!navigator.userAgent.match(/(iPad|iPhone|iPod)/g);
+    if (iOS) {
+      document.body.style.cursor = 'pointer';
+    }
+  }
+
+  @HostListener('document:click', ['$event', '$event.target'])
+  public onClick(event: MouseEvent, targetElement: HTMLElement): void {
+    if (!targetElement || !this.hasPublish) { return; }
+
+    const contains = this.inputContainer.nativeElement.contains(targetElement);
+    if (!contains) { this.blurText(); }
+  }
+
+  chooseCategory(category: string) {
+    this.category = category;
+    this.checkBtnDisabling();
   }
 
   onPaste(data) {
@@ -50,11 +90,15 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   }
 
   feedCreate() {
+    const textEl = this.feedTextDivEl.nativeElement;
+    let text = (textEl.textContent || textEl.innerText).trim();
+    text = text.replace(/\s+/g, ' '); //delete all spaces
+
     if (!!this.linkData) {
       const params = {
-        text: this.feedTextDivEl.nativeElement.innerHTML == this.placeHolder ? '' : this.feedTextDivEl.nativeElement.innerHTML,
+        text: text === this.placeHolder ? '' : text,
         link: this.linkData.ogUrl,
-        category: 'opinion'
+        category: this.category
       };
       if (this.loadImgId) { params['attachment'] = [this.loadImgId]; }
 
@@ -69,17 +113,14 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
           this.broadcastService.broadcast('updateNewsList', data);
         });
     } else {
-      if (!this.feedTextDivEl.nativeElement.innerHTML)
-        return false;
-
-      let params = {
-        text: this.feedTextDivEl.nativeElement.innerHTML == this.placeHolder ? '' : this.feedTextDivEl.nativeElement.innerHTML
+      const params = {
+        text: text === this.placeHolder ? '' : text
       };
 
       if (this.loadImgId)
         params['attachment'] = [this.loadImgId];
 
-      params['category'] = 'opinion';
+      params['category'] = this.category;
 
       this.feedService.feedCreate(params)
         .subscribe(responce => {
@@ -93,7 +134,9 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  triggerToInput() {
+  triggerToInput($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
     let event = new MouseEvent('click');
     this.renderer.invokeElementMethod(
       this.uploadPicture.nativeElement, 'dispatchEvent', [event]);
@@ -132,6 +175,7 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
         this.imageSrc = window.URL.createObjectURL(file);
         this.hasPublish = true;
         this.loadImgId = responce[0].id;
+        this.checkBtnDisabling();
       }, (error) => {
         this.imageSrc = null;
         this.file = null;
@@ -155,9 +199,13 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   }
 
   focusText() {
+    this.setContentEditable(true);
+    const textEl = this.feedTextDivEl.nativeElement;
+    textEl.focus();
     setTimeout(() => {
-      if (this.feedTextDivEl.nativeElement.innerHTML === this.placeHolder) {
-        this.feedTextDivEl.nativeElement.innerHTML = '';
+      const text = textEl.textContent || textEl.innerText;
+      if (text.trim() === this.placeHolder) {
+        textEl.innerHTML = '';
         this.hasPublish = true;
       }
     }, 0);
@@ -165,10 +213,17 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
 
   blurText() {
     setTimeout(() => {
-      if (this.feedTextDivEl.nativeElement.innerHTML === '') {
-        this.feedTextDivEl.nativeElement.innerHTML = this.placeHolder;
+      const textEl = this.feedTextDivEl.nativeElement;
+      const text = textEl.textContent || textEl.innerText;
+      if (!text.trim().length) {
+        textEl.innerHTML = this.placeHolder;
         this.hasPublish = false;
+        this.setContentEditable(false);
       }
     }, 0);
+  }
+
+  setContentEditable(flag: boolean) {
+    this.feedTextDivEl.nativeElement.setAttribute('contenteditable', flag);
   }
 }

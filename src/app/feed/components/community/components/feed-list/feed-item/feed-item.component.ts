@@ -90,18 +90,20 @@ export class FeedItemComponent implements OnInit {
   }
 
   save(data) {
-    const params = {text: data.text, attachment: data.attachment};
+    const params = {text: data.text, attachment: data.attachment, category: data.category};
     params['link'] = !!data.linkData ? data.linkData.ogUrl : null;
-    params['category'] = 'opinion';
     if (!data.linkData) { params['linkData'] = null; }
+
+    console.log('savef', params);
 
     this.feedService.editFeed(this.feed.id, params)
       .subscribe(responce => {
-        const {text, link, linkData} = responce;
+        const {text, link, linkData, attachment, category} = responce;
         this.feed.text = text;
         this.feed.link = link;
         this.feed.linkData = linkData;
-        this.feed.attachment = responce.attachment;
+        this.feed.category = category;
+        this.feed.attachment = attachment;
         this.cancel();
       }, error => this.cancel());
   }

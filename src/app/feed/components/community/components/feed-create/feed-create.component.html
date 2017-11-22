@@ -1,31 +1,39 @@
 <div class="add-post">
   <div class="add-post__head">
     <a href="javascript:void(0)" class="active">Share an Update</a>
-    <a href="javascript:void(0)" (click)="triggerToInput()" >Upload Photo</a>
+    <a href="javascript:void(0)" (click)="triggerToInput($event)" >Upload Photo</a>
     <!--<a href="#">Write an Article</a>-->
   </div>
-  <div #feedtext class="add-post__text"
-       contenteditable="true" (click)="focusText()"
-       (paste)="onPaste($event)"
-       (blur)="blurText()">Write something...</div>
-  <input accept="image/gif, image/jpeg, image/png" type="file" (change)="handleUpload($event)" #uploadPicture style="visibility: hidden; height: 0px;"/>
-  <div *ngIf="imageSrc" class="add-post__img">
-    <div class="upload-img" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}">
-      <a href="javascript:void(0)" (click)="removeImage()"></a>
+  <div #inputContainer>
+    <div #feedtext class="add-post__text"
+         contenteditable="false"
+         (click)="focusText()"
+         (paste)="onPaste($event)"
+         (keyup)="onKey($event)">Write something...</div>
+    <input accept="image/gif, image/jpeg, image/png" type="file" (change)="handleUpload($event)" #uploadPicture style="visibility: hidden; height: 0px;"/>
+    <div *ngIf="imageSrc" class="add-post__img">
+      <div class="upload-img" [ngStyle]="{'background-image': 'url(' + imageSrc + ')'}">
+        <a href="javascript:void(0)" (click)="removeImage()"></a>
+      </div>
     </div>
-  </div>
-  <div *ngIf="!!linkData" class="attachment_post">
-    <div class="upload-img attachment-img" [ngStyle]="{'background-image': 'url(' + linkData?.ogImage?.url + ')'}">
-      <a href="javascript:void(0)" (click)="removeImage()"></a>
+    <div *ngIf="!!linkData" class="attachment_post">
+      <div class="upload-img attachment-img" [ngStyle]="{'background-image': 'url(' + linkData?.ogImage?.url + ')'}">
+        <a href="javascript:void(0)" (click)="removeImage()"></a>
+      </div>
+      <div class="news-item__content">
+        <h4><a href="{{linkData.ogUrl}}" target="_blank" class="attachment-title">{{linkData.ogTitle}}</a></h4>
+        <p class="attachment_desciption">
+          {{linkData.ogDescription}}
+        </p>
+      </div>
     </div>
-    <div class="news-item__content">
-      <h4><a href="{{linkData.ogUrl}}" target="_blank" class="attachment-title">{{linkData.ogTitle}}</a></h4>
-      <p class="attachment_desciption">
-        {{linkData.ogDescription}}
-      </p>
-    </div>
+    <app-post-categories *ngIf="hasPublish"
+                         [categories]="categories"
+                         [createFor]="'createPost'"
+                         (onSelect)="chooseCategory($event)">
+    </app-post-categories>
   </div>
   <div *ngIf="hasPublish" class="add-post__footer">
-    <button (click)="feedCreate()" class="btn btn--primary">Publish</button>
+    <button (click)="feedCreate()" class="btn btn--primary" [disabled]="disabled">Publish</button>
   </div>
 </div><!-- .add-post -->

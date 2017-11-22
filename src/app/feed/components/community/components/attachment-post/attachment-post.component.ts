@@ -23,6 +23,7 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
   public text: string;
   public isLinkData = false;
   private pastedValue: string;
+  private category: string;
 
   constructor(
     private router: Router,
@@ -42,6 +43,10 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
         tags[i].setAttribute('href', `/home/community/hashtag/${tagName}`);
       }
     }
+  }
+
+  chooseCategory(category: string) {
+    this.category = category;
   }
 
   goByTag($event) {
@@ -80,10 +85,14 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
       return;
     }
 
-    const text = this.textInput.nativeElement.innerText;
+    const textEl = this.textInput.nativeElement;
+    let text = (textEl.textContent || textEl.innerText).trim();
+    text = text.replace(/\s+/g, ' '); //delete all spaces
+
     const attachment = !!this.loadImgId ? [this.loadImgId] : [];
     const linkData = !!this.linkData && this.linkData.show ? this.linkData : null;
-    this.onDoAction.emit({key: 'save', payload: {flag, text, linkData, attachment}});
+    const category = this.category || this.feed.category.id;
+    this.onDoAction.emit({key: 'save', payload: {flag, text, linkData, attachment, category}});
   }
 
   onPaste(data) {
