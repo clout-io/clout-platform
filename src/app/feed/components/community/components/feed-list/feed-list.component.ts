@@ -58,6 +58,11 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
   deletePost(id: string): void {
     const index = this.feeds.findIndex((item) => item.id === id);
     this.feeds.splice(index, 1);
+    if (this.feeds.length < 2) {
+      const nextPage = this.meta.nextPage === 1 ? 1 : !this.meta.nextPage ? this.meta.nextPage : this.meta.nextPage - 1;
+      this.meta = Object.assign({}, this.meta, {nextPage});
+      this.loadFeedList();
+    }
   }
 
   ngOnDestroy(): void {

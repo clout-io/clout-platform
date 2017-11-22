@@ -1,0 +1,6 @@
+<div *ngIf="trending.type === 'post'; else press">
+  <app-feed-item [feed]="trending"></app-feed-item>
+</div>
+<ng-template #press>
+  <app-news-item [item]="trending"></app-news-item>
+</ng-template>

@@ -67,4 +67,9 @@ export class FeedService {
   getCategories(): Observable<any> {
     return this.api.get(`${this.path}/categories`);
   }
+
+  getTrendings(options): Observable<any> {
+    const { nextPage, perPage } = options;
+    return this.api.get(`${this.path}/treadings?page=${nextPage}&per_page=${perPage}`);
+  }
 }
