@@ -41,10 +41,14 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   }
 
   onKey() {
-    const textEl = this.feedTextDivEl.nativeElement;
-    const text = textEl.textContent || textEl.innerText;
+    this.checkBtnDisabling();
+  }
 
-    this.disabled = !text.trim().length || !this.category;
+  checkBtnDisabling(): void {
+    const textEl = this.feedTextDivEl.nativeElement;
+    const text = (textEl.textContent || textEl.innerText).trim();
+
+    this.disabled = !((!!text.trim().length || !!this.linkData || !!this.loadImgId) && !!this.category);
   }
 
   fixIOSDocumentClickBug() {
@@ -64,7 +68,7 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
 
   chooseCategory(category: string) {
     this.category = category;
-    this.onKey();
+    this.checkBtnDisabling();
   }
 
   onPaste(data) {
@@ -86,7 +90,6 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   }
 
   feedCreate() {
-    if (!this.category) { return; }
     const textEl = this.feedTextDivEl.nativeElement;
     let text = (textEl.textContent || textEl.innerText).trim();
     text = text.replace(/\s+/g, ' '); //delete all spaces
@@ -110,9 +113,6 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
           this.broadcastService.broadcast('updateNewsList', data);
         });
     } else {
-      if (!this.feedTextDivEl.nativeElement.innerHTML)
-        return false;
-
       const params = {
         text: text === this.placeHolder ? '' : text
       };
@@ -134,7 +134,9 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  triggerToInput() {
+  triggerToInput($event) {
+    $event.preventDefault();
+    $event.stopPropagation();
     let event = new MouseEvent('click');
     this.renderer.invokeElementMethod(
       this.uploadPicture.nativeElement, 'dispatchEvent', [event]);
@@ -173,6 +175,7 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
         this.imageSrc = window.URL.createObjectURL(file);
         this.hasPublish = true;
         this.loadImgId = responce[0].id;
+        this.checkBtnDisabling();
       }, (error) => {
         this.imageSrc = null;
         this.file = null;
