@@ -48,6 +48,10 @@ var routes = [
               "type": "string",
               "description": ""
             },
+            "username": {
+              "type": "string",
+              "description": ""
+            },
             "password": {
               "type": "string",
               "description": ""

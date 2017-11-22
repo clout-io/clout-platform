@@ -31,25 +31,38 @@ module.exports.confirm = function (code, redirectUri, callback) {
   var query = queryString.stringify(queryParams);
 
   var url = accessTokenUrl + "?" + query;
-  request
-    .get(url, function (e, r, body) {
-      if (r.statusCode === 200) {
-        callback(null, JSON.parse(body))
-      } else {
-        callback(JSON.parse(body), null)
-      }
-    })
+
+  return new Promise(function (resolve, reject) {
+    request
+      .get(url, function (e, r, body) {
+        if (r && r.statusCode === 200) {
+          resolve(JSON.parse(body))
+        } else {
+          if (body) {
+            reject(JSON.parse(body));
+          } else {
+            reject({message: "unknown error"})
+          }
+
+        }
+      })
+  });
+
+
 };
 
 module.exports.profile = function (token, callback) {
-  graph.setAccessToken(token);
+  return new Promise(function (resolve, reject) {
+    graph.setAccessToken(token);
 
-  graph.get("/me?fields=id,name,email", function (err, res) {
-    if (err) {
-      callback(err, null);
-    } else {
-      callback(null, res)
-    }
+    graph.get("me?fields=id,name,email,picture.type(large)", function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res)
+      }
+    });
   });
+
 
 };

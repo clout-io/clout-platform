@@ -24,6 +24,14 @@ module.exports = {
       type: 'string',
       defaultsTo: ''
     },
+    username: {
+      type: 'string',
+      required: true
+    },
+    avatar: {
+      type: 'string',
+      url: true
+    },
     password: {
       type: 'string',
       required: true
