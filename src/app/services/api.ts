@@ -139,6 +139,8 @@ export class ApiService {
     this.removeHeader('Authorization');
     this.apiHelper.removeItemFromLocalStorage('auth_token');
     this.apiHelper.removeItemFromLocalStorage('clout_user_email');
+    this.apiHelper.removeItemFromLocalStorage('clout_user_avatar');
+    this.apiHelper.removeItemFromLocalStorage('clout_user_username');
     this.apiHelper.removeItemFromLocalStorage('clout_user_id');
   }
 }

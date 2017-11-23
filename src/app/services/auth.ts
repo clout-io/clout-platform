@@ -38,9 +38,11 @@ export class AuthService implements CanActivate {
   }
 
   setUser(user: any) {
-    const {email, id} = user;
+    const {email, id, avatar, username} = user;
     window.localStorage.setItem('clout_user_email', email);
     window.localStorage.setItem('clout_user_id', id);
+    window.localStorage.setItem('clout_user_avatar', avatar);
+    window.localStorage.setItem('clout_user_username', username);
   }
 
   authenticate(credits): Observable<any> {
