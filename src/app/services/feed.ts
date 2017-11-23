@@ -72,4 +72,8 @@ export class FeedService {
     const { nextPage, perPage } = options;
     return this.api.get(`${this.path}/treadings?page=${nextPage}&per_page=${perPage}`);
   }
+
+  searchAltcoin(term: string): Observable<any>  {
+    return this.api.get(`${this.path}/altcoins/search?term=${term}`);
+  }
 }

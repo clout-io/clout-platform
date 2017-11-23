@@ -1,7 +1,7 @@
 <div class="comments__category" *ngIf="createFor === 'displayTagList'">
   <a *ngFor="let c of categories" routerLink="{{'/home/community/category/' + c.id}}"
      [ngClass]="{'active': c.id === categoryId}">
-    {{c.name}}
+    {{c.name === 'Treading' ? 'Trending' : c.name}}
   </a>
 </div>
 <div class="comments__category create-post" *ngIf="createFor === 'createPost'">
@@ -9,6 +9,6 @@
      href="javascript:void(0)"
      (click)="selectCategory(c.id)"
      [ngClass]="{'active': c.id === categoryId}">
-    {{c.name}}
+    {{c.name === 'Treading' ? 'Trending' : c.name}}
   </a>
 </div>
