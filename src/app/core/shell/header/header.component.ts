@@ -11,6 +11,7 @@ import { Router, NavigationEnd } from '@angular/router';
 export class HeaderComponent implements OnInit, OnDestroy {
   currentUrl: string;
   userName: string;
+  avatar: string;
   subscribe: any;
   topList: any;
   hashtagUrl = '/home/community/hashtag/';
@@ -22,6 +23,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private apiService: ApiService
   ) {
     const name = window.localStorage.getItem('clout_user_username');
+    this.avatar = window.localStorage.getItem('clout_user_avatar');
     this.userName = name ? name : null;
   }
 

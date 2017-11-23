@@ -584,12 +584,14 @@ ___________________________*/
         width: 25px;
         height: 25px;
         display: block;
-        background-image: url('#{$img-path}/layout/user.svg');
-        background-size: cover;
-        background-position: center center;
         border-radius: 50%;
         overflow: hidden;
         margin: 0;
+
+        img {
+          width: 25px;
+          height: 25px;
+        }
       }
     }
 

@@ -23,7 +23,9 @@
     </div><!-- .header__search -->
     <div class="header__actions">
       <div class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <a href="#" class="header__user" title="{{userName}}"></a>
+        <a href="#" class="header__user" title="{{userName}}">
+          <img src="{{avatar}}" onerror="this.src='../../../../assets/user.svg'" alt="">
+        </a>
       </div>
 
       <a href="#" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
