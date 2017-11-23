@@ -15,7 +15,12 @@ module.exports = {
   index: function (req, res) {
     var perPage = req.query.per_page || 20;
     var currentPage = parseInt(req.query.page, 10) || 1;
-    var userId = req.user.id ? req.user : null;
+
+    var userId = null;
+
+    if (req.user) {
+      userId = req.user.id
+    }
 
 
     var conditions = {};
