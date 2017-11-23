@@ -1,7 +1,9 @@
 <div class="comments single-post">
   <div class="comments__body" [ngClass]="{'no_border': editable}">
-    <div class="comments__img"
-         style="background-image: url('../../../../../assets/avatar.png')"></div>
+    <div class="comments__img">
+      <img src="{{feed?.owner?.avatar}}" onerror="this.src='../../../../../../../assets/user.svg'" alt="">
+    </div>
+
     <div class="comments__details">
       <strong>{{feed?.owner?.username}}</strong>
       <p>
