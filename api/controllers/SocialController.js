@@ -135,6 +135,7 @@ module.exports = {
           type: "facebook",
           token: token
         }).then(function (social) {
+          social.user = user;
           cb(null, social);
         }).catch(function (err) {
           cb(err);
