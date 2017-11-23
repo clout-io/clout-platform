@@ -741,8 +741,9 @@ ___________________________*/
 }
 
 .add-favorite-coin-block {
-  padding-top: 20px;
+  padding: 15px 0;
   text-align: center;
+  border-bottom: 1px solid #E8E9EA;
 
   a {
     color: $color-ac-link;
@@ -1949,6 +1950,18 @@ ___________________________*/
 
   img {
     max-width: 100%;
+  }
+
+  .fav-search {
+    margin-bottom: 0;
+
+    input {
+      margin-top: 15px;
+    }
+
+    input:focus {
+      border-color: #EFEFEF;
+    }
   }
 }
 
