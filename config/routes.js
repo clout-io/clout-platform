@@ -1,7 +1,7 @@
 const util = require('util');
 
 
-var routes = [
+let routes = [
   {
     method: "GET", path: "/activate", target:
     {
@@ -634,6 +634,33 @@ var routes = [
   }
   },
   {
+    method: "POST", path: "/user/avatar", target: {
+    controller: "UserController", action: "avatar", swagger: {
+      methods: ['POST'],
+      summary: 'Upload avatar ',
+      description: 'Upload avatar',
+      tags: [
+        'User'
+      ],
+      parameters: [
+        {
+          in: "formData",
+          name: "img",
+          description: "The uploaded file data",
+          required: true,
+          type: "file",
+          allowMultiple: true
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Reset password'
+        }
+      }
+    }
+  }
+  },
+  {
     method: "GET", path: "/press", target:
     {
       controller: 'PressController',
@@ -859,10 +886,10 @@ var routes = [
   }
 ];
 
-var prefix = "/api/v1";
+let prefix = "/api/v1";
 
-var routeObject = {};
-for (var key in routes) {
+let routeObject = {};
+for (let key in routes) {
   routeObject[util.format('%s %s%s', routes[key].method, prefix, routes[key].path)] = routes[key].target
 }
 

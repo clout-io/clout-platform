@@ -5,7 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
+const path = require('path')
 
 module.exports = {
   resetPasswordRequest: function (req, res) {
@@ -66,8 +67,25 @@ module.exports = {
         return res.json(400, Errors.build(err.message, Errors.ERROR_VALIDATION));
       })
     });
+  },
 
 
+  avatar: async (req, res) => {
+    let user = await User.findOne(req.user.id);
+
+    let img = await new Promise((resolve, reject) => {
+      req.file("img").upload({
+        dirname: path.resolve(sails.config.appPath, "public/images1/" + path)
+      }, (err, uploadedFiles) => {
+        "use strict";
+        if (err) reject(err);
+        resolve(uploadedFiles);
+      })
+    });
+
+    console.log(img)
+
+    return res.json(user)
   }
 
 };
