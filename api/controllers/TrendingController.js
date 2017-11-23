@@ -15,7 +15,11 @@ module.exports = {
     var currentPage = parseInt(req.query.page, 10) || 1;
 
     var eachPage = Math.round(perPage / 2);
-    var userId = req.user.id ? req.user : null;
+    var userId = null;
+
+    if (req.user) {
+      userId = req.user.id
+    }
 
     var conditions = {};
 
