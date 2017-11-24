@@ -29,7 +29,7 @@ export class FeedItemComponent implements OnInit {
   ngOnInit() {
     this.showLinkData(true);
     this.createDate = moment(this.feed.createdAt).fromNow();
-    this.isOwner = this.getUserId() === this.feed.owner.id;
+    this.isOwner = !!this.feed.owner ? this.getUserId() === this.feed.owner.id : false;
   }
 
   private showLinkData(show: boolean) {
