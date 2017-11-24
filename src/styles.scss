@@ -219,6 +219,15 @@ _________________________________*/
   }
 }
 
+.facebook-login-error {
+  margin: 30px 20px;
+  color: $color-warning;
+
+  a {
+    color: $color-primary;
+  }
+}
+
 .auth-form--reset {
 
   .auth-form__hint {
