@@ -82,6 +82,7 @@ module.exports = {
       delete obj.password;
       delete obj.activationCode;
       delete obj.confirmPassword;
+      delete obj.email;
       return obj;
     },
     getActivateLink: function () {

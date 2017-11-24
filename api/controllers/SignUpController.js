@@ -60,6 +60,7 @@ module.exports = {
         }
         res.json(200, {
           "isActive": user.isActive,
+          user: user,
           token: Token.issue({id: user.id})
         })
       })
