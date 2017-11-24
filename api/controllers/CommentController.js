@@ -136,7 +136,7 @@ module.exports = {
   list: function (req, res) {
     var objectId = req.param("objectId");
 
-    var ownerCriteria = {select: ['id', 'email']};
+    var ownerCriteria = {select: ['id', 'avatar', 'username']};
 
     var userId = null;
     if (req.user) {
