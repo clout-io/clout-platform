@@ -75,8 +75,6 @@ module.exports = {
 
         var typed = _.map(treadingData, function (item) {
           item.type = item.id.split("_")[0];
-
-
           return item;
         });
 

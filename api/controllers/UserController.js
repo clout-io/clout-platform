@@ -5,7 +5,8 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var bcrypt = require('bcrypt');
+const bcrypt = require('bcrypt');
+const path = require('path')
 
 module.exports = {
   resetPasswordRequest: function (req, res) {
@@ -66,8 +67,17 @@ module.exports = {
         return res.json(400, Errors.build(err.message, Errors.ERROR_VALIDATION));
       })
     });
+  },
 
 
+  avatar: async (req, res) => {
+    let user = await User.findOne(req.user.id);
+    let files = await MediaManager.upload(req.file("img"), user.id);
+    let file = files[0];
+    let savedFile = await Img.create({user: user.id, path: file.fd, size: file.size, type: file.type});
+    user.avatar = sails.config.appUrl + savedFile.url;
+    await user.save();
+    return res.json(user)
   }
 
 };
