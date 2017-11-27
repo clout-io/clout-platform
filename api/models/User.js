@@ -112,9 +112,8 @@ module.exports = {
       })
     })
   },
-  comparePassword: function (password, user, cb) {
+  comparePassword: async (password, user, cb) => {
     bcrypt.compare(password, user.password, function (err, match) {
-
       if (err) cb(err);
       if (match) {
         cb(null, true);
@@ -122,8 +121,29 @@ module.exports = {
         cb(err);
       }
     })
+  },
+  checkPassword: async (password, user) => {
+    return new Promise((resolve) => {
+      bcrypt.compare(password, user.password, function (err, match) {
+        if (err) resolve(false);
+        if (match) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+    })
+  },
+  passwordHash: async (password) => {
+    return new Promise((resolve) => {
+      bcrypt.genSalt(10, function (err, salt) {
+        if (err) throw(err);
+        bcrypt.hash(password, salt, function (err, hash) {
+          if (err) throw(err);
+          resolve(hash)
+        })
+      })
+    })
   }
-
-}
-;
+};
 

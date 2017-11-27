@@ -634,6 +634,47 @@ let routes = [
   }
   },
   {
+    method: "POST", path: "/user/password/change", target: {
+    controller: "UserController", action: "changePassword", swagger: {
+      methods: ['POST'],
+      summary: 'Change password ',
+      description: 'Change password',
+      tags: [
+        'User'
+      ],
+      parameters: [
+        {
+          in: "body", name: "data", schema: {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "oldPassword": {
+              "type": "string",
+              "description": ""
+            },
+            "password": {
+              "type": "string",
+              "description": ""
+            },
+            "confirmPassword": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Reset password'
+        }
+      }
+    }
+  }
+  },
+  {
     method: "POST", path: "/user/avatar", target: {
     controller: "UserController", action: "avatar", swagger: {
       methods: ['POST'],

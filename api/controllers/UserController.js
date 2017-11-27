@@ -6,7 +6,7 @@
  */
 
 const bcrypt = require('bcrypt');
-const path = require('path')
+const validate = require("validate.js");
 
 module.exports = {
   resetPasswordRequest: function (req, res) {
@@ -78,7 +78,62 @@ module.exports = {
     user.avatar = sails.config.appUrl + savedFile.url;
     await user.save();
     return res.json(user)
-  }
+  },
 
+  changePassword: async (req, res) => {
+    let user = await User.findOne(req.user.id);
+    let constraints = {
+      oldPassword: {
+        presence: true
+      },
+      password: (value, attributes, attributeName, options, constraints) => {
+        if (!User.types.password(value)) return {
+          presence: true,
+          equality: "password",
+          format: {
+            pattern: "",
+            message: function (value, attribute, validatorOptions, attributes, globalOptions) {
+              return "Wrong format"
+            }
+          }
+        };
+        return {
+          equality: "confirmPassword",
+        }
+      },
+      confirmPassword: (value, attributes, attributeName, options, constraints) => {
+        if (!User.types.password(value)) return {
+          presence: true,
+          equality: "password",
+          format: {
+            pattern: "",
+            message: function (value, attribute, validatorOptions, attributes, globalOptions) {
+              return "Wrong format"
+            }
+          }
+        };
+        return {
+          presence: true,
+          equality: "password",
+        }
+      }
+    };
+
+    let result = validate(req.body, constraints);
+    if (result) {
+      return res.json(401, result)
+    }
+    let isValidPassword = await User.checkPassword(req.body.oldPassword, user);
+    if (!isValidPassword) {
+      return res.json(401, {"message": "Wrong old password"})
+    }
+    user.password = await User.passwordHash(req.body.password);
+    await user.save();
+    let token = Token.issue({id: user.id});
+    return res.json({
+      user: user,
+      token: token
+    });
+  }
 };
 
