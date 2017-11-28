@@ -18,10 +18,14 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   private category: string;
   public categories;
   public disabled = true;
+  public tagList = [];
+  private caretPos;
+  private text = '';
 
   @ViewChild('inputContainer') inputContainer: ElementRef;
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
   @ViewChild('feedtext') feedTextDivEl: ElementRef;
+  @ViewChild('feedtexthidden') feedTextDivElHidden: ElementRef;
 
   private file: any;
 
@@ -40,8 +44,104 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
     this.fixIOSDocumentClickBug();
   }
 
-  onKey() {
+  selectTag(tag: string) {
+    const typedWordInfo = this.getTypedWord(this.caretPos.hashtagText.textContent, this.caretPos.position);
+    const text = this.caretPos.hashtagText.textContent;
+    const firstPart = text.slice(0, typedWordInfo.beginTagIndex);
+    const secondPart = text.slice(typedWordInfo.endTagIndex);
+
+    this.caretPos.hashtagText.textContent = firstPart + '#' + tag + secondPart;
+    this.text = this.feedTextDivEl.nativeElement.textContent;
+    this.hideTagList();
+  }
+
+  hideTagList() {
+    this.tagList = [];
+  }
+
+  getTypedWord(str: string, caretPos: number) {
+    const firstPart = str.slice(0, caretPos);
+    const beginTagIndex = firstPart.lastIndexOf('#');
+    let endTagIndex = caretPos;
+    const word = str.slice(beginTagIndex, endTagIndex).trim();
+    let isSpaceBetweenCurretAndTag = false;
+    if (word.indexOf(' ') !== -1) {
+      endTagIndex = word.indexOf(' ');
+      isSpaceBetweenCurretAndTag = true;
+    }
+    const hashtag = str.slice(beginTagIndex, endTagIndex);
+
+    return { word, beginTagIndex, endTagIndex, hashtag, isSpaceBetweenCurretAndTag };
+  }
+
+  onKey(event) {
+    this.checkIsHashtagTyped(event);
     this.checkBtnDisabling();
+  }
+
+  checkIsHashtagTyped(event) {
+    this.hideTagList();
+    const textContent = this.feedTextDivEl.nativeElement.textContent;
+    if (this.text.trim() === textContent.trim() || event.code === 'Space') { return; }
+
+    if (this.text !== textContent) { this.text = textContent; }
+    this.caretPos = this.getCaretPosition();
+    if (!(this.caretPos.position > 0)) { return; }
+
+    const str = this.caretPos.selectedObj.anchorNode.textContent;
+    const typedWordInfo = this.getTypedWord(str, this.caretPos.position);
+    const hashtag = typedWordInfo.hashtag;
+    const tagReg = /((^|[ ])#[a-zA-Z0-9\d-_]{1,500})/;
+    if (hashtag.length < 3 || hashtag.search(tagReg) === -1 || typedWordInfo.isSpaceBetweenCurretAndTag) { return; }
+
+    const wordWithoutGrid = hashtag.slice(1);
+    this.hideTagList();
+
+    setTimeout(() => {
+      this.feedTextDivElHidden.nativeElement.innerHTML =
+        str.slice(0, typedWordInfo.beginTagIndex) + '<span id="caret_element" style="position: absolute;"></span>';
+    }, 0);
+
+    this.buildHashtagsAutocomplete(wordWithoutGrid);
+  }
+
+  buildHashtagsAutocomplete(hashtag: string) {
+    this.feedService.searchTag(hashtag).take(1)
+      .subscribe(data => {
+        this.tagList = data;
+        const minWidthOfTagList = 88;
+        const tagList = document.getElementById('tag-list');
+        const offsetWidth = this.feedTextDivElHidden.nativeElement.offsetWidth;
+        const caretOffsetLeft = document.getElementById('caret_element').offsetLeft;
+        const lessThan = (offsetWidth - caretOffsetLeft) <= minWidthOfTagList;
+        tagList.style.left = lessThan ? 'auto' : caretOffsetLeft + 'px';
+        tagList.style.right = lessThan ? '-20px' : 'auto';
+      });
+  }
+
+  getCaretPosition() {
+    if (window.getSelection && window.getSelection().getRangeAt) {
+      const range = window.getSelection().getRangeAt(0);
+      const selectedObj = window.getSelection();
+
+      let rangeCount = 0;
+      const childNodes = selectedObj.anchorNode.parentNode.childNodes;
+      let hashtagText;
+      for (let i = 0; i < childNodes.length; i++) {
+        if (childNodes[i] == selectedObj.anchorNode) {
+          hashtagText = childNodes[i];
+          break;
+        }
+        if (childNodes[i]['outerHTML']) {
+          rangeCount += childNodes[i]['outerHTML'].length;
+        }
+        else if (childNodes[i].nodeType == 3) {
+          rangeCount += childNodes[i].textContent.length;
+        }
+      }
+      return { position: range.startOffset + rangeCount, selectedObj, hashtagText };
+    }
+    return { position: -1, selectedObj: null };
   }
 
   checkBtnDisabling(): void {
@@ -60,6 +160,7 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
 
   @HostListener('document:click', ['$event', '$event.target'])
   public onClick(event: MouseEvent, targetElement: HTMLElement): void {
+    this.hideTagList();
     if (!targetElement || !this.hasPublish) { return; }
 
     const contains = this.inputContainer.nativeElement.contains(targetElement);

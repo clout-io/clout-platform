@@ -2057,6 +2057,9 @@ ___________________________*/
   padding: 26px 30px 15px 30px;
   margin-bottom: 30px;
 
+  word-break: break-all;
+  word-wrap: break-word;
+
   &__head {
     display: flex;
     justify-content: flex-start;
@@ -2138,6 +2141,35 @@ ___________________________*/
 
     .btn {
       width: 100px;
+    }
+  }
+
+  .hidden_contenteditable {
+    position: relative;
+    visibility: hidden;
+    height: 0;
+    overflow: hidden;
+  }
+
+  #tag-list {
+    position: absolute;
+    z-index: 1;
+    background: #fff;
+    border: 1px solid #ccc;
+    color: #444;
+
+    li {
+      padding: 2px 5px;
+      border-bottom: 1px solid #eee;
+      cursor: default;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &:hover {
+        background-color: #ccc;
+      }
     }
   }
 }
