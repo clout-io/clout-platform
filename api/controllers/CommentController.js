@@ -8,6 +8,17 @@ const util = require('util');
 const striptags = require('striptags');
 const extend = require('util')._extend;
 
+let getAndUpdateParentComment = async (comment, list = []) => {
+  if (!comment.parent)
+    return list;
+
+  let parentComment = await Comment.findOne(comment.parent);
+  await parentComment.save();
+
+  list.push(parentComment);
+  return await getAndUpdateParentComment(parentComment, list)
+};
+
 module.exports = {
   create: async (req, res) => {
     let objectId = req.param("objectId");
@@ -30,15 +41,14 @@ module.exports = {
       owner: userId,
       text: text
     };
-    if (!rootNode) {
-      rootNode = objectId
-    }
 
     if (isComment) {
+      rootNode = object.root;
       createData.parent = objectId;
       createData.root = rootNode;
     } else {
       createData.root = objectId;
+      rootNode = objectId
     }
 
     let comment = await Comment.create(createData);
@@ -51,7 +61,7 @@ module.exports = {
 
     let result = {comment: comment, count: count};
     extend(result, clcData);
-
+    await getAndUpdateParentComment(comment);
     return res.json(result);
   },
 

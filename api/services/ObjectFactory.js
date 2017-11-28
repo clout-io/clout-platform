@@ -32,7 +32,6 @@ TYPES[TYPE_PRESS] = {
 module.exports = {
   getObjectType: (objectId) => {
     let [objectType, id] = objectId.split("_");
-    console.log(objectType)
     return objectType;
   },
   getObject: async (objectId) => {
