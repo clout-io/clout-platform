@@ -30,6 +30,8 @@ export class FeedItemComponent implements OnInit {
     this.showLinkData(true);
     this.createDate = moment(this.feed.createdAt).fromNow();
     this.isOwner = !!this.feed.owner ? this.getUserId() === this.feed.owner.id : false;
+    const type = !!this.feed.type ? this.feed.type : 'post';
+    this.feed.type = type;
   }
 
   private showLinkData(show: boolean) {
@@ -89,11 +91,7 @@ export class FeedItemComponent implements OnInit {
     this.editFlag(false);
   }
 
-  save(data) {
-    const params = {text: data.text, attachment: data.attachment, category: data.category};
-    params['link'] = !!data.linkData ? data.linkData.ogUrl : null;
-    if (!data.linkData) { params['linkData'] = null; }
-
+  save(params) {
     this.feedService.editFeed(this.feed.id, params)
       .subscribe(responce => {
         const {text, link, linkData, attachment, category} = responce;

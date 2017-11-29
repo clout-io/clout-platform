@@ -1,0 +1,13 @@
+<app-tiny-editor [createdFor]="'addArticle'"
+                 [elementId]="'article-tiny-editor'"
+                 (onEditorKeyup)="onChangeEditor($event)">
+</app-tiny-editor>
+<app-post-categories *ngIf="hasPublish"
+                     [categories]="categories"
+                     [createFor]="'createPost'"
+                     (onSelect)="chooseCategory($event)">
+</app-post-categories>
+<app-publish-post-btn [hasPublish]="hasPublish"
+                      [disabled]="disabled"
+                      (onPublish)="publishClickEvent()">
+</app-publish-post-btn>
