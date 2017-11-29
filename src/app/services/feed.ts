@@ -76,4 +76,9 @@ export class FeedService {
   searchAltcoin(term: string): Observable<any>  {
     return this.api.get(`${this.path}/altcoins/search?term=${term}`);
   }
+
+  searchTag(term: string): Observable<any>  {
+    return this.api.get(`${this.path}/tag/search?term=${term}`);
+  }
+
 }
