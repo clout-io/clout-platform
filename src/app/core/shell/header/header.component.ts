@@ -53,6 +53,9 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
         if (scrolled > 100) {
           document.body.classList.remove('sticky-header__bottom');
         }
+
+        document.getElementsByClassName('header')[0].classList.remove('mobile-nav-open');
+        me.mobileSearchVisible = false;
       } else {
         // upscroll code
         if (scrolled > 100) {
@@ -67,9 +70,6 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       if (scrolled > 100) {
         document.body.classList.add('sticky-header__top');
       }
-
-      document.getElementsByClassName('header')[0].classList.remove('mobile-nav-open');
-      me.mobileSearchVisible = false;
 
       lastScrollTop = scrolled;
 
