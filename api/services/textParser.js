@@ -103,7 +103,7 @@ function parseEmail(text) {
  */
 function parseHash(text) {
 
-  var hashTags = hashtag_regex; // Hashtags regex
+  let hashTags = hashtag_regex; // Hashtags regex
 
   text = text ? String(text).replace(/<[^>]+>/gm, '') : '';  // Remove all the html tags
 
@@ -230,9 +230,9 @@ function getEmails(data) {
  *
  */
 function getHashtags(data) {
-  var text = String(data).replace(/<[^>]+>/gm, '')
+  let text = String(data).replace(/<[^>]+>/gm, '');
 
-  var hashtagArray = text.match(hashtag_regex);
+  let hashtagArray = text.match(hashtag_regex);
   return (hashtagArray) ? hashtagArray : [];
 }
 

@@ -436,6 +436,10 @@ let routes = [
               "type": "string",
               "description": "category id required"
             },
+            "type": {
+              "type": "string",
+              "description": "article or post"
+            },
             "link": {
               "type": "string",
               "description": "link for preview"
@@ -483,6 +487,10 @@ let routes = [
             "video": {
               "type": "string",
               "description": "youtube link"
+            },
+            "type": {
+              "type": "string",
+              "description": "article or post"
             },
             "link": {
               "type": "string",

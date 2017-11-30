@@ -4,15 +4,21 @@
  * @description :: TODO: You might write a short summary of how this model works and what it represents here.
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
-var cryptoRandomString = require('crypto-random-string');
+const cryptoRandomString = require('crypto-random-string');
 const ogs = require('open-graph-scraper');
 const _ = require("underscore");
 
 
+const POST_TYPE_POST = "post";
+const POST_TYPE_ARTICLE = "article";
+
+const POST_TYPES = [POST_TYPE_POST, POST_TYPE_ARTICLE];
+
+
 function buildPostTags(post, cb) {
-  var tags = textParser.getHashtags(post.text);
-  var find = [];
-  var parsedTags = [];
+  let tags = textParser.getHashtags(post.text);
+  let find = [];
+  let parsedTags = [];
 
   tags.forEach(function (tag) {
     tag = tag.toLowerCase().replace("#", "").trim();
@@ -23,8 +29,8 @@ function buildPostTags(post, cb) {
     parsedTags.push(tag)
   });
 
-  var tagsToAdd = _.difference(parsedTags, post.displayTags);
-  var tagsToRemove = _.difference(post.displayTags, parsedTags);
+  let tagsToAdd = _.difference(parsedTags, post.displayTags);
+  let tagsToRemove = _.difference(post.displayTags, parsedTags);
 
   if (tagsToAdd.length === 0 && tagsToRemove.length === 0) {
     return cb()
@@ -60,7 +66,8 @@ function buildPostTags(post, cb) {
 }
 
 module.exports = {
-
+  TYPE_POST: POST_TYPE_POST,
+  TYPE_ARTICLE: POST_TYPE_ARTICLE,
   attributes: {
 
     id: {
@@ -108,12 +115,16 @@ module.exports = {
     displayTags: {
       type: "array",
       defaultsTo: []
+    },
+    type: {
+      type: "string",
+      enum: POST_TYPES
     }
   },
 
   beforeCreate: function (values, next) {
     if (values.link) {
-      var url = values.link;
+      let url = values.link;
       const options = {'url': url};
       ogs(options, function (err, results) {
         values.linkData = results.data;
@@ -124,7 +135,8 @@ module.exports = {
     }
   },
   beforeValidate: function (values, next) {
-    values.text = textParser.parseUrlAndHash(values.text);
+    if (values.type === POST_TYPE_POST)
+      values.text = textParser.parseUrlAndHash(values.text);
 
     if (!values.category) {
       return next({"category": "Invalid category"})
@@ -144,7 +156,7 @@ module.exports = {
 
   beforeUpdate: function (values, next) {
     if (values.link) {
-      var url = values.link;
+      let url = values.link;
       const options = {'url': url};
       ogs(options, function (err, results) {
         values.linkData = results.data;

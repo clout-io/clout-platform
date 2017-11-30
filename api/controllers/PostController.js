@@ -52,53 +52,71 @@ module.exports = {
       return res.json(400, err)
     });
   },
-  create: function (req, res) {
+  create: async (req, res) => {
 
-    var data = req.body;
+    let data = req.body;
+
+    if (!data.type) {
+      data.type = Post.TYPE_POST;
+    }
+
     data.owner = req.user.id;
 
-    data.text = striptags(data.text);
+    if (data.type === Post.TYPE_POST) {
+      data.text = striptags(data.text);
+    }
 
-    Post.create(data).then(function (post) {
+    try {
+      let createdPost = await Post.create(data);
+      let post = await Post.findOne(createdPost.id).populateAll();
       return res.json(post)
-    }).catch(function (err) {
-      return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-    })
+    } catch (e) {
+      return res.json(400, Errors.build(e, Errors.ERROR_UNKNOWN))
+    }
   },
 
-  edit: function (req, res) {
-    var postId = req.param("itemId");
+  edit: async (req, res) => {
+    let postId = req.param("itemId");
 
-    var data = req.body;
-    var userId = req.user.id;
+    let data = req.body;
+    let userId = req.user.id;
 
-    data.text = striptags(data.text);
+    if (!data.type) {
+      data.type = Post.TYPE_POST;
+    }
 
-    Post.findOne({id: postId, owner: userId}).populate("owner", "attachment").then(function (post) {
-      if (!post) return res.json(404);
-      Post.update({id: postId, owner: userId}, data).exec(function afterwards(err, updated) {
-        if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-        Post.findOne({id: postId, owner: userId}).populateAll().then(function (post) {
-          return res.json(post);
-        });
-      })
-    }).catch(function (err) {
-      return res.json(400, err.errorMessage)
-    });
+    if (data.type === Post.TYPE_POST) {
+      data.text = striptags(data.text);
+    }
+
+    let post = await Post.findOne({id: postId, owner: userId});
+    if (!post) return res.json(404);
+    try {
+      await Post.update({id: postId, owner: userId}, data);
+    } catch (e) {
+      res.json(400, Errors.build(e, Errors.ERROR_UNKNOWN));
+    }
+
+    let updatedPost = await Post.findOne({id: postId, owner: userId}).populateAll();
+    return res.json(updatedPost);
+
   },
-  delete: function (req, res) {
-    var postId = req.param("postId");
-    var userId = req.user.id;
+  delete: async (req, res) => {
+    let postId = req.param("itemId");
+    let userId = req.user.id;
+    let criteria = {id: postId, owner: userId};
 
-    Post.findOne({id: postId, owner: userId}).then(function (post) {
-      if (!post) return res.json(404);
-      Post.destroy({id: postId, owner: userId}).then(function (deletedRecords) {
-        return res.json(204, deletedRecords);
-      }).catch(function (err) {
-        return res.json(400, err)
-      });
-    })
+    let postToDelete = await Post.findOne(criteria);
 
+    if (!postToDelete)
+      return res.json(404);
+
+    try {
+      await Post.destroy(criteria);
+      return res.json(204);
+    } catch (e) {
+      res.json(400, Errors.build(e, Errors.ERROR_UNKNOWN));
+    }
   }
 
 };
