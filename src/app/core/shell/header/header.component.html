@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" [ngClass]="{'mobile-nav-open' : mobileSearchVisible}">
   <div class="container">
     <div class="header__start">
       <a routerLink="/home" class="header__logo"></a>
@@ -17,7 +17,7 @@
     <div class="header__search">
       <form>
         <i class="fa fa-search"></i>
-        <input type="search" placeholder="Search" class="header__search-field">
+        <input type="search" placeholder="Search" class="header__search-field" #headerSearchField>
         <button type="submit" class="header__search-btn"></button>
       </form>
     </div><!-- .header__search -->
@@ -29,6 +29,9 @@
       </div>
 
       <a href="#" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
+      <div class="action">
+        <a href="#" (click)="toggleSearchOnMobile($event); headerSearchField.focus();" class="fa fa-search"></a>
+      </div>
       <!--<div class="action">
         <a href="#"></a>
       </div>
