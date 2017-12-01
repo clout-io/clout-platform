@@ -23,7 +23,7 @@ export class FavCoinListComponent implements OnInit {
 
   getFavoriteCoins(): void {
     this.feedService.getFavoriteCoins().take(1)
-      .subscribe(responce => this.coinList = responce);
+      .subscribe(responce => this.coinList = responce.data);
   }
 
   selectValue(value: string): void {
