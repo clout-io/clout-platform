@@ -1,8 +1,11 @@
 <div class="widget">
   <h4 class="widget__title favorite-coin-widget-title">Your favorite coins</h4>
-  <ul>
-    <app-fav-coin-item *ngFor="let coin of coinList" [favCoin]="coin"></app-fav-coin-item>
-  </ul>
+  <div class="" [ngClass]="{'fav-coin-list--scrollable': coinList?.length > 3 }">
+    <ul class="fav-coin-list">
+      <app-fav-coin-item *ngFor="let coin of coinList" [favCoin]="coin"></app-fav-coin-item>
+    </ul>
+  </div>
+  
   <div class="form-group fav-search">
     <input auto-complete
            [(ngModel)]="inputValue"

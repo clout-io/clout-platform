@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, AfterViewChecked } from '@angular/core';
 import { FeedService, FollowService } from '../../../../services';
 import { Observable } from 'rxjs/Observable';
+
+declare const $: any;
 
 @Component({
   selector: 'app-fav-coin-list',
   templateUrl: './fav-coin-list.component.html',
   styleUrls: ['./fav-coin-list.component.scss']
 })
-export class FavCoinListComponent implements OnInit {
+export class FavCoinListComponent implements OnInit, AfterViewChecked {
   public coinList;
   public inputValue: string;
   private selectedValue: string;
@@ -23,7 +25,7 @@ export class FavCoinListComponent implements OnInit {
 
   getFavoriteCoins(): void {
     this.feedService.getFavoriteCoins().take(1)
-      .subscribe(responce => this.coinList = responce);
+      .subscribe(responce => this.coinList = responce.data);
   }
 
   selectValue(value: string): void {
@@ -47,6 +49,15 @@ export class FavCoinListComponent implements OnInit {
         this.selectedValue = null;
         this.inputValue = null;
       });
+  }
+
+  ngAfterViewChecked(){
+    $('.fav-coin-list--scrollable').mCustomScrollbar({
+      scrollInertia: 200,
+      mouseWheel: {
+        preventDefault: false
+      }
+    });
   }
 
 }
