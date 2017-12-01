@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
 import { AuthService, ApiService } from '../../../services';
 import { Router, NavigationEnd } from '@angular/router';
 
@@ -8,7 +8,7 @@ import { Router, NavigationEnd } from '@angular/router';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
+export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   currentUrl: string;
   userName: string;
   avatar: string;
@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   topList: any;
   hashtagUrl = '/home/community/hashtag/';
   top$: any;
+  mobileSearchVisible: boolean = false;
 
   constructor(
     private auth: AuthService,
@@ -38,6 +39,42 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     this.top$ = this.apiService.get('/api/v1/altcoins/top?top=20')
       .subscribe(responce => this.topList = responce.data);
+  }
+
+  ngAfterViewInit() {
+
+    let lastScrollTop = 0;
+    let me = this;
+
+    window.onscroll = function () {
+      let scrolled = window.pageYOffset;
+      if (scrolled > lastScrollTop) {
+        // downscroll code
+        if (scrolled > 100) {
+          document.body.classList.remove('sticky-header__bottom');
+        }
+
+        document.getElementsByClassName('header')[0].classList.remove('mobile-nav-open');
+        me.mobileSearchVisible = false;
+      } else {
+        // upscroll code
+        if (scrolled > 100) {
+          document.body.classList.add('sticky-header__bottom');
+        }
+
+        if (scrolled == 0) {
+          document.body.classList.remove('sticky-header__top','sticky-header__bottom');
+        }
+      }
+
+      if (scrolled > 100) {
+        document.body.classList.add('sticky-header__top');
+      }
+
+      lastScrollTop = scrolled;
+
+    };
+
   }
 
   setTitle() {
@@ -67,5 +104,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.subscribe.unsubscribe();
     this.top$.unsubscribe();
+  }
+
+  toggleSearchOnMobile(event) {
+    event.preventDefault();
+    this.mobileSearchVisible = !this.mobileSearchVisible;
   }
 }
