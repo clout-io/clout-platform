@@ -18,10 +18,11 @@ export class NewsComponent implements OnInit, AfterViewInit, OnDestroy {
     if (window.matchMedia("(min-width: 992px)").matches) {
       $('.feed-aside__item').stick_in_parent({
         offset_top: 20,
-        parent: '.feed-content'
+        parent: '.feed-content',
+        recalc_every: 4
       })
     }
-    
+
   }
 
   ngOnDestroy() { }
