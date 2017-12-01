@@ -180,18 +180,30 @@ module.exports = {
     })
   },
 
-  search: function (req, res) {
-    var term = req.param('term');
-    Altcoin.find({id: {contains: term}, select: ['id']}).then(
-      function (data) {
-        data = _.map(data, function (item) {
-          return item.id
-        });
-        res.json(data);
+  search: async (req, res) => {
+    let term = req.param('term');
+    let userTags = await Follow.find({user: req.user.id});
+
+    userTags = _.map(userTags, function (item) {
+      return item.altcoin;
+    });
+
+
+    let data = await Altcoin.find({id: {contains: term}, select: ['id']}).limit(15);
+    data = _.map(data, function (item) {
+      return item.id
+    });
+
+    data = data.filter(x => userTags.indexOf(x) === -1);
+    let all = _.uniq(data).sort(function (a, b) {
+      if (a.indexOf(term) < b.indexOf(term)) {
+        return -1;
+      } else {
+        return 1
       }
-    ).catch(function (err) {
-      res.json(400, err);
-    })
+
+    });
+    res.json(all);
   },
 
   sync: function (req, res) {
