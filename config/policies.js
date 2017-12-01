@@ -71,7 +71,8 @@ module.exports.policies = {
       true
   },
   PostController: {
-    index: true
+    index: true,
+    single: true
   },
   UserController: {
     resetPasswordRequest: true,

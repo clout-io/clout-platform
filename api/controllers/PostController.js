@@ -117,6 +117,18 @@ module.exports = {
     } catch (e) {
       res.json(400, Errors.build(e, Errors.ERROR_UNKNOWN));
     }
+  },
+
+  single: async (req, res) => {
+    let postId = req.param("itemId");
+
+    if (!postId) {
+      return res.json(404)
+    }
+
+    let post = await Post.findOne({id: postId}).populateAll();
+
+    return res.json(post)
   }
 
 };

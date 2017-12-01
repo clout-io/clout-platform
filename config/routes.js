@@ -463,6 +463,20 @@ let routes = [
   }
   },
   {
+    method: "GET", path: "/news/:itemId", target: {
+    controller: "PostController", action: "single", swagger: {
+      methods: ['GET'],
+      summary: 'Retrieve Post',
+      description: 'Retrieve Post',
+      tags: [
+        'Post'
+      ],
+      parameters: [
+        {in: "path", name: "itemId"}]
+    }
+  }
+  },
+  {
     method: "POST", path: "/news/:itemId", target: {
     controller: "PostController", action: "edit", swagger: {
       methods: ['POST'],
