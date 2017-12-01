@@ -2508,3 +2508,32 @@ ___________________________*/
     }
   }
 }
+
+
+.feed-aside {
+
+  .coin-list-item {
+    padding-right: 9px;
+
+    a {
+      padding: 7px 0;
+      font-size: 14px;
+    }
+
+    strong {
+      font-size: 16px;
+    }
+  }
+
+  .coin-list-item__img {
+    flex: 0 0 40px;
+  }
+
+  .coin-list-item__content {
+    padding-left: 10px;
+  }
+}
+
+.fav-coin-list--scrollable {
+  height: 192px;
+}
