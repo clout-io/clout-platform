@@ -152,23 +152,22 @@ module.exports = {
       }
     )
   },
-  favorites: function (req, res) {
+  favorites: async (req, res) => {
+
+    let perPage = req.query.per_page || 20;
+    let currentPage = parseInt(req.query.page, 10) || 1;
 
     if (!req.user) {
       return res.json(204, []);
     }
 
-    var userId = req.user.id;
+    let userId = req.user.id;
+    let conditions = {user: userId};
 
-    User.findOne(userId).populate("followedAltcoins").then(
-      function (user) {
-        if (!user) {
-          return res.json(204, []);
-        }
-        var result = _.take(_.shuffle(user.followedAltcoins), 3);
-        return res.json(result);
-      }
-    )
+
+    let result = await pager.paginate(Follow, conditions, currentPage, perPage, ["altcoin"], 'createdAt DESC');
+    result.data = result.data.map(x => x.altcoin);
+    res.json(result)
   },
 
   top: function (req, res) {

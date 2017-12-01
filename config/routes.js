@@ -835,7 +835,10 @@ let routes = [
           '200': {
             description: ''
           }
-        }
+        }, parameters: [
+          {in: "query", name: "page"},
+          {in: "query", name: "per_page"}
+        ]
       }
     }
 
