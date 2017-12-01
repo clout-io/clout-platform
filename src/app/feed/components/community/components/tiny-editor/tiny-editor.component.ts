@@ -29,7 +29,6 @@ export class TinyEditorComponent implements AfterViewInit, OnDestroy {
   }
 
   initEditor() {
-    console.log('height', this.height);
     tinymce.init({
       selector: '#' + this.elementId,
       plugins: ['link', 'paste', 'table', 'image'],
@@ -57,7 +56,6 @@ export class TinyEditorComponent implements AfterViewInit, OnDestroy {
         editor.on('Change', (e) => {
           this.editorContent = editor.getContent();
           this.sendChangeEditorEvent();
-          //console.log('Editor contents was changed.', this.editor.getContent());
         });
       },
     }).then((editors) => {
