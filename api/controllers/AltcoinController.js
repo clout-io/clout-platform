@@ -152,23 +152,22 @@ module.exports = {
       }
     )
   },
-  favorites: function (req, res) {
+  favorites: async (req, res) => {
+
+    let perPage = req.query.per_page || 20;
+    let currentPage = parseInt(req.query.page, 10) || 1;
 
     if (!req.user) {
       return res.json(204, []);
     }
 
-    var userId = req.user.id;
+    let userId = req.user.id;
+    let conditions = {user: userId};
 
-    User.findOne(userId).populate("followedAltcoins").then(
-      function (user) {
-        if (!user) {
-          return res.json(204, []);
-        }
-        var result = _.take(_.shuffle(user.followedAltcoins), 3);
-        return res.json(result);
-      }
-    )
+
+    let result = await pager.paginate(Follow, conditions, currentPage, perPage, ["altcoin"], 'createdAt DESC');
+    result.data = result.data.map(x => x.altcoin);
+    res.json(result)
   },
 
   top: function (req, res) {
@@ -180,18 +179,30 @@ module.exports = {
     })
   },
 
-  search: function (req, res) {
-    var term = req.param('term');
-    Altcoin.find({id: {contains: term}, select: ['id']}).then(
-      function (data) {
-        data = _.map(data, function (item) {
-          return item.id
-        });
-        res.json(data);
+  search: async (req, res) => {
+    let term = req.param('term');
+    let userTags = await Follow.find({user: req.user.id});
+
+    userTags = _.map(userTags, function (item) {
+      return item.altcoin;
+    });
+
+
+    let data = await Altcoin.find({id: {contains: term}, select: ['id']}).limit(15);
+    data = _.map(data, function (item) {
+      return item.id
+    });
+
+    data = data.filter(x => userTags.indexOf(x) === -1);
+    let all = _.uniq(data).sort(function (a, b) {
+      if (a.indexOf(term) < b.indexOf(term)) {
+        return -1;
+      } else {
+        return 1
       }
-    ).catch(function (err) {
-      res.json(400, err);
-    })
+
+    });
+    res.json(all);
   },
 
   sync: function (req, res) {
