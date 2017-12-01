@@ -31,7 +31,11 @@ import {
   PostFilterComponent,
   TrendingComponent,
   TrendingListComponent,
-  TrendingItemComponent
+  TrendingItemComponent,
+  TinyEditorComponent,
+  AddArticleComponent,
+  PublishPostBtnComponent,
+  EditArticleComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -70,7 +74,11 @@ import { TruncatePipe } from '../pipes';
     PostFilterComponent,
     TrendingComponent,
     TrendingListComponent,
-    TrendingItemComponent
+    TrendingItemComponent,
+    TinyEditorComponent,
+    AddArticleComponent,
+    PublishPostBtnComponent,
+    EditArticleComponent
   ]
 })
 export class FeedModule { }

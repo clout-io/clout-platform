@@ -1,6 +1,6 @@
 import {
   Component, OnInit, Input, Output, EventEmitter, OnChanges, ViewChild, ElementRef,
-  SimpleChanges
+  SimpleChanges, AfterViewInit
 } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -11,13 +11,14 @@ import { FeedService } from '../../../../../services';
   templateUrl: './attachment-post.component.html',
   styleUrls: ['./attachment-post.component.scss'],
 })
-export class AttachmentPostComponent implements OnInit, OnChanges {
+export class AttachmentPostComponent implements OnInit, OnChanges, AfterViewInit {
   @Input() feed;
   @Input() categories;
   @Input() imageSrc: string;
   @Input() loadImgId: string;
   @Input() editable: boolean;
   @ViewChild('text_input') textInput: ElementRef;
+  @ViewChild('text_block') text_block: ElementRef;
   @Output() onDoAction = new EventEmitter();
   public linkData = null;
   public text: string;
@@ -32,6 +33,14 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
   }
 
   ngOnInit() {
+  }
+
+  ngAfterViewInit(): void {
+    this.updateContent();
+  }
+
+  updateContent() {
+    this.text_block.nativeElement.insertAdjacentHTML('afterbegin', this.text);
   }
 
   parseTags() {
@@ -57,7 +66,11 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges): void {
     this.text = this.editable ? this.parseTextFromHtml(this.feed.text) : this.parseTagsHref(this.feed.text);
+
     if (!this.editable) {
+      if (!!changes.editable && !changes.editable.firstChange) {
+        setTimeout(() => this.updateContent(), 0);
+      }
       setTimeout(() => this.parseTags(), 0);
     }
 
@@ -92,7 +105,12 @@ export class AttachmentPostComponent implements OnInit, OnChanges {
     const attachment = !!this.loadImgId ? [this.loadImgId] : [];
     const linkData = !!this.linkData && this.linkData.show ? this.linkData : null;
     const category = this.category || this.feed.category.id;
-    this.onDoAction.emit({key: 'save', payload: {flag, text, linkData, attachment, category}});
+
+    const params = {text, attachment, category, type: 'post'};
+    params['link'] = !!linkData ? linkData.ogUrl : null;
+    if (!linkData) { params['linkData'] = null; }
+
+    this.onDoAction.emit({key: 'save', payload: params});
   }
 
   onPaste(data) {

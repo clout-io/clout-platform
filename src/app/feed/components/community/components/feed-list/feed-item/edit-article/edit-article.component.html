@@ -1,0 +1,22 @@
+<div class="single-post__text" *ngIf="!editable">
+  <div class="comments__tags" #text_block>
+    <div style="clear: both"></div>
+  </div>
+  <app-post-categories [categoryId]="feed.category.id"
+                       [categories]="categories"
+                       [createFor]="'displayTagList'">
+  </app-post-categories>
+</div>
+<div *ngIf="editable">
+  <app-tiny-editor [elementId]="feed.id"
+                   [content]="text"
+                   [height]="textBlockHeight"
+                   (onEditorKeyup)="onChangeEditor($event)">
+  </app-tiny-editor>
+  <app-post-categories [categoryId]="feed.category.id"
+                       [categories]="categories"
+                       [createFor]="'createPost'"
+                       (onSelect)="chooseCategory($event)">
+  </app-post-categories>
+  <app-save-cancel (onSaveCancel)="saveOrCancel($event)"></app-save-cancel>
+</div>

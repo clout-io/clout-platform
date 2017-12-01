@@ -1556,6 +1556,10 @@ a.comments__add {
       color: $color-ac-link;
       text-decoration: none;
     }
+
+    img {
+      max-width: 100%;
+    }
   }
 
   &__category {
@@ -2105,7 +2109,7 @@ ___________________________*/
 
   &__text {
     margin-top: 35px;
-    //margin-bottom: 20px;
+    margin-bottom: 24px;
     outline: none;
     color: $color-ac-text;
 
@@ -2171,6 +2175,10 @@ ___________________________*/
         background-color: #ccc;
       }
     }
+  }
+
+  .tiny-editor-container {
+    margin-top: 15px;
   }
 }
 

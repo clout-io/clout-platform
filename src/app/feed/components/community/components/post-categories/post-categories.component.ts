@@ -17,7 +17,9 @@ export class PostCategoriesComponent implements OnInit, OnDestroy {
   ngOnInit() {
   }
 
-  selectCategory(category: string) {
+  selectCategory(event, category: string) {
+    event.preventDefault();
+    event.stopPropagation();
     this.categoryId = category;
     this.onSelect.emit(category);
   }

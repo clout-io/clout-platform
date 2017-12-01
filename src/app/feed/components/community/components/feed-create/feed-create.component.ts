@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, Renderer, ViewChild, ElementRef, HostListener } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { FeedService, BroadcastService } from '../../../../../services';
 
 
@@ -21,17 +21,14 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
   public tagList = [];
   private caretPos;
   private text = '';
+  public postType = 'post';
 
   @ViewChild('inputContainer') inputContainer: ElementRef;
-  @ViewChild('uploadPicture') uploadPicture: ElementRef;
   @ViewChild('feedtext') feedTextDivEl: ElementRef;
   @ViewChild('feedtexthidden') feedTextDivElHidden: ElementRef;
 
-  private file: any;
-
   constructor(
     private feedService: FeedService,
-    private renderer: Renderer,
     private broadcastService: BroadcastService)
   { }
 
@@ -42,6 +39,15 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
       .subscribe(res => this.categories = res);
 
     this.fixIOSDocumentClickBug();
+  }
+
+  onChangePostType(type: string): void {
+    this.postType = type;
+  }
+
+  uploadPhoto(data): void {
+    this.loadImgId = data.loadImgId;
+    this.imageSrc = data.imageSrc;
   }
 
   selectTag(tag: string) {
@@ -163,8 +169,10 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
     this.hideTagList();
     if (!targetElement || !this.hasPublish) { return; }
 
-    const contains = this.inputContainer.nativeElement.contains(targetElement);
-    if (!contains) { this.blurText(); }
+    if (!!this.inputContainer) {
+      const contains = this.inputContainer.nativeElement.contains(targetElement);
+      if (!contains) { this.blurText(); }
+    }
   }
 
   chooseCategory(category: string) {
@@ -208,7 +216,6 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
           this.linkData = null;
           this.feedTextDivEl.nativeElement.innerHTML = this.placeHolder;
           this.imageSrc = null;
-          this.file = null;
           this.hasPublish = false;
           this.loadImgId = null;
           this.broadcastService.broadcast('updateNewsList', data);
@@ -227,7 +234,6 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
         .subscribe(responce => {
           this.feedTextDivEl.nativeElement.innerHTML = this.placeHolder;
           this.imageSrc = null;
-          this.file = null;
           this.hasPublish = false;
           this.loadImgId = null;
           this.broadcastService.broadcast('updateNewsList', responce);
@@ -235,17 +241,8 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  triggerToInput($event) {
-    $event.preventDefault();
-    $event.stopPropagation();
-    let event = new MouseEvent('click');
-    this.renderer.invokeElementMethod(
-      this.uploadPicture.nativeElement, 'dispatchEvent', [event]);
-  }
-
   removeImage() {
     this.imageSrc = null;
-    this.file = null;
     this.linkData = null;
     this.loadImgId = null;
 
@@ -256,47 +253,6 @@ export class FeedCreateComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.imageSrc = null;
-    this.file = null;
-  }
-
-  handleUpload($event): void {
-    this.readThis($event.target);
-  }
-
-  loadImagePreview(file) {
-    if (!file)
-      return false;
-
-    let formData:FormData = new FormData();
-    formData.append('img', file, file.name);
-
-    this.feedService.loadImage(formData)
-      .subscribe(responce => {
-        this.file = file;
-        this.imageSrc = window.URL.createObjectURL(file);
-        this.hasPublish = true;
-        this.loadImgId = responce[0].id;
-        this.checkBtnDisabling();
-      }, (error) => {
-        this.imageSrc = null;
-        this.file = null;
-        this.loadImgId = null;
-      });
-  }
-
-  readThis(inputValue: any) : void {
-    const file:File = inputValue.files[0];
-    const readerImage:FileReader = new FileReader();
-    readerImage.onloadend = ((event) => {
-      if (!event.returnValue) {
-        return false;
-      }
-      if (file.size > 10*1000000) {
-        return false;
-      }
-      this.loadImagePreview(file);
-    });
-    readerImage.readAsDataURL(file);
   }
 
   focusText() {

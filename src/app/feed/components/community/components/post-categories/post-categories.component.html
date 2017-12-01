@@ -7,7 +7,7 @@
 <div class="comments__category create-post" *ngIf="createFor === 'createPost'">
   <a *ngFor="let c of categories"
      href="javascript:void(0)"
-     (click)="selectCategory(c.id)"
+     (click)="selectCategory($event, c.id)"
      [ngClass]="{'active': c.id === categoryId}">
     {{c.name === 'Treading' ? 'Trending' : c.name}}
   </a>
