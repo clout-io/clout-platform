@@ -1,17 +1,10 @@
-function getObject(objectId) {
+const util = require("util");
 
+
+
+module.exports.getObject = function (objectId) {
   return new Promise(function (resolve, reject) {
     async.parallel([
-      function (callback) {
-        Altcoin.findOne(objectId).exec(function (err, result) {
-          callback(err, result)
-        });
-      },
-      function (callback) {
-        Ico.findOne(objectId).exec(function (err, result) {
-          callback(err, result)
-        });
-      },
       function (callback) {
         Comment.findOne(objectId).exec(function (err, result) {
           callback(err, result)
@@ -21,7 +14,12 @@ function getObject(objectId) {
         Post.findOne(objectId).exec(function (err, result) {
           callback(err, result)
         });
-      }
+      },
+      function (callback) {
+        Press.findOne(objectId).exec(function (err, result) {
+          callback(err, result)
+        });
+      },
     ], function (err, results) {
       if (err) {
         return reject(err);
@@ -42,9 +40,7 @@ function getObject(objectId) {
 
     })
   })
-
-
-}
+};
 
 
 module.exports.get = function (objectId, userID) {

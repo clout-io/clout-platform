@@ -4,50 +4,30 @@
  * @description :: Server-side logic for managing Tags
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
-const _ = require("underscore");
-
 module.exports = {
 
-  search: function (req, res) {
+  search: async (req, res) => {
 
-    var term = req.param('term');
+    let term = req.param('term');
+    let altcoinTags = await Altcoin.find({id: {contains: term}, select: ['id']}).limit(15);
+    let existsHashTags = await Tag.find({id: {contains: term}, select: ['id']}).limit(15);
 
-    async.parallel([
-      function (cb) {
-        Altcoin.find({id: {contains: term}, select: ['id']}).then(
-          function (data) {
-            cb(null, data)
-          }
-        ).catch(function (err) {
-          cb(err);
-        })
-      },
-      function (cb) {
-        Tag.find({id: {contains: term}, select: ['id']}).then(
-          function (data) {
-            cb(null, data)
-          }
-        ).catch(function (err) {
-          cb(err);
-        })
+    let allTags = _.reduceRight([altcoinTags, existsHashTags], function (a, b) {
+      return a.concat(b);
+    }, []);
+    let idOnly = _.map(allTags, function (item) {
+      return item.id
+    });
+    let all = _.uniq(idOnly).sort(function (a, b) {
+      if(a.indexOf(term) < b.indexOf(term)){
+        return -1;
+      }else{
+        return 1
       }
-
-    ], function (err, result) {
-      var all = _.reduceRight(result, function (a, b) {
-        return a.concat(b);
-      }, []);
-      var all = _.map(all, function (item) {
-        return item.id
-      });
-      var all = _.uniq(all).sort();
-
-
-      return res.json(all)
-
     });
 
 
+    return res.json(all)
   }
 
 };

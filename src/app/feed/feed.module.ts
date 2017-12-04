@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { InfiniteScrollModule } from 'ngx-infinite-scroll';
+import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 
 import { CoreModule } from '../core/core.module';
 import { FeedRoutingModule } from './feed-routing.module';
@@ -25,7 +27,15 @@ import {
   AttachmentPostComponent,
   SinglePostComponent,
   SaveCancelComponent,
-  PostHashtagComponent
+  PostCategoriesComponent,
+  PostFilterComponent,
+  TrendingComponent,
+  TrendingListComponent,
+  TrendingItemComponent,
+  TinyEditorComponent,
+  AddArticleComponent,
+  PublishPostBtnComponent,
+  EditArticleComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -36,7 +46,9 @@ import { TruncatePipe } from '../pipes';
     CoreModule,
     NgbModule,
     InfiniteScrollModule,
-    FeedRoutingModule
+    FeedRoutingModule,
+    FormsModule,
+    Ng2AutoCompleteModule
   ],
   declarations: [
     FeedComponent,
@@ -58,7 +70,15 @@ import { TruncatePipe } from '../pipes';
     AttachmentPostComponent,
     SinglePostComponent,
     SaveCancelComponent,
-    PostHashtagComponent
+    PostCategoriesComponent,
+    PostFilterComponent,
+    TrendingComponent,
+    TrendingListComponent,
+    TrendingItemComponent,
+    TinyEditorComponent,
+    AddArticleComponent,
+    PublishPostBtnComponent,
+    EditArticleComponent
   ]
 })
 export class FeedModule { }

@@ -1,6 +1,13 @@
 <div class="add-post__head">
-  <a href="javascript:void(0)" class="active">Share an Update</a>
-  <a href="javascript:void(0)" (click)="triggerToInput()" >Upload Photo</a>
+  <a href="javascript:void(0)" (click)="select('post')" [ngClass]="{'active': tabType === 'post'}">
+    Share an Update
+  </a>
+  <a href="javascript:void(0)" (click)="select('post'); triggerToInput()">Upload Photo</a>
+  <a *ngIf="createdFor === 'addPost'"
+     href="javascript:void(0)"
+     (click)="select('article')" [ngClass]="{'active': tabType === 'article'}">
+    Write an Article
+  </a>
 </div>
 <div style="height: 0px">
   <input accept="image/gif, image/jpeg, image/png" type="file"

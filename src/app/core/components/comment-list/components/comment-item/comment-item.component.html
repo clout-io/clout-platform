@@ -1,7 +1,9 @@
 <div class="comments__body">
-  <div class="comments__img" style="background-image: url('../../../../../../assets/avatar.png')"></div>
+  <div class="comments__img">
+    <img src="{{item?.owner?.avatar}}" onerror="this.src='../../../../../../assets/user.svg'" alt="">
+  </div>
   <div class="comments__details">
-    <strong>{{item?.owner?.email}}</strong>
+    <strong>{{item?.owner?.username}}</strong>
     <p>
       {{item?.text}}
     </p>

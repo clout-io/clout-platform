@@ -5,7 +5,12 @@ import { CoreRoute } from '../core/core.route';
 
 // components
 import { FeedComponent } from './feed.component';
-import { NewsComponent, CommunityComponent, PostHashtagComponent } from './components';
+import {
+  NewsComponent,
+  CommunityComponent,
+  PostFilterComponent,
+  TrendingComponent
+} from './components';
 
 const routes: Routes = CoreRoute.withShell([
   {
@@ -32,8 +37,16 @@ const routes: Routes = CoreRoute.withShell([
         component: CommunityComponent
       },
       {
-        path: 'community/hashtag/:id',
-        component: PostHashtagComponent
+        path: 'community/hashtag/:tag',
+        component: PostFilterComponent
+      },
+      {
+        path: 'community/category/:category',
+        component: PostFilterComponent
+      },
+      {
+        path: 'trending',
+        component: TrendingComponent
       }
     ]
   }

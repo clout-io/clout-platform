@@ -8,122 +8,68 @@ const util = require('util');
 const striptags = require('striptags');
 const extend = require('util')._extend;
 
+let getAndUpdateParentComment = async (comment, list = []) => {
+  if (!comment.parent)
+    return list;
+
+  let parentComment = await Comment.findOne(comment.parent);
+  await parentComment.save();
+
+  list.push(parentComment);
+  return await getAndUpdateParentComment(parentComment, list)
+};
+
 module.exports = {
-  create: function (req, res) {
-    var objectId = req.param("objectId");
-    var userId = req.user.id;
-    var text = req.body.text;
+  create: async (req, res) => {
+    let objectId = req.param("objectId");
+    let userId = req.user.id;
+    let text = req.body.text;
 
     text = striptags(text);
 
-    var isComment = false;
-    var rootNode = null;
+    let isComment = (ObjectFactory.getObjectType(objectId) === ObjectFactory.TYPE_COMMENT);
+    let rootNode = null;
 
-    async.parallel([
-      function (callback) {
-        Altcoin.findOne(objectId).exec(function (err, result) {
-          callback(err, result)
-        });
-      },
-      function (callback) {
-        Ico.findOne(objectId).exec(function (err, result) {
-          callback(err, result)
-        });
-      },
-      function (callback) {
-        Comment.findOne(objectId).exec(function (err, result) {
-          if (result) {
-            isComment = true;
-            rootNode = result.root
-          }
-          callback(err, result)
-        });
-      },
-      function (callback) {
-        Post.findOne(objectId).exec(function (err, result) {
-          callback(err, result)
-        });
-      }
-    ], function (err, results) {
-      if (err) {
-        return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-      }
-      var object = null;
 
-      var objectIsExist = results.some(function (element, index, array) {
-        if (!util.isNullOrUndefined(element)) {
-          object = element;
-        }
-        return !util.isNullOrUndefined(element);
-      });
+    let object = await ObjectFactory.getObject(objectId);
+    if (!object) {
+      return res.json(404, Errors.build({"message": "object not found."}, Errors.ERROR_NOT_FOUND));
+    }
 
-      if (!objectIsExist) return res.json(404, Errors.build({"message": "object not found."}, Errors.ERROR_NOT_FOUND));
+    let createData = {
+      objectId: objectId,
+      owner: userId,
+      text: text
+    };
 
-      var createData = {
-        objectId: objectId,
-        owner: userId,
-        text: text
-      };
-      if (!rootNode) {
-        rootNode = objectId
-      }
+    if (isComment) {
+      rootNode = object.root;
+      createData.parent = objectId;
+      createData.root = rootNode;
+    } else {
+      createData.root = objectId;
+      rootNode = objectId
+    }
 
-      if (isComment) {
-        createData.parent = objectId;
-        createData.root = rootNode;
-      } else {
-        createData.root = objectId;
-      }
+    let comment = await Comment.create(createData);
+    let clcData = await CLC.calc(objectId);
+    extend(object, clcData);
+    await object.save();
+    let count = await Comment.count({root: rootNode});
+    let rootObject = await ObjectFactory.getObject(createData.root);
+    await rootObject.save();
 
-      async.waterfall([
-          function (cb) {
-            Comment.create(createData).then(function (comment) {
-              cb(null, comment);
-            }).catch(function (err) {
-              cb(err);
-            })
-
-          },
-          function (comment, cb) {
-            CLC.calc(objectId).then(function (result) {
-              cb(null, result, comment)
-            }).catch(function (err) {
-              cb(err);
-            })
-          },
-          function (clcData, comment, cb) {
-            extend(object, clcData);
-            object.save(function (err) {
-              if (err) cb(err);
-              cb(null, comment, clcData)
-            })
-
-          },
-          function (comment, clcData, cb) {
-            Comment.count(
-              {root: rootNode}
-            ).then(function (count) {
-              var result = {comment: comment, count: count};
-              extend(result, clcData);
-              cb(null, result)
-            }, function (err) {
-              cb(err)
-            });
-          }
-        ],
-        function (err, result) {
-          if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-          return res.json(result);
-        }
-      );
-    });
+    let result = {comment: comment, count: count};
+    extend(result, clcData);
+    await getAndUpdateParentComment(comment);
+    return res.json(result);
   },
 
 
   list: function (req, res) {
     var objectId = req.param("objectId");
 
-    var ownerCriteria = {select: ['id', 'email']};
+    var ownerCriteria = {select: ['id', 'avatar', 'username']};
 
     var userId = null;
     if (req.user) {
@@ -185,6 +131,11 @@ module.exports = {
       },
       function (callback) {
         Post.findOne(objectId).exec(function (err, result) {
+          callback(err, result)
+        });
+      },
+      function (callback) {
+        Press.findOne(objectId).exec(function (err, result) {
           callback(err, result)
         });
       }

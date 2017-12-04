@@ -38,9 +38,10 @@ export class AuthService implements CanActivate {
   }
 
   setUser(user: any) {
-    const {email, id} = user;
-    window.localStorage.setItem('clout_user_email', email);
+    const {id, avatar, username} = user;
     window.localStorage.setItem('clout_user_id', id);
+    window.localStorage.setItem('clout_user_avatar', avatar);
+    window.localStorage.setItem('clout_user_username', username);
   }
 
   authenticate(credits): Observable<any> {
@@ -81,12 +82,7 @@ export class AuthService implements CanActivate {
       .subscribe(data => {
         const authorizeUrl = data.url;
         const url = `${authorizeUrl}&redirect_uri=${this.api.redirect_uri}`;
-        this.openDialog(url, 'auth window', 'width=640,height=480,resizable=1', () => {
-          if (this.isAuthorized()) {
-            this.setToken(window.localStorage.getItem(this.JWT));
-            this.router.navigateByUrl('/');
-          }
-        });
+        window.location.href = url;
       });
   }
 
@@ -98,27 +94,6 @@ export class AuthService implements CanActivate {
           this.setUser(res.user);
         }
       });
-  }
-
-  openDialog(uri, name, options, callback) {
-    setTimeout(() => {
-      const win = window.open(uri, name, options);
-      let interval;
-      interval = window.setInterval(function () {
-        try {
-          if (win == null || win.closed) {
-            window.clearInterval(interval);
-            callback();
-          }
-          if (win == null) {
-            alert('Please disable your popup blocker');
-          }
-        } catch (error) {
-          alert('Please disable your popup blocker');
-        }
-      }, 500);
-      return win;
-    }, 0);
   }
 
   resetUserPassword(email: string): Observable<any>  {

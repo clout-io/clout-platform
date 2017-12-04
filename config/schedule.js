@@ -52,7 +52,7 @@ module.exports.schedule = {
     syncAltcoin: {
       cron: "*/2 * * * *",
       name: "syncAltcoin",
-      options: {priority: "highest"},
+      options: {priority: "default"},
       task: function (job, done) {
         var date = moment().utc().clone();
         var midnight = date.valueOf().toString();
@@ -101,14 +101,11 @@ module.exports.schedule = {
     },
 
     syncRss: {
-      cron: "*/15 * * * *",
+      cron: "*/5 * * * *",
       name: "syncRss",
       options: {priority: "default"},
       task: function (job, done) {
-        sails.log.info("start");
-
         RSS.find().limit(1).sort("updatedAt ASC").then(function (rss) {
-          sails.log.info(rss);
 
           async.map(rss, function (rssItem, callback) {
             var url = rssItem.rssLink;
@@ -126,22 +123,23 @@ module.exports.schedule = {
                   var $ = cheerio.load(item.content);
                   var img = $('img').attr("src");
 
-                  if (!img) {
+                  if (!img && item["content:encoded"]) {
                     $ = cheerio.load(item["content:encoded"]);
                     img = $('img').attr("src");
                   }
 
                   const optionsOg = {'url': item.link};
                   ogs(optionsOg, function (err, results) {
-                    if (err) cb(null);
-                    if (!img) {
+                    if (err) return cb(null);
+                    if (!img && results.data) {
                       img = results.data.ogImage.url;
                     }
-                    console.log(img)
+                    var pubDate = new Date(item.pubDate);
+
                     var createData = {
                       title: item.title,
                       description: item.contentSnippet,
-                      pubDate: item.pubDate,
+                      pubDate: pubDate,
                       image: img,
                       link: item.link,
                       guid: item.guid,
@@ -154,7 +152,9 @@ module.exports.schedule = {
                     });
                   });
                 }, function (err, result) {
-                  callback(err, result)
+                  rssItem.save(function () {
+                    callback(err, result)
+                  });
                 })
               }
             )

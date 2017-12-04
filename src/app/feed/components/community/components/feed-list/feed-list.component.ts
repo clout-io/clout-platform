@@ -10,6 +10,8 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
   public feeds = [];
   @Input() filter: string;
   private subscription: any;
+  private categories$: any;
+  public categories;
   private meta = { nextPage: 1, perPage: 10 };
   public notfound = false;
 
@@ -19,6 +21,8 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
     this.subscription = this.broadcastService.subscribe('updateNewsList', (response) => {
       this.loadFeedList(true);
     });
+    this.categories$ = this.feedService.getCategories()
+      .subscribe(res => this.categories = res);
 
     this.loadFeedList();
   }
@@ -35,28 +39,34 @@ export class FeedListComponent implements OnInit, OnChanges, OnDestroy {
     });
   }
 
-  ngOnDestroy(): void {
-    this.subscription.unsubscribe();
-  }
-
   loadFeedList(forse = false) {
     if (forse) {
       this.feeds = [];
       this.meta = { nextPage: 1, perPage: 10 };
     }
 
+    if (!this.meta.nextPage) { return; }
+
     this.feedService.getFeeds({...this.meta, filter: this.filter})
     .subscribe(response => {
       this.feeds = response.meta.page === 1 ? response.data : R.unionWith(R.eqBy(R.prop('id')), this.feeds, response.data);
-      this.meta = response.meta.nextPage ? response.meta : this.meta;
+      this.meta = response.meta;
       this.notfound = !this.feeds.length;
-      /*this.feeds = response.meta.page === 1 ? response.data : R.uniq([...this.feeds, ...response.data]);
-      this.meta = response.meta.nextPage ? response.meta : this.meta;*/
     });
   }
 
   deletePost(id: string): void {
     const index = this.feeds.findIndex((item) => item.id === id);
     this.feeds.splice(index, 1);
+    if (this.feeds.length < 2) {
+      const nextPage = this.meta.nextPage === 1 ? 1 : !this.meta.nextPage ? this.meta.nextPage : this.meta.nextPage - 1;
+      this.meta = Object.assign({}, this.meta, {nextPage});
+      this.loadFeedList();
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.unsubscribe();
+    this.categories$.unsubscribe();
   }
 }

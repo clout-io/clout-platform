@@ -4,11 +4,12 @@ import { AuthService } from '../../../services';
 
 @Component({
   selector: 'app-social-facebook',
-  template: '<div></div>',
+  templateUrl: 'social-facebook.component.html',
   styleUrls: ['./social-facebook.component.scss']
 })
 export class SocialFacebookComponent implements OnInit, OnDestroy {
   private subscribeRoute: any;
+  public isError: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -21,10 +22,9 @@ export class SocialFacebookComponent implements OnInit, OnDestroy {
       const { code } = params;
       this.authService.facebookAuthenticate(code)
         .subscribe(
-          data => window.close(),
+          data => this.router.navigateByUrl('/'),
           error => {
-            window.close();
-            this.router.navigateByUrl('/login');
+            this.isError = true;
           });
     });
   }

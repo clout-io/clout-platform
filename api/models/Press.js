@@ -26,7 +26,7 @@ module.exports = {
       type: "string"
     },
     pubDate: {
-      type: "string"
+      type: "datetime"
     },
     image: {
       type: "string",

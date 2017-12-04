@@ -71,12 +71,12 @@ module.exports.policies = {
       true
   },
   PostController: {
-    index: true
+    index: true,
+    single: true
   },
   UserController: {
     resetPasswordRequest: true,
-    resetPassword:
-      true
+    resetPassword: true
   },
   PressController: {
     index: true,
@@ -93,5 +93,8 @@ module.exports.policies = {
   UrlController: {
     ogInfo: true,
     redirect: true
+  },
+  TrendingController: {
+    index: true
   }
 };

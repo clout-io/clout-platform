@@ -7,5 +7,8 @@
       <p>{{item?.description | truncate : 250 }}</p>
     </div>
   </a>
+  <div class="single-post__comments">
+    <app-comment-list [item]="item" [type]="'feed'"></app-comment-list>
+  </div>
 </div>
 <!-- .news-item END -->

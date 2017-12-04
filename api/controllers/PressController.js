@@ -9,14 +9,36 @@ const parser = require('rss-parser');
 var pager = require('sails-pager');
 const cheerio = require('cheerio');
 const ogs = require('open-graph-scraper');
+const extend = require('util')._extend;
 
 module.exports = {
   index: function (req, res) {
     var perPage = req.query.per_page || 20;
     var currentPage = parseInt(req.query.page, 10) || 1;
+
+    var userId = null;
+
+    if (req.user) {
+      userId = req.user.id
+    }
+
+
     var conditions = {};
-    pager.paginate(Press, conditions, currentPage, perPage, [], 'pubDate DESC').then(function (records) {
-      res.json(records)
+    pager.paginate(Press, conditions, currentPage, perPage, [], 'updatedAt DESC').then(function (records) {
+      async.map(records.data,
+        function (item, cb) {
+          Insights.get(item.id, userId).then(function (data) {
+            extend(item, data);
+            cb(null, item)
+          }, function (err) {
+            cb(err);
+          })
+        },
+        function (err, result) {
+          if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+          records.data = result;
+          return res.json(records);
+        });
     }).catch(function (err) {
       res.send(err)
     });
@@ -34,26 +56,28 @@ module.exports = {
     };
 
     parser.parseURL(url, options, function (err, parsed) {
-        if (err) return res.json(400, err);
+        if (err) return res.json(400, {"message": err.errorMessage});
         async.map(parsed.feed.entries, function (item, cb) {
           if (err) return cb(null, err);
           var $ = cheerio.load(item.content);
           var img = $('img').attr("src");
 
-          if (!img) {
+          if (!img && item["content:encoded"]) {
             $ = cheerio.load(item["content:encoded"]);
             img = $('img').attr("src");
           }
           const optionsOg = {'url': item.link};
+
           ogs(optionsOg, function (err, results) {
-            if (err) return res.json(400, err);
+            if (err) return cb(null, err);
             if (!img) {
               img = results.data.ogImage.url;
             }
+            var pubDate = new Date(item.pubDate);
             var createData = {
               title: item.title,
               description: item.contentSnippet,
-              pubDate: item.pubDate,
+              pubDate: pubDate,
               image: img,
               link: item.link,
               guid: item.guid

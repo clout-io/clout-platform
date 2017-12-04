@@ -1,11 +1,12 @@
 <div class="single-post__text" *ngIf="!editable">
   <div>
-    <span class="comments__tags" [innerHtml]="text"></span>
-    <div class="comments__category">
-      <a href="#" class="active">Trending</a>
-      <a href="#">Breaking News</a>
-      <a href="#">Opinion</a>
+    <div class="comments__tags" #text_block>
+      <div style="clear: both"></div>
     </div>
+    <app-post-categories [categoryId]="feed.category.id"
+                         [categories]="categories"
+                         [createFor]="'displayTagList'">
+    </app-post-categories>
   </div>
   <div *ngIf="!isLinkData">
     <div *ngFor="let file of feed.attachment" style="max-width: 100%; padding: 20px 0px 10px 0px;">
@@ -13,31 +14,23 @@
     </div>
   </div>
 </div>
-
-<!--<div *ngIf="!editable && !isLinkData"
-     class="single-post__text">
-  <span class="comments__tags" [innerHtml]="text"></span>
-  <div class="comments__category">
-    <a href="#" class="active">Trending</a>
-    <a href="#">Breaking News</a>
-    <a href="#">Opinion</a>
-  </div>
-  <div *ngFor="let file of feed.attachment" style="max-width: 100%; padding: 20px 0px 10px 0px;">
-    <img style="width: 100%;" [src]="file.url" />
-  </div>
-</div>-->
-
-<div *ngIf="editable && isLinkData"
+<div *ngIf="editable"
      class="add-post__text edit"
      #text_input
      (paste)="onPaste($event)"
      contenteditable="true" [innerText]="text"></div>
-<div *ngIf="editable && !isLinkData"
+<!--<div *ngIf="editable && !isLinkData"
      class="add-post__text edit"
      #text_input
      (paste)="onPaste($event)"
      contenteditable="true" [innerText]="text">
-</div>
+</div>-->
+<app-post-categories *ngIf="editable"
+                     [categoryId]="feed.category.id"
+                     [categories]="categories"
+                     [createFor]="'createPost'"
+                     (onSelect)="chooseCategory($event)">
+</app-post-categories>
 
 <div *ngIf="isLinkData" class="attachment_post" [ngClass]="{'edit': editable}">
   <div *ngIf="imageSrc && editable" class="add-post__img">
@@ -63,12 +56,5 @@
       <a href="javascript:void(0)" (click)="removeImage()"></a>
     </div>
   </div>
-  <!--<div *ngIf="!imageSrc" class="add-post__img">
-    <div class="upload-img edit">
-      <div class="upload-img" [ngStyle]="{'background-image': 'url(' + feed?.attachment[0]?.url + ')'}">
-        <a href="javascript:void(0)" (click)="removeImage()"></a>
-      </div>
-    </div>
-  </div>-->
 </div>
 <app-save-cancel (onSaveCancel)="saveOrCancel($event)" *ngIf="editable"></app-save-cancel>

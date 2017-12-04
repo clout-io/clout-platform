@@ -1,7 +1,7 @@
 const util = require('util');
 
 
-var routes = [
+let routes = [
   {
     method: "GET", path: "/activate", target:
     {
@@ -45,6 +45,10 @@ var routes = [
           "type": "object",
           "properties": {
             "email": {
+              "type": "string",
+              "description": ""
+            },
+            "username": {
               "type": "string",
               "description": ""
             },
@@ -432,6 +436,10 @@ var routes = [
               "type": "string",
               "description": "category id required"
             },
+            "type": {
+              "type": "string",
+              "description": "article or post"
+            },
             "link": {
               "type": "string",
               "description": "link for preview"
@@ -451,6 +459,20 @@ var routes = [
           description: 'Created post'
         }
       }
+    }
+  }
+  },
+  {
+    method: "GET", path: "/news/:itemId", target: {
+    controller: "PostController", action: "single", swagger: {
+      methods: ['GET'],
+      summary: 'Retrieve Post',
+      description: 'Retrieve Post',
+      tags: [
+        'Post'
+      ],
+      parameters: [
+        {in: "path", name: "itemId"}]
     }
   }
   },
@@ -479,6 +501,10 @@ var routes = [
             "video": {
               "type": "string",
               "description": "youtube link"
+            },
+            "type": {
+              "type": "string",
+              "description": "article or post"
             },
             "link": {
               "type": "string",
@@ -630,6 +656,74 @@ var routes = [
   }
   },
   {
+    method: "POST", path: "/user/password/change", target: {
+    controller: "UserController", action: "changePassword", swagger: {
+      methods: ['POST'],
+      summary: 'Change password ',
+      description: 'Change password',
+      tags: [
+        'User'
+      ],
+      parameters: [
+        {
+          in: "body", name: "data", schema: {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "oldPassword": {
+              "type": "string",
+              "description": ""
+            },
+            "password": {
+              "type": "string",
+              "description": ""
+            },
+            "confirmPassword": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Reset password'
+        }
+      }
+    }
+  }
+  },
+  {
+    method: "POST", path: "/user/avatar", target: {
+    controller: "UserController", action: "avatar", swagger: {
+      methods: ['POST'],
+      summary: 'Upload avatar ',
+      description: 'Upload avatar',
+      tags: [
+        'User'
+      ],
+      parameters: [
+        {
+          in: "formData",
+          name: "img",
+          description: "The uploaded file data",
+          required: true,
+          type: "file",
+          allowMultiple: true
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Reset password'
+        }
+      }
+    }
+  }
+  },
+  {
     method: "GET", path: "/press", target:
     {
       controller: 'PressController',
@@ -741,7 +835,10 @@ var routes = [
           '200': {
             description: ''
           }
-        }
+        }, parameters: [
+          {in: "query", name: "page"},
+          {in: "query", name: "per_page"}
+        ]
       }
     }
 
@@ -824,13 +921,41 @@ var routes = [
 
       }
     }
+  },
+  {
+    method: "GET", path: "/treadings", target:
+    {
+      controller: 'TrendingController',
+      action: 'index',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: '',
+        description: '',
+        produces: [
+          'application/json'
+        ],
+        tags: ["Trendings"],
+        responses: {
+          '200': {
+            description: ''
+          }
+        },
+        parameters: [
+          {in: "query", name: "page"},
+          {in: "query", name: "per_page"}
+        ]
+
+
+      }
+    }
   }
 ];
 
-var prefix = "/api/v1";
+let prefix = "/api/v1";
 
-var routeObject = {};
-for (var key in routes) {
+let routeObject = {};
+for (let key in routes) {
   routeObject[util.format('%s %s%s', routes[key].method, prefix, routes[key].path)] = routes[key].target
 }
 

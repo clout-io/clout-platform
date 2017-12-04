@@ -1,4 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component, OnInit, Input, Output, EventEmitter, Renderer, ViewChild, ElementRef
+} from '@angular/core';
 import { FeedService } from '../../../../../services';
 
 @Component({
@@ -8,8 +10,11 @@ import { FeedService } from '../../../../../services';
 })
 export class PostHeadComponent implements OnInit {
   @Input() feed;
+  @Input() createdFor;
   @ViewChild('uploadPicture') uploadPicture: ElementRef;
   @Output() onUploadPhoto = new EventEmitter();
+  @Output() onSelectTab = new EventEmitter();
+  public tabType = 'post';
 
   constructor(
     private renderer: Renderer,
@@ -19,12 +24,15 @@ export class PostHeadComponent implements OnInit {
   ngOnInit() {
   }
 
+  select(tabType: string) {
+    this.tabType = tabType;
+    this.onSelectTab.emit(this.tabType);
+  }
+
   triggerToInput() {
-    //if (!this.feed.linkData || !this.feed.linkData.show) {
-      const event = new MouseEvent('click');
-      this.renderer.invokeElementMethod(
-        this.uploadPicture.nativeElement, 'dispatchEvent', [event]);
-    //}
+    const event = new MouseEvent('click');
+    this.renderer.invokeElementMethod(
+      this.uploadPicture.nativeElement, 'dispatchEvent', [event]);
   }
 
   handleUpload($event): void {

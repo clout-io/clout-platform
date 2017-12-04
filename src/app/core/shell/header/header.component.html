@@ -1,4 +1,4 @@
-<header class="header">
+<header class="header" [ngClass]="{'mobile-nav-open' : mobileSearchVisible}">
   <div class="container">
     <div class="header__start">
       <a routerLink="/home" class="header__logo"></a>
@@ -17,16 +17,21 @@
     <div class="header__search">
       <form>
         <i class="fa fa-search"></i>
-        <input type="search" placeholder="Search" class="header__search-field">
+        <input type="search" placeholder="Search" class="header__search-field" #headerSearchField>
         <button type="submit" class="header__search-btn"></button>
       </form>
     </div><!-- .header__search -->
     <div class="header__actions">
       <div class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-        <a href="#" class="header__user" title="{{userEmail}}"></a>
+        <a href="#" class="header__user" title="{{userName}}">
+          <img src="{{avatar}}" onerror="this.src='../../../../assets/user.svg'" alt="">
+        </a>
       </div>
 
       <a href="#" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
+      <div class="action">
+        <a href="#" (click)="toggleSearchOnMobile($event); headerSearchField.focus();" class="fa fa-search"></a>
+      </div>
       <!--<div class="action">
         <a href="#"></a>
       </div>
@@ -46,7 +51,7 @@
 
   <owl-carousel *ngIf="topList?.length" class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
     <a routerLink="/icos">ICO's</a>
-    <a routerLink="/allcoins">All</a>
+    <a routerLink="/home/trending">All</a>
     <a href="javascript:void(0)" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
     <!--<a href="javascript:void(0)">Bitcoin</a>
     <a href="javascript:void(0)">Ethereum</a>

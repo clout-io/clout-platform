@@ -1,15 +1,23 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, AfterViewInit } from '@angular/core';
 
+declare const $: any;
 
 @Component({
   selector: 'app-news',
   templateUrl: './news.component.html'
 })
-export class NewsComponent implements OnInit, OnDestroy {
+export class NewsComponent implements AfterViewInit {
 
   constructor() { }
 
-  ngOnInit() { }
+  ngAfterViewInit() {
+    if (window.matchMedia('(min-width: 992px)').matches) {
+      $('.feed-aside__item').stick_in_parent({
+        offset_top: 20,
+        parent: '.feed-content',
+        recalc_every: 4
+      });
+    }
+  }
 
-  ngOnDestroy() { }
 }

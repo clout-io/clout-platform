@@ -41,6 +41,7 @@
     "bcrypt": "^1.0.3",
     "cheerio": "^1.0.0-rc.2",
     "classlist.js": "^1.1.20150312",
+    "connect-redis": "^3.0.2",
     "core-js": "^2.4.1",
     "crypto-random-string": "^1.0.0",
     "expect": "^21.2.1",
@@ -54,6 +55,7 @@
     "jsdom": "^11.3.0",
     "jsonwebtoken": "^8.1.0",
     "moment": "^2.19.1",
+    "ng2-auto-complete": "^0.12.0",
     "ng2-owl-carousel": "^0.1.15",
     "ngx-infinite-scroll": "^0.6.1",
     "node-cron": "^1.2.1",
@@ -80,7 +82,9 @@
     "slug": "^0.9.1",
     "striptags": "^3.1.0",
     "swagger-ui": "^2.2.10",
+    "tinymce": "^4.7.3",
     "tsickle": "^0.24.1",
+    "validate.js": "^0.12.0",
     "zone.js": "^0.8.14"
   },
   "devDependencies": {

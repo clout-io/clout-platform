@@ -5,8 +5,8 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
-var bcrypt = require('bcrypt');
-var cryptoRandomString = require('crypto-random-string');
+const bcrypt = require('bcrypt');
+const cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
   attributes: {
@@ -23,6 +23,14 @@ module.exports = {
     lastName: {
       type: 'string',
       defaultsTo: ''
+    },
+    username: {
+      type: 'string',
+      required: true
+    },
+    avatar: {
+      type: 'string',
+      url: true
     },
     password: {
       type: 'string',
@@ -74,6 +82,7 @@ module.exports = {
       delete obj.password;
       delete obj.activationCode;
       delete obj.confirmPassword;
+      delete obj.email;
       return obj;
     },
     getActivateLink: function () {
@@ -103,9 +112,8 @@ module.exports = {
       })
     })
   },
-  comparePassword: function (password, user, cb) {
+  comparePassword: async (password, user, cb) => {
     bcrypt.compare(password, user.password, function (err, match) {
-
       if (err) cb(err);
       if (match) {
         cb(null, true);
@@ -113,8 +121,29 @@ module.exports = {
         cb(err);
       }
     })
+  },
+  checkPassword: async (password, user) => {
+    return new Promise((resolve) => {
+      bcrypt.compare(password, user.password, function (err, match) {
+        if (err) resolve(false);
+        if (match) {
+          resolve(true);
+        } else {
+          resolve(false);
+        }
+      })
+    })
+  },
+  passwordHash: async (password) => {
+    return new Promise((resolve) => {
+      bcrypt.genSalt(10, function (err, salt) {
+        if (err) throw(err);
+        bcrypt.hash(password, salt, function (err, hash) {
+          if (err) throw(err);
+          resolve(hash)
+        })
+      })
+    })
   }
-
-}
-;
+};
 
