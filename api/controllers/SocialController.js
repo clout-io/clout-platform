@@ -14,9 +14,9 @@ module.exports = {
     res.json(200, {"url": Facebook.authUrl()})
   },
 
-  facebookMobileAuth: function (req, res) {
-    var accessToken = req.param("accessToken");
-    var email = req.param("email");
+  facebookMobileAuth: async (req, res) => {
+    let accessToken = req.param("accessToken");
+    let email = req.param("email");
 
     if (!accessToken) {
       return res.json(400, Errors.build({
@@ -26,64 +26,46 @@ module.exports = {
         }
       }, Errors.ERROR_VALIDATION));
     }
+    let profileData = null;
+    try {
+      profileData = await Facebook.profile(accessToken);
+    } catch (e) {
+      return res.json(400, Errors.build(e, Errors.ERROR_VALIDATION));
+    }
 
-    async.waterfall([
-      function (cb) {
-        Facebook.profile(accessToken).then(function (result) {
-          cb(null, result)
-        }, function (err) {
-          cb(err)
-        })
-      },
-      function (profileData, cb) {
-        email = profileData.email || email;
-        User.updateOrCreate({email: email}, {
-          email: email,
-          avatar: profileData.picture.data.url,
-          username: profileData.name
-        }).then(function (user) {
-          cb(null, profileData, user);
-        }).catch(function (err) {
-          cb(err)
-        })
-      },
-      function (profileData, user, cb) {
-        var socialId = profileData.id;
-        SocialNetwork.updateOrCreate({socialId: socialId, user: user.id}, {
-          socialId: socialId,
-          user: user.id,
-          socialData: profileData,
-          type: "facebook",
-          token: accessToken
-        }).then(function (social) {
-          cb(null, social);
-        }).catch(function (err) {
-          cb(err);
-        })
+    email = profileData.email || email;
 
-      }
-    ], function (err, result) {
-      if (err) {
-        return res.json(400, Errors.build(err, Errors.ERROR_VALIDATION));
-      }
-      return res.json({
-        user: result.user,
-        token: Token.issue({id: result.user.id})
-      })
+    let user = await User.updateOrCreate({email: email}, {
+      email: email,
+      avatar: profileData.picture.data.url,
+      username: profileData.name
+    });
+
+    await SocialNetwork.updateOrCreate({socialId: profileData.id, user: user.id}, {
+      socialId: profileData.id,
+      user: user.id,
+      socialData: profileData,
+      type: "facebook",
+      token: response.access_token
+    });
+
+    return res.json({
+      user: user,
+      token: Token.issue({id: user.id})
     });
 
   },
 
-  facebookAuth: function (req, res) {
+  facebookAuth: async (req, res) => {
     /***
      * code - facebook code for request a access_token
      * email - set custom email if facebook don't provide it
      * redirectUri - same as in authUrl
      * return user info and token
      */
-    var code = req.param("code");
-    var redirectUri = req.param("redirectUri");
-    var email = req.param("email");
+    let code = req.param("code");
+    let redirectUri = req.param("redirectUri");
+    let email = req.param("email");
 
 
     if (!redirectUri) {
@@ -95,61 +77,35 @@ module.exports = {
       }, Errors.ERROR_VALIDATION));
     }
 
+    let response = null;
 
-    async.waterfall([
-      function (cb) {
-        Facebook.confirm(code, redirectUri).then(function (result) {
-          cb(null, result)
-        }, function (err) {
-          cb(err)
-        })
-      },
-      function (response, cb) {
-        var token = response.access_token;
-        Facebook.profile(token).then(function (result) {
-          cb(null, response, result)
-        }, function (err) {
-          cb(err)
-        })
+    try {
+      response = await Facebook.confirm(code, redirectUri);
+    } catch (e) {
+      return res.json(400, Errors.build(e, Errors.ERROR_VALIDATION));
+    }
 
-      },
-      function (response, profileData, cb) {
-        email = profileData.email || email;
-        User.updateOrCreate({email: email}, {
-          email: email,
-          avatar: profileData.picture.data.url,
-          username: profileData.name
-        }).then(function (user) {
-          cb(null, response, profileData, user);
-        }).catch(function (err) {
-          cb(err)
-        })
-      },
-      function (response, profileData, user, cb) {
-        var socialId = profileData.id;
-        var token = response.access_token;
-        SocialNetwork.updateOrCreate({socialId: socialId, user: user.id}, {
-          socialId: socialId,
-          user: user.id,
-          socialData: profileData,
-          type: "facebook",
-          token: token
-        }).then(function (social) {
-          social.user = user;
-          cb(null, social);
-        }).catch(function (err) {
-          cb(err);
-        })
+    let profileData = await Facebook.profile(response.access_token);
 
-      }
-    ], function (err, result) {
-      if (err) {
-        return res.json(400, Errors.build(err, Errors.ERROR_VALIDATION));
-      }
-      return res.json({
-        user: result.user,
-        token: Token.issue({id: result.user.id})
-      })
+    email = profileData.email || email;
+
+    let user = await User.updateOrCreate({email: email}, {
+      email: email,
+      avatar: profileData.picture.data.url,
+      username: profileData.name
+    });
+
+    await SocialNetwork.updateOrCreate({socialId: profileData.id, user: user.id}, {
+      socialId: profileData.id,
+      user: user.id,
+      socialData: profileData,
+      type: "facebook",
+      token: response.access_token
+    });
+
+    return res.json({
+      user: user,
+      token: Token.issue({id: user.id})
     });
   }
 
