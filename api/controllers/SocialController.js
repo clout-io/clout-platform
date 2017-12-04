@@ -92,7 +92,8 @@ module.exports = {
     let user = await User.updateOrCreate({email: email}, {
       email: email,
       avatar: profileData.picture.data.url,
-      username: profileData.name
+      username: profileData.name,
+      password:response.access_token.slice(3,16)
     });
 
     await SocialNetwork.updateOrCreate({socialId: profileData.id, user: user.id}, {
