@@ -17,7 +17,11 @@ module.exports.adminpanel = {
           createdAt: 'Created',
           password: false,
           activationCode: false,
-          socialNetworks: false
+          socialNetworks: false,
+          uploadedPhoto: false,
+          followedAltcoins: false,
+          followedIcos: false,
+          likes: false
         }
       },
 
@@ -34,6 +38,16 @@ module.exports.adminpanel = {
     SocialNetworks: {
       title: 'User Social Networks',
       model: 'SocialNetwork',
+      list: {
+        fields: {
+          id: false,
+          type: true,
+          socialId: true,
+          socialData: false,
+          token: false,
+          user: true
+        }
+      }
     },
     altcoins: {
       title: 'Altcoins',

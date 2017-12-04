@@ -5,8 +5,8 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
-var bcrypt = require('bcrypt');
-var cryptoRandomString = require('crypto-random-string');
+const bcrypt = require('bcrypt');
+const cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
   attributes: {
