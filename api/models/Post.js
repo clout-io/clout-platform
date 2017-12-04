@@ -43,7 +43,10 @@ let buildPostTags = async (post, cb) => {
     await post.save();
   } else {
     await Tag.findOrCreate(find, find);
-    post.text = textParser.parseHashtags(post.text);
+    if (post.type === POST_TYPE_POST)
+      post.text = textParser.parseHashtags(post.text);
+    if (post.type === POST_TYPE_ARTICLE)
+      post.text = textParser.replaceHash(post.text);
     post.tags.remove(tagsToRemove);
     post.tags.add(tagsToAdd);
 

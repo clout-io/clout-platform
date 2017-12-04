@@ -13,6 +13,7 @@
 exports.parseUrl = parseUrl;
 exports.parseEmail = parseEmail;
 exports.parseHashtags = parseHash;
+exports.replaceHash = replaceHash;
 exports.parseUrlAndHash = parseUrlAndHash;
 exports.parse = parseAll;
 exports.getUrls = getUrls;
@@ -24,9 +25,9 @@ exports.getAll = getAllOccurrences;
 /**
  * GLOBALS
  */
-var url_regex = /(\b(((https?|ftp):\/\/)|www.)[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
-var email_regex = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
-var hashtag_regex = /((^|[ ])#[a-zA-Z0-9\d-_]{1,500})/gim;
+const url_regex = /(\b(((https?|ftp):\/\/)|www.)[A-Z0-9+&@#\/%?=~_|!:,.;-]*[-A-Z0-9+&@#\/%=~_|])/gim;
+const email_regex = /(\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,6})/gim;
+const hashtag_regex = /(#{1}\w+){1,500}/gim;
 
 
 /**
@@ -113,6 +114,21 @@ function parseHash(text) {
 
   return text.replace(/\n\r?/g, '<br />');
 
+}
+
+function replaceHash(text){
+  let hashTags = /<a.*?>(.*)(#{1}.*)+<\/a>/gim;
+  let hashTagsNotInA = /(?!<a[^>]*>)(#{1}\w+)+(?![^<]*<\/a>)/gim;
+
+  if (text.match(hashTags)) {
+    text = text.replace(hashTags, "$1<a href=\"javascript:;\">$2</a>"); // Replaces the hashtag matches with hash# anchor tags
+  }
+
+  if (text.match(hashTagsNotInA)) {
+    text = text.replace(hashTagsNotInA, "<a href=\"javascript:;\">$1</a>");
+  }
+
+  return text.replace(/\n\r?/g, '<br />');
 }
 
 
