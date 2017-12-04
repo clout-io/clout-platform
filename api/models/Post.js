@@ -14,7 +14,7 @@ const POST_TYPE_ARTICLE = "article";
 const POST_TYPES = [POST_TYPE_POST, POST_TYPE_ARTICLE];
 
 
-function buildPostTags(post, cb) {
+let buildPostTags = async (post, cb) => {
   let tags = textParser.getHashtags(post.text);
   let find = [];
   let parsedTags = [];
@@ -35,34 +35,23 @@ function buildPostTags(post, cb) {
     return cb()
   }
 
-  Post.findOne(post.id).then(function (post) {
+  post = await Post.findOne(post.id);
 
-    if (!find.length) {
-      post.tags.remove(tagsToRemove);
-      post.displayTags = [];
-      post.save(function (err) {
-        if (err) return cb(err);
-        cb();
-      })
-    } else {
-      Tag.findOrCreate(find, find).then(function (result) {
-        post.text = textParser.parseHashtags(post.text);
+  if (!find.length) {
+    post.tags.remove(tagsToRemove);
+    post.displayTags = [];
+    await post.save();
+  } else {
+    await Tag.findOrCreate(find, find);
+    post.text = textParser.parseHashtags(post.text);
+    post.tags.remove(tagsToRemove);
+    post.tags.add(tagsToAdd);
 
-        post.tags.remove(tagsToRemove);
-        post.tags.add(tagsToAdd);
-
-        post.displayTags = parsedTags;
-        post.save(function (err) {
-          if (err) return cb(err);
-          cb();
-        })
-
-      });
-    }
-
-
-  })
-}
+    post.displayTags = parsedTags;
+    await post.save()
+  }
+  cb();
+};
 
 module.exports = {
   TYPE_POST: POST_TYPE_POST,
