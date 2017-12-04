@@ -4,9 +4,6 @@
  * @description :: Server-side logic for managing Tags
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-
-const _ = require("underscore");
-
 module.exports = {
 
   search: async (req, res) => {

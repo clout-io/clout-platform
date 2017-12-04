@@ -6,7 +6,6 @@
  */
 const cryptoRandomString = require('crypto-random-string');
 const ogs = require('open-graph-scraper');
-const _ = require("underscore");
 
 
 const POST_TYPE_POST = "post";
