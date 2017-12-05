@@ -8,13 +8,14 @@
       <p>{{createDate}}</p>
     </div>
     <div class="comments__time">
-      <div class="dropdown" *ngIf="isOwner">
+      <div class="dropdown">
         <button class="dropdown-toggle" id="dropdownPostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i></i>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownPostActions">
-          <a class="dropdown-item" (click)="delete()">Delete Post</a>
-          <a class="dropdown-item" (click)="edit()">Edit</a>
+          <a *ngIf="isOwner" class="dropdown-item" (click)="delete()">Delete Post</a>
+          <a *ngIf="isOwner" class="dropdown-item" (click)="edit()">Edit</a>
+          <a class="dropdown-item" (click)="share()">Share</a>
         </div>
       </div>
     </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FeedService } from '../../../../../../services';
 import * as moment from 'moment';
+import { Meta, Title } from '@angular/platform-browser';
 
 class Action {
   key: string;
@@ -22,9 +23,17 @@ export class FeedItemComponent implements OnInit {
   public imageSrc: string;
   public loadImgId: string;
 
-  constructor(
-    private feedService: FeedService,
-  ) { }
+  constructor(meta: Meta, title: Title, private feedService: FeedService) {
+
+    title.setTitle('My Spiffy Home Page');
+
+    meta.addTags([
+      {'og:image': 'http://example.com/default-image.png'},
+      {'og:title': 'title lol'},
+      {'og:description': 'description lol'},
+    ]);
+
+  }
 
   ngOnInit() {
     this.showLinkData(true);
@@ -46,6 +55,10 @@ export class FeedItemComponent implements OnInit {
   removeImage() {
     this.imageSrc = null;
     this.loadImgId = null;
+  }
+
+  share(): void {
+
   }
 
   onDoAction(action: Action) {
