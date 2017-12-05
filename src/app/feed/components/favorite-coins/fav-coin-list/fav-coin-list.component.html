@@ -5,18 +5,7 @@
       <app-fav-coin-item *ngFor="let coin of coinList" [favCoin]="coin"></app-fav-coin-item>
     </ul>
   </div>
-  
-  <div class="form-group fav-search">
-    <input auto-complete
-           [(ngModel)]="inputValue"
-           [source]="getRemoteData.bind(this)"
-           [min-chars]="3"
-           [max-num-list]="8"
-           (valueChanged)="selectValue($event)"
-           placeholder="Type coin"
-           class="form-control"/>
-  </div>
-  <div class="add-favorite-coin-block">
-    <a href="javascript:void(0)" (click)="addCoinToFavorites()"><span>+</span> Coin</a>
-  </div>
+  <app-add-favorite-coin [showInput]="showAddCoinInput"
+                         (onAddCoin)="addCoinEvent($event)">
+  </app-add-favorite-coin>
 </div>

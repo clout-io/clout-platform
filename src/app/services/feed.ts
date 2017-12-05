@@ -81,4 +81,8 @@ export class FeedService {
     return this.api.get(`${this.path}/tag/search?term=${term}`);
   }
 
+  getFavoritesAltcoins(options): Observable<any>  {
+    const { nextPage, perPage } = options;
+    return this.api.get(`${this.path}/altcoins/favorites/?page=${nextPage}&per_page=${perPage}`);
+  }
 }
