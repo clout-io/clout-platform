@@ -19,6 +19,7 @@ import {
   CommunityComponent,
   FavoriteCoinsComponent,
   FavCoinListComponent,
+  AddFavoriteCoinComponent,
   FavCoinItemComponent,
   CloutDescSidebarComponent,
   PopularSearchSidebarComponent,
@@ -62,6 +63,7 @@ import { TruncatePipe } from '../pipes';
     TruncatePipe,
     FavoriteCoinsComponent,
     FavCoinListComponent,
+    AddFavoriteCoinComponent,
     FavCoinItemComponent,
     CloutDescSidebarComponent,
     PopularSearchSidebarComponent,
@@ -78,7 +80,7 @@ import { TruncatePipe } from '../pipes';
     TinyEditorComponent,
     AddArticleComponent,
     PublishPostBtnComponent,
-    EditArticleComponent
+    EditArticleComponent,
   ]
 })
 export class FeedModule { }

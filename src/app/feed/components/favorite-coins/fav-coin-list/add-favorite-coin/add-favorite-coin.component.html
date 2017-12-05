@@ -1,0 +1,15 @@
+<div #favoriteBlock>
+  <div class="form-group fav-search" *ngIf="showInput">
+    <input auto-complete
+           [(ngModel)]="inputValue"
+           [source]="getRemoteData.bind(this)"
+           [min-chars]="3"
+           [max-num-list]="8"
+           (valueChanged)="selectValue($event)"
+           placeholder="Type coin"
+           class="form-control"/>
+  </div>
+  <div class="add-favorite-coin-block">
+    <a href="javascript:void(0)" (click)="addCoinToFavorites()"><span>+</span> Coin</a>
+  </div>
+</div>

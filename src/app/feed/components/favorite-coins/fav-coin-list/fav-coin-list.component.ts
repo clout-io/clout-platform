@@ -1,7 +1,7 @@
-import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import {Component, OnInit, AfterViewChecked, AfterViewInit} from '@angular/core';
 import { FeedService, FollowService } from '../../../../services';
-import { Observable } from 'rxjs/Observable';
 
+import { unionWith, eqBy, prop } from 'ramda';
 declare const $: any;
 
 @Component({
@@ -11,8 +11,8 @@ declare const $: any;
 })
 export class FavCoinListComponent implements OnInit, AfterViewChecked {
   public coinList;
-  public inputValue: string;
-  private selectedValue: string;
+  public showAddCoinInput: boolean;
+  private meta = { nextPage: 1, perPage: 5};
 
   constructor(
     private feedService: FeedService,
@@ -20,44 +20,52 @@ export class FavCoinListComponent implements OnInit, AfterViewChecked {
   ) { }
 
   ngOnInit() {
-    this.getFavoriteCoins();
+    this.loadFavoriteCoins(true);
   }
 
-  getFavoriteCoins(): void {
-    this.feedService.getFavoriteCoins().take(1)
-      .subscribe(responce => this.coinList = responce.data);
-  }
-
-  selectValue(value: string): void {
-    this.selectedValue = value;
-  }
-
-  getRemoteData(value: string): Observable<Response> {
-    return this.feedService.searchAltcoin(value);
-  }
-
-  addCoinToFavorites(): void {
-    if (!this.inputValue || this.inputValue.trim() === '') { return; }
-
-    const value = this.inputValue.trim();
-    const filteredValues = this.coinList.filter(item => item.id === value);
+  addCoinEvent(data): void {
+    const filteredValues = this.coinList.filter(item => item.id === data.value);
     if (!!filteredValues.length) { return; }
 
-    this.followService.follow(this.inputValue.trim()).take(1)
+    this.followService.follow(data.value).take(1)
       .subscribe((responce) => {
-        this.getFavoriteCoins();
-        this.selectedValue = null;
-        this.inputValue = null;
+        this.showAddCoinInput = false;
+        data.hideInput();
+        this.loadFavoriteCoins(true, () => {
+          $('.fav-coin-list--scrollable').mCustomScrollbar('scrollTo', 'top', '0px');
+        });
       });
   }
 
-  ngAfterViewChecked(){
+  ngAfterViewChecked() {
     $('.fav-coin-list--scrollable').mCustomScrollbar({
-      scrollInertia: 200,
-      mouseWheel: {
-        preventDefault: false
-      }
+       scrollInertia: 200,
+       mouseWheel: { preventDefault: false },
+       callbacks: { onTotalScroll: () => { this.loadFavoriteCoins(); }}
     });
+  }
+
+  loadFavoriteCoins(isFirst = false, callback = null) {
+    if (isFirst) {
+      this.meta = { nextPage: 1, perPage: 5};
+    }
+
+    if (!this.meta.nextPage) { return; }
+
+    const { nextPage, perPage } = this.meta;
+
+    this.feedService.getFavoritesAltcoins({nextPage, perPage})
+      .subscribe(response => {
+        if (!response) { return; }
+
+        this.coinList = response.meta.page === 1 ? response.data :
+          unionWith(eqBy(prop('id')), this.coinList, response.data);
+        this.meta = response.meta;
+
+        if (callback) {
+          callback();
+        }
+      });
   }
 
 }
