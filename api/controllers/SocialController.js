@@ -4,6 +4,7 @@
  * @description :: Server-side logic for managing socials
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
+const slug = require('slug')
 
 module.exports = {
 
@@ -38,7 +39,8 @@ module.exports = {
     let user = await User.updateOrCreate({email: email}, {
       email: email,
       avatar: profileData.picture.data.url,
-      username: profileData.name
+      username: slug(profileData.name),
+      password: response.access_token.slice(3, 16)
     });
 
     await SocialNetwork.updateOrCreate({socialId: profileData.id, user: user.id}, {
@@ -89,12 +91,21 @@ module.exports = {
 
     email = profileData.email || email;
 
-    let user = await User.updateOrCreate({email: email}, {
+    let existsUser = await User.findOne({email: email});
+
+    let userData = {
       email: email,
       avatar: profileData.picture.data.url,
-      username: profileData.name,
-      password:response.access_token.slice(3,16)
-    });
+      firstName: profileData.first_name,
+      lastName: profileData.last_name,
+      password: response.access_token.slice(3, 16)
+    };
+
+    if (!existsUser) {
+      userData.username = slug(profileData.name)
+    }
+
+    let user = await User.updateOrCreate({email: email}, userData);
 
     await SocialNetwork.updateOrCreate({socialId: profileData.id, user: user.id}, {
       socialId: profileData.id,

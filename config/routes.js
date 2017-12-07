@@ -683,6 +683,10 @@ let routes = [
             "suite": {
               "type": "string",
               "description": ""
+            },
+            "slug": {
+              "type": "string",
+              "description": ""
             }
           }
         }

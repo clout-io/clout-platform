@@ -36,7 +36,8 @@ module.exports = {
     slug: {
       type: 'string',
       required: true,
-      unique: true
+      unique: true,
+      editable: true,
     },
     avatar: {
       type: 'string',
@@ -181,10 +182,6 @@ module.exports = {
         next();
       })
     })
-  },
-  beforeUpdate: function (values, next) {
-    values.slug = values.username.toLowerCase();
-    next()
   },
   comparePassword: async (password, user, cb) => {
     bcrypt.compare(password, user.password, function (err, match) {
