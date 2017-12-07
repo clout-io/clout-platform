@@ -1,6 +1,7 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
+import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
 import { AuthService, ApiService } from '../../../services';
 import { Router, NavigationEnd } from '@angular/router';
+import { sortBy, compose, prop, toLower } from 'ramda';
 
 
 @Component({
@@ -9,6 +10,7 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('hiddenCoinsDropdown') hiddenCoinsDropdown;
   currentUrl: string;
   userName: string;
   avatar: string;
@@ -38,7 +40,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     });
 
     this.top$ = this.apiService.get('/api/v1/altcoins/top?top=20')
-      .subscribe(responce => this.topList = responce.data);
+      .subscribe(responce => {
+        const sortByNameCaseInsensitive = sortBy(compose(toLower, prop('name')));
+        this.topList = sortByNameCaseInsensitive(responce.data);
+      });
   }
 
   ngAfterViewInit() {
@@ -75,6 +80,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     };
 
+  }
+
+  showCoinsDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.hiddenCoinsDropdown.nativeElement.click();
   }
 
   setTitle() {

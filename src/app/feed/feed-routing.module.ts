@@ -50,7 +50,7 @@ const routes: Routes = CoreRoute.withShell([
         component: PostFilterComponent
       },
       {
-        path: 'trending',
+        path: 'all',
         component: TrendingComponent
       }
     ]
