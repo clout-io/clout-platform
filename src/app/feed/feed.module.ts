@@ -8,6 +8,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { CoreModule } from '../core/core.module';
 import { FeedRoutingModule } from './feed-routing.module';
 import { FeedComponent } from './feed.component';
+import { CeiboShare } from 'ng2-social-share';
 
 import {
   FeedListComponent,
@@ -53,6 +54,7 @@ import { TruncatePipe } from '../pipes';
     Ng2AutoCompleteModule
   ],
   declarations: [
+    CeiboShare,
     FeedComponent,
     FeedListComponent,
     FeedItemComponent,

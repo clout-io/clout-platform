@@ -19,6 +19,8 @@ export class FeedItemComponent implements OnInit {
   createDate: string = '';
   editable = false;
   isOwner: boolean;
+  twitterShareObj: any;
+  showShareTwitter = true;
 
   public imageSrc: string;
   public loadImgId: string;
@@ -32,6 +34,8 @@ export class FeedItemComponent implements OnInit {
     this.isOwner = !!this.feed.owner ? this.getUserId() === this.feed.owner.id : false;
     const type = !!this.feed.type ? this.feed.type : 'post';
     this.feed.type = type;
+
+    this.parseInfoForTwitterSharing();
   }
 
   private showLinkData(show: boolean) {
@@ -48,7 +52,7 @@ export class FeedItemComponent implements OnInit {
     this.loadImgId = null;
   }
 
-  share(): void {
+  shareFacebook(): void {
     let title = '';
     let description = this.feed.text;
     let imageUrl = this.feed.attachment.length ?
@@ -71,7 +75,7 @@ export class FeedItemComponent implements OnInit {
 
     const defaultUrl = 'https://steemitimages.com/DQmPJPwNz2t9d6ZsoUo1cyvKGfWTE9VZ2kgogyzDYvSSbmq/image.png';
     const ogObj = {
-      'og:url': window.location.origin + '/home/community/' + this.feed.id,
+      'og:url': this.getSocialRedirectUrl(),
       'og:title': title,
       'og:description': description,
       'og:image': !!imageUrl.length ? imageUrl : defaultUrl
@@ -85,6 +89,27 @@ export class FeedItemComponent implements OnInit {
         object: ogObj
       })
     }).catch(() => {});
+  }
+
+  getSocialRedirectUrl(): string {
+    return window.location.origin + '/home/community/' + this.feed.id;
+  }
+
+  parseInfoForTwitterSharing(): void {
+    this.twitterShareObj = null;
+    let twitterText = this.parseTextFromHtml(this.feed.text) + ' ';
+    if (twitterText.length > 200) { twitterText = twitterText.slice(0, 200) + '... '; }
+    const twitterRedirectUrl = this.getSocialRedirectUrl();
+    this.twitterShareObj = {url: twitterRedirectUrl, text: twitterText, hashtags: ''};
+    //this.twitterHref = 'https://twitter.com/intent/tweet/?text=' + encodeURIComponent(twitterText) + '&url=' + this.twitterRedirectUrl;
+  }
+
+  reinitShareTwitterDirective() {
+    //fix directive bug with change url
+    this.showShareTwitter = false;
+    setTimeout(() => {
+      this.showShareTwitter = true;
+    }, 0);
   }
 
   parseTextFromHtml(str: string) {
@@ -104,6 +129,10 @@ export class FeedItemComponent implements OnInit {
 
   editFlag(edit: boolean) {
     this.editable = edit;
+
+    if (!edit) {
+      this.reinitShareTwitterDirective();
+    }
   }
 
   getUserId(): string {
@@ -134,6 +163,7 @@ export class FeedItemComponent implements OnInit {
     this.removeImage();
     this.showLinkData(true);
     this.editFlag(false);
+    this.parseInfoForTwitterSharing();
   }
 
   save(params) {
