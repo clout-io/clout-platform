@@ -616,6 +616,104 @@ let routes = [
   }
   },
   {
+    method: "POST", path: "/user/profile", target: {
+    controller: "UserController", action: "editProfile", swagger: {
+      methods: ['POST'],
+      summary: 'Edit self profile',
+      description: 'Edit self profile',
+      tags: [
+        'User'
+      ],
+      parameters: [
+        {
+          in: "body", name: "data", schema: {
+          "required": [
+            "content"
+          ],
+          "type": "object",
+          "properties": {
+            "username": {
+              "type": "string",
+              "description": ""
+            },
+            "firstName": {
+              "type": "string",
+              "description": ""
+            },
+            "phone": {
+              "type": "string",
+              "description": ""
+            },
+            "site": {
+              "type": "string",
+              "description": ""
+            },
+            "skype": {
+              "type": "string",
+              "description": ""
+            },
+            "linkedin": {
+              "type": "string",
+              "description": ""
+            },
+            "tweeter": {
+              "type": "string",
+              "description": ""
+            },
+            "facebook": {
+              "type": "string",
+              "description": ""
+            },
+            "country": {
+              "type": "string",
+              "description": ""
+            },
+            "city": {
+              "type": "string",
+              "description": ""
+            },
+            "state": {
+              "type": "string",
+              "description": ""
+            },
+            "street": {
+              "type": "string",
+              "description": ""
+            },
+            "suite": {
+              "type": "string",
+              "description": ""
+            }
+          }
+        }
+        }
+      ],
+      responses: {
+        '200': {
+          description: 'Reset password'
+        }
+      }
+    }
+  }
+  },
+  {
+    method: "GET", path: "/user/profile/:username", target: {
+    controller: "UserController", action: "profile", swagger: {
+      methods: ['GET'],
+      summary: 'Return public profile ',
+      description: 'Return public profile',
+      tags: [
+        'User'
+      ],
+      responses: {
+        '200': {
+          description: 'Return public profile'
+        }
+      }
+    }
+  }
+  },
+  {
     method: "POST", path: "/user/password/reset/:code", target: {
     controller: "UserController", action: "resetPassword", swagger: {
       methods: ['POST'],

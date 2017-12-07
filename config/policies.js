@@ -76,7 +76,8 @@ module.exports.policies = {
   },
   UserController: {
     resetPasswordRequest: true,
-    resetPassword: true
+    resetPassword: true,
+    profile: true
   },
   PressController: {
     index: true,

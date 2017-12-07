@@ -18,15 +18,25 @@ module.exports = {
     },
     firstName: {
       type: 'string',
-      defaultsTo: ''
+      defaultsTo: '',
+      editable: true,
     },
     lastName: {
       type: 'string',
-      defaultsTo: ''
+      defaultsTo: '',
+      editable: true,
     },
     username: {
       type: 'string',
-      required: true
+      required: true,
+      editable: true,
+      unique: true,
+      isUsername: true
+    },
+    slug: {
+      type: 'string',
+      required: true,
+      unique: true
     },
     avatar: {
       type: 'string',
@@ -59,6 +69,55 @@ module.exports = {
       collection: 'Img',
       via: 'user'
     },
+    phone: {
+      type: "string",
+      phone: true,
+      editable: true,
+    },
+    site: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    skype: {
+      type: "string",
+      editable: true,
+    },
+    linkedin: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    tweeter: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    facebook: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    country: {
+      type: "string",
+      editable: true,
+    },
+    city: {
+      type: "string",
+      editable: true,
+    },
+    state: {
+      type: "string",
+      editable: true,
+    },
+    street: {
+      type: "string",
+      editable: true,
+    },
+    suite: {
+      type: "string",
+      editable: true,
+    },
     followedAltcoins: {
       collection: 'Altcoin',
       via: 'user',
@@ -78,8 +137,9 @@ module.exports = {
     },
 
     toJSON: function () {
-      var obj = this.toObject();
+      let obj = this.toObject();
       delete obj.password;
+      delete obj.slug;
       delete obj.activationCode;
       delete obj.confirmPassword;
       delete obj.email;
@@ -89,7 +149,7 @@ module.exports = {
       return sails.config.appUrl + "/activate" + '?code=' + this.activationCode;
     },
     getResetPasswordLink: function () {
-      var token = Token.issue({id: this.id}, '5m');
+      let token = Token.issue({id: this.id}, '5m');
       return {
         url: sails.config.appUrl + "/reset" + '?code=' + token,
         token: token
@@ -97,12 +157,22 @@ module.exports = {
     }
   },
   types: {
+    editable: (value) => {
+      return true;
+    },
+    isUsername: (value) => {
+      return !_.isEmpty(value) && value.match(/^[A-z0-9]+(?:-[A-z0-9]+)*$/);
+    },
+    phone: function (value) {
+      return value.match(/\(?\+[0-9]{1,3}\)? ?-?[0-9]{1,3} ?-?[0-9]{3,5} ?-?[0-9]{4}( ?-?[0-9]{3})? ?(\w{1,10}\s?\d{1,6})?/i)
+    },
     password: function (value) {
       return _.isString(value) && value.length >= 6 && value.match(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/g);
     }
   },
   beforeCreate: function (values, next) {
     delete values.confirmPassword;
+    values.slug = values.username.toLowerCase();
     bcrypt.genSalt(10, function (err, salt) {
       if (err) return next(err);
       bcrypt.hash(values.password, salt, function (err, hash) {
@@ -111,6 +181,10 @@ module.exports = {
         next();
       })
     })
+  },
+  beforeUpdate: function (values, next) {
+    values.slug = values.username.toLowerCase();
+    next()
   },
   comparePassword: async (password, user, cb) => {
     bcrypt.compare(password, user.password, function (err, match) {

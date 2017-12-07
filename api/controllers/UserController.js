@@ -134,6 +134,33 @@ module.exports = {
       user: user,
       token: token
     });
+  },
+  editProfile: async (req, res) => {
+    let user = await User.findOne(req.user.id);
+    let allowedFields = _.pick(User.attributes, (value, key, object) => {
+      return value.editable;
+    });
+    let allowedKeys = _.keys(allowedFields);
+
+    let body = _.pick(req.body, (value, key) => {
+      return _.indexOf(allowedKeys, key) !== -1 && !_.isEmpty(value);
+    });
+
+    try {
+      let updatedUser = await User.update({id: user.id}, body);
+      return res.json(updatedUser)
+    } catch (e) {
+      return res.json(400, Errors.build(e, Errors.ERROR_UNKNOWN));
+    }
+  },
+
+
+  profile: async (req, res) => {
+    let slug = req.param("username").toLowerCase();
+    let user = await User.findOne({slug: slug});
+    //need add check permission
+
+    return res.json(user)
   }
 };
 
