@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FeedService } from '../../../../../../services';
+import { FacebookService } from 'ngx-facebook';
 import * as moment from 'moment';
-import { Meta, Title } from '@angular/platform-browser';
 
 class Action {
   key: string;
@@ -23,17 +23,8 @@ export class FeedItemComponent implements OnInit {
   public imageSrc: string;
   public loadImgId: string;
 
-  constructor(meta: Meta, title: Title, private feedService: FeedService) {
-
-    title.setTitle('My Spiffy Home Page');
-
-    meta.addTags([
-      {'og:image': 'http://example.com/default-image.png'},
-      {'og:title': 'title lol'},
-      {'og:description': 'description lol'},
-    ]);
-
-  }
+  constructor(private feedService: FeedService,
+              private fb: FacebookService) {}
 
   ngOnInit() {
     this.showLinkData(true);
@@ -58,7 +49,48 @@ export class FeedItemComponent implements OnInit {
   }
 
   share(): void {
+    let title = '';
+    let description = this.feed.text;
+    let imageUrl = this.feed.attachment.length ?
+      'http://haumea.bvblogic.net:8103' + this.feed.attachment[0].url : '';
 
+    if (this.feed.linkData) {
+      title = this.feed.linkData.ogTitle;
+      description = this.feed.linkData.ogDescription;
+      imageUrl = this.feed.linkData.ogImage.url;
+    }
+
+    if (this.feed.type === 'article') {
+      const regexImgTag = /<img.*?src="(.*?)"/;
+      const imgTag = regexImgTag.exec(this.feed.text);
+      if (imgTag) {
+        imageUrl = imgTag[1];
+      }
+      description = this.parseTextFromHtml(this.feed.text);
+    }
+
+    const defaultUrl = 'https://steemitimages.com/DQmPJPwNz2t9d6ZsoUo1cyvKGfWTE9VZ2kgogyzDYvSSbmq/image.png';
+    const ogObj = {
+      'og:url': window.location.origin + '/home/community/' + this.feed.id,
+      'og:title': title,
+      'og:description': description,
+      'og:image': !!imageUrl.length ? imageUrl : defaultUrl
+    };
+
+    this.fb.ui({
+      method: 'share_open_graph',
+      action_type: 'og.shares',
+      display: 'popup',
+      action_properties: JSON.stringify({
+        object: ogObj
+      })
+    }).catch(() => {});
+  }
+
+  parseTextFromHtml(str: string) {
+    const temporalDivElement = document.createElement('div');
+    temporalDivElement.innerHTML = str;
+    return temporalDivElement.textContent || temporalDivElement.innerText || '';
   }
 
   onDoAction(action: Action) {

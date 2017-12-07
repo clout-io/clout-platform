@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { FacebookService, InitParams } from 'ngx-facebook';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,16 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'ico';
+
+  constructor(private fb: FacebookService) {
+
+    const initParams: InitParams = {
+      appId: '913950675449647',
+      xfbml: true,
+      version: 'v2.11'
+    };
+
+    fb.init(initParams);
+  }
+
 }

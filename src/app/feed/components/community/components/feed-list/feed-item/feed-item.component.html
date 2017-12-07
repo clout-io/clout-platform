@@ -15,7 +15,7 @@
         <div class="dropdown-menu" aria-labelledby="dropdownPostActions">
           <a *ngIf="isOwner" class="dropdown-item" (click)="delete()">Delete Post</a>
           <a *ngIf="isOwner" class="dropdown-item" (click)="edit()">Edit</a>
-          <a class="dropdown-item" (click)="share()">Share</a>
+          <a class="dropdown-item" (click)="share($event)">Share</a>
         </div>
       </div>
     </div>
