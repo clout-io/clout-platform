@@ -36,7 +36,8 @@ import {
   TinyEditorComponent,
   AddArticleComponent,
   PublishPostBtnComponent,
-  EditArticleComponent
+  EditArticleComponent,
+  SinglePostItemComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -81,6 +82,7 @@ import { TruncatePipe } from '../pipes';
     AddArticleComponent,
     PublishPostBtnComponent,
     EditArticleComponent,
+    SinglePostItemComponent,
   ]
 })
 export class FeedModule { }

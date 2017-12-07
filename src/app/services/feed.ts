@@ -42,6 +42,10 @@ export class FeedService {
       .map((res: any) => res);
   }
 
+  getFeed(id: string): Observable<any> {
+    return this.api.get(`${this.path}/news/${id}`);
+  }
+
   editFeed(id: string, options: any): Observable<any> {
     return this.api.post(`${this.path}/news/${id}`, options);
   }

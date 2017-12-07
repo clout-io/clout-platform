@@ -16,3 +16,4 @@ export * from './components/add-article/add-article.component';
 export * from './components/tiny-editor/tiny-editor.component';
 export * from './components/publish-post-btn/publish-post-btn.component';
 export * from './components/feed-list/feed-item/edit-article/edit-article.component';
+export * from './components/single-post-item/single-post-item.component';
