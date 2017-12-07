@@ -50,9 +50,9 @@
   </div>-->
 
   <owl-carousel *ngIf="topList?.length" class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
-    <a routerLink="/icos">ICO's</a>
-    <a routerLink="/home/trending">All</a>
-    <a href="javascript:void(0)" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
+    <a href="javascript:void(0)" (click)="showCoinsDropdown($event)">Coins</a>
+    <a routerLink="/home/all" routerLinkActive="active">All</a>
+    <a href="javascript:void(0)" routerLinkActive="active" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
     <!--<a href="javascript:void(0)">Bitcoin</a>
     <a href="javascript:void(0)">Ethereum</a>
     <a href="javascript:void(0)">Bitcoin Cash</a>
@@ -82,6 +82,14 @@
     <a href="javascript:void(0)">IOTA</a>
     <a href="javascript:void(0)">Qtum</a>-->
   </owl-carousel>
+  <div class="dropdown hidden-coins-dropdown" id="dropdownMenuButton2">
+    <button class="btn btn-secondary dropdown-toggle" #hiddenCoinsDropdown type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a routerLink="/allcoins" routerLinkActive="active">Allcoins</a><br>
+      <a routerLink="/icos" routerLinkActive="active">ICO's</a>
+    </div>
+  </div>
 
   <app-loader-line></app-loader-line>
 </header><!-- .header -->

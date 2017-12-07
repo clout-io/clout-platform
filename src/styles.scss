@@ -413,6 +413,32 @@ ___________________________*/
     }
   }
 
+  .hidden-coins-dropdown {
+    height: 0;
+
+    button {
+      height: 0;
+      border: none;
+
+      &:after {
+        display: none;
+      }
+    }
+
+    .dropdown-menu {
+      a {
+        font-size: 13px;
+        line-height: 16px;
+        color: #A9A8A8;
+        padding-left: 17px;
+
+        &.active {
+          color: $color-ac-link;
+        }
+      }
+    }
+  }
+
   &__start {
     display: flex;
     justify-content: flex-start;
@@ -484,7 +510,7 @@ ___________________________*/
     width: 100%;
     height: 43px;
     position: relative;
-    
+
     height: 0;
     overflow: hidden;
     margin: 10px 0 0 0;
@@ -693,7 +719,7 @@ ___________________________*/
 }
 
 .sticky-header__bottom {
-  
+
   .header {
     position: fixed;
     top: 0;
@@ -2434,6 +2460,10 @@ ___________________________*/
     padding: 0 18px 0 17px;
     position: relative;
     white-space: nowrap;
+
+    &.active {
+      color: $color-ac-link;
+    }
   }
 
   .owl-stage-outer {
