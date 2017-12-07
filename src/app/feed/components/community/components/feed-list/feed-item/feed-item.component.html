@@ -15,9 +15,15 @@
         <div class="dropdown-menu" aria-labelledby="dropdownPostActions">
           <a *ngIf="isOwner" class="dropdown-item" (click)="delete()">Delete Post</a>
           <a *ngIf="isOwner" class="dropdown-item" (click)="edit()">Edit</a>
-          <a class="dropdown-item" (click)="share($event)">Share</a>
+          <a class="dropdown-item" (click)="shareFacebook($event)">Share Facebook</a>
+          <a *ngIf="showShareTwitter" class="dropdown-item" ceiboShare
+             [twitter]="twitterShareObj">Share Twitter</a>
         </div>
       </div>
+      <!--<button ceiboShare
+              [twitter]="{url:'',
+               text:'Checkout this awesome ng2 social share directive',
+               hashtags:'angular2, social, ceiboIT'}">Twitter</button>-->
     </div>
   </div>
   <app-post-head *ngIf="feed?.type === 'post' && editable"
