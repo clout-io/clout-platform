@@ -151,7 +151,7 @@ module.exports = {
       delete obj.email;
       delete obj.isAdmin;
 
-      obj.name = obj.firstName + obj.lastName;
+      obj.name = obj.firstName + " " + obj.lastName;
       if (_.isEmpty(obj.name.trim())) {
         obj.name = "@" + obj.username;
       }
