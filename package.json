@@ -76,6 +76,7 @@
     "sails-hook-autoreload": "^0.14.3",
     "sails-hook-orm": "^1.0.9",
     "sails-hook-responsetime": "^1.0.7",
+    "sails-hook-slugs": "^2.1.0",
     "sails-hook-update-or-create": "^0.1.4",
     "sails-mongo": "^0.12.2",
     "sails-pager": "^2.1.0",
