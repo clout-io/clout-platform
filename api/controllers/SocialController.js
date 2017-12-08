@@ -97,12 +97,12 @@ module.exports = {
       email: email,
       avatar: profileData.picture.data.url,
       firstName: profileData.first_name,
-      lastName: profileData.last_name,
-      password: response.access_token.slice(3, 16)
+      lastName: profileData.last_name
     };
 
     if (!existsUser) {
-      userData.username = slug(profileData.name)
+      userData.username = slug(profileData.name);
+      userData.password = response.access_token.slice(3, 16);
     }
 
     let user = await User.updateOrCreate({email: email}, userData);
