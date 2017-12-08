@@ -40,7 +40,6 @@ module.exports = {
     slug: {
       type: 'slug',
       from: 'username',
-      blacklist: ['search'],
       unique: true,
     },
     avatar: {
@@ -149,7 +148,6 @@ module.exports = {
       delete obj.activationCode;
       delete obj.confirmPassword;
       delete obj.email;
-      delete obj.isAdmin;
 
       obj.name = obj.firstName + " " + obj.lastName;
       if (_.isEmpty(obj.name.trim())) {
