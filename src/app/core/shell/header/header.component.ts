@@ -1,8 +1,6 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
 import { AuthService, FeedService } from '../../../services';
 import { Router, NavigationEnd } from '@angular/router';
-import { sortBy, compose, prop, toLower } from 'ramda';
-
 
 @Component({
   selector: 'app-header',
@@ -43,8 +41,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     const coinsName = this.router.url === '/icos' ? 'icos' : 'altcoins';
     this.top$ = this.feedService.getTopCoins(coinsName, 30)
       .subscribe(responce => {
-        const sortByNameCaseInsensitive = sortBy(compose(toLower, prop('name')));
-        this.topList = sortByNameCaseInsensitive(responce.data);
+        this.topList = responce.data;
       });
   }
 

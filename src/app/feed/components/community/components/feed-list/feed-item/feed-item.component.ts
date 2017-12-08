@@ -56,7 +56,7 @@ export class FeedItemComponent implements OnInit {
     let title = '';
     let description = this.feed.text;
     let imageUrl = this.feed.attachment.length ?
-      'http://haumea.bvblogic.net:8103' + this.feed.attachment[0].url : '';
+      window.location.origin + this.feed.attachment[0].url : '';
 
     if (this.feed.linkData) {
       title = this.feed.linkData.ogTitle;
