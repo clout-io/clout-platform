@@ -3,6 +3,21 @@
     {{errorMessage}}
   </div>
   <div class="form-group"
+       [ngClass]="{'has_error': account.get('namesurname').invalid && account.get('namesurname').touched}">
+    <div class="input-group">
+      <input type="text"
+             placeholder="Name and Surname"
+             formControlName="namesurname"/>
+      <app-reset-input-btn [inputName]="'namesurname'"></app-reset-input-btn>
+    </div>
+    <div *ngIf="account.get('namesurname').invalid && account.get('namesurname').touched" class="validation-err-msg">
+      <div *ngIf="account.get('namesurname').hasError('required')">Name and Surname is required</div>
+      <div *ngIf="account.get('namesurname').hasError('minlength')">
+        Name and Surname must be of minimum 4 characters length
+      </div>
+    </div>
+  </div>
+  <div class="form-group"
        [ngClass]="{'has_error': account.get('username').invalid && account.get('username').touched}">
     <div class="input-group">
       <input type="text"
