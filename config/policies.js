@@ -54,6 +54,7 @@ module.exports.policies = {
   IcoController: {
     index: true,
     info: true,
+    top:true,
     alphabetList: true,
     sync: true,
     syncPhoto: true

@@ -263,6 +263,33 @@ let routes = [
     }
   },
   {
+    method: "GET", path: "/icos/top", target:
+    {
+      controller: 'IcoController',
+      action: 'top',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: '',
+        description: '',
+        produces: [
+          'application/json'
+        ],
+        tags: ["Ico"],
+        responses: {
+          '200': {
+            description: ''
+          }
+        },
+        parameters: [
+          {in: "query", name: "top"}
+        ]
+
+
+      }
+    }
+  },
+  {
     method: "GET", path: "/icos/alpha", target:
     {
       controller: 'IcoController',
