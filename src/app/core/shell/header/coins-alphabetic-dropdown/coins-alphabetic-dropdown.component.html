@@ -1,0 +1,21 @@
+<div class="coins-alphabetical-dropdown">
+  <div>
+    <input placeholder="Search" type="search" [(ngModel)]="filterValue">
+  </div>
+  <div class="coins-alphabetical-dropdown-list">
+    <div *ngIf="!alphabeticList.length">Loding...</div>
+    <div *ngFor="let group of alphabeticList | alphabeticCoinsPipe: filterValue">
+      <div class="group-name">{{group.groupName}}</div>
+      <div *ngFor="let item of group.items">
+        <a routerLink="/home/community/hashtag/{{item}}">{{item}}</a>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="letter-vertical-list" *ngIf="showLettersList">
+  <div *ngFor="let group of alphabeticList | alphabeticCoinsPipe: filterValue">
+    <div class="group-name">
+      <a (click)="sortByGroupName(group.groupName)">{{group.groupName | uppercase}}</a>
+    </div>
+  </div>
+</div>

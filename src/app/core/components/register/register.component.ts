@@ -25,6 +25,7 @@ export class RegisterComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.account = this.formBuilder.group({
+      namesurname: ['', [Validators.required, Validators.minLength(4)]],
       username: ['', [Validators.required, Validators.minLength(4)]],
       email: ['', [Validators.required, emailValidator(/\S+@\S+\.\S+/)]],
       password: this.createPasswordValidation(),
@@ -46,7 +47,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
   }
 
   register() {
-    console.log('this.account', this.account);
     if (this.account.invalid) {
       for (let inputName in this.account.controls) {
         this.account.get(inputName).markAsTouched();
@@ -54,8 +54,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const {username, email, password, password_confirm} = this.account.value;
-    const user = {username, email, password, confirmPassword: password_confirm};
+    const {username, namesurname, email, password, password_confirm} = this.account.value;
+    const user = {name: namesurname, username, email, password, confirmPassword: password_confirm};
     this.auth.authenticate(user)
       .subscribe(data => {
           this.disableRegisterBtn = true;

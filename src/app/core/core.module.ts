@@ -6,12 +6,13 @@ import { OwlModule } from 'ng2-owl-carousel';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { PercentPipe } from './../pipes';
+import { PercentPipe, AlphabeticCoinsPipe } from './../pipes';
 
 // components
 import {
   HeaderComponent,
-  ShellComponent
+  ShellComponent,
+  CoinsAlphabeticDropdownComponent
 } from './shell';
 import {
   LoginComponent,
@@ -56,7 +57,9 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     LoaderLineComponent,
     ResetPasswordComponent,
     PercentPipe,
-    AutomaticGetDataByUrlDirective
+    AlphabeticCoinsPipe,
+    AutomaticGetDataByUrlDirective,
+    CoinsAlphabeticDropdownComponent
   ],
   exports: [
     CommentListComponent,
