@@ -43,6 +43,7 @@ module.exports.policies = {
   AltcoinController: {
     index: true,
     favorites: true,
+    alphabetList: true,
     sync: true,//temp
     history: true,
     info: true,
@@ -53,6 +54,7 @@ module.exports.policies = {
   IcoController: {
     index: true,
     info: true,
+    alphabetList: true,
     sync: true,
     syncPhoto: true
   },

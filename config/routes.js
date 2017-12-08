@@ -197,6 +197,30 @@ let routes = [
   }
   },
   {
+    method: "GET", path: "/altcoins/alpha", target:
+    {
+      controller: 'AltcoinController',
+      action: 'alphabetList',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: ' alphabetList',
+        description: 'alphabetList',
+        produces: [
+          'application/json'
+        ],
+        tags: [
+          'Altcoins'
+        ],
+        responses: {
+          '200': {
+            description: 'List of Altcoins'
+          }
+        }
+      }
+    }
+  },
+  {
     method: "POST", path: "/follow/:id", target: {
     controller: "FollowController", action: "index", swagger: {
       methods: ['POST'],
@@ -233,6 +257,32 @@ let routes = [
           {in: "query", name: "page"},
           {in: "query", name: "per_page"}
         ]
+
+
+      }
+    }
+  },
+  {
+    method: "GET", path: "/icos/alpha", target:
+    {
+      controller: 'IcoController',
+      action: 'alphabetList',
+      skipAssets: 'true',
+      swagger: {
+        methods: ['GET'],
+        summary: ' alphabetList',
+        description: 'alphabetList',
+        produces: [
+          'application/json'
+        ],
+        tags: [
+          'Ico'
+        ],
+        responses: {
+          '200': {
+            description: 'List of Ico'
+          }
+        }
 
 
       }

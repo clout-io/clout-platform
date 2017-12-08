@@ -5,16 +5,16 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var pager = require('sails-pager');
-var moment = require('moment');
-var async = require('async');
+const pager = require('sails-pager');
+const moment = require('moment');
+const async = require('async');
 
 module.exports = {
 
   index: function (req, res) {
 
-    var perPage = req.query.per_page || 20;
-    var currentPage = parseInt(req.query.page, 10) || 1;
+    let perPage = req.query.per_page || 20;
+    let currentPage = parseInt(req.query.page, 10) || 1;
 
     async.waterfall([
         function (callback) {
@@ -171,13 +171,27 @@ module.exports = {
   },
 
   top: function (req, res) {
-    var limit = req.param("top") || 10;
+    let limit = req.param("top") || 10;
     Altcoin.find().sort("rank ASC").limit(limit).then(function (result) {
       res.json({data: result});
     }).catch(function (err) {
       res.json(400, err)
     })
   },
+
+  alphabetList: async (req, res) => {
+    let alphaObject = {};
+    let altcoins = await Altcoin.find({select: ['id']}).sort("rank ASC");
+    _.map(altcoins, x => {
+      if (_.isUndefined(alphaObject[x.id[0]])) {
+        alphaObject[x.id[0]] = [];
+      }
+      alphaObject[x.id[0]].push(x.id);
+      return x.slug
+    });
+    return res.json(alphaObject)
+  },
+
 
   search: async (req, res) => {
     let term = req.param('term');

@@ -149,9 +149,56 @@ module.exports = {
         res.json(ico);
       }
     )
-
-
   },
+
+
+  search: async (req, res) => {
+    let term = req.param('term');
+    let userTags = await FollowedIco.find({user: req.user.id});
+
+    userTags = _.map(userTags, function (item) {
+      return item.ico;
+    });
+
+
+    let data = await Ico.find({slug: {contains: term}, select: ['slug']}).limit(15);
+    data = _.map(data, function (item) {
+      return item.id
+    });
+
+    data = data.filter(x => userTags.indexOf(x) === -1);
+    let all = _.uniq(data).sort(function (a, b) {
+      if (a.indexOf(term) < b.indexOf(term)) {
+        return -1;
+      } else {
+        return 1
+      }
+
+    });
+    res.json(all);
+  },
+  top: function (req, res) {
+    let limit = req.param("top") || 10;
+    Ico.find().sort("slug ASC").limit(limit).then(function (result) {
+      res.json({data: result});
+    }).catch(function (err) {
+      res.json(400, err)
+    })
+  },
+  alphabetList: async (req, res) => {
+    let alphaObject = {};
+    let icoList = await Ico.find({select: ['slug']}).sort("slug ASC");
+    _.map(icoList, x => {
+      if (_.isUndefined(alphaObject[x.slug[0]])) {
+        alphaObject[x.slug[0]] = [];
+      }
+      alphaObject[x.slug[0]].push(x.slug);
+      return x.slug
+    });
+    return res.json(alphaObject)
+  },
+  /*-----------------------------------------------------*/
+
   sync: function (req, res) {
     var type = req.param("type");
     CoinhillsAPI.getICOs(type).then(function (response) {
