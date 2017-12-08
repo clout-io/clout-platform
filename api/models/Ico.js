@@ -24,7 +24,8 @@ module.exports = {
     },
     slug: {
       type: "string",
-      unique: true
+      unique: true,
+      required: true
     },
     description: {
       type: "string"
@@ -119,7 +120,7 @@ module.exports = {
       collection: "IcoSocial",
       via: 'id'
     },
-    followByUsers:{
+    followByUsers: {
       collection: 'user',
       via: 'altcoin',
       through: 'followedico'
