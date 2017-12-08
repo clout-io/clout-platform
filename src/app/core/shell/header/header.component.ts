@@ -1,5 +1,5 @@
 import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
-import { AuthService, ApiService } from '../../../services';
+import { AuthService, FeedService } from '../../../services';
 import { Router, NavigationEnd } from '@angular/router';
 import { sortBy, compose, prop, toLower } from 'ramda';
 
@@ -19,11 +19,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   hashtagUrl = '/home/community/hashtag/';
   top$: any;
   mobileSearchVisible: boolean = false;
+  visibleAlphabeticalDropdown: boolean;
 
   constructor(
     private auth: AuthService,
     private router: Router,
-    private apiService: ApiService
+    private feedService: FeedService
   ) {
     const name = window.localStorage.getItem('clout_user_username');
     this.avatar = window.localStorage.getItem('clout_user_avatar');
@@ -39,7 +40,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.top$ = this.apiService.get('/api/v1/altcoins/top?top=20')
+    const coinsName = this.router.url === '/icos' ? 'icos' : 'altcoins';
+    this.top$ = this.feedService.getTopCoins(coinsName, 30)
       .subscribe(responce => {
         const sortByNameCaseInsensitive = sortBy(compose(toLower, prop('name')));
         this.topList = sortByNameCaseInsensitive(responce.data);
@@ -86,6 +88,10 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     event.preventDefault();
     event.stopPropagation();
     this.hiddenCoinsDropdown.nativeElement.click();
+  }
+
+  showAlphabetCoinDropdown() {
+    this.visibleAlphabeticalDropdown = !this.visibleAlphabeticalDropdown;
   }
 
   setTitle() {

@@ -2451,6 +2451,7 @@ ___________________________*/
 
 .page-list {
    //border-top: 1px solid $color-ac-border;
+  position: relative;
   height: 22px;
   border-top: 1px solid $color-ac-border;
 
@@ -2497,6 +2498,27 @@ ___________________________*/
 
     &.active {
       color: $color-ac-link;
+    }
+  }
+
+  .coins-alphabetical-dropdown {
+    position: absolute;
+    top: 24px;
+    right: 0;
+    width: 300px;
+    /*max-height: 900px;
+    overflow: hidden;*/
+    background-color: $color-ac-white;
+    z-index: 1;
+
+    .coins-alphabetical-dropdown-list {
+      max-height: 800px;
+      overflow: hidden;
+    }
+
+    .group-name {
+      background-color: $color-ac-field;
+      font-weight: bold;
     }
   }
 

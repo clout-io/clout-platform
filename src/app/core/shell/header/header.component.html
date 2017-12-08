@@ -58,8 +58,9 @@
       </div>
     </div>
     <div class="owl-more-btn">
-      <a href="javascript:void(0)">More</a>
+      <a href="javascript:void(0)" (click)="showAlphabetCoinDropdown($event)">More</a>
     </div>
+    <app-coins-alphabetic-dropdown *ngIf="visibleAlphabeticalDropdown"></app-coins-alphabetic-dropdown>
   </div>
 
   <div class="dropdown hidden-coins-dropdown" id="dropdownMenuButton2">
