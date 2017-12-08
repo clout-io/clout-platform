@@ -52,6 +52,10 @@ let routes = [
               "type": "string",
               "description": ""
             },
+            "name": {
+              "type": "string",
+              "description": ""
+            },
             "password": {
               "type": "string",
               "description": ""

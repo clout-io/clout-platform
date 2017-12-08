@@ -14,30 +14,34 @@ module.exports = {
       type: 'string',
       email: true,
       unique: true,
-      required: true
+      required: true,
+      createOnly: true
     },
     firstName: {
       type: 'string',
       defaultsTo: '',
       editable: true,
+      createOnly: true
     },
     lastName: {
       type: 'string',
       defaultsTo: '',
       editable: true,
+      createOnly: true
     },
     username: {
       type: 'string',
       required: true,
       editable: true,
       unique: true,
-      isUsername: true
+      isUsername: true,
+      createOnly: true
     },
     slug: {
-      type: 'string',
-      required: true,
+      type: 'slug',
+      from: 'username',
+      blacklist: ['search'],
       unique: true,
-      editable: true,
     },
     avatar: {
       type: 'string',
@@ -45,7 +49,8 @@ module.exports = {
     },
     password: {
       type: 'string',
-      required: true
+      required: true,
+      createOnly: true
     },
     activationCode: {
       type: 'string',
@@ -144,6 +149,12 @@ module.exports = {
       delete obj.activationCode;
       delete obj.confirmPassword;
       delete obj.email;
+      delete obj.isAdmin;
+
+      obj.name = obj.firstName + obj.lastName;
+      if (_.isEmpty(obj.name.trim())) {
+        obj.name = "@" + obj.username;
+      }
       return obj;
     },
     getActivateLink: function () {
@@ -161,6 +172,9 @@ module.exports = {
     editable: (value) => {
       return true;
     },
+    createOnly: (value) => {
+      return true;
+    },
     isUsername: (value) => {
       return !_.isEmpty(value) && value.match(/^[A-z0-9]+(?:-[A-z0-9]+)*$/);
     },
@@ -173,7 +187,6 @@ module.exports = {
   },
   beforeCreate: function (values, next) {
     delete values.confirmPassword;
-    values.slug = values.username.toLowerCase();
     bcrypt.genSalt(10, function (err, salt) {
       if (err) return next(err);
       bcrypt.hash(values.password, salt, function (err, hash) {

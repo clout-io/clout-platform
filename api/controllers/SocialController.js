@@ -86,9 +86,12 @@ module.exports = {
     } catch (e) {
       return res.json(400, Errors.build(e, Errors.ERROR_VALIDATION));
     }
-
-    let profileData = await Facebook.profile(response.access_token);
-
+    let profileData;
+    try {
+      profileData = await Facebook.profile(response.access_token);
+    } catch (e) {
+      return res.json(400, Errors.build(e, Errors.ERROR_VALIDATION));
+    }
     email = profileData.email || email;
 
     let existsUser = await User.findOne({email: email});
@@ -101,7 +104,7 @@ module.exports = {
     };
 
     if (!existsUser) {
-      userData.username = slug(profileData.name);
+      userData.username = profileData.id;
       userData.password = response.access_token.slice(3, 16);
     }
 
