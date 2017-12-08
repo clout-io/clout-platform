@@ -12,3 +12,10 @@
     </div>
   </div>
 </div>
+<div class="letter-vertical-list" *ngIf="showLettersList">
+  <div *ngFor="let group of alphabeticList | alphabeticCoinsPipe: filterValue">
+    <div class="group-name">
+      <a (click)="sortByGroupName(group.groupName)">{{group.groupName | uppercase}}</a>
+    </div>
+  </div>
+</div>

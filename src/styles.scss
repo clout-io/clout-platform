@@ -2522,6 +2522,23 @@ ___________________________*/
     }
   }
 
+  .letter-vertical-list {
+    position: absolute;
+    right: 0;
+    z-index: 2;
+    width: 30px;
+    top: 120px;
+    color: $color-ac-link;
+
+    a {
+      padding: 0;
+
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  }
+
   /*.owl-stage-outer {
     border-top: 1px solid $color-ac-border;
   }
