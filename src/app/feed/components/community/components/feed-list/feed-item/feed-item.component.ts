@@ -29,7 +29,6 @@ export class FeedItemComponent implements OnInit {
               private fb: FacebookService) {}
 
   ngOnInit() {
-    console.log(this.feed);
     this.showLinkData(true);
     this.createDate = moment(this.feed.createdAt).fromNow();
     this.isOwner = !!this.feed.owner ? this.getUserId() === this.feed.owner.id : false;
