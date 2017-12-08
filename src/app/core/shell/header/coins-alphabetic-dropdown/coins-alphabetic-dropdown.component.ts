@@ -12,7 +12,9 @@ declare const $: any;
 })
 export class CoinsAlphabeticDropdownComponent implements OnInit {
   public alphabeticList = [];
+  public defaultAlphabeticList = [];
   public filterValue: string;
+  public showLettersList = true;
 
   constructor(private router: Router,
               private feedService: FeedService) { }
@@ -30,6 +32,7 @@ export class CoinsAlphabeticDropdownComponent implements OnInit {
 
   initDropdown(data: any): void {
     this.alphabeticList = this.parseList(data);
+    this.defaultAlphabeticList = [...this.alphabeticList];
     this.addScrollToDropdown();
   }
 
@@ -53,4 +56,10 @@ export class CoinsAlphabeticDropdownComponent implements OnInit {
     });
   }
 
+  sortByGroupName(letter: string) {
+    this.alphabeticList = this.defaultAlphabeticList.filter((groupItem, i) => {
+      return groupItem.groupName.indexOf(letter) !== -1;
+    });
+    this.showLettersList = false;
+  }
 }
