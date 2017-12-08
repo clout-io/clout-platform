@@ -2444,13 +2444,47 @@ ___________________________*/
 
 
 
-@import '../node_modules/owl.carousel/dist/assets/owl.carousel.css';
-@import '../node_modules/owl.carousel/dist/assets/owl.theme.default.css';
+/*@import '../node_modules/owl.carousel/dist/assets/owl.carousel.css';
+@import '../node_modules/owl.carousel/dist/assets/owl.theme.default.css';*/
 
 
 
 .page-list {
    //border-top: 1px solid $color-ac-border;
+  height: 22px;
+  border-top: 1px solid $color-ac-border;
+
+  .owl-stage {
+    display: inline-block;
+    width: 95%;
+    height: 22px;
+    overflow: hidden;
+  }
+
+  .owl-more-btn {
+    width: 5%;
+    float: right;
+    text-align: center;
+  }
+
+  .owl-item {
+    display: inline-block;
+    position: relative;
+    vertical-align: top;
+    width: auto;
+
+    &:before {
+      content: "";
+      display: block;
+      width: 3px;
+      height: 3px;
+      border-radius: 50%;
+      background: $color-ac-text;
+      position: absolute;
+      left: -2px;
+      top: 11px;
+    }
+  }
 
   a {
     font-size: 12px;
@@ -2466,7 +2500,7 @@ ___________________________*/
     }
   }
 
-  .owl-stage-outer {
+  /*.owl-stage-outer {
     border-top: 1px solid $color-ac-border;
   }
 
@@ -2536,7 +2570,7 @@ ___________________________*/
         }
       }
     }
-  }
+  }*/
 }
 
 
