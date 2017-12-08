@@ -10,18 +10,22 @@ module.exports = {
 
     let term = req.param('term');
     let altcoinTags = await Altcoin.find({id: {contains: term}, select: ['id']}).limit(15);
+    let IcoTags = await Ico.find({slug: {contains: term}, select: ['slug']}).limit(15);
     let existsHashTags = await Tag.find({id: {contains: term}, select: ['id']}).limit(15);
 
-    let allTags = _.reduceRight([altcoinTags, existsHashTags], function (a, b) {
+    let allTags = _.reduceRight([altcoinTags, existsHashTags, IcoTags], function (a, b) {
       return a.concat(b);
     }, []);
     let idOnly = _.map(allTags, function (item) {
+      if(_.has(item, 'slug'))
+        return item.slug;
+
       return item.id
     });
     let all = _.uniq(idOnly).sort(function (a, b) {
-      if(a.indexOf(term) < b.indexOf(term)){
+      if (a.indexOf(term) < b.indexOf(term)) {
         return -1;
-      }else{
+      } else {
         return 1
       }
     });
