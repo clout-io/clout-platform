@@ -65,9 +65,10 @@ module.exports = {
     }
 
     let now = moment().utc();
-    let geo = await IpApi.lookup(req.ip);
-    let agentData = req.headers['user-agent'];
-    let referer = req.headers['referer'];
+    let ip = req.header('x-real-ip');
+    let geo = await IpApi.lookup(ip);
+    let agentData = req.header('user-agent');
+    let referer = req.header('referer');
 
     user.lastLogin = now.toDate();
     user.activities.add({
