@@ -782,6 +782,24 @@ let routes = [
   }
   },
   {
+    method: "GET", path: "/user/activity", target: {
+    controller: "UserController", action: "activities",
+    swagger: {
+      methods: ['GET'],
+      summary: 'User activity ',
+      description: 'User activity',
+      tags: [
+        'User'
+      ],
+      responses: {
+        '200': {
+          description: 'User activities'
+        }
+      }
+    }
+  }
+  },
+  {
     method: "GET", path: "/user/profile/:username", target: {
     controller: "UserController", action: "profile", swagger: {
       methods: ['GET'],

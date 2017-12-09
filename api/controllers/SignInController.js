@@ -1,7 +1,9 @@
 //https://thesabbir.com/how-to-use-json-web-token-authentication-with-sails-js/
 
 
-var defaultUserErrorMsg = {
+const moment = require('moment');
+
+const defaultUserErrorMsg = {
   "email": [
     {
       "rule": "email",
@@ -30,42 +32,57 @@ module.exports = {
    * @param req
    * @param res
    */
-  index: function (req, res) {
-    var email = req.param('email');
-    var password = req.param('password');
+  index: async (req, res) => {
+    let email = req.param('email');
+    let password = req.param('password');
 
-    Authentication.validate(req.body, function (err, data) {
-      if (err) {
-        return res.json(401, Errors.build(err.invalidAttributes, Errors.ERROR_VALIDATION))
-      }
 
-      User.findOne({email: email}, function (err, user) {
-        if (!user) {
-          return res.json(401, Errors.build(defaultUserErrorMsg, Errors.ERROR_VALIDATION));
-        }
-
-        User.comparePassword(password, user, function (err, valid) {
-          if (err || !valid) {
-            return res.json(
-              401,
-              Errors.build(defaultUserErrorMsg, Errors.ERROR_VALIDATION)
-            );
-          }
-
-          if (!user.isActive) {
-            return res.json(
-              401,
-              Errors.build({"non_field_error": "User is not active."}, Errors.ERROR_USER_IS_NOT_ACTIVE)
-            )
-          }
-
-          var token = Token.issue({id: user.id});
-          return res.json({
-            user: user,
-            token: token
-          });
+    try {
+      await async function validate() {
+        return new Promise((resolve, reject) => {
+          Authentication.validate(req.body, (err, data) => {
+            if (err) reject(err);
+            resolve(data)
+          })
         });
-      })
-    })
+      }()
+    } catch (e) {
+      return res.json(400, Errors.build(e.invalidAttributes, Errors.ERROR_VALIDATION))
+    }
+
+    let user = await User.findOne({email: email, isActive: true});
+
+
+    if (!user) {
+      return res.json(401, Errors.build(defaultUserErrorMsg, Errors.ERROR_VALIDATION));
+    }
+
+    let isValid = await User.checkPassword(password, user);
+
+    if (!isValid) {
+      return res.json(401, Errors.build(defaultUserErrorMsg, Errors.ERROR_VALIDATION)
+      );
+    }
+
+    let now = moment().utc();
+    let geo = await IpApi.lookup(req.ip);
+    let agentData = req.headers['user-agent'];
+    let referer = req.headers['referer'];
+
+    user.lastLogin = now.toDate();
+    user.activities.add({
+      ip: req.ip,
+      ips: req.ips,
+      rawInfo: geo,
+      agent: agentData,
+      referer: referer
+    });
+    await user.save();
+
+    let token = Token.issue({id: user.id});
+    return res.json({
+      user: user,
+      token: token
+    });
   }
 };

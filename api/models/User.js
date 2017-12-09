@@ -65,7 +65,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-
+    lastLogin: {
+      type: "datetime",
+      datetime:true
+    },
     socialNetworks: {
       collection: 'SocialNetwork',
       via: 'user'
@@ -140,6 +143,10 @@ module.exports = {
       via: 'owner',
       dominant: true
     },
+    activities: {
+      collection: 'UserActivity',
+      via: 'user'
+    },
 
     toJSON: function () {
       let obj = this.toObject();
@@ -208,11 +215,10 @@ module.exports = {
     return new Promise((resolve) => {
       bcrypt.compare(password, user.password, function (err, match) {
         if (err) resolve(false);
-        if (match) {
+        if (match)
           resolve(true);
-        } else {
-          resolve(false);
-        }
+
+        resolve(false);
       })
     })
   },

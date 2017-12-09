@@ -161,6 +161,11 @@ module.exports = {
     //need add check permission
 
     return res.json(user)
+  },
+
+  activities: async (req, res) => {
+    let activities = await UserActivity.find({user: req.user.id}).sort("createdAt DESC");
+    return res.json(activities);
   }
 };
 
