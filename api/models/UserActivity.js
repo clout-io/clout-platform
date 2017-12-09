@@ -35,6 +35,18 @@ module.exports = {
     },
     browser: {
       type: "string"
+    },
+    token: {
+      type: "string",
+      required: true
+    },
+    isActive: {
+      type: "boolean",
+      defaultsTo: true
+    },
+    expiredAt: {
+      type: "datetime",
+      required: true
     }
   },
   beforeCreate: function (values, next) {

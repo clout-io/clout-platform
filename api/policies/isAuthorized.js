@@ -5,18 +5,12 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Policies
  */
 
-module.exports = function (req, res, next) {
-  var token;
-
+module.exports = async (req, res, next) => {
+  let token;
   if (req.headers && req.headers.authorization) {
-    var parts = req.headers.authorization.split(' ');
-    if (parts.length === 2) {
-      var scheme = parts[0],
-        credentials = parts[1];
-
-      if (/^Token$/i.test(scheme)) {
-        token = credentials;
-      }
+    let [scheme, credentials] = req.headers.authorization.split(' ');
+    if (/^Token$/i.test(scheme)) {
+      token = credentials;
     } else {
       return res.json(401, {err: 'Format is Authorization: Token [token]'});
     }
@@ -27,14 +21,10 @@ module.exports = function (req, res, next) {
     return res.json(401, {err: 'No Authorization header was found'});
   }
 
-  Token.verify(token, function (err, encodedToken) {
-    if (err) return res.json(401, {err: 'Invalid Token!'});
+  let [encodedToken, user] = await Token.verify(token);
+  if (!encodedToken) return res.json(401, {err: 'Invalid Token!'});
 
-    req.token = encodedToken;
-    User.findOne(encodedToken.id).exec(function (err, user) {
-      if (err) return res.json(401, {err: 'No Authorization header was found'});
-      req.user = user.toJSON();
-      next();
-    });
-  });
+  req.token = encodedToken;
+  req.user = user.toJSON();
+  next();
 };

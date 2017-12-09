@@ -1,8 +1,6 @@
 //https://thesabbir.com/how-to-use-json-web-token-authentication-with-sails-js/
 
 
-const moment = require('moment');
-
 const defaultUserErrorMsg = {
   "email": [
     {
@@ -24,7 +22,7 @@ const defaultUserErrorMsg = {
       "message": "\"required\" validation rule failed for input: null\nSpecifically, it threw an error.  Details:\n undefined"
     }
   ]
-}
+};
 
 module.exports = {
   /***
@@ -64,25 +62,11 @@ module.exports = {
       );
     }
 
-    let now = moment().utc();
-    let ip = req.header('x-real-ip');
-    let geo = await IpApi.lookup(ip);
-    let agentData = req.header('user-agent');
-    let referer = req.header('referer');
+    let updatedUser, token;
+    [updatedUser, token] = await Token.generate(user, req);
 
-    user.lastLogin = now.toDate();
-    user.activities.add({
-      ip: req.ip,
-      ips: req.ips,
-      rawInfo: geo,
-      agent: agentData,
-      referer: referer
-    });
-    await user.save();
-
-    let token = Token.issue({id: user.id});
     return res.json({
-      user: user,
+      user: updatedUser,
       token: token
     });
   }
