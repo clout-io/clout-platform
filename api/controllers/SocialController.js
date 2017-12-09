@@ -51,9 +51,12 @@ module.exports = {
       token: response.access_token
     });
 
+    let updatedUser, token;
+    [updatedUser, token] = await Token.generate(user, req);
+
     return res.json({
-      user: user,
-      token: Token.issue({id: user.id})
+      user: updatedUser,
+      token: token
     });
 
   },
@@ -118,9 +121,12 @@ module.exports = {
       token: response.access_token
     });
 
+    let updatedUser, token;
+    [updatedUser, token] = await Token.generate(user, req);
+
     return res.json({
-      user: user,
-      token: Token.issue({id: user.id})
+      user: updatedUser,
+      token: token
     });
   }
 
