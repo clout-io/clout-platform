@@ -1632,7 +1632,15 @@ a.comments__add {
 
   &__reply {
     // flex: 0 0 100%;
-    padding-left: 55px;
+    padding-left: 15px;
+
+    @media #{$phone-lg} {
+      padding-left: 20px;
+    }
+
+    @media #{$tablet} {
+      padding-left: 55px;
+    }
   }
 
   &__tags {
@@ -1725,13 +1733,13 @@ a.comments__add {
   }
 
   .comments__head {
-    flex-flow: column nowrap;
+    flex-flow: row nowrap;
     align-items: flex-start;
     padding: 20px 0 19px 0;
 
-    @media #{$phone-lg} {
-      flex-flow: row nowrap;
-    }
+    // @media #{$phone-lg} {
+    //   flex-flow: row nowrap;
+    // }
 
     a {
       margin-right: 10px;
