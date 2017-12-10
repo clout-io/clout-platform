@@ -1665,6 +1665,10 @@ a.comments__add {
       padding: 2px 7px 1px 7px;
       margin-right: 10px;
 
+      &:last-child {
+        margin-right: 0;
+      }
+
       &:hover {
         background: rgba($color-ac-text, .05);
       }
@@ -1752,25 +1756,28 @@ a.comments__add {
     border-bottom: 1px solid $color-ac-border;
     padding: 19px 0 18px 0;
 
-    flex-flow: row wrap;
+    flex-flow: row nowrap;
 
     &.no_border {
       border: none;
     }
 
     @media #{$phone-lg} {
-      flex-flow: row nowrap;
+      // flex-flow: row nowrap;
     }
   }
 
   .comments__time {
-    padding-left: 55px;
-    flex: 0 0 100%;
+    padding: 0;
+    flex: 0 0 40px;
+    margin: 23px 0 0 0;
+    // flex: 0 0 100%;
 
     @media #{$phone-lg} {
       padding: 0;
       flex: 0 0 auto;
       align-self: center;
+      margin-top: 0;
     }
   }
 
