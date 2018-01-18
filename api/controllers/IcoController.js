@@ -5,60 +5,75 @@
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
 
-var pager = require('sails-pager');
+const pager = require('sails-pager');
 const util = require('util');
+const Promise = require('bluebird');
+const IcoFilterValidation = require('../validation/ico.filters');
+const IcoSortValidation = require('../validation/ico.sort');
+const Validate = require('../validation/validator');
+const joiErrorsToForms = require('joi-errors-for-forms').form();
 
 module.exports = {
 
-  index: function (req, res) {
-    var perPage = req.query.per_page || 20;
-    var currentPage = parseInt(req.query.page, 10) || 1;
+  index: async function (req, res) {
+    const perPage = req.query.per_page || 20;
+    const sort = req.query.sort || "started";
+    const sortType = req.query.sortType || "ASC";
 
-    async.waterfall([
-        function (callback) {
-          if (req.user) {
-            User.findOne(req.user.id).populate('followedIcos', {select: "id"}).then(function (user) {
-              async.map(user.followedIcos, function (item, callback) {
-                callback(null, item.id)
-              }, function (err, results) {
+    const currentPage = parseInt(req.query.page, 10) || 1;
 
-                Ico.find({id: results}).populateAll().then(function (icos) {
-                  var data = {
-                    ids: results,
-                    items: icos
-                  };
-                  callback(null, data);
-                }).catch(function (err) {
-                  callback(err)
-                })
-              });
+    let filter = {};
+    try {
+      filter = JSON.parse(req.query.filter);
+    } catch (e) {
+    }
+    let validateResult = await Validate(filter, IcoFilterValidation);
 
-            }).catch(function (err) {
-              callback(err)
-            })
-          } else {
-            callback(null, {})
-          }
-        }
-      ],
+    let filterValidateResult = joiErrorsToForms(validateResult);
 
-      function (err, result) {
-        if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-        var conditions = {};
-        if (result.ids) {
-          conditions.id = {"!": result.ids}
-        }
+    if (filterValidateResult) {
+      return res.status(400).json(filterValidateResult)
+    }
 
-        pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"], 'name ASC').then(function (records) {
-          var resultData = records;
-          if (currentPage === 1 && result.items) {
-            resultData.data = result.items.concat(resultData.data)
-          }
-          res.json(resultData)
-        }).catch(function (err) {
-          res.send(err)
-        });
-      })
+    let sortValidationResult = await Validate({sort: sort, sortType: sortType}, IcoSortValidation);
+    if (sortValidationResult) {
+      return res.status(400).json(sortValidationResult)
+    }
+
+
+    let conditions = {};
+    _.extend(conditions, filter);
+
+    let followedIco = [];
+
+    if (req.user) {
+      let user = await User.findOne(req.user.id).populate('followedIcos', {select: "id"});
+      let ids = await Promise.map(user.followedIcos, function (item) {
+        return item.id;
+      });
+      if (ids) {
+        conditions.id = {"!": ids}
+      }
+      let userCondition = {id: {"$in": ids}};
+
+      _.extend(userCondition, filter);
+
+      followedIco = await Ico.find(userCondition).populate(["socials", "team"]);
+    }
+    let resultData = {};
+    try {
+      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"], `${sort} ${sortType}`);
+    } catch (e) {
+      return res.status(400).json(e);
+    }
+
+    if (currentPage !== 1) {
+      return res.json(resultData)
+    }
+    if (followedIco) {
+      resultData.data = followedIco.concat(resultData.data)
+    }
+    return res.json(resultData)
   },
 
   info: function (req, res) {
@@ -149,7 +164,8 @@ module.exports = {
         res.json(ico);
       }
     )
-  },
+  }
+  ,
 
 
   search: async (req, res) => {
@@ -177,14 +193,18 @@ module.exports = {
     });
     res.json(all);
   },
-  top: function (req, res) {
-    let limit = req.param("top") || 10;
-    Ico.find().sort("slug ASC").limit(limit).then(function (result) {
-      res.json({data: result});
-    }).catch(function (err) {
-      res.json(400, err)
-    })
-  },
+  top:
+
+    function (req, res) {
+      let limit = req.param("top") || 10;
+      Ico.find().sort("slug ASC").limit(limit).then(function (result) {
+        res.json({data: result});
+      }).catch(function (err) {
+        res.json(400, err)
+      })
+    }
+
+  ,
   alphabetList: async (req, res) => {
     let alphaObject = {};
     let icoList = await Ico.find({select: ['slug']}).sort("slug ASC");
@@ -199,65 +219,69 @@ module.exports = {
   },
   /*-----------------------------------------------------*/
 
-  sync: function (req, res) {
-    var type = req.param("type");
-    CoinhillsAPI.getICOs(type).then(function (response) {
-      var data = response.data;
-      async.map(data, function (item, cb) {
-        var members = item.members;
-        var links = item.links;
-        delete item.members;
-        delete item.links;
-        delete item.id;
-        item.status = type;
+  sync:
 
-        async.waterfall([
-          function (callback) {
-            Ico.findOrCreate({slug: item.slug}, item).then(function (ico) {
-              callback(null, ico);
-            }).catch(function (err) {
-              callback(err)
-            })
-          },
-          function (ico, callback) {
-            IcoSocial.findOrCreate(links, links).then(function (created) {
-              callback(null, ico, created)
-            }).catch(function (err) {
-              cb(err)
-            })
-          },
-          function (ico, links, callback) {
-            if (members.length) {
-              IcoTeam.findOrCreate(members, members).then(function (created) {
-                callback(null, ico, links, created)
+    function (req, res) {
+      var type = req.param("type");
+      CoinhillsAPI.getICOs(type).then(function (response) {
+        var data = response.data;
+        async.map(data, function (item, cb) {
+          var members = item.members;
+          var links = item.links;
+          delete item.members;
+          delete item.links;
+          delete item.id;
+          item.status = type;
+
+          async.waterfall([
+            function (callback) {
+              Ico.findOrCreate({slug: item.slug}, item).then(function (ico) {
+                callback(null, ico);
+              }).catch(function (err) {
+                callback(err)
+              })
+            },
+            function (ico, callback) {
+              IcoSocial.findOrCreate(links, links).then(function (created) {
+                callback(null, ico, created)
               }).catch(function (err) {
                 cb(err)
               })
-            } else {
-              callback(null, ico, links, [])
+            },
+            function (ico, links, callback) {
+              if (members.length) {
+                IcoTeam.findOrCreate(members, members).then(function (created) {
+                  callback(null, ico, links, created)
+                }).catch(function (err) {
+                  cb(err)
+                })
+              } else {
+                callback(null, ico, links, [])
+              }
+            },
+            function (ico, links, member, callback) {
+              ico.socials.add(links);
+              ico.team.add(member);
+              ico.status = type;
+              ico.save(function (err, r) {
+                callback(null, ico)
+              })
             }
-          },
-          function (ico, links, member, callback) {
-            ico.socials.add(links);
-            ico.team.add(member);
-            ico.status = type;
-            ico.save(function (err, r) {
-              callback(null, ico)
-            })
-          }
-        ], function (err, result) {
-          cb(null, result)
+          ], function (err, result) {
+            cb(null, result)
+          });
+        }, function (err, finalRes) {
+          if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+          return res.json(finalRes)
         });
-      }, function (err, finalRes) {
-        if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-        return res.json(finalRes)
-      });
 
 
-    }, function (err) {
-      return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-    })
-  },
+      }, function (err) {
+        return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
+      })
+    }
+
+  ,
 
   syncPhoto: function (req, res) {
     Ico.find().then(function (icos) {
