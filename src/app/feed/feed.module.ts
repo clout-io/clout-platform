@@ -12,6 +12,9 @@ import { CeiboShare } from 'ng2-social-share';
 
 import { NouisliderModule } from 'ng2-nouislider';
 
+import { Ng2FlatpickrComponent } from 'ng2-flatpickr/ng2-flatpickr';
+
+
 import {
   FeedListComponent,
   FeedItemComponent,
@@ -89,7 +92,8 @@ import { TruncatePipe } from '../pipes';
     PublishPostBtnComponent,
     EditArticleComponent,
     SinglePostItemComponent,
-    FilterSidebarComponent
+    FilterSidebarComponent,
+    Ng2FlatpickrComponent
   ]
 })
 export class FeedModule { }

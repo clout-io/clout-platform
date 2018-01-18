@@ -36,9 +36,9 @@
   </div>
   <div class="search-item">
     <h4 class="widget__title widget__title--alt">ICO Dates</h4>
-    <div class="input-group">
-      <input type="text" value="07/10/17" placeholder="MM/DD/YY">
-      <input type="text" placeholder="MM/DD/YY">
+    <div class="input-group" id="range-date-wrap">
+      <ng2-flatpickr [config]="defaultOptions"></ng2-flatpickr>
+      <input type="text" class="range-last" id="secondRangeInput">
     </div>
   </div>
   <div class="search-item">
