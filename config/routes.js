@@ -260,7 +260,7 @@ let routes = [
         parameters: [
           {in: "query", name: "page"},
           {in: "query", name: "per_page"},
-          {in: "query", name: "filter"},
+          {in: "query", name: "filter", "description": ' \{"status":"closed|upcoming|ongoing" \} '},
           {in: "query", name: "sort", "description": "any field from ICO object, excep object or arry fields"},
           {in: "query", name: "sortType", "description": "asc or desc"}
         ]
