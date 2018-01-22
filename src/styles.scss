@@ -11,6 +11,10 @@
 // Theme customization
 @import 'theme/theme';
 
+
+@import "~nouislider/distribute/nouislider.min.css";
+@import "~flatpickr/dist/flatpickr.min.css";
+
 /*
 Button Styles
 _________________________________*/
@@ -2044,6 +2048,12 @@ ___________________________*/
     }
   }
 
+  &__title--alt {
+    border: 0;
+    margin: 0;
+    padding: 11px 0 14px 0;
+  }
+
   .popular-search-list {
     li {
       line-height: 28px;
@@ -2071,6 +2081,243 @@ ___________________________*/
     }
   }
 }
+
+
+
+/*
+Search Item
+___________________________*/
+.search-item {
+  border-bottom: 1px solid $color-ac-border;
+  padding-bottom: 30px;
+  margin-bottom: 20px;
+
+  &:last-child {
+    border: 0;
+    margin-bottom: 0;
+  }
+
+  .ng2-nouislider {
+    margin: 7px 0 29px 0;
+  }
+
+
+  .input-group {
+    max-width: 100%;
+
+    input {
+      width: 100%;
+      outline: none;
+      border: 1px solid #EFEFEF;
+      padding: 7px 10px 5px 13px;
+    }
+
+    ng2-flatpickr {
+      width: 50%;
+      outline: none;
+
+      input {
+        border-right: 0;
+        border-radius: $border-radius - 1 0 0 $border-radius - 1;
+      }
+    }
+
+    .range-last {
+      width: 50%;
+      border-radius: 0 $border-radius - 1 $border-radius - 1 0;
+    }
+  }
+}
+
+
+
+
+/*
+Flatpickr override styles
+___________________________*/
+.flatpickr-day {
+  border-radius: 0;
+}
+
+.flatpickr-day.selected.startRange,
+.flatpickr-day.startRange.startRange,
+.flatpickr-day.endRange.startRange,
+.flatpickr-day.selected.endRange,
+.flatpickr-day.startRange.endRange,
+.flatpickr-day.endRange.endRange {
+  border-radius: 0;
+}
+
+.flatpickr-day.selected.startRange + .endRange,
+.flatpickr-day.startRange.startRange + .endRange, 
+.flatpickr-day.endRange.startRange + .endRange {
+  box-shadow: -10px 0 0 $color-ac-link;
+}
+
+
+.flatpickr-day.inRange,
+.flatpickr-day.prevMonthDay.inRange,
+.flatpickr-day.nextMonthDay.inRange {
+  background: #D9EEEE;
+  box-shadow: -5px 0 0 #D9EEEE, 5px 0 0 #D9EEEE;
+  border-color: transparent;
+}
+
+
+.flatpickr-day.today.inRange {
+  background: rgba($color-ac-link, .3);
+  border-color: transparent;
+}
+
+.rangeMode .flatpickr-day {
+  margin-top: 0;
+}
+
+.flatpickr-day.selected,
+.flatpickr-day.startRange,
+.flatpickr-day.endRange, 
+.flatpickr-day.selected.inRange, 
+.flatpickr-day.startRange.inRange, 
+.flatpickr-day.endRange.inRange, 
+.flatpickr-day.selected:focus, 
+.flatpickr-day.startRange:focus, 
+.flatpickr-day.endRange:focus, 
+.flatpickr-day.selected:hover, 
+.flatpickr-day.startRange:hover, 
+.flatpickr-day.endRange:hover, 
+.flatpickr-day.selected.prevMonthDay, 
+.flatpickr-day.startRange.prevMonthDay, 
+.flatpickr-day.endRange.prevMonthDay, 
+.flatpickr-day.selected.nextMonthDay, 
+.flatpickr-day.startRange.nextMonthDay, 
+.flatpickr-day.endRange.nextMonthDay {
+  border-color: transparent;
+  border-radius: 0;
+  background: $color-ac-link;
+  box-shadow: none;
+}
+
+.flatpickr-current-month,
+.flatpickr-current-month span.cur-month:hover {
+  color: $color-ac-text-alt;
+  font-size: 15px;
+  background: transparent;
+}
+
+.flatpickr-current-month .numInputWrapper,
+.numInputWrapper:hover {
+  background: transparent;
+}
+
+span.flatpickr-weekday {
+  color: $color-ac-link;
+}
+
+
+
+/*
+Custom Select
+___________________________*/
+.custom-select-item {
+  display: block;
+  width: 100%;
+  position: relative;
+
+  &:after {
+    display: block;
+    content: "";
+    border-top: 5px solid $color-ac-text;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    position: absolute;
+    right: 20px;
+    top: 16px;
+    pointer-events: none;
+  }
+
+  select {
+    width: 100%;
+    border: 1px solid #EFEFEF;
+    display: block;
+    outline: none;
+    box-shadow: none;
+    font-size: $font-size-default;
+    line-height: $font-size-default + 5;
+    color: $color-ac-text-alt;
+    border-radius: $border-radius - 1;
+    padding: 7px 10px 6px 10px;
+    appearance: none;
+    cursor: pointer;
+
+    &::-ms-expand {
+      display: none;
+    }
+  }
+}
+
+
+
+
+/*
+Custom Checkbox
+___________________________*/
+.custom-checkbox {
+  margin-bottom: 11px;
+
+  label {
+    color: $color-ac-text;
+    position: relative;
+    padding-left: 28px;
+    display: block;
+    user-select: none;
+
+    &:hover {
+
+      &:before {
+        border-color: rgba($color-ac-link, .4);
+      }
+    }
+
+    &:before {
+      display: block;
+      content: "";
+      width: 18px;
+      height: 18px;
+      border-radius: $border-radius - 1;
+      border: 1px solid #EFEFEF;
+      position: absolute;
+      top: 0;
+      left: 0;
+      text-align: center;
+      line-height: 18px;
+      font-size: 12px;
+      color: $color-ac-white;
+      background: transparent url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9Ii0xMDY4NCAzMDg5IDEwLjI0NiA3LjM2MiI+ICA8ZGVmcz4gICAgPHN0eWxlPiAgICAgIC5jbHMtMSB7ICAgICAgICBmaWxsOiAjZmZmOyAgICAgIH0gICAgPC9zdHlsZT4gIDwvZGVmcz4gIDxwYXRoIGlkPSJQYXRoXzM2MSIgZGF0YS1uYW1lPSJQYXRoIDM2MSIgY2xhc3M9ImNscy0xIiBkPSJNOS4yNzIsOTUyLjM5MmEuOTIyLjkyMiwwLDAsMC0uNjU2LjI4OGMtMS41LDEuNTIxLTMuMjUsMy4yNS00LjgxOCw0LjgxOGwtMi4yMDktMS44NDFhLjk4Ljk4LDAsMCwwLTEuMzYxLjExMkEuOTguOTgsMCwwLDAsLjM0LDk1Ny4xM2gwbDIuODgxLDIuNGEuOTYxLjk2MSwwLDAsMCwxLjMtLjA2NGw1LjQ0My01LjQ0M2EuOTYxLjk2MSwwLDAsMCwuMDE2LTEuMzYxQS45MjkuOTI5LDAsMCwwLDkuMjcyLDk1Mi4zOTJaIiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgtMTA2ODQuMDA1IDIxMzYuNjA5KSIvPjwvc3ZnPg==) no-repeat center center;
+      background-size: 11px 8px;
+    }
+  }
+
+  input {
+    display: none;
+
+    &:checked {
+
+      + label {
+
+        &:before {
+          background-color: $color-ac-link;
+          border-color: $color-ac-link;
+        }
+      }
+    }
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+
 
 
 /*
@@ -2640,3 +2887,46 @@ ___________________________*/
 .fav-coin-list--scrollable {
   height: 192px;
 }
+
+
+
+/*
+Range Slider
+___________________________*/
+.noUi-target {
+  box-shadow: none;
+}
+.noUi-horizontal {
+  height: 4px;
+  border: 0;
+  background: #EFEFEF;
+  border-radius: $border-radius - 1;
+
+  .noUi-handle {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid $color-ac-text;
+    box-shadow: none;
+    outline: none;
+    left: -9px;
+    top: -7px;
+
+    &:before,
+    &:after {
+      display: none;
+    }
+  }
+
+  .noUi-tooltip {
+    bottom: auto;
+    top: 120%;
+    border: 0;
+    color: $color-ac-text;
+  }
+}
+.noUi-connect {
+  background: $color-ac-link;
+}
+
+

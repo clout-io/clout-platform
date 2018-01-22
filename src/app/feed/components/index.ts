@@ -11,4 +11,5 @@ export * from './favorite-coins';
 export * from './clout-desc-sidebar/clout-desc-sidebar.component';
 export * from './popular-search-sidebar/popular-search-sidebar.component';
 export * from './ads-block-sidebar/ads-block-sidebar.component';
+export * from './filter-sidebar/filter-sidebar.component';
 export * from './trending';
