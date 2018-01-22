@@ -9,8 +9,7 @@
     <app-filters></app-filters>
   </div> -->
 
-  <div class="container">
-    
+  <div class="container">    
     <div class="feed-content feed-content--alt">
       <aside class="feed-aside">
         <div class="widget widget--new-coin">
@@ -59,6 +58,18 @@
           <div class="form-section">
             <h3 class="form-section__title">General</h3>
             <div class="row">
+              <div class="col-sm-6">
+                <div class="form-item">
+                  <label class="form-item__label">Multiple Select</label>
+                  <ss-multiselect-dropdown [options]="myOptions" [texts]="myTexts" [settings]="mySettings" ></ss-multiselect-dropdown>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item">
+                  <label class="form-item__label">ICO Website</label>
+                  <input type="text" class="form-item__field" value="https://aventus.io/">
+                </div>
+              </div>
               <div class="col-sm-6">
                 <div class="form-item form-item--error">
                   <label class="form-item__label">Project Stage</label>
