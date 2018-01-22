@@ -22,16 +22,16 @@
     </li>-->
     <li>
       <span>Status:</span>
-      <span>{{icoData.status}}</span>
+      <span>{{icoData?.status}}</span>
     </li>
     <li>
         <span>Founded:</span>
-        <span>{{icoData.startedW3c | date: 'yyyy'}}</span>
+        <span>{{icoData?.startedW3c | date: 'yyyy'}}</span>
       </li>
   </ul>
   <div class="coin-details__share">
-    <app-social-networks *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-social-networks>
-    <app-links *ngIf="icoData['socials']" [socials]="icoData['socials']"></app-links>
+    <app-social-networks *ngIf="icoData && icoData['socials']" [socials]="icoData['socials']"></app-social-networks>
+    <app-links *ngIf="icoData && icoData['socials']" [socials]="icoData['socials']"></app-links>
     <app-follow-btn [coin]="icoData"></app-follow-btn>
   </div>
 </div>

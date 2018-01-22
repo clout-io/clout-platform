@@ -9,7 +9,7 @@ import { BroadcastService } from '../../../services';
   styleUrls: ['./ico-detail.component.scss']
 })
 export class IcoDetailComponent implements OnInit, OnDestroy {
-  ico: Object = {};
+  ico: any;
   subscription: any;
 
   constructor(private broadcastService: BroadcastService) { }

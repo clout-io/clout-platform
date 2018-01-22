@@ -1,22 +1,19 @@
-<!--<div class="page-title">
-  <h1>ICOs</h1>
-</div>-->
-
 <div class="ico-component">
 
   <!-- <div id="filters" class="filters-container collapse col-xl-3 col-lg-3 col-md-2 col-sm-2 col-12">
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filters" aria-controls="filters" aria-expanded="false" aria-label="Toggle Filter">&times;</button>
     <app-filters></app-filters>
   </div> -->
+  <app-navs-switcher [createFor]="'icos'"></app-navs-switcher>
 
-  <div class="container">    
-    <div class="feed-content feed-content--alt">
+  <div class="container">
+    <!--<div class="feed-content feed-content&#45;&#45;alt">
       <aside class="feed-aside">
-        <div class="widget widget--new-coin">
-          <div class="new-coin-image new-coin-image--error">
+        <div class="widget widget&#45;&#45;new-coin">
+          <div class="new-coin-image new-coin-image&#45;&#45;error">
             <a href="#"></a>
             <span>Logo required!</span>
-          </div>          
+          </div>
           <div class="form-item">
             <div class="form-item__check-slide">
               <label>
@@ -44,12 +41,12 @@
         <div class="widget">
           <div class="form-section">
             <h3 class="form-section__title">Basic Info</h3>
-            <div class="form-item form-item--error">
+            <div class="form-item form-item&#45;&#45;error">
               <label class="form-item__label">ICO Name*</label>
               <input type="text" class="form-item__field" value="Aventus">
               <span class="form-item__hint">This field is required!</span>
             </div>
-            <div class="form-item form-item--error">
+            <div class="form-item form-item&#45;&#45;error">
               <label class="form-item__label">Description*</label>
               <textarea class="form-item__area">A fair, secure, and transparent blockchain-based event ticketing solution that practically eliminates fraud and unregulated touting</textarea>
               <span class="form-item__hint">This field is required!</span>
@@ -71,7 +68,7 @@
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item form-item--error">
+                <div class="form-item form-item&#45;&#45;error">
                   <label class="form-item__label">Project Stage</label>
                   <div class="form-item__select">
                     <select>
@@ -386,25 +383,13 @@
             </div>
           </div>
           <div class="form-actions text-center">
-            <a href="#" class="btn btn--secondary">Cancel</a>
-            <a href="#" class="btn btn--primary">Save</a>
+            <a href="#" class="btn btn&#45;&#45;secondary">Cancel</a>
+            <a href="#" class="btn btn&#45;&#45;primary">Save</a>
           </div>
         </div>
       </main>
-    </div>
-    
-    <div class="main-components content">
-
-      <!-- <app-search></app-search> -->
-      <div class="content__list">
-          <app-ico-list></app-ico-list>
-      </div>
-
-      <div class="content__main">
-        <app-ico-detail></app-ico-detail>
-      </div>
-
-    </div>
+    </div>-->
+    <router-outlet></router-outlet>
   </div>
 
 </div>

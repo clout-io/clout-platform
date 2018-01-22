@@ -1,6 +1,8 @@
 import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 
 import { ApiService, BroadcastService } from '../../../services';
+import { ActivatedRoute } from '@angular/router';
+import { environment } from '../../../../environments/environment';
 declare const $: any;
 
 @Component({
@@ -18,7 +20,8 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   };
 
   constructor(private apiService: ApiService,
-              private broadcastService: BroadcastService) { }
+              private broadcastService: BroadcastService,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadCoinList(true);
@@ -35,9 +38,13 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loadCoinList(isFirst = false) {
     const { nextPage, perPage } = this.meta;
+    const tab = this.route.snapshot.data.tab;
+    const filter = tab !== 'all' ? JSON.stringify({status: tab}) : JSON.stringify({});
 
-    this.apiService.get(`/${this.apiService.icos}?page=${nextPage}&per_page=${perPage}`)
+    const url = `/${this.apiService.icos}?page=${nextPage}&per_page=${perPage}&sortType=asc&filter=${filter}`;
+    this.apiService.get(url)
       .subscribe(responce => {
+        responce.data.map(item => item.imageUrl = environment.url + item.image);
         if (isFirst) {
           this.meta = responce.meta;
           this.icoList = responce.data;
@@ -60,6 +67,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.selectedId = id;
     this.apiService.get(`/${this.apiService.ico}/${id}`)
       .subscribe(ico => {
+        ico.imageUrl = environment.url + ico.image;
         this.broadcastService.broadcast('icoInfo', ico);
       });
   }
@@ -67,7 +75,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngAfterViewInit(): void {
     const me = this;
 
-    if (window.matchMedia("(min-width: 768px)").matches) {
+    if (window.matchMedia('(min-width: 768px)').matches) {
       $('#altcoin-list-sticky').sticky({ topSpacing: 20, bottomSpacing: 0 });
     } else {
       $('#altcoin-list-sticky').unstick();

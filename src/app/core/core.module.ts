@@ -25,7 +25,8 @@ import {
   CommentListComponent,
   FollowBtnComponent,
   LoaderLineComponent,
-  ResetPasswordComponent
+  ResetPasswordComponent,
+  NavsSwitcherComponent
 } from './components';
 import {
   CommentItemComponent
@@ -59,7 +60,8 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     PercentPipe,
     AlphabeticCoinsPipe,
     AutomaticGetDataByUrlDirective,
-    CoinsAlphabeticDropdownComponent
+    CoinsAlphabeticDropdownComponent,
+    NavsSwitcherComponent
   ],
   exports: [
     CommentListComponent,
@@ -67,7 +69,8 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     FollowBtnComponent,
     LoaderLineComponent,
     PercentPipe,
-    AutomaticGetDataByUrlDirective
+    AutomaticGetDataByUrlDirective,
+    NavsSwitcherComponent
   ]
 })
 export class CoreModule { }

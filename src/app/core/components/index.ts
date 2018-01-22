@@ -5,6 +5,7 @@ export * from './confirm-user';
 export * from './reset-input-btn';
 export * from './facebook-auth-btn';
 export * from './modal';
+export * from './navs-switcher';
 export * from './comment-list';
 export * from './follow-btn/follow-btn.component';
 export * from './loader-line/loader-line.component';

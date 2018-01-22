@@ -17,6 +17,8 @@ import {
   CalendarComponent,
   CheckboxComponent,
   RangeComponent,
+  // ICO container
+  IcoContentComponent,
   // ICO detail
   IcoDetailComponent,
   FeatureListComponent,
@@ -45,6 +47,8 @@ import {
     CalendarComponent,
     CheckboxComponent,
     RangeComponent,
+    // ICO container
+    IcoContentComponent,
     // ICO detail
     IcoDetailComponent,
     FeatureListComponent,

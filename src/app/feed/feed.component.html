@@ -1,9 +1,2 @@
-<div class="page-title">
-  <nav class="page-links">
-    <a href="javascript:void(0)" routerLink="community" routerLinkActive="active">Community</a>
-    <a href="javascript:void(0)" routerLink="news" routerLinkActive="active">News</a>
-    <a href="javascript:void(0)" routerLink="all" routerLinkActive="active">All</a>
-  </nav>
-</div><!-- .page-title -->
-
+<app-navs-switcher [createFor]="'feed'"></app-navs-switcher>
 <router-outlet></router-outlet>

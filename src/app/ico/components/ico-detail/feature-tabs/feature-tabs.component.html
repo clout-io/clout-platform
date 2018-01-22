@@ -51,12 +51,12 @@
             <li>
               <span>ICO date:</span>
               <span>
-                {{icoData.startedW3c | date: 'MMM dd, yyyy'}} – {{icoData.endedW3c | date: 'MMM dd, yyyy'}}
+                {{icoData?.startedW3c | date: 'MMM dd, yyyy'}} – {{icoData?.endedW3c | date: 'MMM dd, yyyy'}}
               </span>
             </li>
             <li>
               <span>Token Type:</span>
-              <span>{{icoData.tokenTypeBlockchain}}</span>
+              <span>{{icoData?.tokenTypeBlockchain}}</span>
             </li>
            <!-- <li>
               <span>Token Technology:</span>
@@ -72,7 +72,7 @@
             </li>-->
             <li>
               <span>Tokens distribution:</span>
-              <span>{{icoData.tokenSupplyAmount}}</span>
+              <span>{{icoData?.tokenSupplyAmount}}</span>
               <!--<span>Total token supply: 10,000,000 AVT</span>-->
             </li>
             <!--<li>
@@ -125,7 +125,7 @@
         </div>-->
         <div class="tab-pane" id="team" role="tabpanel">
             <ul class="coin-details-list">
-              <li *ngFor="let team of icoData.team">
+              <li *ngFor="let team of icoData?.team">
                 <span>{{team.role}}:</span>
                 <span>{{team.name}}</span>
               </li>

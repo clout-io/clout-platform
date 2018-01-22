@@ -1,12 +1,13 @@
 <li class="coin-list-item">
-  <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico.id === selectedId}">
+  <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico?.id === selectedId}">
     <div class="coin-list-item__img">
-      <img src="{{ico?.image}}">
+      <img [src]="ico?.imageUrl">
     </div>
     <div class="coin-list-item__content">
-      <strong>{{ico.name}}</strong>
-      <div class="coin-list-item__details">
-        {{ico.startedW3c  | date: 'MMM dd, yyyy'}} – {{ico.endedW3c | date: 'MMM dd, yyyy'}}
+      <strong>{{ico?.name}}</strong>
+      <div class="coin-list-item__details" *ngIf="ico?.endedW3c">
+        {{ico?.startedW3c  | date: 'MMM dd, yyyy'}} –
+        {{ico?.endedW3c | date: 'MMM dd, yyyy'}}
       </div>
     </div>
   </a>

@@ -1,0 +1,7 @@
+<div class="page-title">
+  <nav class="page-links">
+    <a *ngFor="let item of navsList"
+       routerLink="{{item.link}}"
+       routerLinkActive="active">{{item.text}}</a>
+  </nav>
+</div>

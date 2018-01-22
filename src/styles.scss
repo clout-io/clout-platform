@@ -243,62 +243,6 @@ _________________________________*/
 END Authorization Styles
 _________________________________*/
 
-
-/*
-Colors
-___________________________*/
-$color-ac-text: #A9A8A8;
-$color-ac-text-alt: #1B1D1F;
-
-$color-ac-selection: #b3d4fc;
-
-$color-ac-border: #E8E9EA;
-$color-ac-border-1: #D8D8D8;
-
-$color-ac-black: #000;
-$color-ac-white: #FFF;
-
-$color-ac-field: #F7F8F9;
-$color-ac-shadow: #848484;
-
-$color-ac-coin-hover: #FCFCFC;
-
-$color-ac-success: #0C9611;
-$color-ac-warning: #CC3232;
-
-$color-ac-error: #E04F4F;
-
-$color-ac-link: #008F8D;
-$color-feed-text: #444444;
-
-$color-category: #E54B4B;
-
-
-$border-radius: 4px;
-
-
-/*
-Paths
-___________________________*/
-
-
-
-
-/*
-Font Face
-___________________________*/
-$font-size-default: 15px;
-
-
-/*
-Breakpoints
-___________________________*/
-$phone: "(min-width: 375px)";
-$phone-lg: "(min-width: 480px)";
-$tablet: "(min-width: 768px)";
-$desktop-sm: "(min-width: 992px)";
-$desktop-md: "(min-width: 1200px)";
-
 /*
 Helpers
 ___________________________*/
@@ -736,28 +680,6 @@ ___________________________*/
 
   .page-title {
     margin-top: 100px;
-  }
-}
-
-
-
-
-
-/*
-Page Titles
-___________________________*/
-.page-title {
-  border-bottom: 1px solid $color-ac-border;
-  box-shadow: 0 1px 1px rgba($color-ac-shadow, .15);
-  padding: 25px 0;
-
-  h1 {
-    margin: 0;
-    padding: 0;
-    font-weight: 600;
-    font-size: $font-size-default;
-    line-height: $font-size-default + 10;
-    text-align: center;
   }
 }
 
@@ -1986,43 +1908,6 @@ ___________________________*/
     }
   }
 }
-
-
-
-/*
-Page Links
-___________________________*/
-.page-links {
-  text-align: center;
-  height: 75px;
-  margin: -25px 0;
-
-  a {
-    display: inline-block;
-    vertical-align: top;
-    height: 75px;
-    font-weight: 500;
-    font-size: 15px;
-    line-height: 75px;
-    padding: 0 15px;
-    border-bottom: 2px solid transparent;
-    color: $color-ac-text;
-    margin: 0 8px;
-    text-decoration: none;
-
-
-    &:hover {
-
-    }
-  }
-
-  .active {
-    color: $color-ac-text-alt;
-    border-color: $color-ac-link;
-  }
-}
-
-
 
 /*
 Widget
