@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-
+import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
+import {Location} from '@angular/common';
 import { ApiService, BroadcastService } from '../../../services';
 import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
@@ -19,9 +19,12 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
     perPage: 20
   };
 
+  @Input() selected: boolean = false;
+
   constructor(private apiService: ApiService,
               private broadcastService: BroadcastService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private location: Location ) { }
 
   ngOnInit() {
     this.loadCoinList(true);
@@ -48,7 +51,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
         if (isFirst) {
           this.meta = responce.meta;
           this.icoList = responce.data;
-          this.loadCoin(this.icoList[0]['id']);
+          !this.selected && this.loadCoin(this.icoList[0]['id']);
         } else {
           if (responce.meta.nextPage !== this.meta.nextPage) {
             this.meta = responce.meta;
@@ -89,6 +92,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onNotify(selectedId) {
+    this.selected && this.location.go("/icos/all");
     this.selectedId = selectedId;
     this.loadCoin(this.selectedId);
 

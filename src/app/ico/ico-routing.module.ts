@@ -9,6 +9,7 @@ import {
   IcoContentComponent,
   EditIcoComponent,
   AddIcoComponent,
+  IcoSelectComponent
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
@@ -20,8 +21,9 @@ const routes: Routes = CoreRoute.withShell([
       { path: 'all', component: IcoContentComponent, data: {tab: 'all'} },
       { path: 'upcoming', component: IcoContentComponent, data: {tab: 'upcoming'} },
       { path: 'ongoing', component: IcoContentComponent, data: {tab: 'ongoing'} },
-      { path: 'closed', component: IcoContentComponent, data: {tab: 'closed'} }
-    ],
+      { path: 'closed', component: IcoContentComponent, data: {tab: 'closed'} },
+      { path: 'details/:id', component: IcoSelectComponent }
+    ]
   },
   { path: 'ico/add', component: AddIcoComponent },
   { path: 'ico/edit', component: EditIcoComponent },

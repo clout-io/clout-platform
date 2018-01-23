@@ -5,3 +5,4 @@ export * from './add-ico';
 export * from './edit-ico';
 export * from './ico-list';
 export * from './search';
+export * from './ico-select';
