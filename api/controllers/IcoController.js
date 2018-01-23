@@ -18,7 +18,7 @@ module.exports = {
   index: async function (req, res) {
     const perPage = req.query.per_page || 20;
     const sort = req.query.sort || "started";
-    const sortType = req.query.sortType || "ASC";
+    const sortType = req.query.sortType || "desc";
 
     const currentPage = parseInt(req.query.page, 10) || 1;
 
