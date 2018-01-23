@@ -31,6 +31,7 @@ import {
   // ADD/EDIT Ico
   AddIcoComponent,
   EditIcoComponent,
+  IcoEditFormComponent,
   // search
   SearchComponent
 } from './components';
@@ -64,7 +65,8 @@ import {
     // search
     SearchComponent,
     AddIcoComponent,
-    EditIcoComponent
+    EditIcoComponent,
+    IcoEditFormComponent
   ]
 })
 export class IcoModule { }

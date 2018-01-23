@@ -1,4 +1,4 @@
-@import './src/theme/theme-variables';
+@import './../../../../../theme/theme-variables';
 
 .feature-list-component {
   border: 1px solid $border-color;
@@ -37,6 +37,20 @@
           width: 50%;
         }
       }
+    }
+  }
+}
+
+a {
+  &:visited, &:focus {
+    color: $color-ac-link;
+  }
+
+  &.edit-ico-btn {
+    min-width: 70px;
+
+    &:hover {
+      color: $color-ac-white;
     }
   }
 }
