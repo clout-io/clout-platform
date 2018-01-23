@@ -17,7 +17,7 @@ module.exports = {
 
   index: async function (req, res) {
     const perPage = req.query.per_page || 20;
-    const sort = req.query.sort || "started";
+    const sort = req.query.sort || "name";
     const sortType = req.query.sortType || "desc";
 
     const currentPage = parseInt(req.query.page, 10) || 1;
@@ -40,8 +40,10 @@ module.exports = {
       return res.status(400).json(sortValidationResult)
     }
 
+    let sorting = {isPremium: -1, premiumRank: 1,};
+    sorting[sort] = sortType === 'desc' ? -1 : 1;
 
-    let conditions = {};
+    let conditions = {sort: sorting};
     _.extend(conditions, filter);
 
     let followedIco = [];
@@ -62,7 +64,7 @@ module.exports = {
     }
     let resultData = {};
     try {
-      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"], `${sort} ${sortType}`);
+      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"]);
     } catch (e) {
       return res.status(400).json(e);
     }

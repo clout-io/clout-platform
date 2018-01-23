@@ -124,6 +124,17 @@ module.exports = {
       collection: 'user',
       via: 'altcoin',
       through: 'followedico'
+    },
+    isPremium: {
+      type: "boolean",
+      defaultsTo: false
+    },
+    premiumRank: {
+      type: "integer",
+      defaultsTo: 0
+    },
+    premiumDescription: {
+      type: "string"
     }
   }
 };
