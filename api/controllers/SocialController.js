@@ -4,7 +4,7 @@
  * @description :: Server-side logic for managing socials
  * @help        :: See http://sailsjs.org/#!/documentation/concepts/Controllers
  */
-const slug = require('slug')
+const slug = require('slug');
 
 module.exports = {
 

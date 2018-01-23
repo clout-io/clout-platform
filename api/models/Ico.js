@@ -5,8 +5,14 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
-var enumScore = ["low", "medium", "hight"];
-var cryptoRandomString = require('crypto-random-string');
+const slug = require('slug');
+
+const {SCORE_LEVEL, ICO_STATUS, PROJECT_STAGE} = require('../const/ico');
+
+const SCORE_ENUM = Object.keys(SCORE_LEVEL);
+const STATUS = Object.keys(ICO_STATUS);
+const STAGE = Object.keys(PROJECT_STAGE);
+const cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
 
@@ -32,7 +38,7 @@ module.exports = {
     },
     status: {
       type: "string",
-      enum: ["upcoming", "ongoing", "closed"]
+      enum: STATUS
     },
     startDate: {
       type: "date"
@@ -44,24 +50,25 @@ module.exports = {
       type: "string"
     },
     projectStage: {
-      type: "string"
+      type: "string",
+      enum: STAGE
     },
     hypeScore: {
       type: "string",
-      enum: enumScore
+      enum: SCORE_ENUM
     },
     riskScore: {
       type: "string",
-      enum: enumScore
+      enum: SCORE_ENUM
     },
     investScore: {
       type: "string",
-      enum: enumScore
+      enum: SCORE_ENUM
     },
     categories: {
       collection: 'IcoCategory',
       via: 'id'
-    },//need model
+    },
     founded: {
       type: "string"
     },
@@ -102,7 +109,7 @@ module.exports = {
     accepts: {
       collection: "Altcoin",
       via: 'id'
-    }, //link to Altcoins
+    },
     technicalDetails: {
       type: "string"
     },
@@ -136,6 +143,16 @@ module.exports = {
     premiumDescription: {
       type: "string"
     }
+  },
+  beforeValidate: function (values, next) {
+    if (!values.slug) {
+      values.slug = slug(values.name);
+    }
+    next()
+  },
+  beforeCreate: function (values, next) {
+
+    next();
   }
 };
 

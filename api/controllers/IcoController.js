@@ -10,10 +10,29 @@ const util = require('util');
 const Promise = require('bluebird');
 const IcoFilterValidation = require('../validation/ico.filters');
 const IcoSortValidation = require('../validation/ico.sort');
+const IcoCreateValidation = require('../validation/ico.create');
 const Validate = require('../validation/validator');
 const joiErrorsToForms = require('joi-errors-for-forms').form();
 
 module.exports = {
+
+  create: async function (req, res) {
+
+    let result = await IcoCategory.find();
+    let categories = result.map(x => x.id);
+
+    let validateResult = await Validate(req.body, IcoCreateValidation, {categories: categories});
+
+    let ValidateResult = joiErrorsToForms(validateResult);
+
+    if (ValidateResult) {
+      return res.status(400).json(ValidateResult)
+    }
+
+    let ico = await Ico.create(req.body);
+
+    return res.json(ico);
+  },
 
   index: async function (req, res) {
     const perPage = req.query.per_page || 20;
