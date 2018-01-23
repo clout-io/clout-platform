@@ -6,6 +6,7 @@ import { CoreRoute } from '../core/core.route';
 // components
 import { IcoComponent } from './ico.component';
 import { IcoContentComponent } from './components/ico-content/ico-content.component';
+import { IcoSelectComponent } from './components/ico-select/ico-select.component';
 
 const routes: Routes = CoreRoute.withShell([
   { path: '', redirectTo: '/icos', pathMatch: 'full' },
@@ -16,7 +17,8 @@ const routes: Routes = CoreRoute.withShell([
       { path: 'all', component: IcoContentComponent, data: {tab: 'all'} },
       { path: 'upcoming', component: IcoContentComponent, data: {tab: 'upcoming'} },
       { path: 'ongoing', component: IcoContentComponent, data: {tab: 'ongoing'} },
-      { path: 'closed', component: IcoContentComponent, data: {tab: 'closed'} }
+      { path: 'closed', component: IcoContentComponent, data: {tab: 'closed'} },
+      { path: 'details/:id', component: IcoSelectComponent }
     ]
   },
   { path: '**', redirectTo: 'icos'}

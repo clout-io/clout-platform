@@ -21,6 +21,7 @@ import {
   IcoContentComponent,
   // ICO detail
   IcoDetailComponent,
+  IcoSelectComponent,
   FeatureListComponent,
   FeatureTabsComponent,
   LinksComponent,
@@ -51,6 +52,7 @@ import {
     IcoContentComponent,
     // ICO detail
     IcoDetailComponent,
+    IcoSelectComponent,
     FeatureListComponent,
     FeatureTabsComponent,
     LinksComponent,
