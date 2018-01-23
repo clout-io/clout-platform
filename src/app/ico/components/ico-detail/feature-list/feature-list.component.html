@@ -32,6 +32,12 @@
   <div class="coin-details__share">
     <app-social-networks *ngIf="icoData && icoData['socials']" [socials]="icoData['socials']"></app-social-networks>
     <app-links *ngIf="icoData && icoData['socials']" [socials]="icoData['socials']"></app-links>
-    <app-follow-btn [coin]="icoData"></app-follow-btn>
+    <div>
+      <a class="coin-details__share-subscribe btn btn--primary-outline edit-ico-btn"
+         [routerLink]="['/ico/edit']" [queryParams]="{id: icoData?.id}">
+        Edit
+      </a>
+      <app-follow-btn [coin]="icoData"></app-follow-btn>
+    </div>
   </div>
 </div>

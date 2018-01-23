@@ -1,0 +1,391 @@
+<div class="container">
+  <div class="feed-content feed-content--alt">
+    <aside class="feed-aside">
+      <div class="widget widget--new-coin">
+        <div class="new-coin-image new-coin-image--error">
+          <a href="javascript:void(0)"
+             [ngStyle]="!!imageSrc && {'background-image': (imageSrc ? 'url(' + imageSrc + ')': '')}"
+             (click)="triggerToInput()">
+          </a>
+          <span *ngIf="!imageSrc">Logo required!</span>
+          <div style="height: 0px">
+            <input accept="image/gif, image/jpeg, image/png" type="file"
+                   (change)="handleUpload($event)" #uploadIcoLogo style="visibility: hidden; height: 0px; width: 100%"/>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item__check-slide">
+            <label>
+              <span>Premium</span>
+              <input type="checkbox">
+              <i></i>
+            </label>
+          </div>
+        </div>
+        <div class="form-item">
+          <div class="form-item__select">
+            <select>
+              <option>Level One</option>
+              <option>Level Two</option>
+              <option>Level Three</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-item">
+          <textarea class="form-item__area" placeholder="Notes"></textarea>
+        </div>
+      </div>
+    </aside>
+    <main class="feed-main">
+      <div class="widget">
+        <div class="form-section">
+          <h3 class="form-section__title">Basic Info</h3>
+          <div class="form-item form-item--error">
+            <label class="form-item__label">ICO Name*</label>
+            <input type="text" class="form-item__field" value="Aventus">
+            <span class="form-item__hint">This field is required!</span>
+          </div>
+          <div class="form-item form-item--error">
+            <label class="form-item__label">Description*</label>
+            <textarea class="form-item__area">A fair, secure, and transparent blockchain-based event ticketing solution that practically eliminates fraud and unregulated touting</textarea>
+            <span class="form-item__hint">This field is required!</span>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section__title">General</h3>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Multiple Select</label>
+                <ss-multiselect-dropdown [options]="myOptions" [texts]="myTexts" [settings]="mySettings" ></ss-multiselect-dropdown>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">ICO Website</label>
+                <input type="text" class="form-item__field" value="https://aventus.io/">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item form-item--error">
+                <label class="form-item__label">Project Stage</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>Useable Product</option>
+                    <option>Useable Product</option>
+                    <option>Useable Product</option>
+                    <option>Useable Product</option>
+                  </select>
+                </div>
+                <span class="form-item__hint">This field is required!</span>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Hype Score</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>LOW</option>
+                    <option>MEDIUM</option>
+                    <option>HIGH</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Risk Score</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>LOW</option>
+                    <option>MEDIUM</option>
+                    <option>HIGH</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Invest Score</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>LOW</option>
+                    <option>MEDIUM</option>
+                    <option>HIGH</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Category TODO</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>LOW</option>
+                    <option>MEDIUM</option>
+                    <option>HIGH</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Founded</label>
+                <input type="text" class="form-item__field" placeholder="2017">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section__title">Contact info</h3>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">ICO Website</label>
+                <input type="text" class="form-item__field" value="https://aventus.io/">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Whitepaper</label>
+                <input type="text" class="form-item__field" value="https://aventus.io/whitepaper.pdf">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Blog</label>
+                <input type="text" class="form-item__field" value="https://aventus.io/blog">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Twitter</label>
+                <input type="text" class="form-item__field" placeholder="Enter Twitter link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Facebook</label>
+                <input type="text" class="form-item__field" placeholder="Enter Facebook link" value="https://www.facebook.com/aventus">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Youtube</label>
+                <input type="text" class="form-item__field" placeholder="Enter Youtube link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Linkedin</label>
+                <input type="text" class="form-item__field" placeholder="Enter Linkedin link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Slack</label>
+                <input type="text" class="form-item__field" placeholder="Enter Slack link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">GitHub</label>
+                <input type="text" class="form-item__field" placeholder="Enter GitHub link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Telegram</label>
+                <input type="text" class="form-item__field" placeholder="Enter Telegram link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Medium</label>
+                <input type="text" class="form-item__field" placeholder="Enter Medium link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Btctalk</label>
+                <input type="text" class="form-item__field" placeholder="Enter Btctalk link">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Steemit</label>
+                <input type="text" class="form-item__field" placeholder="Enter Steemit link">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section__title">Project Details</h3>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Project Stage</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>Crypto Investments</option>
+                    <option>Crypto Investments</option>
+                    <option>Crypto Investments</option>
+                    <option>Crypto Investments</option>
+                    <option>Crypto Investments</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Primary Geography</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>Europe</option>
+                    <option>Europe</option>
+                    <option>Europe</option>
+                    <option>Europe</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-item">
+                <label class="form-item__label">Description*</label>
+                <textarea class="form-item__area">- Allows event organisers to create,manage and promote their events and tickets with dramatically reduced costs, even letting them set price controls and receive commissions on ticket resales
+- Gives ticket buyers rewards for promoting events, and identifying fraudulent activity
+- Secondary Market Control
+- Promotion and Platform Cost Reduction
+- The AventCoin is essential for aligning the economic incentives of participants and for ensuring that minimal fraud occurs in the system</textarea>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-item">
+                <label class="form-item__label">Similar Projects</label>
+                <input type="text" class="form-item__field" value="Blocktix">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section__title">ICO Details</h3>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">ICO Date</label>
+                <input type="text" class="form-item__field" value="Blocktix">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Token Type</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>App token</option>
+                    <option>App token</option>
+                    <option>App token</option>
+                    <option>App token</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">Token Technology</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>ERC20</option>
+                    <option>ERC20</option>
+                    <option>ERC20</option>
+                    <option>ERC20</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">ICO Amount</label>
+                <input type="text" class="form-item__field" value="$ 1 000 000">
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <div class="form-item">
+                <label class="form-item__label">ICO Jurisdiction</label>
+                <div class="form-item__select">
+                  <select>
+                    <option>Estonia</option>
+                    <option>Estonia</option>
+                    <option>Estonia</option>
+                    <option>Estonia</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-item">
+                <label class="form-item__label">Tokens distribution</label>
+                <textarea class="form-item__area">Total token supply: 10,000,000 AVT Token crowdsale supply: 6,000,000 AVT (The pre-sale will be capped at 30%, e.g. 50% of the total crowdsale percentage). New user incentives: 1,950,000 AVT Bounties: 250,000 AVT Team, advisors, and corporate partners: 1,800,000 AVT A minimum of $6 million (24,000 ETH), with a target of $15 million (60,000 ETH).</textarea>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-item">
+                <label class="form-item__label">Token Sales</label>
+                <textarea class="form-item__area">92 AVT = 1 ETH Pre-sale to strategic partners and corporate partners will be 20% discounted (max 27,273 ETH accepted).</textarea>
+              </div>
+            </div>
+            <div class="col-sm-12">
+              <div class="form-item">
+                <label class="form-item__label">Accepts</label>
+                <input type="text" class="form-item__field" value="ETH">
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section__title">Tech</h3>
+          <div class="form-item">
+            <label class="form-item__label">Technical details</label>
+            <textarea class="form-item__area">The overall ecosystem is comprised of 3 layers: the protocol, the service layer, and the application layer. The Protocol is entirely composed of Ethereum smart contracts that allow for the creation and validation of events, the issuance and sale of tickets in primary and secondary ticket markets (customisable by the event organisers), and the distribution of ticket sale revenue and market/event fees between the event organisers, ticket promoters, market matchers, attendees, etc. There will be minimal fees for using these contracts so that the protocol can remain competitive and enjoy maximal adoption.</textarea>
+          </div>
+          <div class="form-item">
+            <label class="form-item__label">The source code</label>
+            <textarea class="form-item__area">Is intended to be a free and open project, the protocol specification being under a Creative Commons license and the code being placed under a FLOSS license.</textarea>
+          </div>
+          <div class="form-item">
+            <label class="form-item__label">Proof of developer</label>
+            <input type="text" class="form-item__field" value="Public team">
+          </div>
+        </div>
+        <div class="form-section">
+          <h3 class="form-section__title">Team</h3>
+          <div class="form-item">
+            <label class="form-item__label">Team Members</label>
+            <div class="team-item">
+              <div class="team-group">
+                <div class="form-item__dots"></div>
+                <input type="text" class="form-item__field" placeholder="Enter Position">
+                <input type="text" class="form-item__field" placeholder="Enter Name">
+                <div class="form-item__select">
+                  <select>
+                    <option>Active</option>
+                    <option>Active</option>
+                    <option>Active</option>
+                    <option>Active</option>
+                  </select>
+                </div>
+              </div>
+              <div class="team-action">
+                <a href="#" class="team-action__remove"></a>
+                <a href="#" class="team-action__add"></a>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="form-actions text-center">
+          <a href="#" class="btn btn--secondary" (click)="cancel()">Cancel</a>
+          <a href="#" class="btn btn--primary" (click)="save()">Save</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

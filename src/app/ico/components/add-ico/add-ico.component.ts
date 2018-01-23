@@ -12,4 +12,11 @@ export class AddIcoComponent implements OnInit {
   ngOnInit() {
   }
 
+  cancel() {
+  }
+
+  addIco() {
+
+  }
+
 }
