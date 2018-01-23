@@ -5,8 +5,11 @@ import { CoreRoute } from '../core/core.route';
 
 // components
 import { IcoComponent } from './ico.component';
-import { AddIcoComponent } from './components/add-ico/add-ico.component';
-import { IcoContentComponent } from './components/ico-content/ico-content.component';
+import {
+  IcoContentComponent,
+  EditIcoComponent,
+  AddIcoComponent,
+} from './components';
 
 const routes: Routes = CoreRoute.withShell([
   { path: '', redirectTo: '/icos', pathMatch: 'full' },
@@ -21,6 +24,7 @@ const routes: Routes = CoreRoute.withShell([
     ],
   },
   { path: 'ico/add', component: AddIcoComponent },
+  { path: 'ico/edit', component: EditIcoComponent },
   { path: '**', redirectTo: 'icos'}
 ]);
 
