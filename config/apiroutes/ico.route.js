@@ -58,25 +58,42 @@ module.exports.routes = [
             in: "body", name: "data",
             schema: {
               "required": [
-                "email",
-                "password",
+
               ],
               "type": "object",
               "properties": {
-                "email": {
+                "name": {
                   "type": "string",
                   "description": ""
                 },
-                "password": {
+                "description": {
                   "type": "string",
                   "description": ""
-                }
+                },
+                "status": {
+                  "type": "string",
+                  "description": ""
+                },
+                "startDate": {
+                  "type": "string",
+                  "description": ""
+                },
+                "endDate": {
+                  "type": "string",
+                  "description": ""
+                },
+                "image": {
+                  "type": "string",
+                  "description": ""
+                },
+                "categories": {
+                  "type": "string",
+                  "description": ""
+                },
               }
             }
           }
         ]
-
-
       }
     }
   },
