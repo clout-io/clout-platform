@@ -28,6 +28,8 @@ import {
   // ICO list
   IcoListComponent,
   IcoItemComponent,
+  // ADD Ico
+  AddIcoComponent,
   // search
   SearchComponent
 } from './components';
@@ -59,7 +61,8 @@ import {
     IcoListComponent,
     IcoItemComponent,
     // search
-    SearchComponent
+    SearchComponent,
+    AddIcoComponent
   ]
 })
 export class IcoModule { }
