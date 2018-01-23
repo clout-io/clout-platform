@@ -44,7 +44,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
     const tab = this.route.snapshot.data.tab;
     const filter = tab !== 'all' ? JSON.stringify({status: tab}) : JSON.stringify({});
 
-    const url = `/${this.apiService.icos}?page=${nextPage}&per_page=${perPage}&sortType=asc&filter=${filter}`;
+    const url = `/${this.apiService.icos}?page=${nextPage}&per_page=${perPage}&sortType=desc&filter=${filter}`;
     this.apiService.get(url)
       .subscribe(responce => {
         responce.data.map(item => item.imageUrl = environment.url + item.image);
