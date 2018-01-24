@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
-import {Location} from '@angular/common';
 import { ApiService, BroadcastService } from '../../../services';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import * as R from 'ramda';
 declare const $: any;
 
 @Component({
@@ -13,7 +13,13 @@ declare const $: any;
 export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   private follow$;
   public icoList: Array<any>;
-  public selectedId: string;
+  @Input() selectedId: string;
+
+  private sub: any;
+  private icoId: string;
+  private DEFAULT_TAB: string = 'all';
+  private DEFAULT_STATUS: any = [ 'closed', 'upcoming', 'ongoing' ];
+
   private meta = {
     nextPage: 1,
     perPage: 20
@@ -24,9 +30,10 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   constructor(private apiService: ApiService,
               private broadcastService: BroadcastService,
               private route: ActivatedRoute,
-              private location: Location ) { }
+              private router: Router) { }
 
   ngOnInit() {
+    this.sub = this.route.params.subscribe(params => { this.icoId = params['id']; });
     this.loadCoinList(true);
 
     this.follow$ = this.broadcastService.subscribe('follow', coin => {
@@ -41,38 +48,24 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   loadCoinList(isFirst = false) {
     const { nextPage, perPage } = this.meta;
-    const tab = this.route.snapshot.data.tab;
-    const filter = tab !== 'all' ? JSON.stringify({status: tab}) : JSON.stringify({});
 
-    const url = `/${this.apiService.icos}?page=${nextPage}&per_page=${perPage}&sortType=desc&filter=${filter}`;
-    this.apiService.get(url)
-      .subscribe(responce => {
-        responce.data.map(item => item.imageUrl = environment.url + item.image);
-        if (isFirst) {
+    const status = R.contains(this.route.snapshot.params.status, this.DEFAULT_STATUS) ? { status: this.route.snapshot.params.status } : false;
+    const filter = JSON.stringify(Object.assign({}, (status ? status : {}), this.route.snapshot.queryParams));
+
+    const url = `/${this.apiService.icos}?page=${nextPage}&per_page=${perPage}&sortType=asc&filter=${filter}`;
+    this.apiService.get(url).subscribe(responce => {
+      responce.data.map(item => item.imageUrl = environment.url + item.image);
+      if (isFirst) {
+        this.meta = responce.meta;
+        this.icoList = responce.data;
+        !this.icoId  && this.router.navigate(['/icos', !status ? 'all' : this.route.snapshot.params.status, R.head(this.icoList).id], {queryParams : this.route.snapshot.queryParams});
+      } else {
+        if (responce.meta.nextPage !== this.meta.nextPage) {
           this.meta = responce.meta;
-          this.icoList = responce.data;
-          !this.selected && this.loadCoin(this.icoList[0]['id']);
-        } else {
-          if (responce.meta.nextPage !== this.meta.nextPage) {
-            this.meta = responce.meta;
-            responce.data.map((item) => {
-              this.icoList.push(item);
-            });
-          }
+          this.icoList = R.concat(this.icoList, responce.data);
         }
-      });
-  }
-
-  loadCoin(id) {
-    if (!id)
-      return false;
-
-    this.selectedId = id;
-    this.apiService.get(`/${this.apiService.ico}/${id}`)
-      .subscribe(ico => {
-        ico.imageUrl = environment.url + ico.image;
-        this.broadcastService.broadcast('icoInfo', ico);
-      });
+      }
+    });
   }
 
   ngAfterViewInit(): void {
@@ -92,9 +85,8 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   onNotify(selectedId) {
-    this.selected && this.location.go("/icos/all");
-    this.selectedId = selectedId;
-    this.loadCoin(this.selectedId);
+    const status = this.route.snapshot.params.status || this.DEFAULT_TAB;
+    this.router.navigate(['/icos', status, selectedId], {queryParams : this.route.snapshot.queryParams});
 
     setTimeout(() => {
       $('body, html').animate({

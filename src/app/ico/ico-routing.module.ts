@@ -8,8 +8,7 @@ import { IcoComponent } from './ico.component';
 import {
   IcoContentComponent,
   EditIcoComponent,
-  AddIcoComponent,
-  IcoSelectComponent
+  AddIcoComponent
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
@@ -17,12 +16,9 @@ const routes: Routes = CoreRoute.withShell([
   {
     path: 'icos', component: IcoComponent, data: {title: 'ICOs'},
     children: [
-      { path: '', redirectTo: 'all', pathMatch: 'full'},
-      { path: 'all', component: IcoContentComponent, data: {tab: 'all'} },
-      { path: 'upcoming', component: IcoContentComponent, data: {tab: 'upcoming'} },
-      { path: 'ongoing', component: IcoContentComponent, data: {tab: 'ongoing'} },
-      { path: 'closed', component: IcoContentComponent, data: {tab: 'closed'} },
-      { path: 'details/:id', component: IcoSelectComponent }
+      { path: '', redirectTo: 'all/', pathMatch: 'full'},
+      { path: ':status', component: IcoContentComponent },
+      { path: ':status/:id', component: IcoContentComponent }
     ]
   },
   { path: 'ico/add', component: AddIcoComponent },
@@ -34,4 +30,5 @@ const routes: Routes = CoreRoute.withShell([
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
+
 export class IcoRoutingModule { }
