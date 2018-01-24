@@ -64,13 +64,16 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     NavsSwitcherComponent
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     CommentListComponent,
     ModalComponent,
     FollowBtnComponent,
     LoaderLineComponent,
     PercentPipe,
     AutomaticGetDataByUrlDirective,
-    NavsSwitcherComponent
+    NavsSwitcherComponent,
+    ResetInputBtnComponent
   ]
 })
 export class CoreModule { }

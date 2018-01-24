@@ -1,6 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
-import { FeedService } from '../../../services/feed';
+import { FeedService, IcosService } from '../../../services';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { emptyValidator } from '../../../shared';
 
 @Component({
   selector: 'app-ico-edit-form',
@@ -8,10 +10,24 @@ import { FeedService } from '../../../services/feed';
   styleUrls: ['./ico-edit-form.component.scss']
 })
 export class IcoEditFormComponent implements OnInit {
+  form: FormGroup;
   @Output() onCancel = new EventEmitter();
   @Output() onSave = new EventEmitter();
   @ViewChild('uploadIcoLogo') uploadIcoLogo: ElementRef;
   imageSrc: string;
+  defaultMember = {name: '', link: '', icon: {key: 'dot-circle-o', styleClass: 'fa-dot-circle-o'}};
+  linksList = [
+    {...this.defaultMember}
+  ];
+  scores: Array<any> = [
+    {value: '1', label: 'LOW'},
+    {value: '2', label: 'MEDIUM'},
+    {value: '3', label: 'HIGH'},
+  ];
+  projectStages: Array<any>;
+  tokenTypes: Array<any>;
+  tokenTechnologies: Array<any>;
+  industries: Array<any>;
 
   optionsModel: number[];
   myOptions: IMultiSelectOption[];
@@ -36,9 +52,33 @@ export class IcoEditFormComponent implements OnInit {
   };
 
   constructor(private renderer: Renderer,
-              private feedService: FeedService) {}
+              private feedService: FeedService,
+              private icosService: IcosService,
+              private formBuilder: FormBuilder) {}
 
   ngOnInit() {
+    this.icosService.getFiltersStage().take(1)
+      .subscribe(res => this.projectStages = res.map(item => { return {value: item.id, label: item.name}; }));
+
+    this.icosService.getFiltersTokenType().take(1)
+      .subscribe(res => this.tokenTypes = res.map(item => { return {value: item.id, label: item.name}; }));
+
+    this.icosService.getFiltersTokenTechnology().take(1)
+      .subscribe(res => this.tokenTechnologies = res.map(item => { return {value: item.id, label: item.name}; }));
+
+    this.icosService.getFiltersIndustry().take(1)
+      .subscribe(res => this.industries = res.map(item => { return {value: item.id, label: item.name}; }));
+
+    this.form = this.formBuilder.group({
+      icoName: ['', [Validators.required, emptyValidator()]],
+      description: ['', [Validators.required, emptyValidator()]],
+      hypeScore: [''],
+      projectStage: [''],
+      tokenType: [''],
+      tokenTechnology: [''],
+      industry: [''],
+    });
+
     this.myOptions = [
       { id: 1, name: 'Service 1' },
       { id: 2, name: 'Service 2' },
@@ -60,16 +100,22 @@ export class IcoEditFormComponent implements OnInit {
     ];
   }
 
+  addNewTeamMember() {
+    this.linksList.push({...this.defaultMember});
+  }
+
+  removeTeamMember(index: number) {
+    console.log(index, this.linksList.length)
+    this.linksList.splice(index, 1);
+  }
+
   cancel() {
+    console.log(this.form)
     this.onCancel.emit();
   }
 
   save() {
     this.onSave.emit();
-  }
-
-  onChange() {
-    console.log(this.optionsModel);
   }
 
   triggerToInput() {

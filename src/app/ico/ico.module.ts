@@ -8,6 +8,7 @@ import { CoreModule } from '../core/core.module';
 import { IcoRoutingModule } from './ico-routing.module';
 
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+import {SelectModule} from 'angular2-select';
 
 // components
 import { IcoComponent } from './ico.component';
@@ -33,6 +34,7 @@ import {
   AddIcoComponent,
   EditIcoComponent,
   IcoEditFormComponent,
+  SelectIconComponent,
   // search
   SearchComponent
 } from './components';
@@ -43,7 +45,8 @@ import {
     CoreModule,
     NgbModule,
     IcoRoutingModule,
-    MultiselectDropdownModule
+    MultiselectDropdownModule,
+    SelectModule
   ],
   declarations: [
     IcoComponent,
@@ -68,7 +71,8 @@ import {
     SearchComponent,
     AddIcoComponent,
     EditIcoComponent,
-    IcoEditFormComponent
+    IcoEditFormComponent,
+    SelectIconComponent
   ]
 })
 export class IcoModule { }
