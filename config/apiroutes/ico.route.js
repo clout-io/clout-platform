@@ -212,4 +212,16 @@ module.exports.routes = [
     }
   }
   },
+  {
+    method: "GET", path: "/ico/filters/industry", target: {
+    controller: "IcoIndustryController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'tokentype list',
+      description: 'tokentype list',
+      tags: [
+        'Ico',
+      ]
+    }
+  }
+  },
 ];

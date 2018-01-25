@@ -54,7 +54,7 @@ module.exports.policies = {
   IcoController: {
     index: true,
     info: true,
-    top:true,
+    top: true,
     alphabetList: true,
     sync: true,
     syncPhoto: true
@@ -100,5 +100,18 @@ module.exports.policies = {
   },
   TrendingController: {
     index: true
+  },
+  IcoIndustryController: {
+    list: true,
+  },
+  IcoTokenTechnologyController: {
+    list: true,
+  },
+  IcoTokenTypeController: {
+    list: true,
+  },
+  IcoStageController: {
+    list: true,
   }
+
 };
