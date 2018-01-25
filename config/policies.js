@@ -112,6 +112,9 @@ module.exports.policies = {
   },
   IcoStageController: {
     list: true,
+  },
+  IcoCategoryController: {
+    list: true,
   }
 
 };
