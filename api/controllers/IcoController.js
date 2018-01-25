@@ -29,9 +29,13 @@ module.exports = {
       return res.status(400).json(ValidateResult)
     }
 
-    let ico = await Ico.create(req.body);
-
-    return res.json(ico);
+    try {
+      let ico = await Ico.create(req.body);
+      ico = await Ico.findOne(ico.id).populate(["socials", "team"]);
+      return res.json(ico);
+    } catch (e) {
+      return res.status(400).json(e);
+    }
   },
 
   index: async function (req, res) {

@@ -1,4 +1,5 @@
 const Joi = require('joi');
+const CountryList = require('country-list');
 
 const {SCORE_LEVEL, ICO_STATUS, PROJECT_STAGE} = require('../const/ico');
 
@@ -23,6 +24,27 @@ const customJoi = Joi.extend((joi) => ({
 }));
 
 
+const teamObjectSchema = Joi.object({
+  role: Joi.string().min(1).max(80).trim().required(),
+  name: Joi.string().min(1).max(80).trim().required(),
+  link: Joi.string().uri().min(1).max(40).trim().required(),
+  order: Joi.number().integer().required(),
+  status: Joi.string().valid(["active", "inactive"]),
+  isDeleted: Joi.boolean()
+}).required();
+
+
+const teamArraySchema = Joi.array().items(teamObjectSchema).min(1).unique();
+
+const socialObjectSchema = Joi.object({
+  type: Joi.string().min(1).max(80).trim().required(),
+  link: Joi.string().uri().min(1).max(40).trim().required(),
+}).required();
+
+
+const socialArraySchema = Joi.array().items(socialObjectSchema).min(1).unique();
+
+
 module.exports = {
   name: Joi.string().required(),
   description: Joi.string().required(),
@@ -30,23 +52,34 @@ module.exports = {
   startDate: Joi.date().required(),
   endDate: Joi.date().required(),
   image: Joi.string().required(),
-  projectStage: Joi.string().valid(Object.keys(PROJECT_STAGE)),
   hypeScore: Joi.string().valid(Object.keys(SCORE_LEVEL)),
   riskScore: Joi.string().valid(Object.keys(SCORE_LEVEL)),
   investScore: Joi.string().valid(Object.keys(SCORE_LEVEL)),
   categories: customJoi.string().required().category(),
   founded: Joi.number().integer().min(2000).max(new Date().getFullYear()),
-  primaryGeography: Joi.string().valid(),
+  site: Joi.string(),
+  blog: Joi.string(),
+  whitepaper: Joi.string(),
+
+  primaryGeography: Joi.string().valid(Object.keys(CountryList().getCodeList())).required(),
+  projectStage: Joi.string().valid(), //projectStage list
   features: Joi.string(),
-  tokenType: Joi.string().valid(),
-  tokenTechnology: Joi.string().valid(),
-  amount: Joi.string().valid(),
-  jurisdiction: Joi.string().valid(),
-  tokensDistribution: Joi.string().valid(),
-  tokenSales: Joi.string().valid(),
-  accepts: Joi.string().valid(),
+
+
+  tokenType: Joi.string().valid(),//need token types
+  tokenTechnology: Joi.string().valid(), //need token tech
+
+  amount: Joi.number().integer().min(1).required(),
+  jurisdiction: Joi.string().required(Object.keys(CountryList().getCodeList())),
+
+  tokensDistribution: Joi.string(),
+  tokenSales: Joi.string(),
+  accepts: Joi.string(),
+
   technicalDetails: Joi.string(),
   sourceCode: Joi.string(),
   proofOfDeveloper: Joi.string(),
 
+  team: Joi.alternatives().try(teamObjectSchema, teamArraySchema),
+  socials: Joi.alternatives().try(socialObjectSchema, socialArraySchema)
 };

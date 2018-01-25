@@ -11,6 +11,7 @@ const TrendingRoutes = require('./trending.route');
 const UrlRoutes = require('./url.route');
 const UserRoutes = require('./user.route');
 const VoteRoutes = require('./vote.route');
+const CountryRoutes = require('./country.route');
 
 
 let routes = [
@@ -62,7 +63,8 @@ routes = routes.concat(
   TrendingRoutes.routes,
   UrlRoutes.routes,
   UserRoutes.routes,
-  VoteRoutes.routes
+  VoteRoutes.routes,
+  CountryRoutes.routes
 );
 
 let prefix = "/api/v1";

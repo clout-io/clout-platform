@@ -175,5 +175,41 @@ module.exports.routes = [
 
       }
     }
+  },
+  {
+    method: "GET", path: "/ico/filters/stage", target: {
+    controller: "IcoStageController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'Stage list',
+      description: 'Stage list',
+      tags: [
+        'Ico',
+      ]
+    }
   }
+  },
+  {
+    method: "GET", path: "/ico/filters/tokentype", target: {
+    controller: "IcoTokenTypeController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'tokentype list',
+      description: 'tokentype list',
+      tags: [
+        'Ico',
+      ]
+    }
+  }
+  },
+  {
+    method: "GET", path: "/ico/filters/tokentechnology", target: {
+    controller: "IcoTokenTechnologyController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'tokentype list',
+      description: 'tokentype list',
+      tags: [
+        'Ico',
+      ]
+    }
+  }
+  },
 ];

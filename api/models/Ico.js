@@ -11,7 +11,6 @@ const {SCORE_LEVEL, ICO_STATUS, PROJECT_STAGE} = require('../const/ico');
 
 const SCORE_ENUM = Object.keys(SCORE_LEVEL);
 const STATUS = Object.keys(ICO_STATUS);
-const STAGE = Object.keys(PROJECT_STAGE);
 const cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
@@ -50,8 +49,8 @@ module.exports = {
       type: "string"
     },
     projectStage: {
-      type: "string",
-      enum: STAGE
+      collection: "IcoStage",
+      via: 'id'
     },
     hypeScore: {
       type: "string",
@@ -78,6 +77,9 @@ module.exports = {
     blog: {
       type: "string"
     },
+    whitepaper: {
+      type: "string"
+    },
     primaryGeography: {
       type: "string"
     },
@@ -89,10 +91,12 @@ module.exports = {
       via: 'id'
     },
     tokenType: {
-      type: "string"
+      collection: "IcoTokenType",
+      via: 'id'
     },
     tokenTechnology: {
-      type: "string"
+      collection: "IcoTokenTechnology",
+      via: 'id'
     },
     amount: {
       type: "integer"
