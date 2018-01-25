@@ -146,6 +146,10 @@ module.exports = {
     },
     premiumDescription: {
       type: "string"
+    },
+    industry:{
+      collection: "IcoIndustry",
+      via: 'id'
     }
   },
   beforeValidate: function (values, next) {

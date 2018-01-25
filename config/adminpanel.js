@@ -191,5 +191,9 @@ module.exports.adminpanel = {
       title: 'IcoStage',
       model: 'IcoStage'
     },
+    IcoIndustry: {
+      title: 'IcoIndustry',
+      model: 'IcoIndustry'
+    },
   }
 };

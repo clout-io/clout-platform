@@ -80,6 +80,8 @@ module.exports = {
   sourceCode: Joi.string(),
   proofOfDeveloper: Joi.string(),
 
+  industry: Joi.string(),
+
   team: Joi.alternatives().try(teamObjectSchema, teamArraySchema),
   socials: Joi.alternatives().try(socialObjectSchema, socialArraySchema)
 };
