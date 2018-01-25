@@ -8,7 +8,7 @@ module.exports = {
     }
   },
   beforeValidate: function (values, next) {
-    values.id = slug(values.name);
+    values.id = slug(values.name).toLowerCase();
     next()
   },
 };
