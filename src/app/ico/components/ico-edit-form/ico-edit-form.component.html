@@ -2,38 +2,50 @@
   <div class="feed-content feed-content--alt">
     <aside class="feed-aside">
       <div class="widget widget--new-coin">
-        <div class="new-coin-image new-coin-image--error">
-          <a href="javascript:void(0)"
-             [ngStyle]="!!imageSrc && {'background-image': (imageSrc ? 'url(' + imageSrc + ')': '')}"
-             (click)="triggerToInput()">
-          </a>
-          <span *ngIf="!imageSrc">Logo required!</span>
-          <div style="height: 0px">
-            <input accept="image/gif, image/jpeg, image/png" type="file"
-                   (change)="handleUpload($event)" #uploadIcoLogo style="visibility: hidden; height: 0px; width: 100%"/>
+        <form novalidate [formGroup]="premiumForm">
+          <div class="new-coin-image" [ngClass]="{'new-coin-image--error': !imageLoaded}">
+            <a href="javascript:void(0)"
+               [ngStyle]="!!imageSrc && {'background-image': (imageSrc ? 'url(' + imageSrc + ')': '')}"
+               (click)="triggerToInput()">
+            </a>
+            <span>Logo required!</span>
+            <div style="height: 0px">
+              <input accept="image/gif, image/jpeg, image/png" type="file"
+                     (change)="handleUpload($event)" #uploadIcoLogo style="visibility: hidden; height: 0px; width: 100%"/>
+            </div>
           </div>
-        </div>
-        <div class="form-item">
-          <div class="form-item__check-slide">
-            <label>
-              <span>Premium</span>
-              <input type="checkbox">
-              <i></i>
-            </label>
+          <div class="form-item">
+            <div class="form-item__check-slide">
+              <label>
+                <span>Premium</span>
+                <input type="checkbox" formControlName="isPremium">
+                <i></i>
+              </label>
+            </div>
           </div>
-        </div>
-        <div class="form-item">
-          <div class="form-item__select">
-            <select>
-              <option>Level One</option>
-              <option>Level Two</option>
-              <option>Level Three</option>
-            </select>
+          <div class="form-item">
+            <div class="form-item__select">
+              <!--<select>
+                <option>Level One</option>
+                <option>Level Two</option>
+                <option>Level Three</option>
+              </select>-->
+              <ng-select
+                class="ang-select"
+                [options]="premiumRanks"
+                [multiple]="false"
+                formControlName="premiumRank"
+                [allowClear]="false">
+              </ng-select>
+            </div>
           </div>
-        </div>
-        <div class="form-item">
-          <textarea class="form-item__area" placeholder="Notes"></textarea>
-        </div>
+          <div class="form-item">
+            <textarea class="form-item__area"
+                      placeholder="Notes"
+                      formControlName="premiumDescription">
+            </textarea>
+          </div>
+        </form>
       </div>
     </aside>
     <main class="feed-main">
@@ -83,7 +95,7 @@
               </div>-->
 
               <div class="col-sm-6">
-                <div class="form-item form-item--error">
+                <div class="form-item">
                   <label class="form-item__label">Project Stage</label>
                   <div class="form-item__select">
                     <!--<select>
@@ -101,7 +113,6 @@
                       [allowClear]="false">
                     </ng-select>
                   </div>
-                  <span class="form-item__hint">This field is required!</span>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -165,9 +176,16 @@
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Category</label>
-                  <ss-multiselect-dropdown [options]="myOptions" [texts]="myTexts" [settings]="mySettings" >
+                <div class="form-item" #categoryMultiSelect>
+                  <label class="form-item__label">Category*</label>
+                  <ss-multiselect-dropdown #ff appFoo [options]="categories"
+                                           [texts]="myTexts"
+                                           [settings]="mySettings"
+                                           (onFilter)="filterCategory($event)"
+                                           (onAdded)="onAdded($event)"
+                                           (onRemoved)="onRemoved($event)"
+                                           placeholder="select category"
+                                           formControlName="categories">
                   </ss-multiselect-dropdown>
                 </div>
               </div>
@@ -178,7 +196,7 @@
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item form-item--error">
+                <div class="form-item">
                   <label class="form-item__label">Industry</label>
                   <div class="form-item__select">
                     <ng-select
@@ -322,7 +340,7 @@
           <div class="form-section">
             <h3 class="form-section__title">Project Details</h3>
             <div class="row">
-              <div class="col-sm-6">
+              <!--<div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Project Stage</label>
                   <div class="form-item__select">
@@ -335,34 +353,44 @@
                     </select>
                   </div>
                 </div>
-              </div>
+              </div>-->
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Primary Geography</label>
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('primaryGeography').invalid &&
+                     form.get('primaryGeography').touched && form.get('primaryGeography').selectWasOpened}">
+                  <label class="form-item__label">Primary Geography*</label>
                   <div class="form-item__select">
-                    <select>
+                    <!--<select>
                       <option>Europe</option>
                       <option>Europe</option>
                       <option>Europe</option>
                       <option>Europe</option>
-                    </select>
+                    </select>-->
+                    <ng-select
+                      class="ang-select"
+                      [options]="countries"
+                      [multiple]="false"
+                      placeholder="Select Primary Geography"
+                      formControlName="primaryGeography"
+                      (closed)="closeSelect('primaryGeography')"
+                      [allowClear]="false">
+                    </ng-select>
+                    <span class="form-item__hint">
+                      This field is required!
+                    </span>
                   </div>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Description*</label>
-                  <textarea class="form-item__area">- Allows event organisers to create,manage and promote their events and tickets with dramatically reduced costs, even letting them set price controls and receive commissions on ticket resales
-- Gives ticket buyers rewards for promoting events, and identifying fraudulent activity
-- Secondary Market Control
-- Promotion and Platform Cost Reduction
-- The AventCoin is essential for aligning the economic incentives of participants and for ensuring that minimal fraud occurs in the system</textarea>
+                  <textarea class="form-item__area"></textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Similar Projects</label>
-                  <input type="text" class="form-item__field" value="Blocktix">
+                  <input type="text" class="form-item__field">
                 </div>
               </div>
             </div>
@@ -373,7 +401,7 @@
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">ICO Date</label>
-                  <input type="text" class="form-item__field" value="Blocktix">
+                  <input type="text" class="form-item__field">
                 </div>
               </div>
               <div class="col-sm-6">
@@ -420,39 +448,55 @@
               </div>
               <div class="col-sm-6">
                 <div class="form-item">
-                  <label class="form-item__label">ICO Amount</label>
-                  <input type="text" class="form-item__field" value="$ 1 000 000">
+                  <label class="form-item__label">ICO Amount*</label>
+                  <input type="text"
+                         class="form-item__field"
+                         formControlName="amount">
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">ICO Jurisdiction</label>
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('jurisdiction').invalid &&
+                     form.get('jurisdiction').touched && form.get('jurisdiction').selectWasOpened}">
+                  <label class="form-item__label">ICO Jurisdiction*</label>
                   <div class="form-item__select">
-                    <select>
+                    <!--<select>
                       <option>Estonia</option>
                       <option>Estonia</option>
                       <option>Estonia</option>
                       <option>Estonia</option>
-                    </select>
+                    </select>-->
+                    <ng-select
+                      class="ang-select"
+                      [options]="countries"
+                      [multiple]="false"
+                      placeholder="Select ICO Jurisdiction"
+                      (closed)="closeSelect('jurisdiction')"
+                      formControlName="jurisdiction"
+                      [allowClear]="false">
+                    </ng-select>
+                    <span class="form-item__hint">
+                      This field is required!
+                    </span>
                   </div>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Tokens distribution</label>
-                  <textarea class="form-item__area">Total token supply: 10,000,000 AVT Token crowdsale supply: 6,000,000 AVT (The pre-sale will be capped at 30%, e.g. 50% of the total crowdsale percentage). New user incentives: 1,950,000 AVT Bounties: 250,000 AVT Team, advisors, and corporate partners: 1,800,000 AVT A minimum of $6 million (24,000 ETH), with a target of $15 million (60,000 ETH).</textarea>
+                  <textarea class="form-item__area"></textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Token Sales</label>
-                  <textarea class="form-item__area">92 AVT = 1 ETH Pre-sale to strategic partners and corporate partners will be 20% discounted (max 27,273 ETH accepted).</textarea>
+                  <textarea class="form-item__area"></textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Accepts</label>
-                  <input type="text" class="form-item__field" value="ETH">
+                  <input type="text" class="form-item__field">
                 </div>
               </div>
             </div>
@@ -461,15 +505,15 @@
             <h3 class="form-section__title">Tech</h3>
             <div class="form-item">
               <label class="form-item__label">Technical details</label>
-              <textarea class="form-item__area">The overall ecosystem is comprised of 3 layers: the protocol, the service layer, and the application layer. The Protocol is entirely composed of Ethereum smart contracts that allow for the creation and validation of events, the issuance and sale of tickets in primary and secondary ticket markets (customisable by the event organisers), and the distribution of ticket sale revenue and market/event fees between the event organisers, ticket promoters, market matchers, attendees, etc. There will be minimal fees for using these contracts so that the protocol can remain competitive and enjoy maximal adoption.</textarea>
+              <textarea class="form-item__area"></textarea>
             </div>
             <div class="form-item">
               <label class="form-item__label">The source code</label>
-              <textarea class="form-item__area">Is intended to be a free and open project, the protocol specification being under a Creative Commons license and the code being placed under a FLOSS license.</textarea>
+              <textarea class="form-item__area"></textarea>
             </div>
             <div class="form-item">
               <label class="form-item__label">Proof of developer</label>
-              <input type="text" class="form-item__field" value="Public team">
+              <input type="text" class="form-item__field">
             </div>
           </div>
           <div class="form-section">

@@ -7,3 +7,4 @@ export * from './ico-edit-form';
 export * from './ico-list';
 export * from './search';
 export * from './ico-select';
+export * from './foo.directive';

@@ -27,4 +27,12 @@ export class IcosService {
     return this.api.get(`${this.path}/ico/filters/industry`);
   }
 
+  getFiltersCategory(): Observable<any> {
+    return this.api.get(`${this.path}/ico/filters/category`);
+  }
+
+  getCountries(): Observable<any> {
+    return this.api.get(`${this.path}/countries`);
+  }
+
 }

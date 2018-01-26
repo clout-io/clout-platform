@@ -36,7 +36,8 @@ import {
   IcoEditFormComponent,
   SelectIconComponent,
   // search
-  SearchComponent
+  SearchComponent,
+  FooDirective
 } from './components';
 
 @NgModule({
@@ -72,7 +73,8 @@ import {
     AddIcoComponent,
     EditIcoComponent,
     IcoEditFormComponent,
-    SelectIconComponent
+    SelectIconComponent,
+    FooDirective
   ]
 })
 export class IcoModule { }
