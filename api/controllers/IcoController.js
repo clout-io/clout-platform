@@ -6,6 +6,7 @@
  */
 
 const pager = require('sails-pager');
+const slug = require('slug');
 const util = require('util');
 const Promise = require('bluebird');
 const IcoFilterValidation = require('../validation/ico.filters');
@@ -29,11 +30,46 @@ module.exports = {
       return res.status(400).json(ValidateResult)
     }
 
+    if (req.body.categories) {
+      req.body.categories = await Promise.map(req.body.categories, async (item) => {
+        let category = await IcoCategory.findOne({id: slug(item).toLowerCase()});
+        if (!category) {
+          category = await IcoCategory.create({"name": item})
+        }
+        return category;
+      });
+    }
+
+    if (req.body.projectStage) {
+      let stage = await IcoStage.findOne({id: slug(req.body.projectStage).toLowerCase()});
+      if (!stage) {
+        stage = await IcoStage.create({"name": req.body.projectStage})
+      }
+      req.body.projectStage = stage;
+    }
+
+    if (req.body.tokenTechnology) {
+      let tokenTech = await IcoTokenTechnology.findOne({id: slug(req.body.tokenTechnology).toLowerCase()});
+      if (!tokenTech) {
+        tokenTech = await IcoTokenTechnology.create({"name": req.body.tokenTechnology})
+      }
+      req.body.tokenTechnology = tokenTech;
+    }
+
+    if (req.body.tokenType) {
+      let tokenType = await IcoTokenType.findOne({id: slug(req.body.tokenType).toLowerCase()});
+      if (!tokenType) {
+        tokenType = await IcoTokenType.create({"name": req.body.tokenType})
+      }
+      req.body.tokenType = tokenType;
+    }
+
     try {
       let ico = await Ico.create(req.body);
-      ico = await Ico.findOne(ico.id).populate(["socials", "team"]);
+      ico = await Ico.findOne(ico.id).populate(["socials", "team", "categories"]);
       return res.json(ico);
     } catch (e) {
+      console.log(e)
       return res.status(400).json(e);
     }
   },

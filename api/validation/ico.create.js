@@ -55,19 +55,19 @@ module.exports = {
   hypeScore: Joi.string().valid(Object.keys(SCORE_LEVEL)),
   riskScore: Joi.string().valid(Object.keys(SCORE_LEVEL)),
   investScore: Joi.string().valid(Object.keys(SCORE_LEVEL)),
-  categories: customJoi.string().required().category(),
+  categories: Joi.array().items(Joi.string()).required(),
   founded: Joi.number().integer().min(2000).max(new Date().getFullYear()),
   site: Joi.string(),
   blog: Joi.string(),
   whitepaper: Joi.string(),
 
   primaryGeography: Joi.string().valid(Object.keys(CountryList().getCodeList())).required(),
-  projectStage: Joi.string().valid(), //projectStage list
+  projectStage: Joi.string(), //projectStage list
   features: Joi.string(),
 
 
-  tokenType: Joi.string().valid(),//need token types
-  tokenTechnology: Joi.string().valid(), //need token tech
+  tokenType: Joi.string(),//need token types
+  tokenTechnology: Joi.string(), //need token tech
 
   amount: Joi.number().integer().min(1).required(),
   jurisdiction: Joi.string().required(Object.keys(CountryList().getCodeList())),

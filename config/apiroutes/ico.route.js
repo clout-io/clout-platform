@@ -57,9 +57,7 @@ module.exports.routes = [
           {
             in: "body", name: "data",
             schema: {
-              "required": [
-
-              ],
+              "required": [],
               "type": "object",
               "properties": {
                 "name": {
@@ -87,9 +85,21 @@ module.exports.routes = [
                   "description": ""
                 },
                 "categories": {
+                  "type": "array",
+                  "description": ""
+                },
+                "primaryGeography": {
                   "type": "string",
                   "description": ""
                 },
+                "amount": {
+                  "type": "integer",
+                  "description": ""
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "description": ""
+                }
               }
             }
           }

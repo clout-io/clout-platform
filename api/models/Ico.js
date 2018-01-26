@@ -49,7 +49,7 @@ module.exports = {
       type: "string"
     },
     projectStage: {
-      collection: "IcoStage",
+      model: "IcoStage",
       via: 'id'
     },
     hypeScore: {
@@ -91,11 +91,11 @@ module.exports = {
       via: 'id'
     },
     tokenType: {
-      collection: "IcoTokenType",
+      model: "IcoTokenType",
       via: 'id'
     },
     tokenTechnology: {
-      collection: "IcoTokenTechnology",
+      model: "IcoTokenTechnology",
       via: 'id'
     },
     amount: {
