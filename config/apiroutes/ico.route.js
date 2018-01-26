@@ -99,6 +99,18 @@ module.exports.routes = [
                 "jurisdiction": {
                   "type": "string",
                   "description": ""
+                },
+                isPremium: {
+                  "type": "boolean",
+                  "description": ""
+                },
+                premiumRank: {
+                  "type": "integer",
+                  "description": ""
+                },
+                premiumDescription: {
+                  "type": "string",
+                  "description": ""
                 }
               }
             }

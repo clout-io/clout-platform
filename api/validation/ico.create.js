@@ -83,5 +83,10 @@ module.exports = {
   industry: Joi.string(),
 
   team: Joi.alternatives().try(teamObjectSchema, teamArraySchema),
-  socials: Joi.alternatives().try(socialObjectSchema, socialArraySchema)
+  socials: Joi.alternatives().try(socialObjectSchema, socialArraySchema),
+
+  isPremium: Joi.boolean(),
+  premiumRank: Joi.number().integer(),
+  premiumDescription: Joi.string()
+
 };
