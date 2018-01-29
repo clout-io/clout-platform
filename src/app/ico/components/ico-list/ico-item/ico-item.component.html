@@ -2,6 +2,10 @@
   <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico?.id === selectedId}">
     <div class="coin-list-item__img">
       <img [src]="ico?.imageUrl">
+      <span *ngIf="ico?.isPremium" class="premium-icon fa-stack fa-lg">
+        <i class="fa fa-circle fa-stack-2x fa-circle-text-shadow"></i>
+        <i class="fa fa-star icon-white fa-stack-1x fa-inverse"></i>
+      </span>
     </div>
     <div class="coin-list-item__content">
       <strong>{{ico?.name}}</strong>

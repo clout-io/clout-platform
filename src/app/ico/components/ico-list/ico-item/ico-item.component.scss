@@ -1,0 +1,21 @@
+.coin-list-item {
+  &__img {
+    position: relative;
+
+    .premium-icon {
+      position: absolute;
+      font-size: 13px;
+      top: -8px;
+      left: -8px;
+      color: #008F8D;
+
+      .fa-circle-text-shadow {
+        text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.6);
+      }
+
+      .icon-white {
+        color: white;
+      }
+    }
+  }
+}
