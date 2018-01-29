@@ -18,6 +18,8 @@ export class SelectIconComponent implements OnInit {
     {key: 'reddit', styleClass: 'fa-reddit'},
     {key: 'google', styleClass: 'fa-google'},
     {key: 'instagram', styleClass: 'fa-instagram'},
+    {key: 'steemit', styleClass: 'icon-steemit'},
+    {key: 'medium', styleClass: 'icon-medium'},
     {key: 'dot-circle-o', styleClass: 'fa-dot-circle-o'},
   ];
   activeIcon = this.icons[0];

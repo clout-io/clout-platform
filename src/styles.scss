@@ -15,6 +15,9 @@
 @import "~nouislider/distribute/nouislider.min.css";
 @import "~flatpickr/dist/flatpickr.min.css";
 
+// import font styles file with two social icons
+@import "assets/social-icons";
+
 /*
 Button Styles
 _________________________________*/
@@ -1183,6 +1186,12 @@ ___________________________*/
   }
   .fa-dot-circle-o {
     background: #547BBD;
+  }
+  .icon-steemit {
+    background-color: #E8E9EA;
+  }
+  .icon-medium {
+    background-color: #A9A8A8;
   }
 }
 
