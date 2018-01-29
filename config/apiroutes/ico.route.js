@@ -84,13 +84,49 @@ module.exports.routes = [
                   "type": "string",
                   "description": ""
                 },
+                "projectStage": {
+                  type: "string"
+                },
+                "hypeScore": {
+                  type: "string"
+                },
+                "riskScore": {
+                  type: "string"
+                },
+                "investScore": {
+                  type: "string"
+                },
                 "categories": {
                   "type": "array",
                   "description": ""
                 },
+                "founded": {
+                  "type": "integer",
+                },
+                "site": {
+                  "type": "string"
+                },
+                "blog": {
+                  "type": "string"
+                },
+                "whitepaper": {
+                  "type": "string"
+                },
                 "primaryGeography": {
                   "type": "string",
                   "description": ""
+                },
+                "features": {
+                  "type": "string",
+                },
+                "similarProjects": {
+                  "type": "string",
+                },
+                "tokenType": {
+                  "type": "string"
+                },
+                "tokenTechnology": {
+                  "type": "string"
                 },
                 "amount": {
                   "type": "integer",
@@ -99,6 +135,27 @@ module.exports.routes = [
                 "jurisdiction": {
                   "type": "string",
                   "description": ""
+                },
+                "tokensDistribution": {
+                  "type": "string"
+                },
+                "tokenSales": {
+                  "type": "string"
+                },
+                "accepts": {
+                  "type": "string"
+                },
+                "sourceCode": {
+                  "type": "string"
+                },
+                "team": {
+                  "type": "array"
+                },
+                "socials": {
+                  "type": "array"
+                },
+                "technicalDetails": {
+                  "type": "string"
                 },
                 isPremium: {
                   "type": "boolean",
