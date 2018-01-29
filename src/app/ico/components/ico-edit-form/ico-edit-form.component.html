@@ -3,7 +3,9 @@
     <aside class="feed-aside">
       <div class="widget widget--new-coin">
         <form novalidate [formGroup]="premiumForm">
-          <div class="new-coin-image" [ngClass]="{'new-coin-image--error': !imageLoaded}">
+          <div class="new-coin-image"
+               [ngClass]="{'new-coin-image--error':
+               premiumForm.get('image').touched && premiumForm.get('image').invalid}">
             <a href="javascript:void(0)"
                [ngStyle]="!!imageSrc && {'background-image': (imageSrc ? 'url(' + imageSrc + ')': '')}"
                (click)="triggerToInput()">
@@ -25,11 +27,6 @@
           </div>
           <div class="form-item">
             <div class="form-item__select">
-              <!--<select>
-                <option>Level One</option>
-                <option>Level Two</option>
-                <option>Level Three</option>
-              </select>-->
               <ng-select
                 class="ang-select"
                 [options]="premiumRanks"
@@ -54,16 +51,16 @@
           <div class="form-section">
             <h3 class="form-section__title">Basic Info</h3>
             <div class="form-item"
-                 [ngClass]="{'form-item--error': form.get('icoName').invalid && form.get('icoName').touched}">
+                 [ngClass]="{'form-item--error': form.get('name').invalid && form.get('name').touched}">
               <label class="form-item__label">ICO Name*</label>
               <input type="text"
                      class="form-item__field"
                      placeholder="Enter ICO Name"
-                     formControlName="icoName">
-              <span class="form-item__hint" *ngIf="form.get('icoName').invalid && form.get('icoName').touched">
+                     formControlName="name">
+              <span class="form-item__hint" *ngIf="form.get('name').invalid && form.get('name').touched">
                 This field is required!
               </span>
-              <app-reset-input-btn [inputField]="form.get('icoName')"></app-reset-input-btn>
+              <app-reset-input-btn [inputField]="form.get('name')"></app-reset-input-btn>
             </div>
             <div class="form-item"
                  [ngClass]="{'form-item--error': form.get('description').invalid && form.get('description').touched}">
@@ -83,7 +80,7 @@
               <!--<div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Multiple Select</label>
-                  <ss-multiselect-dropdown [options]="myOptions" [texts]="myTexts" [settings]="mySettings" >
+                  <ss-multiselect-dropdown [options]="myOptions" [texts]="multiTexts" [settings]="multiSettings" >
                   </ss-multiselect-dropdown>
                 </div>
               </div>-->
@@ -98,12 +95,6 @@
                 <div class="form-item">
                   <label class="form-item__label">Project Stage</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>Useable Product</option>
-                      <option>Useable Product</option>
-                      <option>Useable Product</option>
-                      <option>Useable Product</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="projectStages"
@@ -119,11 +110,6 @@
                 <div class="form-item">
                   <label class="form-item__label">Hype Score</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>LOW</option>
-                      <option>MEDIUM</option>
-                      <option>HIGH</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="scores"
@@ -139,17 +125,12 @@
                 <div class="form-item">
                   <label class="form-item__label">Risk Score</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>LOW</option>
-                      <option>MEDIUM</option>
-                      <option>HIGH</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="scores"
                       [multiple]="false"
                       placeholder="Select Risk Score"
-                      formControlName="hypeScore"
+                      formControlName="riskScore"
                       [allowClear]="false">
                     </ng-select>
                   </div>
@@ -159,40 +140,43 @@
                 <div class="form-item">
                   <label class="form-item__label">Invest Score</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>LOW</option>
-                      <option>MEDIUM</option>
-                      <option>HIGH</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="scores"
                       [multiple]="false"
                       placeholder="Select Invest Score"
-                      formControlName="hypeScore"
+                      formControlName="investScore"
                       [allowClear]="false">
                     </ng-select>
                   </div>
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item" #categoryMultiSelect>
+                <div class="form-item"
+                     [class.form-item--error]="form.get('categories').touched && form.get('categories').invalid"
+                     #categoryMultiSelect>
                   <label class="form-item__label">Category*</label>
-                  <ss-multiselect-dropdown #ff appFoo [options]="categories"
-                                           [texts]="myTexts"
-                                           [settings]="mySettings"
-                                           (onFilter)="filterCategory($event)"
-                                           (onAdded)="onAdded($event)"
-                                           (onRemoved)="onRemoved($event)"
-                                           placeholder="select category"
-                                           formControlName="categories">
+                  <ss-multiselect-dropdown
+                    [class.placeholder-text]="form.get('categories').touched && form.get('categories').invalid"
+                    appFoo [options]="categories"
+                    [texts]="multiTexts"
+                    [settings]="multiSettings"
+                    (onFilter)="filterCategory($event)"
+                    (onAdded)="onAdded($event)"
+                    (onRemoved)="onRemoved($event)"
+                    (dropdownClosed)="onDropdownClosed($event)"
+                    placeholder="select category"
+                    formControlName="categories">
                   </ss-multiselect-dropdown>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Founded</label>
-                  <input type="text" class="form-item__field" placeholder="YYYY">
+                  <input type="text"
+                         class="form-item__field"
+                         placeholder="YYYY"
+                         formControlName="founded">
                 </div>
               </div>
               <div class="col-sm-6">
@@ -205,6 +189,21 @@
                       [multiple]="false"
                       placeholder="Select Industry"
                       formControlName="industry"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item">
+                  <label class="form-item__label">Status</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="statuses"
+                      [multiple]="false"
+                      placeholder="Select Status"
+                      formControlName="status"
                       [allowClear]="false">
                     </ng-select>
                   </div>
@@ -260,19 +259,19 @@
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">ICO Website</label>
-                  <input type="text" class="form-item__field" value="https://aventus.io/">
+                  <input type="text" class="form-item__field" formControlName="site">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Whitepaper</label>
-                  <input type="text" class="form-item__field" value="https://aventus.io/whitepaper.pdf">
+                  <input type="text" class="form-item__field" formControlName="whitepaper">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Blog</label>
-                  <input type="text" class="form-item__field" value="https://aventus.io/blog">
+                  <input type="text" class="form-item__field" formControlName="blog">
                 </div>
               </div>
               <!--<div class="col-sm-6">
@@ -354,18 +353,12 @@
                   </div>
                 </div>
               </div>-->
-              <div class="col-sm-6">
+              <div class="col-sm-12">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('primaryGeography').invalid &&
                      form.get('primaryGeography').touched && form.get('primaryGeography').selectWasOpened}">
                   <label class="form-item__label">Primary Geography*</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>Europe</option>
-                      <option>Europe</option>
-                      <option>Europe</option>
-                      <option>Europe</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="countries"
@@ -383,14 +376,20 @@
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
-                  <label class="form-item__label">Description*</label>
-                  <textarea class="form-item__area"></textarea>
+                  <label class="form-item__label">Features</label>
+                  <textarea class="form-item__area"
+                            placeholder="Enter Features"
+                            formControlName="features">
+                  </textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Similar Projects</label>
-                  <input type="text" class="form-item__field">
+                  <textarea class="form-item__area"
+                            placeholder="Enter Similar Projects"
+                            formControlName="similarProjects">
+                  </textarea>
                 </div>
               </div>
             </div>
@@ -399,21 +398,40 @@
             <h3 class="form-section__title">ICO Details</h3>
             <div class="row">
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">ICO Date</label>
-                  <input type="text" class="form-item__field">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error': form.get('startDate').invalid && form.get('startDate').touched}">
+                  <label class="form-item__label">ICO Date*</label>
+                  <div class="dates-input-group" id="range-date-wrap">
+                    <ng2-flatpickr
+                      [config]="datepickerOptions"
+                      formControlName="startDate"
+                      placeholder="MM/DD/YY">
+                    </ng2-flatpickr>
+                    <input
+                      type="text"
+                      class="range-last form-item__field"
+                      id="secondRangeInput"
+                      formControlName="endDate"
+                      placeholder="MM/DD/YY">
+                  </div>
+                  <div class="validation-group">
+                    <div *ngIf="form.get('startDate').invalid && form.get('startDate').touched">
+                      <span class="form-item__hint">
+                        This field is required!
+                      </span>
+                    </div>
+                    <div *ngIf="form.get('endDate').invalid && form.get('endDate').touched">
+                      <span class="form-item__hint">
+                        This field is required!
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Token Type</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>App token</option>
-                      <option>App token</option>
-                      <option>App token</option>
-                      <option>App token</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="tokenTypes"
@@ -429,12 +447,6 @@
                 <div class="form-item">
                   <label class="form-item__label">Token Technology</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>ERC20</option>
-                      <option>ERC20</option>
-                      <option>ERC20</option>
-                      <option>ERC20</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="tokenTechnologies"
@@ -447,11 +459,16 @@
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error': form.get('amount').invalid && form.get('amount').touched}">
                   <label class="form-item__label">ICO Amount*</label>
                   <input type="text"
                          class="form-item__field"
+                         placeholder="Enter ICO Amount"
                          formControlName="amount">
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -460,12 +477,6 @@
                      form.get('jurisdiction').touched && form.get('jurisdiction').selectWasOpened}">
                   <label class="form-item__label">ICO Jurisdiction*</label>
                   <div class="form-item__select">
-                    <!--<select>
-                      <option>Estonia</option>
-                      <option>Estonia</option>
-                      <option>Estonia</option>
-                      <option>Estonia</option>
-                    </select>-->
                     <ng-select
                       class="ang-select"
                       [options]="countries"
@@ -484,19 +495,28 @@
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Tokens distribution</label>
-                  <textarea class="form-item__area"></textarea>
+                  <textarea class="form-item__area"
+                            placeholder="Enter text"
+                            formControlName="tokenDistribution">
+                  </textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Token Sales</label>
-                  <textarea class="form-item__area"></textarea>
+                  <textarea class="form-item__area"
+                            placeholder="Enter text"
+                            formControlName="tokenSales">
+                  </textarea>
                 </div>
               </div>
               <div class="col-sm-12">
                 <div class="form-item">
                   <label class="form-item__label">Accepts</label>
-                  <input type="text" class="form-item__field">
+                  <textarea class="form-item__area"
+                            placeholder="Enter text"
+                            formControlName="accepts">
+                  </textarea>
                 </div>
               </div>
             </div>
@@ -505,15 +525,24 @@
             <h3 class="form-section__title">Tech</h3>
             <div class="form-item">
               <label class="form-item__label">Technical details</label>
-              <textarea class="form-item__area"></textarea>
+              <textarea class="form-item__area"
+                        placeholder="Enter text"
+                        formControlName="technicalDetails">
+              </textarea>
             </div>
             <div class="form-item">
               <label class="form-item__label">The source code</label>
-              <textarea class="form-item__area"></textarea>
+              <textarea class="form-item__area"
+                        placeholder="Enter text"
+                        formControlName="sourceCode">
+              </textarea>
             </div>
             <div class="form-item">
               <label class="form-item__label">Proof of developer</label>
-              <input type="text" class="form-item__field">
+              <textarea class="form-item__area"
+                        placeholder="Enter text"
+                        formControlName="proofOfDeveloper">
+              </textarea>
             </div>
           </div>
           <div class="form-section">

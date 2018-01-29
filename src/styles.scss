@@ -2997,7 +2997,7 @@ ___________________________*/
     border-radius: $border-radius - 1;
     color: $color-ac-text-alt;
     outline: none;
-    min-height: 70px;
+    height: 45px;
   }
 
   &__dots {
@@ -3074,9 +3074,56 @@ ___________________________*/
     }
   }
 
+  .dates-input-group {
+    max-width: 100%;
+    display: flex;
+
+    input {
+      width: 100%;
+      outline: none;
+      border: 1px solid #EFEFEF;
+      padding: 7px 10px 5px 13px;
+    }
+
+    ng2-flatpickr {
+      width: 50%;
+      outline: none;
+
+      input {
+        border-right: 0;
+        border-radius: $border-radius - 1 0 0 $border-radius - 1;
+        padding: 11px 14px;;
+      }
+    }
+
+    .range-last {
+      width: 50%;
+      border-radius: 0 $border-radius - 1 $border-radius - 1 0;
+      padding: 11px 14px;
+    }
+  }
+
+  .validation-group {
+    display: flex;
+
+    div {
+      width: 50%;
+    }
+  }
+
   ss-multiselect-dropdown {
+
+    &.placeholder-text {
+      .custom-multiple-select {
+        .btn {
+          color: grey;
+        }
+      }
+    }
+
     ul {
       .empty {
+        cursor: pointer;
         height: 100%;
         text-align: center;
         padding-top: 12px;
@@ -3105,6 +3152,18 @@ ___________________________*/
   .form-item__field,
   .form-item__area {
     border-color: $color-ac-error;
+  }
+
+  .dates-input-group {
+    input {
+      border-color: $color-ac-error;
+    }
+  }
+
+  .custom-multiple-select {
+    .btn {
+      border-color: $color-ac-error;
+    }
   }
 
   .form-item__select {

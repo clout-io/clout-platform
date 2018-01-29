@@ -1,9 +1,14 @@
-import { Component, OnInit, Output, EventEmitter, Renderer, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component, OnInit, Output, EventEmitter, Renderer, ViewChild, ElementRef
+} from '@angular/core';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { FeedService, IcosService } from '../../../services';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { multiSelectEmptyValidator } from '../../../shared';
 import { emptyValidator } from '../../../shared';
-import {BroadcastService} from "../../../services/broadcastService";
+import {BroadcastService} from '../../../services/broadcastService';
+import { FlatpickrOptions } from 'ng2-flatpickr/ng2-flatpickr';
+import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
 
 @Component({
   selector: 'app-ico-edit-form',
@@ -17,9 +22,7 @@ export class IcoEditFormComponent implements OnInit {
   @Output() onSave = new EventEmitter();
   @ViewChild('uploadIcoLogo') uploadIcoLogo: ElementRef;
   @ViewChild('categoryMultiSelect') categoryMultiSelect: ElementRef;
-  @ViewChild('ff') ff: ElementRef;
   imageSrc: string;
-  imageLoaded = true;
   defaultMember = {name: '', link: '', icon: {key: 'dot-circle-o', styleClass: 'fa-dot-circle-o'}};
   linksList = [
     {...this.defaultMember}
@@ -41,6 +44,11 @@ export class IcoEditFormComponent implements OnInit {
     {value: '9', label: 'Level Nine'},
     {value: '10', label: 'Level Ten'}
   ];
+  statuses: Array<any> = [
+    {value: 'upcoming', label: 'Upcoming'},
+    {value: 'ongoing', label: 'Ongoing'},
+    {value: 'closed', label: 'Closed'},
+  ];
   projectStages: Array<any>;
   tokenTypes: Array<any>;
   tokenTechnologies: Array<any>;
@@ -48,14 +56,14 @@ export class IcoEditFormComponent implements OnInit {
   countries: Array<any>;
   categories: IMultiSelectOption[] = [];
 
-  mySettings: IMultiSelectSettings = {
+  multiSettings: IMultiSelectSettings = {
     enableSearch: true,
     containerClasses: 'custom-multiple-select',
     dynamicTitleMaxItems: 3,
     displayAllSelectedText: true
   };
 
-  myTexts: IMultiSelectTexts = {
+  multiTexts: IMultiSelectTexts = {
     checkAll: 'Select all',
     uncheckAll: 'Unselect all',
     checked: 'item selected',
@@ -65,6 +73,12 @@ export class IcoEditFormComponent implements OnInit {
     searchNoRenderText: 'Type in search box to see results...',
     defaultTitle: 'Select Category',
     allSelected: 'Select Category',
+  };
+
+  datepickerOptions: FlatpickrOptions = {
+    dateFormat: 'm/d/Y',
+    mode: 'range',
+    plugins: [rangePlugin({ input: '#secondRangeInput' })]
   };
 
   constructor(private renderer: Renderer,
@@ -87,7 +101,11 @@ export class IcoEditFormComponent implements OnInit {
       .subscribe(res => this.industries = res.map(item => { return {value: item.id, label: item.name}; }));
 
     this.icosService.getFiltersCategory().take(1)
-      .subscribe(res => this.categories = res.map(item => { return {id: item.id, name: item.name}; }));
+      .subscribe(res => {
+        this.categories = res.map(item => { return {id: item.id, name: item.name}; });
+        setTimeout(() => this.form.controls['categories'].markAsUntouched(), 0);
+        this.broadcastService.broadcast('updateCategoryTitle');
+      });
 
     this.icosService.getCountries().take(1)
       .subscribe(res => {
@@ -98,38 +116,51 @@ export class IcoEditFormComponent implements OnInit {
       });
 
     this.premiumForm = this.formBuilder.group({
-      image: [''],
+      image: ['', [Validators.required]],
       premiumRank: ['1'],
       isPremium: [false],
       premiumDescription: ['']
     });
 
     this.form = this.formBuilder.group({
-      icoName: ['', [Validators.required, emptyValidator()]],
+      name: ['', [Validators.required, emptyValidator()]],
       description: ['', [Validators.required, emptyValidator()]],
       hypeScore: [''],
+      riskScore: [''],
+      investScore: [''],
       projectStage: [''],
       tokenType: [''],
       tokenTechnology: [''],
       industry: [''],
+      status: [''],
+      founded: [''],
+      site: [''],
+      whitepaper: [''],
+      blog: [''],
+      features: [''],
+      tokenDistribution: [''],
+      tokenSales: [''],
+      accepts: [''],
+      similarProjects: [''],
+      technicalDetails: [''],
+      sourceCode: [''],
+      proofOfDeveloper: [''],
+      startDate: ['', [Validators.required]],
+      endDate: ['', [Validators.required]],
       primaryGeography: ['', Validators.required],
       jurisdiction: ['', Validators.required],
-      amount: ['', Validators.required],
-      categories: ['']
+      amount: ['', [Validators.required, emptyValidator()]],
+      categories: ['', [Validators.required, multiSelectEmptyValidator()]]
     });
     this.form.controls['primaryGeography']['isSelectRequired'] = true;
     this.form.controls['jurisdiction']['isSelectRequired'] = true;
-
-    setTimeout(() => {
-      //this.opened();
-    }, 2000)
   }
 
   filterCategory(filter) {
     const a = document.createElement('p');
-    a.innerHTML = `Add "${filter}"`;
+    a.innerHTML = `Add '${filter}'`;
     a.addEventListener('click', () => {
-      const obj: IMultiSelectOption = {id: filter, name: filter};
+      const obj: IMultiSelectOption = {id: 'new_' + filter, name: filter};
       this.categories = [].concat(this.categories, [obj]);
       this.broadcastService.broadcast('addCategoryToSelect', obj);
     });
@@ -160,6 +191,10 @@ export class IcoEditFormComponent implements OnInit {
 
   onRemoved(a) {
     this.broadcastService.broadcast('updateCategoryTitle');
+  }
+
+  onDropdownClosed() {
+    this.form.controls['categories'].markAsTouched();
   }
 
   cancel() {
@@ -215,16 +250,7 @@ export class IcoEditFormComponent implements OnInit {
         const imageSrc = window.URL.createObjectURL(file);
         this.imageSrc = imageSrc;
         this.premiumForm.get('image').setValue(responce[0].id);
-        //this.onUploadPhoto.emit({file, imageSrc, loadImgId: responce[0].id});
-      }, (error) => {
-    });
-
-    /*this.feedService.loadImage(formData)
-      .subscribe(responce => {
-        const imageSrc = window.URL.createObjectURL(file);
-        this.onUploadPhoto.emit({file, imageSrc, loadImgId: responce[0].id});
-      }, (error) => {
-      });*/
+      }, (error) => {});
   }
 
 }

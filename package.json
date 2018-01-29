@@ -61,7 +61,7 @@
     "jsonwebtoken": "^8.1.0",
     "moment": "^2.19.1",
     "ng2-auto-complete": "^0.12.0",
-    "ng2-flatpickr": "^0.4.0",
+    "ng2-flatpickr": "^1.5.0",
     "ng2-nouislider": "^1.7.7",
     "ng2-owl-carousel": "^0.1.15",
     "ng2-social-share": "0.0.10",
