@@ -13,7 +13,7 @@ import {emptyValidator} from '../../../../shared/index';
 export class TeamMembersComponent implements OnInit {
 
   @Input() team;
-  @Output() changeTeam: EventEmitter<FormGroup> = new EventEmitter<FormGroup>();
+  @Output() changeTeam: EventEmitter<any> = new EventEmitter<any>();
 
   membersForm: FormGroup;
   items: any = [];
@@ -63,7 +63,8 @@ export class TeamMembersComponent implements OnInit {
       });
     });
 
-    this.changeTeam.emit(R.sortWith([R.ascend(R.prop('order'))])(R.concat(R.concat(_team, _deleted), _new)));
+    const teams = R.sortWith([R.ascend(R.prop('order'))])(R.concat(R.concat(_team, _deleted), _new));
+    this.changeTeam.emit({form: this.membersForm, teams});
   }
 
   createItem(): FormGroup {
@@ -71,7 +72,7 @@ export class TeamMembersComponent implements OnInit {
       id: null,
       name: ['', [Validators.required, emptyValidator()]],
       role: ['', [Validators.required, emptyValidator()]],
-      action: ['active', [Validators.required]]
+      status: ['active', [Validators.required]]
     });
   }
 

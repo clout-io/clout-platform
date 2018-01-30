@@ -7,8 +7,7 @@ import { otherLinks } from '../other-links';
   styleUrls: ['./links.component.scss']
 })
 export class LinksComponent implements OnInit, OnChanges {
-  @Input() socials;
-  socialList: [any];
+  @Input() icoData;
 
   constructor() { }
 
@@ -16,9 +15,7 @@ export class LinksComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes): void {
-    this.socialList = this.socials.filter(item => {
-      return !!otherLinks[item.network];
-    });
+    console.log('t', this.icoData)
   }
 
 }

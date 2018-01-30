@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
-
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-ico-detail',
@@ -8,6 +8,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 })
 export class IcoDetailComponent implements OnInit, OnDestroy {
   @Input() ico: any;
+  url = environment.url;
 
   constructor() { }
 

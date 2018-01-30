@@ -226,12 +226,12 @@
                      *ngFor="let item of form.get('socials')['controls']; let i = index;">
                   <div [formGroupName]="i">
                     <div class="team-group links-group">
-                      <input type="text"
+                      <!--<input type="text"
                              class="form-item__field"
                              [ngClass]="{'invalid_link':
-                             item['controls']['name'].touched && item['controls']['name'].invalid}"
+                             item['controls']['type'].touched && item['controls']['type'].invalid}"
                              formControlName="name"
-                             placeholder="Enter Name">
+                             placeholder="Enter Name">-->
                       <input type="text"
                              class="form-item__field"
                              [ngClass]="{'invalid_link':
@@ -239,7 +239,7 @@
                              formControlName="link"
                              placeholder="Enter Link">
                       <div class="form-item__select form-item__select-links">
-                        <app-select-icon [formField]="item['controls']['icon']"></app-select-icon>
+                        <app-select-icon [formField]="item['controls']['type']"></app-select-icon>
                       </div>
                     </div>
                     <div class="team-action">
@@ -258,13 +258,13 @@
                       </a>
                     </div>
                     <div class="team-group links-group validation-inputs-group">
-                      <span class="input_invalid"
+                      <!--<span class="input_invalid"
                             *ngIf="item['controls']['name'].touched && item['controls']['name'].invalid">
                         This field is required!
-                      </span>
-                      <span class="input_invalid"
+                      </span>-->
+                      <!--<span class="input_invalid"
                             *ngIf="item['controls']['name'].untouched || item['controls']['name'].valid">
-                      </span>
+                      </span>-->
                       <span class="input_invalid"
                             *ngIf="item['controls']['link'].touched && item['controls']['link'].invalid">
                         This field is required!
@@ -320,10 +320,10 @@
                       (closed)="closeSelect('primaryGeography')"
                       [allowClear]="false">
                     </ng-select>
-                    <span class="form-item__hint">
+                  </div>
+                  <span class="form-item__hint">
                       This field is required!
                     </span>
-                  </div>
                   <app-server-error-msg [errorMsg]="serverErrors['primaryGeography']"></app-server-error-msg>
                 </div>
               </div>
@@ -451,10 +451,10 @@
                       formControlName="jurisdiction"
                       [allowClear]="false">
                     </ng-select>
-                    <span class="form-item__hint">
+                  </div>
+                  <span class="form-item__hint">
                       This field is required!
                     </span>
-                  </div>
                   <app-server-error-msg [errorMsg]="serverErrors['jurisdiction']"></app-server-error-msg>
                 </div>
               </div>
@@ -463,9 +463,9 @@
                   <label class="form-item__label">Tokens distribution</label>
                   <textarea class="form-item__area"
                             placeholder="Enter text"
-                            formControlName="tokenDistribution">
+                            formControlName="tokensDistribution">
                   </textarea>
-                  <app-server-error-msg [errorMsg]="serverErrors['tokenDistribution']"></app-server-error-msg>
+                  <app-server-error-msg [errorMsg]="serverErrors['tokensDistribution']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-12">

@@ -7,10 +7,11 @@ import 'rxjs/add/operator/toPromise';
 import { Router } from '@angular/router';
 import { ApiHelperService } from './apiHelper';
 import { BroadcastService } from './broadcastService';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class ApiService {
-  api_url = 'http://haumea.bvblogic.net:8103';
+  api_url = environment.url;
   signin_url = 'api/v1/signin';
   signup_url = 'api/v1/signup';
   activate_url = 'api/v1/activate?code=';

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import {IcosService} from '../../../services/icosService';
 
 @Component({
   selector: 'app-add-ico',
@@ -7,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddIcoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private icosService: IcosService) { }
 
   ngOnInit() {
   }
@@ -15,8 +16,12 @@ export class AddIcoComponent implements OnInit {
   cancel() {
   }
 
-  addIco() {
-
+  addIco(data) {
+    console.log('data', data);
+    this.icosService.addIco(data).take(1)
+      .subscribe(responce => {
+        console.log('responce', responce);
+      });
   }
 
 }

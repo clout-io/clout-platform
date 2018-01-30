@@ -51,12 +51,12 @@
             <li>
               <span>ICO date:</span>
               <span>
-                {{icoData?.startedW3c | date: 'MMM dd, yyyy'}} – {{icoData?.endedW3c | date: 'MMM dd, yyyy'}}
+                {{icoData?.startDate | date: 'MMM dd, yyyy'}} – {{icoData?.endDate | date: 'MMM dd, yyyy'}}
               </span>
             </li>
             <li>
               <span>Token Type:</span>
-              <span>{{icoData?.tokenTypeBlockchain}}</span>
+              <span>{{icoData?.tokenType?.name}}</span>
             </li>
            <!-- <li>
               <span>Token Technology:</span>
@@ -72,7 +72,7 @@
             </li>-->
             <li>
               <span>Tokens distribution:</span>
-              <span>{{icoData?.tokenSupplyAmount}}</span>
+              <span>{{icoData?.tokensDistribution}}</span>
               <!--<span>Total token supply: 10,000,000 AVT</span>-->
             </li>
             <!--<li>

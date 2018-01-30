@@ -18,6 +18,7 @@ import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
 export class IcoEditFormComponent implements OnInit {
   premiumForm: FormGroup;
   form: FormGroup;
+  membersForm: FormGroup;
   socials: any;
   @Output() onCancel = new EventEmitter();
   @Output() onSave = new EventEmitter();
@@ -169,7 +170,7 @@ export class IcoEditFormComponent implements OnInit {
       whitepaper: [''],
       blog: [''],
       features: [''],
-      tokenDistribution: [''],
+      tokensDistribution: [''],
       tokenSales: [''],
       accepts: [''],
       similarProjects: [''],
@@ -191,9 +192,8 @@ export class IcoEditFormComponent implements OnInit {
 
   createSocialItem(): FormGroup {
     return this.formBuilder.group({
-      name: ['', [Validators.required, emptyValidator()]],
       link: ['', [Validators.required, emptyValidator()]],
-      icon: ['']
+      type: ['other']
     });
   }
 
@@ -251,8 +251,10 @@ export class IcoEditFormComponent implements OnInit {
     this.onCancel.emit();
   }
 
-  teamChange(team: any[]) {
-    console.log('new team', team);
+  teamChange(data) {
+    console.log('new team', data.teams);
+    console.log('form', data.form);
+    this.membersForm = data.form;
   }
 
   save() {
@@ -262,13 +264,83 @@ export class IcoEditFormComponent implements OnInit {
     Object.keys(this.form.controls).forEach(key => {
       this.serverErrors[key] = `${key} is required!`;
     });*/
+    console.log(this.premiumForm);
+    console.log(this.form);
+    this.setFormFieldsAsTouched(this.premiumForm.controls);
+    this.setFormFieldsAsTouched(this.form.controls);
+    this.setGroupFieldsAsTouched();
+
+    if (this.form.controls['startDate'].valid) {
+      if (this.form.controls['startDate'].value.length === 2) {
+        this.form.controls['endDate'].setErrors(null);
+      }
+    }
+
+    const {image, premiumRank, isPremium, premiumDescription} = this.premiumForm.value;
+    const {
+      name, description, primaryGeography, amount, jurisdiction, status, projectStage, hypeScore, riskScore,
+      investScore, founded, tokenType, tokenTechnology, industry, site, whitepaper, blog, features,
+      tokensDistribution, tokenSales, accepts, similarProjects, technicalDetails, sourceCode, proofOfDeveloper
+    } = this.form.value;
+
+    const data = {
+      name, description, status, image, projectStage, hypeScore, riskScore, investScore, founded,
+      site, blog, whitepaper, primaryGeography, features, similarProjects, tokenType, tokenTechnology,
+      amount, jurisdiction, tokensDistribution, tokenSales, accepts, sourceCode, technicalDetails,
+      isPremium, premiumRank, premiumDescription, industry, proofOfDeveloper
+    };
+    let categories = this.form.value.categories.filter(item => item.trim().length > 1);
+    categories = categories.map(item => {
+      const flagIndex = item.indexOf('new_');
+      if (flagIndex !== -1) { return item.slice(flagIndex + 4); }
+      return item;
+    });
+    const sD = this.form.value.startDate[0],
+      eD = this.form.value.startDate[1];
+
+    if (sD && eD) {
+      data['startDate'] = `${sD.getMonth() + 1}/${sD.getDate()}/${sD.getFullYear()}`;
+      data['endDate'] = `${eD.getMonth() + 1}/${eD.getDate()}/${eD.getFullYear()}`;
+    }
+
+    data['categories'] = categories;
+    data['socials'] = this.form.controls['socials'].value;
+    data['team'] = this.membersForm.controls['items'].value.map(item => {
+      const {name, role, status, order} = item;
+      return {name, role, status, order};
+    });
+
+    const sendData = {};
+    Object.keys(data).forEach(key => {
+      const value = data[key];
+      if (typeof value === 'undefined' || (typeof value === 'string' && value.trim() === '')) { return; }
+
+      sendData[key] = value;
+    });
+
+    console.log('data', data);
+    console.log('sendData', sendData);
+    this.onSave.emit(sendData);
+  }
+
+  setFormFieldsAsTouched(formControls: any): void {
+    for (const inputName in formControls) {
+      if (formControls[inputName]['isSelectRequired']) {
+        formControls[inputName]['selectWasOpened'] = true;
+      }
+      formControls[inputName].markAsTouched();
+    }
+  }
+
+  setGroupFieldsAsTouched(): void {
     this.form.controls['socials']['controls'].map(item => {
-      item['controls']['name'].markAsTouched();
+      //item['controls']['type'].markAsTouched();
       item['controls']['link'].markAsTouched();
     });
-    const premiumC = this.form.controls;
-    const icoC = this.form.controls;
-    this.onSave.emit();
+    this.membersForm.controls['items']['controls'].map(item => {
+      item['controls']['role'].markAsTouched();
+      item['controls']['name'].markAsTouched();
+    });
   }
 
   triggerToInput() {

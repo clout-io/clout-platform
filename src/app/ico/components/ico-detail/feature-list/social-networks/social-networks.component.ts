@@ -7,21 +7,23 @@ import { otherLinks } from '../other-links';
   styleUrls: ['./social-networks.component.scss']
 })
 export class SocialNetworksComponent implements OnInit, OnChanges {
-  @Input() socials;
-  socialNames = {
-    'facebook': 'fa fa-facebook',
-    'twitter': 'fa fa-twitter',
-    'linkedin': 'fa fa-linkedin',
-    'reddit': 'fa fa-reddit',
-    'slack': 'fa fa-slack',
-    'github': 'fa fa-github-alt',
-    'youtube': 'fa fa-youtube-play',
-    'telegram': 'fa fa-telegram',
-    'bitcoin': 'fa fa-btc',
-    'instagram': 'fa fa-instagram',
-    'google': 'fa fa-google',
-    'other': 'fa fa-dot-circle-o'
-  };
+  @Input() icoData;
+  socialNames = [
+    {key: 'other', styleClass: 'fa-dot-circle-o'},
+    {key: 'twitter', styleClass: 'fa-twitter'},
+    {key: 'facebook', styleClass: 'fa-facebook'},
+    {key: 'youtube-play', styleClass: 'fa-youtube-play'},
+    {key: 'linkedin', styleClass: 'fa-linkedin'},
+    {key: 'slack', styleClass: 'fa-slack'},
+    {key: 'github-alt', styleClass: 'fa-github-alt'},
+    {key: 'telegram', styleClass: 'fa-telegram'},
+    {key: 'btc', styleClass: 'fa-btc'},
+    {key: 'reddit', styleClass: 'fa-reddit'},
+    {key: 'google', styleClass: 'fa-google'},
+    {key: 'instagram', styleClass: 'fa-instagram'},
+    {key: 'steemit', styleClass: 'icon-steemit'},
+    {key: 'medium', styleClass: 'icon-medium'},
+  ];
   socialList: [any];
 
   constructor() { }
@@ -30,7 +32,7 @@ export class SocialNetworksComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes): void {
-    this.socialList = this.socials.filter(item => {
+    this.socialList = this.icoData.socials.filter(item => {
       const socialFound = this.socialNames[item.network];
       const otherLinkFound = otherLinks[item.network];
       if (!!socialFound) {
