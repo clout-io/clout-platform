@@ -3,7 +3,7 @@ import {
 } from '@angular/core';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { FeedService, IcosService } from '../../../services';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { multiSelectEmptyValidator } from '../../../shared';
 import { emptyValidator } from '../../../shared';
 import {BroadcastService} from '../../../services/broadcastService';
@@ -18,19 +18,16 @@ import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
 export class IcoEditFormComponent implements OnInit {
   premiumForm: FormGroup;
   form: FormGroup;
+  socials: any;
   @Output() onCancel = new EventEmitter();
   @Output() onSave = new EventEmitter();
   @ViewChild('uploadIcoLogo') uploadIcoLogo: ElementRef;
   @ViewChild('categoryMultiSelect') categoryMultiSelect: ElementRef;
   imageSrc: string;
-  defaultMember = {name: '', link: '', icon: {key: 'dot-circle-o', styleClass: 'fa-dot-circle-o'}};
-  linksList = [
-    {...this.defaultMember}
-  ];
   scores: Array<any> = [
-    {value: '1', label: 'LOW'},
-    {value: '2', label: 'MEDIUM'},
-    {value: '3', label: 'HIGH'},
+    {value: 'low', label: 'LOW'},
+    {value: 'medium', label: 'MEDIUM'},
+    {value: 'hight', label: 'HIGH'},
   ];
   premiumRanks: Array<any> = [
     {value: '1', label: 'Level One'},
@@ -48,6 +45,16 @@ export class IcoEditFormComponent implements OnInit {
     {value: 'upcoming', label: 'Upcoming'},
     {value: 'ongoing', label: 'Ongoing'},
     {value: 'closed', label: 'Closed'},
+  ];
+  years: Array<any> = [
+    {value: 2017, label: 2017},
+    {value: 2018, label: 2018},
+    {value: 2019, label: 2019},
+    {value: 2020, label: 2020},
+    {value: 2021, label: 2021},
+    {value: 2022, label: 2022},
+    {value: 2023, label: 2023},
+    {value: 2024, label: 2024},
   ];
   projectStages: Array<any>;
   tokenTypes: Array<any>;
@@ -149,11 +156,21 @@ export class IcoEditFormComponent implements OnInit {
       endDate: ['', [Validators.required]],
       primaryGeography: ['', Validators.required],
       jurisdiction: ['', Validators.required],
-      amount: ['', [Validators.required, emptyValidator()]],
-      categories: ['', [Validators.required, multiSelectEmptyValidator()]]
+      amount: ['', [Validators.required, emptyValidator(), Validators.min(1)]],
+      categories: ['', [Validators.required, multiSelectEmptyValidator()]],
+      socials: this.formBuilder.array([ this.createSocialItem() ])
     });
     this.form.controls['primaryGeography']['isSelectRequired'] = true;
     this.form.controls['jurisdiction']['isSelectRequired'] = true;
+    this.socials = this.form.get('socials') as FormArray;
+  }
+
+  createSocialItem(): FormGroup {
+    return this.formBuilder.group({
+      name: ['', [Validators.required, emptyValidator()]],
+      link: ['', [Validators.required, emptyValidator()]],
+      icon: ['']
+    });
   }
 
   filterCategory(filter) {
@@ -177,12 +194,14 @@ export class IcoEditFormComponent implements OnInit {
     this.form.controls[formControlName]['selectWasOpened'] = true;
   }
 
-  addNewTeamMember() {
-    this.linksList.push({...this.defaultMember});
+  addSocialItem() {
+    this.socials = this.form.get('socials') as FormArray;
+    this.socials.push(this.createSocialItem());
   }
 
-  removeTeamMember(index: number) {
-    this.linksList.splice(index, 1);
+  removeSocialItem(index: number) {
+    const toDelete = confirm('Do you really want to delete this item?');
+    if (toDelete) { this.socials.removeAt(index); }
   }
 
   onAdded(a) {
@@ -209,6 +228,10 @@ export class IcoEditFormComponent implements OnInit {
   }
 
   save() {
+    this.form.controls['socials']['controls'].map(item => {
+      item['controls']['name'].markAsTouched();
+      item['controls']['link'].markAsTouched();
+    });
     const premiumC = this.form.controls;
     const icoC = this.form.controls;
     this.onSave.emit();
@@ -224,7 +247,7 @@ export class IcoEditFormComponent implements OnInit {
     this.readThis($event.target);
   }
 
-  readThis(inputValue: any) : void {
+  readThis(inputValue: any): void {
     const file: File = inputValue.files[0];
     const readerImage: FileReader = new FileReader();
     readerImage.onloadend = event => {

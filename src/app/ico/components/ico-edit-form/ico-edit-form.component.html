@@ -77,20 +77,6 @@
           <div class="form-section">
             <h3 class="form-section__title">General</h3>
             <div class="row">
-              <!--<div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Multiple Select</label>
-                  <ss-multiselect-dropdown [options]="myOptions" [texts]="multiTexts" [settings]="multiSettings" >
-                  </ss-multiselect-dropdown>
-                </div>
-              </div>-->
-              <!--<div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">ICO Website</label>
-                  <input type="text" class="form-item__field" value="https://aventus.io/">
-                </div>
-              </div>-->
-
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Project Stage</label>
@@ -173,10 +159,16 @@
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Founded</label>
-                  <input type="text"
-                         class="form-item__field"
-                         placeholder="YYYY"
-                         formControlName="founded">
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select years-select"
+                      [options]="years"
+                      [multiple]="false"
+                      placeholder="YYYY"
+                      formControlName="founded"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -213,125 +205,82 @@
           </div>
           <div class="form-section">
             <h3 class="form-section__title">Contact info</h3>
-            <div class="form-section" *ngIf="!!linksList.length">
-              <div class="form-item">
+            <div class="form-section" *ngIf="!!socials.length">
+              <div class="form-item" formArrayName="socials">
                 <label class="form-item__label">Links</label>
-                <div class="team-item link-item" *ngFor="let m of linksList; let i = index">
-                  <div class="team-group links-group">
-                    <input type="text" class="form-item__field" placeholder="Enter Name">
-                    <input type="text" class="form-item__field" placeholder="Enter Link">
-                    <div class="form-item__select form-item__select-links">
-                      <app-select-icon></app-select-icon>
+                <div class="team-item link-item"
+                     *ngFor="let item of form.get('socials')['controls']; let i = index;">
+                  <div [formGroupName]="i">
+                    <div class="team-group links-group">
+                      <input type="text"
+                             class="form-item__field"
+                             [ngClass]="{'invalid_link':
+                             item['controls']['name'].touched && item['controls']['name'].invalid}"
+                             formControlName="name"
+                             placeholder="Enter Name">
+                      <input type="text"
+                             class="form-item__field"
+                             [ngClass]="{'invalid_link':
+                             item['controls']['link'].touched && item['controls']['link'].invalid}"
+                             formControlName="link"
+                             placeholder="Enter Link">
+                      <div class="form-item__select form-item__select-links">
+                        <app-select-icon [formField]="item['controls']['icon']"></app-select-icon>
+                      </div>
                     </div>
-                  </div>
-                  <div class="team-action">
-                    <a href="javascript:void(0)"
-                       class="team-action__remove"
-                       (click)="removeTeamMember(i)">
-                    </a>
-                    <a href="javascript:void(0)"
-                       class="team-action__add"
-                       *ngIf="i === (linksList.length - 1)"
-                       (click)="addNewTeamMember()">
-                    </a>
-                    <a href="javascript:void(0)"
-                       class="team-action__fake"
-                       *ngIf="i !== (linksList.length - 1)">
-                    </a>
+                    <div class="team-action">
+                      <a href="javascript:void(0)"
+                         class="team-action__remove"
+                         (click)="removeSocialItem(i)">
+                      </a>
+                      <a href="javascript:void(0)"
+                         class="team-action__add"
+                         *ngIf="i === (socials.length - 1)"
+                         (click)="addSocialItem()">
+                      </a>
+                      <a href="javascript:void(0)"
+                         class="team-action__fake"
+                         *ngIf="i !== (socials.length - 1)">
+                      </a>
+                    </div>
+                    <div class="team-group links-group">
+                      <span class="input_invalid"
+                            *ngIf="item['controls']['name'].touched && item['controls']['name'].invalid">
+                        This field is required!
+                      </span>
+                      <span class="input_invalid"
+                            *ngIf="item['controls']['name'].untouched || item['controls']['name'].valid">
+                      </span>
+                      <span class="input_invalid"
+                            *ngIf="item['controls']['link'].touched && item['controls']['link'].invalid">
+                        This field is required!
+                      </span>
+                      <div class="fake-block"></div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-            <!--<ul class="dropdown-menu">
-              <li class="dropdown-header">Member name (you)</li>
-              <li>
-                <a href="#" title="Select this card"><img src="http://lorempixel.com/75/50/abstract/">0123 4567 8912 3456</a>
-              </li>
-              <li>
-                <a href="#" title="Select this card"><img src="http://lorempixel.com/75/50/abstract/">0123 4567 8912 3456</a>
-              </li>
-              <li class="dropdown-header">Member name</li>
-              <li>
-                <a href="#" title="Select this card"><img src="http://lorempixel.com/75/50/abstract/">0123 4567 8912 3456</a>
-              </li>
-            </ul>-->
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">ICO Website</label>
-                  <input type="text" class="form-item__field" formControlName="site">
+                  <input type="text" class="form-item__field"
+                         formControlName="site" placeholder="Enter Website link">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Whitepaper</label>
-                  <input type="text" class="form-item__field" formControlName="whitepaper">
+                  <input type="text" class="form-item__field"
+                         formControlName="whitepaper" placeholder="Enter Whitepaper link">
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item">
                   <label class="form-item__label">Blog</label>
-                  <input type="text" class="form-item__field" formControlName="blog">
-                </div>
-              </div>
-              <!--<div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Twitter</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Twitter link">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Facebook</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Facebook link" value="https://www.facebook.com/aventus">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Youtube</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Youtube link">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Linkedin</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Linkedin link">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Slack</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Slack link">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">GitHub</label>
-                  <input type="text" class="form-item__field" placeholder="Enter GitHub link">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Telegram</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Telegram link">
-                </div>
-              </div>-->
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Medium</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Medium link">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Btctalk</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Btctalk link">
-                </div>
-              </div>
-              <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Steemit</label>
-                  <input type="text" class="form-item__field" placeholder="Enter Steemit link">
+                  <input type="text" class="form-item__field"
+                         formControlName="blog" placeholder="Enter Blog link">
                 </div>
               </div>
             </div>
@@ -339,20 +288,6 @@
           <div class="form-section">
             <h3 class="form-section__title">Project Details</h3>
             <div class="row">
-              <!--<div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Project Stage</label>
-                  <div class="form-item__select">
-                    <select>
-                      <option>Crypto Investments</option>
-                      <option>Crypto Investments</option>
-                      <option>Crypto Investments</option>
-                      <option>Crypto Investments</option>
-                      <option>Crypto Investments</option>
-                    </select>
-                  </div>
-                </div>
-              </div>-->
               <div class="col-sm-12">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('primaryGeography').invalid &&
@@ -466,8 +401,11 @@
                          class="form-item__field"
                          placeholder="Enter ICO Amount"
                          formControlName="amount">
-                  <span class="form-item__hint">
+                  <span class="form-item__hint" *ngIf="form.get('amount').hasError('required')">
                     This field is required!
+                  </span>
+                  <span class="form-item__hint" *ngIf="!form.get('amount').hasError('required')">
+                    Amount must be larger than or equal to 1.
                   </span>
                 </div>
               </div>

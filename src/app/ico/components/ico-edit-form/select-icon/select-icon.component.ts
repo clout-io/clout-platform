@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 
 @Component({
   selector: 'app-select-icon',
@@ -6,7 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./select-icon.component.scss']
 })
 export class SelectIconComponent implements OnInit {
+  @Input() formField;
   icons = [
+    {key: 'dot-circle-o', styleClass: 'fa-dot-circle-o'},
     {key: 'twitter', styleClass: 'fa-twitter'},
     {key: 'facebook', styleClass: 'fa-facebook'},
     {key: 'youtube-play', styleClass: 'fa-youtube-play'},
@@ -20,7 +22,6 @@ export class SelectIconComponent implements OnInit {
     {key: 'instagram', styleClass: 'fa-instagram'},
     {key: 'steemit', styleClass: 'icon-steemit'},
     {key: 'medium', styleClass: 'icon-medium'},
-    {key: 'dot-circle-o', styleClass: 'fa-dot-circle-o'},
   ];
   activeIcon = this.icons[0];
 
@@ -31,6 +32,7 @@ export class SelectIconComponent implements OnInit {
 
   selectIcon(icon) {
     this.activeIcon = icon;
+    this.formField.setValue({...this.activeIcon});
   }
 
 }

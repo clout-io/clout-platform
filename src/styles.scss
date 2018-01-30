@@ -2926,6 +2926,7 @@ ___________________________*/
 
   &__select {
     position: relative;
+    height: 45px;
 
     &:after {
       display: block;
@@ -2961,6 +2962,7 @@ ___________________________*/
       }
 
       & > div {
+        height: 45px;
         border: 1px solid $border-color-alt;
         background-color: $color-ac-white;
         border-radius: $border-radius - 1;
@@ -2995,6 +2997,35 @@ ___________________________*/
         &:first-child {
           border: none;
         }
+      }
+
+      &.years-select {
+
+        ul {
+          display: flex;
+          flex-wrap: wrap;
+          padding: 5px;
+
+          li {
+            border: none;
+            border-radius: 4px;
+            width: 25%;
+            text-align: center;
+
+            &.highlighted {
+              background-color: #eceeef;
+            }
+
+            &.selected {
+              background-color: $color-ac-link;
+            }
+
+            @media screen and (max-width: 480px) {
+              padding: 6px 0;
+            }
+          }
+        }
+
       }
     }
   }
@@ -3182,7 +3213,7 @@ ___________________________*/
     }
   }
 
-  .form-item__hint {
+  .form-item__hint, .input_invalid {
     display: block;
     color: $color-ac-error;
     padding: 8px 0 0 0;
@@ -3257,6 +3288,25 @@ ___________________________*/
         border-left: 1px solid $border-color-alt;
       }
     }
+  }
+
+  input {
+    &.form-item__field {
+      &.invalid_link {
+        border: 1px solid $color-ac-error;
+      }
+    }
+  }
+
+  .input_invalid {
+    width: 100%;
+    display: block;
+    color: $color-ac-error;
+    padding: 8px 0 0 0;
+  }
+
+  .fake-block {
+    flex: 0 0 95px;
   }
 }
 
