@@ -57,9 +57,7 @@ module.exports.routes = [
           {
             in: "body", name: "data",
             schema: {
-              "required": [
-
-              ],
+              "required": [],
               "type": "object",
               "properties": {
                 "name": {
@@ -86,10 +84,91 @@ module.exports.routes = [
                   "type": "string",
                   "description": ""
                 },
+                "projectStage": {
+                  type: "string"
+                },
+                "hypeScore": {
+                  type: "string"
+                },
+                "riskScore": {
+                  type: "string"
+                },
+                "investScore": {
+                  type: "string"
+                },
                 "categories": {
+                  "type": "array",
+                  "description": ""
+                },
+                "founded": {
+                  "type": "integer",
+                },
+                "site": {
+                  "type": "string"
+                },
+                "blog": {
+                  "type": "string"
+                },
+                "whitepaper": {
+                  "type": "string"
+                },
+                "primaryGeography": {
                   "type": "string",
                   "description": ""
                 },
+                "features": {
+                  "type": "string",
+                },
+                "similarProjects": {
+                  "type": "string",
+                },
+                "tokenType": {
+                  "type": "string"
+                },
+                "tokenTechnology": {
+                  "type": "string"
+                },
+                "amount": {
+                  "type": "integer",
+                  "description": ""
+                },
+                "jurisdiction": {
+                  "type": "string",
+                  "description": ""
+                },
+                "tokensDistribution": {
+                  "type": "string"
+                },
+                "tokenSales": {
+                  "type": "string"
+                },
+                "accepts": {
+                  "type": "string"
+                },
+                "sourceCode": {
+                  "type": "string"
+                },
+                "team": {
+                  "type": "array"
+                },
+                "socials": {
+                  "type": "array"
+                },
+                "technicalDetails": {
+                  "type": "string"
+                },
+                isPremium: {
+                  "type": "boolean",
+                  "description": ""
+                },
+                premiumRank: {
+                  "type": "integer",
+                  "description": ""
+                },
+                premiumDescription: {
+                  "type": "string",
+                  "description": ""
+                }
               }
             }
           }
@@ -175,5 +254,65 @@ module.exports.routes = [
 
       }
     }
+  },
+  {
+    method: "GET", path: "/ico/filters/stage", target: {
+    controller: "IcoStageController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'Stage list',
+      description: 'Stage list',
+      tags: [
+        'Ico',
+      ]
+    }
   }
+  },
+  {
+    method: "GET", path: "/ico/filters/tokentype", target: {
+    controller: "IcoTokenTypeController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'tokentype list',
+      description: 'tokentype list',
+      tags: [
+        'Ico',
+      ]
+    }
+  }
+  },
+  {
+    method: "GET", path: "/ico/filters/tokentechnology", target: {
+    controller: "IcoTokenTechnologyController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'tokentype list',
+      description: 'tokentype list',
+      tags: [
+        'Ico',
+      ]
+    }
+  }
+  },
+  {
+    method: "GET", path: "/ico/filters/industry", target: {
+    controller: "IcoIndustryController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'tokentype list',
+      description: 'tokentype list',
+      tags: [
+        'Ico',
+      ]
+    }
+  }
+  },
+  {
+    method: "GET", path: "/ico/filters/category", target: {
+    controller: "IcoCategoryController", action: "list", swagger: {
+      methods: ['GET'],
+      summary: 'tokentype list',
+      description: 'tokentype list',
+      tags: [
+        'Ico',
+      ]
+    }
+  }
+  },
 ];

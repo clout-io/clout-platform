@@ -5,6 +5,8 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
+const slug = require('slug');
+
 module.exports = {
 
   attributes: {
@@ -12,6 +14,11 @@ module.exports = {
       type: "string"
     }
 
-  }
+  },
+  beforeValidate: function (values, next) {
+    values.id = slug(values.name).toLowerCase();
+    next();
+  },
+
 };
 
