@@ -1,0 +1,77 @@
+<div>
+  <h3 class="form-section__title">Team</h3>
+  <div class="form-item">
+    <label class="form-item__label">Team Members</label>
+    <ul [formGroup]="membersForm" [dragula]='"team-items"' [dragulaModel]="membersForm.get('items').controls">
+      <div class="team-item" formArrayName="items" *ngFor="let item of membersForm.get('items').controls; let i = index;">
+        <div class="team-group" [formGroupName]="i">
+          <div class="form-item__dots"></div>
+          <input formControlName="role"
+                 type="text" class="form-item__field"
+                 [ngClass]="{'invalid_link':
+                             item['controls']['role'].touched && item['controls']['role'].invalid}"
+                 placeholder="Enter Position">
+          <input formControlName="name"
+                 type="text" class="form-item__field"
+                 [ngClass]="{'invalid_link':
+                             item['controls']['name'].touched && item['controls']['name'].invalid}"
+                 placeholder="Enter Name">
+          <div class="form-item__select">
+            <ng-select
+              class="ang-select team-select"
+              [options]="actions"
+              [multiple]="false"
+              placeholder="Active"
+              formControlName="action"
+              [allowClear]="false">
+            </ng-select>
+            <span class="form-item__hint">
+              This field is required!
+            </span>
+          </div>
+          <!--<div  class="form-item__select">
+            <select formControlName="action" >
+              <option [value]="1">Active1</option>
+              <option [value]="2">Active2</option>
+              <option [value]="3">Active3</option>
+              <option [value]="4">Active4</option>
+            </select>
+          </div>-->
+        </div>
+        <div class="team-action">
+          <a href="javascript:void(0)"
+             class="team-action__remove"
+             (click)="deleteItem(i)">
+          </a>
+          <a href="javascript:void(0)"
+             class="team-action__add"
+             *ngIf="i === (membersForm.get('items').controls.length - 1)"
+             (click)="addItem()">
+          </a>
+          <a href="javascript:void(0)"
+             class="team-action__fake"
+             *ngIf="i !== (membersForm.get('items').controls.length - 1)">
+          </a>
+        </div>
+        <div class="team-group links-group validation-inputs-group">
+          <span class="input_invalid"
+                *ngIf="item['controls']['role'].touched && item['controls']['role'].invalid">
+            This field is required!
+          </span>
+          <span class="input_invalid"
+                *ngIf="item['controls']['role'].untouched || item['controls']['role'].valid">
+          </span>
+          <span class="input_invalid"
+                *ngIf="item['controls']['name'].touched && item['controls']['name'].invalid">
+            This field is required!
+          </span>
+          <div class="fake-block"></div>
+        </div>
+        <!--<div class="team-action" [ngClass]="{'only-add-action': membersForm.get('items').controls.length == 1 }">
+          <a *ngIf="membersForm.get('items').controls.length > 1" href="javascript:void(0);" (click)="deleteItem(i)" class="team-action__remove"></a>
+          <a href="javascript:void(0);" (click)="addItem()" class="team-action__add"></a>
+        </div>-->
+      </div>
+    </ul>
+  </div>
+</div>

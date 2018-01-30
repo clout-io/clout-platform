@@ -2978,6 +2978,16 @@ ___________________________*/
             line-height: 45px;
             padding: 0 14px;
           }
+
+          & > div.placeholder {
+            color: rgba(27, 29, 31, 0.68);
+          }
+        }
+      }
+
+      &.team-select {
+        & > div {
+          border-left: none;
         }
       }
 
@@ -3248,6 +3258,10 @@ ___________________________*/
       border-left: 0;
       border-bottom-width: 1px;
     }
+
+    &.invalid_link {
+      border: 1px solid $color-ac-error;
+    }
   }
 
   .form-item__select {
@@ -3271,11 +3285,13 @@ ___________________________*/
       flex: 0 0 95px;
     }
   }
+
+  &.validation-inputs-group {
+    margin-bottom: 5px;
+  }
 }
 
 .link-item {
-  margin-top: 10px;
-
   &:first-child {
     margin-top: 0;
   }
@@ -3303,6 +3319,11 @@ ___________________________*/
     display: block;
     color: $color-ac-error;
     padding: 8px 0 0 0;
+
+    &:first-child {
+      margin-left: 30px;
+      width: 90%;
+    }
   }
 
   .fake-block {

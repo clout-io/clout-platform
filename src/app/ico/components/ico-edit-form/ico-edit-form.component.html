@@ -243,7 +243,7 @@
                          *ngIf="i !== (socials.length - 1)">
                       </a>
                     </div>
-                    <div class="team-group links-group">
+                    <div class="team-group links-group validation-inputs-group">
                       <span class="input_invalid"
                             *ngIf="item['controls']['name'].touched && item['controls']['name'].invalid">
                         This field is required!
@@ -483,36 +483,15 @@
               </textarea>
             </div>
           </div>
-          <div class="form-section">
-            <h3 class="form-section__title">Team</h3>
-            <div class="form-item">
-              <label class="form-item__label">Team Members</label>
-              <div class="team-item">
-                <div class="team-group">
-                  <div class="form-item__dots"></div>
-                  <input type="text" class="form-item__field" placeholder="Enter Position">
-                  <input type="text" class="form-item__field" placeholder="Enter Name">
-                  <div class="form-item__select">
-                    <select>
-                      <option>Active</option>
-                      <option>Active</option>
-                      <option>Active</option>
-                      <option>Active</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="team-action">
-                  <a href="#" class="team-action__remove"></a>
-                  <a href="#" class="team-action__add"></a>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="form-actions text-center">
-            <a href="javascript:void(0)" class="btn btn--secondary" (click)="cancel()">Cancel</a>
-            <a href="javascript:void(0)" class="btn btn--primary" (click)="save()">Save</a>
-          </div>
         </form>
+
+        <div class="form-section">
+          <app-team-members [team]="team" (changeTeam)="teamChange($event)"></app-team-members>
+        </div>
+        <div class="form-actions text-center">
+          <a href="javascript:void(0)" class="btn btn--secondary" (click)="cancel()">Cancel</a>
+          <a href="javascript:void(0)" class="btn btn--primary" (click)="save()">Save</a>
+        </div>
       </div>
     </main>
   </div>

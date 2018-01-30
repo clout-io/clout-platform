@@ -63,6 +63,29 @@ export class IcoEditFormComponent implements OnInit {
   countries: Array<any>;
   categories: IMultiSelectOption[] = [];
 
+  team = [{
+      id: "59f9d19798f3eerere0ad5c5c2f2c",
+      name: "Will Warren11",
+      role: "Co-founder & CEO",
+      action: 1,
+      order: 11,
+    },
+    {
+      id: "59f9d1qqwwww9798f3e0ad5c5c2f2c",
+      name: "Will Warren5",
+      role: "Co-founder & CEO",
+      order: 5,
+      action: 3,
+    },
+    {
+      id: "59f9d19edsdsd798f3e0ad5c5c2f2c",
+      name: "Will Warren8",
+      role: "Co-founder & CEO",
+      order: 8,
+      action: 2,
+    }
+  ];
+
   multiSettings: IMultiSelectSettings = {
     enableSearch: true,
     containerClasses: 'custom-multiple-select',
@@ -225,6 +248,10 @@ export class IcoEditFormComponent implements OnInit {
     }
 
     this.onCancel.emit();
+  }
+
+  teamChange(team: any[]) {
+    console.log('new team', team);
   }
 
   save() {

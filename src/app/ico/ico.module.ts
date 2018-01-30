@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 // modules
@@ -9,6 +9,7 @@ import { IcoRoutingModule } from './ico-routing.module';
 
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 import {SelectModule} from 'angular2-select';
+import { DragulaModule } from 'ng2-dragula/ng2-dragula';
 
 // components
 import { IcoComponent } from './ico.component';
@@ -35,6 +36,7 @@ import {
   EditIcoComponent,
   IcoEditFormComponent,
   SelectIconComponent,
+  TeamMembersComponent,
   // search
   SearchComponent,
   FooDirective
@@ -47,7 +49,10 @@ import {
     NgbModule,
     IcoRoutingModule,
     MultiselectDropdownModule,
-    SelectModule
+    SelectModule,
+    DragulaModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   declarations: [
     IcoComponent,
@@ -74,7 +79,8 @@ import {
     EditIcoComponent,
     IcoEditFormComponent,
     SelectIconComponent,
-    FooDirective
+    FooDirective,
+    TeamMembersComponent
   ]
 })
 export class IcoModule { }
