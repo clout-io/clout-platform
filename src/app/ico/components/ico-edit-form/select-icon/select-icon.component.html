@@ -1,0 +1,18 @@
+<div class="dropdown">
+  <div class="dropdown-toggle social-toggle" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    <a><i class="fa {{activeIcon.styleClass}}"></i></a>
+  </div>
+  <div class="dropdown-menu select-social-icons" aria-labelledby="dropdownMenuButton">
+    <a *ngFor="let item of icons"
+       class="dropdown-item"
+       href="javascript:void(0)"
+       (click)="selectIcon(item)">
+      <i class="fa {{item.styleClass}}"></i>
+    </a>
+    <!--<a class="dropdown-item" href="javascript:void(0)" (click)="selectIcon()">
+      <i class="fa fa-twitter"></i>Action
+    </a>
+    <a class="dropdown-item" href="javascript:void(0)" (click)="selectIcon()">Another action</a>
+    <a class="dropdown-item" href="javascript:void(0)" (click)="selectIcon()">Something else here</a>-->
+  </div>
+</div>

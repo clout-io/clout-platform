@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { OwlModule } from 'ng2-owl-carousel';
+import { Ng2FlatpickrModule } from 'ng2-flatpickr';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -40,7 +41,8 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    OwlModule
+    OwlModule,
+    Ng2FlatpickrModule
   ],
   declarations: [
     HeaderComponent,
@@ -64,13 +66,17 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     NavsSwitcherComponent
   ],
   exports: [
+    FormsModule,
+    ReactiveFormsModule,
     CommentListComponent,
     ModalComponent,
     FollowBtnComponent,
     LoaderLineComponent,
     PercentPipe,
     AutomaticGetDataByUrlDirective,
-    NavsSwitcherComponent
+    NavsSwitcherComponent,
+    ResetInputBtnComponent,
+    Ng2FlatpickrModule
   ]
 })
 export class CoreModule { }

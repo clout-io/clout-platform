@@ -19,7 +19,8 @@ import {
   ModalService,
   CommentService,
   FollowService,
-  FeedService
+  FeedService,
+  IcosService
 } from './services';
 
 import { NumberSeparator } from './pipes';
@@ -57,7 +58,8 @@ import { AppComponent } from './app.component';
     ModalService,
     CommentService,
     FollowService,
-    FeedService
+    FeedService,
+    IcosService
   ],
   bootstrap: [AppComponent]
 })
