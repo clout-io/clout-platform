@@ -23,6 +23,7 @@ export class IcoEditFormComponent implements OnInit {
   @Output() onSave = new EventEmitter();
   @ViewChild('uploadIcoLogo') uploadIcoLogo: ElementRef;
   @ViewChild('categoryMultiSelect') categoryMultiSelect: ElementRef;
+  serverErrors = {};
   imageSrc: string;
   scores: Array<any> = [
     {value: 'low', label: 'LOW'},
@@ -255,6 +256,12 @@ export class IcoEditFormComponent implements OnInit {
   }
 
   save() {
+    /*Object.keys(this.premiumForm.controls).forEach(key => {
+      this.serverErrors[key] = `${key} is required!`;
+    });
+    Object.keys(this.form.controls).forEach(key => {
+      this.serverErrors[key] = `${key} is required!`;
+    });*/
     this.form.controls['socials']['controls'].map(item => {
       item['controls']['name'].markAsTouched();
       item['controls']['link'].markAsTouched();

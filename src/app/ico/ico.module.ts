@@ -39,7 +39,8 @@ import {
   TeamMembersComponent,
   // search
   SearchComponent,
-  FooDirective
+  FooDirective,
+  ServerErrorMsgComponent
 } from './components';
 
 @NgModule({
@@ -80,7 +81,8 @@ import {
     IcoEditFormComponent,
     SelectIconComponent,
     FooDirective,
-    TeamMembersComponent
+    TeamMembersComponent,
+    ServerErrorMsgComponent
   ]
 })
 export class IcoModule { }
