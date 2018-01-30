@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'app-ico-item',
@@ -6,6 +7,7 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
   styleUrls: ['./ico-item.component.scss']
 })
 export class IcoItemComponent implements OnInit {
+  url = environment.url;
   @Input() ico;
   @Input() selectedId;
   @Output() notify = new EventEmitter();
@@ -13,6 +15,10 @@ export class IcoItemComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    /*this.url = environment.url + '/' + this.ico.image.url;
+    console.log(this.ico)
+    console.log(this.ico.image)
+    console.log(this.ico.image.url)*/
   }
 
   selectItem() {

@@ -35,4 +35,8 @@ export class IcosService {
     return this.api.get(`${this.path}/countries`);
   }
 
+  addIco(options: any): Observable<any> {
+    return this.api.post(`${this.path}/ico`, options);
+  }
+
 }

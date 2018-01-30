@@ -8,7 +8,7 @@ import {Component, Input, OnInit} from '@angular/core';
 export class SelectIconComponent implements OnInit {
   @Input() formField;
   icons = [
-    {key: 'dot-circle-o', styleClass: 'fa-dot-circle-o'},
+    {key: 'other', styleClass: 'fa-dot-circle-o'},
     {key: 'twitter', styleClass: 'fa-twitter'},
     {key: 'facebook', styleClass: 'fa-facebook'},
     {key: 'youtube-play', styleClass: 'fa-youtube-play'},
@@ -32,7 +32,7 @@ export class SelectIconComponent implements OnInit {
 
   selectIcon(icon) {
     this.activeIcon = icon;
-    this.formField.setValue({...this.activeIcon});
+    this.formField.setValue(this.activeIcon.key);
   }
 
 }

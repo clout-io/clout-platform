@@ -6,5 +6,6 @@
 export const environment = {
   production: false,
   port: 4200,
-  url: 'http://haumea.bvblogic.net:8103'
+  //url: 'http://haumea.bvblogic.net:8103'
+  url: 'http://10.100.0.124:1337'
 };
