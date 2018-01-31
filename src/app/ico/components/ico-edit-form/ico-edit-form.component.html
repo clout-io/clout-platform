@@ -84,8 +84,10 @@
             <h3 class="form-section__title">General</h3>
             <div class="row">
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Project Stage</label>
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('projectStage').touched &&
+                     form.get('projectStage').invalid  && form.get('projectStage').selectWasOpened}">
+                  <label class="form-item__label">Project Stage*</label>
                   <div class="form-item__select">
                     <ng-select
                       class="ang-select"
@@ -93,15 +95,21 @@
                       [multiple]="false"
                       placeholder="Select Project Stage"
                       formControlName="projectStage"
+                      (closed)="closeSelect('projectStage')"
                       [allowClear]="false">
                     </ng-select>
                   </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['projectStage']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Hype Score</label>
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('hypeScore').touched &&
+                     form.get('hypeScore').invalid && form.get('hypeScore').selectWasOpened}">
+                  <label class="form-item__label">Hype Score*</label>
                   <div class="form-item__select">
                     <ng-select
                       class="ang-select"
@@ -109,15 +117,21 @@
                       [multiple]="false"
                       placeholder="Select Hype Score"
                       formControlName="hypeScore"
+                      (closed)="closeSelect('hypeScore')"
                       [allowClear]="false">
                     </ng-select>
                   </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['hypeScore']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Risk Score</label>
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('riskScore').touched
+                     && form.get('riskScore').invalid && form.get('riskScore').selectWasOpened}">
+                  <label class="form-item__label">Risk Score*</label>
                   <div class="form-item__select">
                     <ng-select
                       class="ang-select"
@@ -125,15 +139,21 @@
                       [multiple]="false"
                       placeholder="Select Risk Score"
                       formControlName="riskScore"
+                      (closed)="closeSelect('riskScore')"
                       [allowClear]="false">
                     </ng-select>
                   </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['riskScore']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Invest Score</label>
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('investScore').touched
+                     && form.get('investScore').invalid && form.get('investScore').selectWasOpened}">
+                  <label class="form-item__label">Invest Score*</label>
                   <div class="form-item__select">
                     <ng-select
                       class="ang-select"
@@ -141,45 +161,65 @@
                       [multiple]="false"
                       placeholder="Select Invest Score"
                       formControlName="investScore"
+                      (closed)="closeSelect('investScore')"
                       [allowClear]="false">
                     </ng-select>
                   </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['investScore']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
-                     [class.form-item--error]="form.get('categories').touched && form.get('categories').invalid"
+                     [class.form-item--error]="form.get('categories').touched &&
+                     form.get('categories').invalid && form.get('categories').selectWasOpened"
                      #categoryMultiSelect>
                   <label class="form-item__label">Category*</label>
                   <ss-multiselect-dropdown
-                    [class.placeholder-text]="form.get('categories').touched && form.get('categories').invalid"
+                    [class.placeholder-text]="form.get('categories').touched &&
+                    form.get('categories').invalid && form.get('categories').selectWasOpened"
                     appFoo [options]="categories"
                     [texts]="multiTexts"
                     [settings]="multiSettings"
                     (onFilter)="filterCategory($event)"
-                    (onAdded)="onAdded($event)"
-                    (onRemoved)="onRemoved($event)"
-                    (dropdownClosed)="onDropdownClosed($event)"
+                    (onAdded)="updateCategoryTitle($event)"
+                    (onRemoved)="updateCategoryTitle($event)"
+                    (dropdownClosed)="closeSelect('categories')"
                     placeholder="select category"
                     formControlName="categories">
                   </ss-multiselect-dropdown>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['categories']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
-                  <label class="form-item__label">Founded</label>
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('founded').touched
+                     && form.get('founded').invalid && form.get('founded').selectWasOpened}">
+                  <label class="form-item__label">Founded*</label>
                   <div class="form-item__select">
                     <ng-select
                       class="ang-select years-select"
                       [options]="years"
                       [multiple]="false"
+                      (closed)="closeSelect('founded')"
                       placeholder="YYYY"
                       formControlName="founded"
                       [allowClear]="false">
                     </ng-select>
                   </div>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('founded').hasError('max')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="form.get('founded').hasError('max')">
+                    This field must be less or equal to {{currentYear}}
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['founded']"></app-server-error-msg>
                 </div>
               </div>
@@ -322,8 +362,8 @@
                     </ng-select>
                   </div>
                   <span class="form-item__hint">
-                      This field is required!
-                    </span>
+                    This field is required!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['primaryGeography']"></app-server-error-msg>
                 </div>
               </div>

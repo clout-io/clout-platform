@@ -64,6 +64,7 @@ export class IcoEditFormComponent implements OnInit {
   industries: Array<any>;
   countries: Array<any>;
   categories: IMultiSelectOption[] = [];
+  currentYear = new Date().getFullYear();
 
   team = [{
       id: "59f9d19798f3eerere0ad5c5c2f2c",
@@ -135,7 +136,6 @@ export class IcoEditFormComponent implements OnInit {
     this.icosService.getFiltersCategory().take(1)
       .subscribe(res => {
         this.categories = res.map(item => { return {id: item.id, name: item.name}; });
-        setTimeout(() => this.form.controls['categories'].markAsUntouched(), 0);
         this.broadcastService.broadcast('updateCategoryTitle');
       });
 
@@ -157,15 +157,15 @@ export class IcoEditFormComponent implements OnInit {
     this.form = this.formBuilder.group({
       name: ['', [Validators.required, emptyValidator()]],
       description: ['', [Validators.required, emptyValidator()]],
-      hypeScore: [''],
-      riskScore: [''],
-      investScore: [''],
-      projectStage: [''],
+      hypeScore: ['', [Validators.required]],
+      riskScore: ['', [Validators.required]],
+      investScore: ['', [Validators.required]],
+      projectStage: ['', [Validators.required]],
       tokenType: [''],
       tokenTechnology: [''],
       industry: [''],
       status: [''],
-      founded: [''],
+      founded: ['', [Validators.required, Validators.max(this.currentYear)]],
       site: [''],
       whitepaper: [''],
       blog: [''],
@@ -187,6 +187,12 @@ export class IcoEditFormComponent implements OnInit {
     });
     this.form.controls['primaryGeography']['isSelectRequired'] = true;
     this.form.controls['jurisdiction']['isSelectRequired'] = true;
+    this.form.controls['hypeScore']['isSelectRequired'] = true;
+    this.form.controls['riskScore']['isSelectRequired'] = true;
+    this.form.controls['investScore']['isSelectRequired'] = true;
+    this.form.controls['projectStage']['isSelectRequired'] = true;
+    this.form.controls['founded']['isSelectRequired'] = true;
+    this.form.controls['categories']['isSelectRequired'] = true;
     this.socials = this.form.get('socials') as FormArray;
   }
 
@@ -228,16 +234,8 @@ export class IcoEditFormComponent implements OnInit {
     if (toDelete) { this.socials.removeAt(index); }
   }
 
-  onAdded(a) {
+  updateCategoryTitle(): void {
     this.broadcastService.broadcast('updateCategoryTitle');
-  }
-
-  onRemoved(a) {
-    this.broadcastService.broadcast('updateCategoryTitle');
-  }
-
-  onDropdownClosed() {
-    this.form.controls['categories'].markAsTouched();
   }
 
   cancel() {
@@ -334,7 +332,6 @@ export class IcoEditFormComponent implements OnInit {
 
   setGroupFieldsAsTouched(): void {
     this.form.controls['socials']['controls'].map(item => {
-      //item['controls']['type'].markAsTouched();
       item['controls']['link'].markAsTouched();
     });
     this.membersForm.controls['items']['controls'].map(item => {
