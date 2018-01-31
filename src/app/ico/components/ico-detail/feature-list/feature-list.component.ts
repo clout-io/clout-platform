@@ -12,39 +12,23 @@ export class FeatureListComponent implements OnInit, OnChanges {
   hypeScore: any;
   projectStage: any;
   categories: any;
-  scores: Array<any> = [
-    {value: 'low', label: 'LOW'},
-    {value: 'medium', label: 'MEDIUM'},
-    {value: 'hight', label: 'HIGH'},
-  ];
+  scores = {
+    'low': 'LOW',
+    'medium': 'MEDIUM',
+    'hight': 'HIGH'
+  };
 
   constructor() { }
 
   ngOnChanges(changes): void {
     if (!this.icoData) { return; }
-    this.scores.map(item => {
-      console.log('this.icoData.investScore', this.icoData.investScore);
-      console.log('this.icoData.riskScore', this.icoData.riskScore);
-      console.log('this.icoData.hypeScore', this.icoData.hypeScore);
-      if (item.value === this.icoData.investScore) {
-        this.investScore = item.label;
-      }
-      if (item.value === this.icoData.riskScore) {
-        this.riskScore = item.label;
-      }
-      if (item.value === this.icoData.hypeScore) {
-        this.hypeScore = item.label;
-      }
-    });
+
+    this.investScore = this.scores[this.icoData.investScore] || '';
+    this.riskScore = this.scores[this.icoData.riskScore] || '';
+    this.hypeScore = this.scores[this.icoData.hypeScore] || '';
     this.projectStage = this.icoData.projectStage ? this.icoData.projectStage.name : '';
-    const categories = this.icoData.categories.map(item => {
-      return item.name;
-    });
-    this.categories = categories.join(',');
+    this.categories = this.icoData.categories.map(item => item.name).join(', ');
   }
 
-  ngOnInit() {
-
-  }
-
+  ngOnInit() {}
 }

@@ -1,0 +1,36 @@
+<ul class="coin-details-list" *ngIf="icoData">
+  <li>
+    <span>ICO date:</span>
+    <span>
+      {{icoData.startDate | date: 'MMM dd, yyyy'}} – {{icoData.endDate | date: 'MMM dd, yyyy'}}
+    </span>
+  </li>
+  <li>
+    <span>Token Type:</span>
+    <span>{{icoData.tokenType?.name}}</span>
+  </li>
+   <li>
+     <span>Token Technology:</span>
+     <span>{{icoData.tokenTechnology?.name}}</span>
+   </li>
+   <li>
+     <span>ICO Amount:</span>
+     <span>{{icoData.amount}}</span>
+   </li>
+   <li>
+     <span>ICO Jurisdiction:</span>
+     <span>{{jurisdiction}}</span>
+   </li>
+  <li>
+    <span>Tokens distribution:</span>
+    <span>{{icoData.tokensDistribution}}</span>
+  </li>
+  <li>
+    <span>Tokens Sales:</span>
+    <span>{{icoData.tokenSales}}</span>
+  </li>
+  <li>
+    <span>Accepts:</span>
+    <span>{{icoData.accepts}}</span>
+  </li>
+</ul>

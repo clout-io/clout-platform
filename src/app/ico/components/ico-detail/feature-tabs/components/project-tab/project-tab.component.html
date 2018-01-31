@@ -1,0 +1,20 @@
+<ul class="coin-details-list" *ngIf="icoData">
+  <li>
+    <span>Industry:</span>
+    <span>{{industry}}</span>
+  </li>
+  <li>
+    <span>Primary Geography:</span>
+    <span>{{primaryGeography}}</span>
+  </li>
+  <li>
+    <span>Features:</span>
+    <span>
+      {{icoData.features}}
+    </span>
+  </li>
+  <li>
+    <span>Similar projects:</span>
+    <span>{{icoData.similarProjects}}</span>
+  </li>
+</ul>

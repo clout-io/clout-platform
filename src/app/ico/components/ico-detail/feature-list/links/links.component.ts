@@ -1,21 +1,16 @@
-import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { otherLinks } from '../other-links';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-links',
   templateUrl: './links.component.html',
   styleUrls: ['./links.component.scss']
 })
-export class LinksComponent implements OnInit, OnChanges {
+export class LinksComponent implements OnInit {
   @Input() icoData;
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  ngOnChanges(changes): void {
-    console.log('t', this.icoData)
   }
 
 }
