@@ -22,13 +22,15 @@
       </form>
     </div><!-- .header__search -->
     <div class="header__actions">
-      <div class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a *ngIf="!isAuthUser" routerLink="/login" class="sing-in-link">Sign In</a>
+
+      <div *ngIf="isAuthUser" class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <a href="#" class="header__user" title="{{userName}}">
           <img src="{{avatar}}" onerror="this.src='../../../../assets/user.svg'" alt="">
         </a>
       </div>
 
-      <a href="#" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
+      <a href="javascript:void(0);" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
       <div class="action">
         <a href="#" (click)="toggleSearchOnMobile($event); headerSearchField.focus();" class="fa fa-search"></a>
       </div>
