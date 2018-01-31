@@ -19,6 +19,8 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   mobileSearchVisible: boolean = false;
   visibleAlphabeticalDropdown: boolean;
 
+  isAuthUser: boolean = false;
+
   constructor(
     private auth: AuthService,
     private router: Router,
@@ -43,6 +45,12 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       .subscribe(responce => {
         this.topList = responce.data;
       });
+
+    this.isAuthUser = this.isAuthorized();
+  }
+
+  isAuthorized() {
+    return Boolean(window.localStorage.getItem(this.auth.JWT));
   }
 
   ngAfterViewInit() {
