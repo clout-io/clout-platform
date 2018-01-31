@@ -298,6 +298,23 @@ module.exports.routes = [
   }
   },
   {
+    method: "GET", path: "/user", target: {
+    controller: "UserController", action: "info", swagger: {
+      methods: ['GET'],
+      summary: 'Return public profile ',
+      description: 'Return public profile',
+      tags: [
+        'User'
+      ],
+      responses: {
+        '200': {
+          description: 'Return public profile'
+        }
+      }
+    }
+  }
+  },
+  {
     method: "POST", path: "/user/password/reset/:code", target: {
     controller: "UserController", action: "resetPassword", swagger: {
       methods: ['POST'],

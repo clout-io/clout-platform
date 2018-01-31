@@ -166,6 +166,11 @@ module.exports = {
   activities: async (req, res) => {
     let activities = await UserActivity.find({user: req.user.id}).sort("createdAt DESC");
     return res.json(activities);
-  }
+  },
+
+  info: async (req, res) => {
+    let user = await User.findOne({id: req.user.id});
+    return res.json(user)
+  },
 };
 
