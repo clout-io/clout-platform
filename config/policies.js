@@ -115,6 +115,9 @@ module.exports.policies = {
   },
   IcoCategoryController: {
     list: true,
+  },
+  CountryController: {
+    list: true
   }
 
 };
