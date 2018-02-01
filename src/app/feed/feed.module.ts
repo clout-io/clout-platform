@@ -10,10 +10,6 @@ import { FeedRoutingModule } from './feed-routing.module';
 import { FeedComponent } from './feed.component';
 import { CeiboShare } from 'ng2-social-share';
 
-import { NouisliderModule } from 'ng2-nouislider';
-
-
-
 import {
   FeedListComponent,
   FeedItemComponent,
@@ -42,8 +38,7 @@ import {
   AddArticleComponent,
   PublishPostBtnComponent,
   EditArticleComponent,
-  SinglePostItemComponent,
-  FilterSidebarComponent
+  SinglePostItemComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -56,8 +51,7 @@ import { TruncatePipe } from '../pipes';
     InfiniteScrollModule,
     FeedRoutingModule,
     FormsModule,
-    Ng2AutoCompleteModule,
-    NouisliderModule
+    Ng2AutoCompleteModule
   ],
   declarations: [
     CeiboShare,
@@ -90,8 +84,7 @@ import { TruncatePipe } from '../pipes';
     AddArticleComponent,
     PublishPostBtnComponent,
     EditArticleComponent,
-    SinglePostItemComponent,
-    FilterSidebarComponent
+    SinglePostItemComponent
   ]
 })
 export class FeedModule { }

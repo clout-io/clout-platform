@@ -1,5 +1,7 @@
-<ul class="social-links">
-  <li *ngFor="let social of socialList">
-    <a href="{{'http://'+social.url}}" class="{{social.className}}" target="_blank"></a>
-  </li>
-</ul>
+<div *ngIf="socialList.length > 0">
+  <ul class="social-links">
+    <li *ngFor="let social of socialList">
+      <a [href]="social?.link" class="fa {{social?.className}}" target="_blank"></a>
+    </li>
+  </ul>
+</div>

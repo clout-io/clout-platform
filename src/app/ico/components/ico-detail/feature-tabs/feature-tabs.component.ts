@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {Component, OnInit, Input} from '@angular/core';
+import {IcosService} from '../../../../services';
 
 @Component({
   selector: 'app-feature-tabs',
@@ -7,10 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class FeatureTabsComponent implements OnInit {
   @Input() icoData;
+  countries = [];
 
-  constructor() { }
+  constructor(private icosService: IcosService) {}
 
   ngOnInit() {
+    this.icosService.getCountries().take(1)
+      .subscribe(countriesObj => this.countries = countriesObj);
   }
 
 }

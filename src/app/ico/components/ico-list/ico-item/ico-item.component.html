@@ -1,7 +1,7 @@
 <li class="coin-list-item">
   <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico?.id === selectedId}">
     <div class="coin-list-item__img">
-      <img [src]="ico?.imageUrl">
+      <img src="{{url + ico?.image?.url}}">
       <span *ngIf="ico?.isPremium" class="premium-icon fa-stack fa-lg">
         <i class="fa fa-circle fa-stack-2x fa-circle-text-shadow"></i>
         <i class="fa fa-star fa-stack-1x fa-inverse"></i>
@@ -9,9 +9,9 @@
     </div>
     <div class="coin-list-item__content">
       <strong>{{ico?.name}}</strong>
-      <div class="coin-list-item__details" *ngIf="ico?.endedW3c">
-        {{ico?.startedW3c  | date: 'MMM dd, yyyy'}} –
-        {{ico?.endedW3c | date: 'MMM dd, yyyy'}}
+      <div class="coin-list-item__details" *ngIf="ico?.startDate">
+        {{ico?.startDate  | date: 'MM/dd/yyyy'}} –
+        {{ico?.endDate | date: 'MM/dd/yyyy'}}
       </div>
     </div>
   </a>

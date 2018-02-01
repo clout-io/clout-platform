@@ -1,7 +1,17 @@
 <div class="coin-details__share-links">
-  <span *ngFor="let social of socialList">
-    <a href="{{'http://'+social.url}}" [ngClass]="{'underline': social.network === 'homepage'}" target="_blank">
-      {{social.network === 'homepage' ? social.url : social.network}}
+  <span class="underline" *ngIf="icoData?.site">
+    <a href="{{icoData.site}}" target="_blank">
+      {{icoData.site}}
+    </a>
+  </span>
+  <span *ngIf="icoData?.whitepaper">
+    <a href="{{icoData.whitepaper}}" target="_blank">
+      Whitepaper
+    </a>
+  </span>
+  <span *ngIf="icoData?.blog">
+    <a href="{{icoData.blog}}" target="_blank">
+      Blog
     </a>
   </span>
 </div>

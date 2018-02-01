@@ -3177,7 +3177,7 @@ ___________________________*/
         height: 100%;
         text-align: center;
         padding-top: 12px;
-        background-color: grey;
+        background-color: #FBFBFC;
       }
     }
   }
@@ -3524,7 +3524,8 @@ ss-multiselect-dropdown {
     display: block;
     width: 100%;
     text-align: left;
-    color: $color-ac-text-alt;
+
+    color: rgba(27, 29, 31, 0.68);
     padding: 11px 35px 11px 14px;
     border: 1px solid #EFEFEF;
     border-radius: $border-radius - 1;

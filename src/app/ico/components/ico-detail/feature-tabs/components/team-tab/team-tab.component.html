@@ -1,0 +1,6 @@
+<ul class="coin-details-list" *ngIf="icoData">
+  <li *ngFor="let team of icoData.team; let i = index;">
+    <span>{{team.role}}:</span>
+    <span>{{team.name}}</span>
+  </li>
+</ul>

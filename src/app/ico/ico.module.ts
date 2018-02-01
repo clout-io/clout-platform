@@ -25,7 +25,12 @@ import {
   IcoDetailComponent,
   IcoSelectComponent,
   FeatureListComponent,
+  // ICO feature tabs
   FeatureTabsComponent,
+  ProjectTabComponent,
+  IcoTabComponent,
+  TechTabComponent,
+  TeamTabComponent,
   LinksComponent,
   SocialNetworksComponent,
   // ICO list
@@ -42,7 +47,6 @@ import {
   FooDirective,
   ServerErrorMsgComponent
 } from './components';
-
 @NgModule({
   imports: [
     CommonModule,
@@ -82,7 +86,11 @@ import {
     SelectIconComponent,
     FooDirective,
     TeamMembersComponent,
-    ServerErrorMsgComponent
+    ServerErrorMsgComponent,
+    ProjectTabComponent,
+    IcoTabComponent,
+    TechTabComponent,
+    TeamTabComponent
   ]
 })
 export class IcoModule { }

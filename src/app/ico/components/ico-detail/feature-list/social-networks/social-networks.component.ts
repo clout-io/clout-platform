@@ -1,5 +1,4 @@
 import { Component, OnInit, Input, OnChanges } from '@angular/core';
-import { otherLinks } from '../other-links';
 
 @Component({
   selector: 'app-social-networks',
@@ -7,40 +6,37 @@ import { otherLinks } from '../other-links';
   styleUrls: ['./social-networks.component.scss']
 })
 export class SocialNetworksComponent implements OnInit, OnChanges {
-  @Input() socials;
-  socialNames = {
-    'facebook': 'fa fa-facebook',
-    'twitter': 'fa fa-twitter',
-    'linkedin': 'fa fa-linkedin',
-    'reddit': 'fa fa-reddit',
-    'slack': 'fa fa-slack',
-    'github': 'fa fa-github-alt',
-    'youtube': 'fa fa-youtube-play',
-    'telegram': 'fa fa-telegram',
-    'bitcoin': 'fa fa-btc',
-    'instagram': 'fa fa-instagram',
-    'google': 'fa fa-google',
-    'other': 'fa fa-dot-circle-o'
+  @Input() icoData;
+  socialTypes = {
+    'other': 'fa-dot-circle-o',
+    'twitter': 'fa-twitter',
+    'facebook': 'fa-facebook',
+    'youtube-play': 'fa-youtube-play',
+    'linkedin': 'fa-linkedin',
+    'slack': 'fa-slack',
+    'github-alt': 'fa-github-alt',
+    'telegram': 'fa-telegram',
+    'btc': 'fa-btc',
+    'reddit': 'fa-reddit',
+    'google': 'fa-google',
+    'instagram': 'fa-instagram',
+    'steemit': 'icon-steemit',
+    'medium': 'icon-medium',
   };
-  socialList: [any];
+  socialList = [];
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
-  ngOnChanges(changes): void {
-    this.socialList = this.socials.filter(item => {
-      const socialFound = this.socialNames[item.network];
-      const otherLinkFound = otherLinks[item.network];
-      if (!!socialFound) {
-        item.className = socialFound;
-        return true;
-      } else if (!otherLinkFound) {
-        item.className = this.socialNames['other'];
-        return true;
+  ngOnChanges(): void {
+    if (!this.icoData.socials) { return; }
+
+    this.socialList = this.icoData.socials.map(item => {
+      if (this.socialTypes[item.type]) {
+        const {type, link} = item;
+        return {type, link, className: this.socialTypes[item.type]};
       }
-      return false;
     });
   }
 

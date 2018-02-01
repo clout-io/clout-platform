@@ -1,37 +1,33 @@
 <div class="coin-details">
   <ul class="coin-details-list">
-    <!--<li>
+    <li>
       <span>Project Stage:</span>
-      <span>Useable Product</span>
+      <span>{{projectStage}}</span>
     </li>
     <li>
       <span>Hype Score:</span>
-      <span>LOW</span>
+      <span>{{hypeScore}}</span>
     </li>
     <li>
       <span>Risk score:</span>
-      <span>MEDIUM</span>
+      <span>{{riskScore}}</span>
     </li>
     <li>
       <span>Invest score:</span>
-      <span>LOW</span>
+      <span>{{investScore}}</span>
     </li>
     <li>
       <span>Category:</span>
-      <span>Service</span>
-    </li>-->
-    <li>
-      <span>Status:</span>
-      <span>{{icoData?.status}}</span>
+      <span>{{categories}}</span>
     </li>
     <li>
         <span>Founded:</span>
-        <span>{{icoData?.startedW3c | date: 'yyyy'}}</span>
+        <span>{{icoData?.founded}}</span>
       </li>
   </ul>
   <div class="coin-details__share">
-    <app-social-networks *ngIf="icoData && icoData['socials']" [socials]="icoData['socials']"></app-social-networks>
-    <app-links *ngIf="icoData && icoData['socials']" [socials]="icoData['socials']"></app-links>
+    <app-social-networks *ngIf="icoData" [icoData]="icoData"></app-social-networks>
+    <app-links *ngIf="icoData" [icoData]="icoData"></app-links>
     <div>
       <a class="coin-details__share-subscribe btn btn--primary-outline edit-ico-btn"
          [routerLink]="['/ico/edit']" [queryParams]="{id: icoData?.id}">
