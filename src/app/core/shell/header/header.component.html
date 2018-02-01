@@ -22,13 +22,15 @@
       </form>
     </div><!-- .header__search -->
     <div class="header__actions">
-      <div class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      <a *ngIf="!isAuthUser" routerLink="/login" class="sing-in-link">Sign In</a>
+
+      <div *ngIf="isAuthUser" class="action user-img" id="dropdown-settings" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
         <a href="#" class="header__user" title="{{userName}}">
           <img src="{{avatar}}" onerror="this.src='../../../../assets/user.svg'" alt="">
         </a>
       </div>
 
-      <a href="#" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
+      <a href="javascript:void(0);" class="btn btn--primary-outline btn--xs">CLC Wallet</a>
       <div class="action">
         <a href="#" (click)="toggleSearchOnMobile($event); headerSearchField.focus();" class="fa fa-search"></a>
       </div>
@@ -44,44 +46,34 @@
     </div><!-- .header__actions -->
   </div><!-- .container -->
 
-  <!--<div class="page-list">
-    <a routerLink="/icos">ICO's</a>
-    <a routerLink="/allcoins">All</a>
-  </div>-->
+  <!--<owl-carousel *ngIf="topList?.length" class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
+    <a href="javascript:void(0)" (click)="showCoinsDropdown($event)">Coins</a>
+    <a routerLink="/home/all" routerLinkActive="active">All</a>
+    <a href="javascript:void(0)" routerLinkActive="active" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
+  </owl-carousel>-->
+  <div class="page-list">
+    <div class="owl-stage">
+      <div class="owl-item"><a href="javascript:void(0)" (click)="showCoinsDropdown($event)">Coins</a></div>
+      <div class="owl-item"><a routerLink="/home/all" routerLinkActive="active">All</a></div>
+      <div class="owl-item" *ngFor="let i of topList">
+        <a href="javascript:void(0)" routerLinkActive="active" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
+      </div>
+    </div>
+    <div class="owl-more-btn">
+      <a href="javascript:void(0)" (click)="showAlphabetCoinDropdown($event)">More</a>
+    </div>
+    <app-coins-alphabetic-dropdown *ngIf="visibleAlphabeticalDropdown"></app-coins-alphabetic-dropdown>
+  </div>
 
-  <owl-carousel *ngIf="topList?.length" class="page-list" [options]="{dots: false, nav: true, autoWidth: true, pullDrag:false, mouseDrag:false, navText: ['','More &raquo;']}">
-    <a routerLink="/icos">ICO's</a>
-    <a routerLink="/home/trending">All</a>
-    <a href="javascript:void(0)" *ngFor="let i of topList" routerLink="{{hashtagUrl+'/'+i.id}}">{{i.name}}</a>
-    <!--<a href="javascript:void(0)">Bitcoin</a>
-    <a href="javascript:void(0)">Ethereum</a>
-    <a href="javascript:void(0)">Bitcoin Cash</a>
-    <a href="javascript:void(0)">Ripple</a>
-    <a href="javascript:void(0)">Litecoin</a>
-    <a href="javascript:void(0)">Dash</a>
-    <a href="javascript:void(0)">NEO</a>
-    <a href="javascript:void(0)">NEM</a>
-    <a href="javascript:void(0)">Monero</a>
-    <a href="javascript:void(0)">Ethereum Classic</a>
-    <a href="javascript:void(0)">IOTA</a>
-    <a href="javascript:void(0)">Qtum</a>
-    <a href="javascript:void(0)">Ethereum Classic</a>
-    <a routerLink="/icos">ICO's</a>
-    <a href="javascript:void(0)">Educational Resources</a>
-    <a routerLink="/allcoins">All</a>
-    <a href="javascript:void(0)">Bitcoin</a>
-    <a href="javascript:void(0)">Ethereum</a>
-    <a href="javascript:void(0)">Bitcoin Cash</a>
-    <a href="javascript:void(0)">Ripple</a>
-    <a href="javascript:void(0)">Litecoin</a>
-    <a href="javascript:void(0)">Dash</a>
-    <a href="javascript:void(0)">NEO</a>
-    <a href="javascript:void(0)">NEM</a>
-    <a href="javascript:void(0)">Monero</a>
-    <a href="javascript:void(0)">Ethereum Classic</a>
-    <a href="javascript:void(0)">IOTA</a>
-    <a href="javascript:void(0)">Qtum</a>-->
-  </owl-carousel>
+  <div class="dropdown hidden-coins-dropdown" id="dropdownMenuButton2">
+    <button class="btn btn-secondary dropdown-toggle" #hiddenCoinsDropdown type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+    </button>
+    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a routerLink="/allcoins" routerLinkActive="active">Allcoins</a><br>
+      <a routerLink="/icos" routerLinkActive="active">ICO's</a><br>
+      <a *ngIf="isAdmin" routerLink="/ico/add" routerLinkActive="active">+ ICO</a>
+    </div>
+  </div>
 
   <app-loader-line></app-loader-line>
 </header><!-- .header -->

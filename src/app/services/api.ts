@@ -7,10 +7,14 @@ import 'rxjs/add/operator/toPromise';
 import { Router } from '@angular/router';
 import { ApiHelperService } from './apiHelper';
 import { BroadcastService } from './broadcastService';
+import { environment } from '../../environments/environment';
+
 
 @Injectable()
 export class ApiService {
-  api_url = 'http://haumea.bvblogic.net:8103';
+  api_url = environment.url;
+  //api_url = 'http://haumea.bvblogic.net:8103';
+  check_user = 'api/v1/user';
   signin_url = 'api/v1/signin';
   signup_url = 'api/v1/signup';
   activate_url = 'api/v1/activate?code=';
@@ -141,5 +145,6 @@ export class ApiService {
     this.apiHelper.removeItemFromLocalStorage('clout_user_avatar');
     this.apiHelper.removeItemFromLocalStorage('clout_user_username');
     this.apiHelper.removeItemFromLocalStorage('clout_user_id');
+    this.apiHelper.removeItemFromLocalStorage('clout_user_is_admin');
   }
 }

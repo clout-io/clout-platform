@@ -8,6 +8,7 @@ import { Ng2AutoCompleteModule } from 'ng2-auto-complete';
 import { CoreModule } from '../core/core.module';
 import { FeedRoutingModule } from './feed-routing.module';
 import { FeedComponent } from './feed.component';
+import { CeiboShare } from 'ng2-social-share';
 
 import {
   FeedListComponent,
@@ -19,6 +20,7 @@ import {
   CommunityComponent,
   FavoriteCoinsComponent,
   FavCoinListComponent,
+  AddFavoriteCoinComponent,
   FavCoinItemComponent,
   CloutDescSidebarComponent,
   PopularSearchSidebarComponent,
@@ -35,7 +37,8 @@ import {
   TinyEditorComponent,
   AddArticleComponent,
   PublishPostBtnComponent,
-  EditArticleComponent
+  EditArticleComponent,
+  SinglePostItemComponent
 } from './components';
 
 import { TruncatePipe } from '../pipes';
@@ -51,6 +54,7 @@ import { TruncatePipe } from '../pipes';
     Ng2AutoCompleteModule
   ],
   declarations: [
+    CeiboShare,
     FeedComponent,
     FeedListComponent,
     FeedItemComponent,
@@ -62,6 +66,7 @@ import { TruncatePipe } from '../pipes';
     TruncatePipe,
     FavoriteCoinsComponent,
     FavCoinListComponent,
+    AddFavoriteCoinComponent,
     FavCoinItemComponent,
     CloutDescSidebarComponent,
     PopularSearchSidebarComponent,
@@ -78,7 +83,8 @@ import { TruncatePipe } from '../pipes';
     TinyEditorComponent,
     AddArticleComponent,
     PublishPostBtnComponent,
-    EditArticleComponent
+    EditArticleComponent,
+    SinglePostItemComponent
   ]
 })
 export class FeedModule { }

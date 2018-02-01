@@ -42,6 +42,22 @@ export class FeedService {
       .map((res: any) => res);
   }
 
+  getFeed(id: string): Observable<any> {
+    return this.api.get(`${this.path}/news/${id}`);
+  }
+
+  getIcosAlphabetic(): Observable<any> {
+    return this.api.get(`${this.path}/icos/alpha`);
+  }
+
+  getAltcoinsAlphabetic(): Observable<any> {
+    return this.api.get(`${this.path}/altcoins/alpha`);
+  }
+
+  getTopCoins(icosOrAltcoins = 'altcoins', top: number): Observable<any> {
+    return this.api.get(`${this.path}/${icosOrAltcoins}/top?top=${top}`);
+  }
+
   editFeed(id: string, options: any): Observable<any> {
     return this.api.post(`${this.path}/news/${id}`, options);
   }
@@ -81,4 +97,8 @@ export class FeedService {
     return this.api.get(`${this.path}/tag/search?term=${term}`);
   }
 
+  getFavoritesAltcoins(options): Observable<any>  {
+    const { nextPage, perPage } = options;
+    return this.api.get(`${this.path}/altcoins/favorites/?page=${nextPage}&per_page=${perPage}`);
+  }
 }

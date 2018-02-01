@@ -1,13 +1,16 @@
 <div class="content__main__inner">
   <div class="coin-description">
     <div class="coin-description__img">
-      <img src="{{ico?.image}}" alt="">
+      <img *ngIf="ico"
+           src="{{ico.imageUrl}}"
+           onerror="this.src='../../../../assets/defaultCoin.png'" alt="">
     </div>
     <div class="coin-description__text">
-      <h2>{{ico.name}}</h2>
-      <p>
-        {{ico.description}}
-      </p>
+      <h2>{{ico?.name}}</h2>
+      <p [innerHtml]="ico?.description"></p>
+      <!--<p>
+        {{ico?.description}}
+      </p>-->
     </div>
   </div>
 

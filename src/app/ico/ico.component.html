@@ -1,27 +1,6 @@
-<!--<div class="page-title">
-  <h1>ICOs</h1>
-</div>-->
-
 <div class="ico-component">
-
-  <!-- <div id="filters" class="filters-container collapse col-xl-3 col-lg-3 col-md-2 col-sm-2 col-12">
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#filters" aria-controls="filters" aria-expanded="false" aria-label="Toggle Filter">&times;</button>
-    <app-filters></app-filters>
-  </div> -->
-
+  <app-navs-switcher [createFor]="'icos'"></app-navs-switcher>
   <div class="container">
-    <div class="main-components content">
-
-      <!-- <app-search></app-search> -->
-      <div class="content__list">
-          <app-ico-list></app-ico-list>
-      </div>
-
-      <div class="content__main">
-        <app-ico-detail></app-ico-detail>
-      </div>
-
-    </div>
+    <router-outlet></router-outlet>
   </div>
-
 </div>

@@ -9,7 +9,8 @@ import {
   NewsComponent,
   CommunityComponent,
   PostFilterComponent,
-  TrendingComponent
+  TrendingComponent,
+  SinglePostItemComponent
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
@@ -37,6 +38,10 @@ const routes: Routes = CoreRoute.withShell([
         component: CommunityComponent
       },
       {
+        path: 'community/:id',
+        component: SinglePostItemComponent
+      },
+      {
         path: 'community/hashtag/:tag',
         component: PostFilterComponent
       },
@@ -45,7 +50,7 @@ const routes: Routes = CoreRoute.withShell([
         component: PostFilterComponent
       },
       {
-        path: 'trending',
+        path: 'all',
         component: TrendingComponent
       }
     ]

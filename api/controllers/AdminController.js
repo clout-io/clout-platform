@@ -7,6 +7,10 @@ module.exports = {
     let email = req.body.email;
     let password = req.body.password;
     let user = await User.findOne({email: email});
+
+    if (!user) {
+      return res.json(401, Errors.build({}, Errors.ERROR_AUTH_VALIDATION));
+    }
     let canLogin = await User.checkPassword(password, user);
 
     if (!canLogin)

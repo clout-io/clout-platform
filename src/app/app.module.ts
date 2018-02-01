@@ -19,12 +19,13 @@ import {
   ModalService,
   CommentService,
   FollowService,
-  FeedService
+  FeedService,
+  IcosService
 } from './services';
 
 import { NumberSeparator } from './pipes';
 import { HttpModule } from '@angular/http';
-
+import { FacebookService } from 'ngx-facebook';
 // components
 import { AppComponent } from './app.component';
 
@@ -47,7 +48,19 @@ import { AppComponent } from './app.component';
     OwlModule,
     InfiniteScrollModule
   ],
-  providers: [AuthService, ApiService, ApiHelperService, BroadcastService, NumberSeparator, ModalService, CommentService, FollowService, FeedService],
+  providers: [
+    FacebookService,
+    AuthService,
+    ApiService,
+    ApiHelperService,
+    BroadcastService,
+    NumberSeparator,
+    ModalService,
+    CommentService,
+    FollowService,
+    FeedService,
+    IcosService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

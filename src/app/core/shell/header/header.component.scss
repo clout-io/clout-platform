@@ -1,5 +1,10 @@
 @import './src/theme/theme-variables';
 
+.sing-in-link {
+  color: #008F8D;
+  font-weight: 600;
+}
+
 .navbar {
   padding: 0;
   background-color: $blue;
@@ -169,7 +174,7 @@
     }
 
     &[aria-expanded='true'] {
-      
+
       .icon {
         background: transparent;
         transition-duration: .5s;

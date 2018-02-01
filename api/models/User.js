@@ -14,19 +14,33 @@ module.exports = {
       type: 'string',
       email: true,
       unique: true,
-      required: true
+      required: true,
+      createOnly: true
     },
     firstName: {
       type: 'string',
-      defaultsTo: ''
+      defaultsTo: '',
+      editable: true,
+      createOnly: true
     },
     lastName: {
       type: 'string',
-      defaultsTo: ''
+      defaultsTo: '',
+      editable: true,
+      createOnly: true
     },
     username: {
       type: 'string',
-      required: true
+      required: true,
+      editable: true,
+      unique: true,
+      isUsername: true,
+      createOnly: true
+    },
+    slug: {
+      type: 'slug',
+      from: 'username',
+      unique: true,
     },
     avatar: {
       type: 'string',
@@ -34,7 +48,8 @@ module.exports = {
     },
     password: {
       type: 'string',
-      required: true
+      required: true,
+      createOnly: true
     },
     activationCode: {
       type: 'string',
@@ -50,7 +65,10 @@ module.exports = {
       type: 'boolean',
       defaultsTo: false
     },
-
+    lastLogin: {
+      type: "datetime",
+      datetime: true
+    },
     socialNetworks: {
       collection: 'SocialNetwork',
       via: 'user'
@@ -58,6 +76,55 @@ module.exports = {
     uploadedPhoto: {
       collection: 'Img',
       via: 'user'
+    },
+    phone: {
+      type: "string",
+      phone: true,
+      editable: true,
+    },
+    site: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    skype: {
+      type: "string",
+      editable: true,
+    },
+    linkedin: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    tweeter: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    facebook: {
+      type: "string",
+      url: true,
+      editable: true,
+    },
+    country: {
+      type: "string",
+      editable: true,
+    },
+    city: {
+      type: "string",
+      editable: true,
+    },
+    state: {
+      type: "string",
+      editable: true,
+    },
+    street: {
+      type: "string",
+      editable: true,
+    },
+    suite: {
+      type: "string",
+      editable: true,
     },
     followedAltcoins: {
       collection: 'Altcoin',
@@ -76,20 +143,39 @@ module.exports = {
       via: 'owner',
       dominant: true
     },
+    activities: {
+      collection: 'UserActivity',
+      via: 'user'
+    },
+    roles: {
+      collection: 'Role',
+      via: 'users',
+      dominant: true
+    },
+    permissions: {
+      collection: "Permission",
+      via: "user"
+    },
 
     toJSON: function () {
-      var obj = this.toObject();
+      let obj = this.toObject();
       delete obj.password;
+      delete obj.slug;
       delete obj.activationCode;
       delete obj.confirmPassword;
       delete obj.email;
+
+      obj.name = obj.firstName + " " + obj.lastName;
+      if (_.isEmpty(obj.name.trim())) {
+        obj.name = "@" + obj.username;
+      }
       return obj;
     },
     getActivateLink: function () {
       return sails.config.appUrl + "/activate" + '?code=' + this.activationCode;
     },
     getResetPasswordLink: function () {
-      var token = Token.issue({id: this.id}, '5m');
+      let token = Token.issue({id: this.id}, '5m');
       return {
         url: sails.config.appUrl + "/reset" + '?code=' + token,
         token: token
@@ -97,6 +183,18 @@ module.exports = {
     }
   },
   types: {
+    editable: (value) => {
+      return true;
+    },
+    createOnly: (value) => {
+      return true;
+    },
+    isUsername: (value) => {
+      return !_.isEmpty(value) && value.match(/^[A-z0-9]+(?:-[A-z0-9]+)*$/);
+    },
+    phone: function (value) {
+      return value.match(/\(?\+[0-9]{1,3}\)? ?-?[0-9]{1,3} ?-?[0-9]{3,5} ?-?[0-9]{4}( ?-?[0-9]{3})? ?(\w{1,10}\s?\d{1,6})?/i)
+    },
     password: function (value) {
       return _.isString(value) && value.length >= 6 && value.match(/^(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/g);
     }
@@ -126,11 +224,10 @@ module.exports = {
     return new Promise((resolve) => {
       bcrypt.compare(password, user.password, function (err, match) {
         if (err) resolve(false);
-        if (match) {
+        if (match)
           resolve(true);
-        } else {
-          resolve(false);
-        }
+
+        resolve(false);
       })
     })
   },

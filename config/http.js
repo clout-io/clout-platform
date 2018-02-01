@@ -23,17 +23,12 @@ module.exports.http = {
 
   middleware: {
 
-    lazyUser: function (req, res, next) {
-      var token;
+    lazyUser: async (req, res, next) => {
+      let token;
       if (req.headers && req.headers.authorization) {
-        var parts = req.headers.authorization.split(' ');
-        if (parts.length === 2) {
-          var scheme = parts[0],
-            credentials = parts[1];
-
-          if (/^Token$/i.test(scheme)) {
-            token = credentials;
-          }
+        let [scheme, credentials] = req.headers.authorization.split(' ');
+        if (/^Token$/i.test(scheme)) {
+          token = credentials;
         }
       } else if (req.param('token')) {
         token = req.param('token');
@@ -43,18 +38,12 @@ module.exports.http = {
         return next()
       }
 
-      Token.verify(token, function (err, encodedToken) {
-        if (err) return next();
-        User.findOne(encodedToken.id).exec(function (err, user) {
-          if (err) {
-            return next();
-          }
-          if (user) {
-            req.user = user.toJSON();
-          }
-          next();
-        });
-      });
+      let [encodedToken, user] = await Token.verify(token);
+      if (!encodedToken) return next();
+      if (user) {
+        req.user = user.toJSON();
+      }
+      next();
     },
 
     /***************************************************************************

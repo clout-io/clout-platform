@@ -1,0 +1,609 @@
+<div class="container">
+  <div class="feed-content feed-content--alt">
+    <aside class="feed-aside">
+      <div class="widget widget--new-coin">
+        <form novalidate [formGroup]="premiumForm">
+          <div class="new-coin-image"
+               [ngClass]="{'new-coin-image--error':
+               premiumForm.get('image').touched && premiumForm.get('image').invalid}">
+            <a href="javascript:void(0)"
+               [ngStyle]="!!imageSrc && {'background-image': (imageSrc ? 'url(' + imageSrc + ')': '')}"
+               (click)="triggerToInput()">
+            </a>
+            <span>Logo required!</span>
+            <app-server-error-msg [errorMsg]="serverErrors['image']"></app-server-error-msg>
+            <div style="height: 0px">
+              <input accept="image/gif, image/jpeg, image/png" type="file"
+                     (change)="handleUpload($event)" #uploadIcoLogo style="visibility: hidden; height: 0px; width: 100%"/>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item__check-slide">
+              <label>
+                <span>Premium</span>
+                <input type="checkbox" formControlName="isPremium">
+                <i></i>
+              </label>
+              <app-server-error-msg [errorMsg]="serverErrors['isPremium']"></app-server-error-msg>
+            </div>
+          </div>
+          <div class="form-item">
+            <div class="form-item__select">
+              <ng-select
+                class="ang-select"
+                [options]="premiumRanks"
+                [multiple]="false"
+                formControlName="premiumRank"
+                [allowClear]="false">
+              </ng-select>
+            </div>
+            <app-server-error-msg [errorMsg]="serverErrors['premiumRank']"></app-server-error-msg>
+          </div>
+          <div class="form-item">
+            <textarea class="form-item__area"
+                      placeholder="Notes"
+                      formControlName="premiumDescription">
+            </textarea>
+            <app-server-error-msg [errorMsg]="serverErrors['premiumDescription']"></app-server-error-msg>
+          </div>
+        </form>
+      </div>
+    </aside>
+    <main class="feed-main">
+      <div class="widget">
+        <form novalidate [formGroup]="form">
+          <div class="form-section">
+            <h3 class="form-section__title">Basic Info</h3>
+            <div class="form-item"
+                 [ngClass]="{'form-item--error': form.get('name').invalid && form.get('name').touched}">
+              <label class="form-item__label">ICO Name*</label>
+              <input type="text"
+                     class="form-item__field"
+                     placeholder="Enter ICO Name"
+                     formControlName="name">
+              <span class="form-item__hint" *ngIf="form.get('name').invalid && form.get('name').touched">
+                This field is required!
+              </span>
+              <app-server-error-msg [errorMsg]="serverErrors['name']"></app-server-error-msg>
+              <app-reset-input-btn [inputField]="form.get('name')"></app-reset-input-btn>
+            </div>
+            <div class="form-item"
+                 [ngClass]="{'form-item--error': form.get('description').invalid && form.get('description').touched}">
+              <label class="form-item__label">Description*</label>
+              <textarea class="form-item__area"
+                        placeholder="Enter Description"
+                        formControlName="description">
+              </textarea>
+              <span class="form-item__hint" *ngIf="form.get('description').invalid && form.get('description').touched">
+                This field is required!
+              </span>
+              <app-server-error-msg [errorMsg]="serverErrors['description']"></app-server-error-msg>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3 class="form-section__title">General</h3>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('projectStage').touched &&
+                     form.get('projectStage').invalid  && form.get('projectStage').selectWasOpened}">
+                  <label class="form-item__label">Project Stage*</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="projectStages"
+                      [multiple]="false"
+                      placeholder="Select Project Stage"
+                      formControlName="projectStage"
+                      (closed)="closeSelect('projectStage')"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['projectStage']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('hypeScore').touched &&
+                     form.get('hypeScore').invalid && form.get('hypeScore').selectWasOpened}">
+                  <label class="form-item__label">Hype Score*</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="scores"
+                      [multiple]="false"
+                      placeholder="Select Hype Score"
+                      formControlName="hypeScore"
+                      (closed)="closeSelect('hypeScore')"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['hypeScore']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('riskScore').touched
+                     && form.get('riskScore').invalid && form.get('riskScore').selectWasOpened}">
+                  <label class="form-item__label">Risk Score*</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="scores"
+                      [multiple]="false"
+                      placeholder="Select Risk Score"
+                      formControlName="riskScore"
+                      (closed)="closeSelect('riskScore')"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['riskScore']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('investScore').touched
+                     && form.get('investScore').invalid && form.get('investScore').selectWasOpened}">
+                  <label class="form-item__label">Invest Score*</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="scores"
+                      [multiple]="false"
+                      placeholder="Select Invest Score"
+                      formControlName="investScore"
+                      (closed)="closeSelect('investScore')"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['investScore']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [class.form-item--error]="form.get('categories').touched &&
+                     form.get('categories').invalid && form.get('categories').selectWasOpened"
+                     #categoryMultiSelect>
+                  <label class="form-item__label">Category*</label>
+                  <ss-multiselect-dropdown
+                    [class.placeholder-text]="form.get('categories').touched &&
+                    form.get('categories').invalid && form.get('categories').selectWasOpened"
+                    appFoo [options]="categories"
+                    [texts]="multiTexts"
+                    [settings]="multiSettings"
+                    (onFilter)="filterCategory($event)"
+                    (onAdded)="updateCategoryTitle($event)"
+                    (onRemoved)="updateCategoryTitle($event)"
+                    (dropdownClosed)="closeSelect('categories')"
+                    placeholder="select category"
+                    formControlName="categories">
+                  </ss-multiselect-dropdown>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['categories']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('founded').touched
+                     && form.get('founded').invalid && form.get('founded').selectWasOpened}">
+                  <label class="form-item__label">Founded*</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select years-select"
+                      [options]="years"
+                      [multiple]="false"
+                      (closed)="closeSelect('founded')"
+                      placeholder="YYYY"
+                      formControlName="founded"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('founded').hasError('max')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="form.get('founded').hasError('max')">
+                    This field must be less or equal to {{currentYear}}
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['founded']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item">
+                  <label class="form-item__label">Industry</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="industries"
+                      [multiple]="false"
+                      placeholder="Select Industry"
+                      formControlName="industry"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <app-server-error-msg [errorMsg]="serverErrors['industry']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item">
+                  <label class="form-item__label">Status</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="statuses"
+                      [multiple]="false"
+                      placeholder="Select Status"
+                      formControlName="status"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <app-server-error-msg [errorMsg]="serverErrors['status']"></app-server-error-msg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3 class="form-section__title">Contact info</h3>
+            <div class="form-section" *ngIf="!!socials.length">
+              <div class="form-item" formArrayName="socials">
+                <label class="form-item__label">Links</label>
+                <div class="team-item link-item"
+                     [ngClass]="{'form-item--error': item['controls']['link'].touched && item['controls']['link'].invalid}"
+                     *ngFor="let item of form.get('socials')['controls']; let i = index;">
+                  <div [formGroupName]="i">
+                    <div class="team-group links-group">
+                      <!--<input type="text"
+                             class="form-item__field"
+                             [ngClass]="{'invalid_link':
+                             item['controls']['type'].touched && item['controls']['type'].invalid}"
+                             formControlName="name"
+                             placeholder="Enter Name">-->
+                      <input type="text"
+                             class="form-item__field"
+                             [ngClass]="{'invalid_link':
+                             item['controls']['link'].touched && item['controls']['link'].invalid}"
+                             formControlName="link"
+                             placeholder="Enter Link">
+                      <div class="form-item__select form-item__select-links">
+                        <app-select-icon [formField]="item['controls']['type']"></app-select-icon>
+                      </div>
+                    </div>
+                    <div class="team-action">
+                      <a href="javascript:void(0)"
+                         class="team-action__remove"
+                         (click)="removeSocialItem(i)">
+                      </a>
+                      <a href="javascript:void(0)"
+                         class="team-action__add"
+                         *ngIf="i === (socials.length - 1)"
+                         (click)="addSocialItem()">
+                      </a>
+                      <a href="javascript:void(0)"
+                         class="team-action__fake"
+                         *ngIf="i !== (socials.length - 1)">
+                      </a>
+                    </div>
+                    <div class="team-group links-group validation-inputs-group">
+                      <!--<span class="input_invalid"
+                            *ngIf="item['controls']['name'].touched && item['controls']['name'].invalid">
+                        This field is required!
+                      </span>-->
+                      <!--<span class="input_invalid"
+                            *ngIf="item['controls']['name'].untouched || item['controls']['name'].valid">
+                      </span>-->
+                      <span class="form-item__hint"
+                            *ngIf="item['controls']['link'].touched && item['controls']['link'].hasError('required')">
+                        This field is required!
+                      </span>
+                      <span class="form-item__hint"
+                            *ngIf="item['controls']['link'].touched && item['controls']['link'].hasError('urlNotValid')
+                            && !item['controls']['link'].hasError('required')">
+                        This link is not valid!
+                      </span>
+                      <div class="fake-block"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('site').touched && form.get('site').invalid}">
+                  <label class="form-item__label">ICO Website</label>
+                  <input type="text" class="form-item__field"
+                         formControlName="site" placeholder="Enter Website link">
+                  <span class="form-item__hint" *ngIf="form.get('site').hasError('required')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('site').hasError('required') && form.get('site').hasError('urlNotValid')">
+                    ICO Website link is not valid!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['site']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('whitepaper').touched && form.get('whitepaper').invalid}">
+                  <label class="form-item__label">Whitepaper</label>
+                  <input type="text" class="form-item__field"
+                         formControlName="whitepaper" placeholder="Enter Whitepaper link">
+                  <span class="form-item__hint" *ngIf="form.get('whitepaper').hasError('required')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('whitepaper').hasError('required') && form.get('whitepaper').hasError('urlNotValid')">
+                    Whitepaper link is not valid!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['whitepaper']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('blog').touched && form.get('blog').invalid}">
+                  <label class="form-item__label">Blog</label>
+                  <input type="text" class="form-item__field"
+                         formControlName="blog" placeholder="Enter Blog link">
+                  <span class="form-item__hint" *ngIf="form.get('blog').hasError('required')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('blog').hasError('required') && form.get('blog').hasError('urlNotValid')">
+                    Blog link is not valid!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['blog']"></app-server-error-msg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3 class="form-section__title">Project Details</h3>
+            <div class="row">
+              <div class="col-sm-12">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('primaryGeography').invalid &&
+                     form.get('primaryGeography').touched && form.get('primaryGeography').selectWasOpened}">
+                  <label class="form-item__label">Primary Geography*</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="countries"
+                      [multiple]="false"
+                      placeholder="Select Primary Geography"
+                      formControlName="primaryGeography"
+                      (closed)="closeSelect('primaryGeography')"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <span class="form-item__hint">
+                    This field is required!
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['primaryGeography']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-item">
+                  <label class="form-item__label">Features</label>
+                  <textarea class="form-item__area"
+                            placeholder="Enter Features"
+                            formControlName="features">
+                  </textarea>
+                  <app-server-error-msg [errorMsg]="serverErrors['features']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-item">
+                  <label class="form-item__label">Similar Projects</label>
+                  <textarea class="form-item__area"
+                            placeholder="Enter Similar Projects"
+                            formControlName="similarProjects">
+                  </textarea>
+                  <app-server-error-msg [errorMsg]="serverErrors['similarProjects']"></app-server-error-msg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3 class="form-section__title">ICO Details</h3>
+            <div class="row">
+              <div class="col-sm-6">
+                <div class="form-item"
+                     id="flatpickr"
+                     [ngClass]="{'form-item--error': form.get('startDate').invalid && form.get('startDate').touched}">
+                  <label class="form-item__label">ICO Date*</label>
+                  <div class="dates-input-group" id="range-date-wrap">
+                    <ng2-flatpickr
+                      [config]="datepickerOptions"
+                      formControlName="startDate"
+                      placeholder="MM/DD/YY">
+                    </ng2-flatpickr>
+                    <input
+                      type="text"
+                      class="range-last form-item__field"
+                      id="secondRangeInput"
+                      formControlName="endDate"
+                      readonly
+                      placeholder="MM/DD/YY">
+                  </div>
+                  <div class="validation-group">
+                    <div *ngIf="form.get('startDate').invalid && form.get('startDate').touched">
+                      <span class="form-item__hint">
+                        This field is required!
+                      </span>
+                    </div>
+                    <div *ngIf="form.get('endDate').invalid && form.get('endDate').touched">
+                      <span class="form-item__hint">
+                        This field is required!
+                      </span>
+                    </div>
+                  </div>
+                  <div class="validation-group">
+                    <app-server-error-msg [errorMsg]="serverErrors['startDate']"></app-server-error-msg>
+                    <app-server-error-msg [errorMsg]="serverErrors['endDate']"></app-server-error-msg>
+                  </div>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item">
+                  <label class="form-item__label">Token Type</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="tokenTypes"
+                      [multiple]="false"
+                      placeholder="Select Token Type"
+                      formControlName="tokenType"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <app-server-error-msg [errorMsg]="serverErrors['tokenType']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item">
+                  <label class="form-item__label">Token Technology</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="tokenTechnologies"
+                      [multiple]="false"
+                      placeholder="Select Token Technology"
+                      formControlName="tokenTechnology"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <app-server-error-msg [errorMsg]="serverErrors['tokenTechnology']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error': form.get('amount').invalid && form.get('amount').touched}">
+                  <label class="form-item__label">ICO Amount*</label>
+                  <input type="text"
+                         class="form-item__field"
+                         placeholder="Enter ICO Amount"
+                         formControlName="amount">
+                  <span class="form-item__hint" *ngIf="form.get('amount').hasError('required')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('amount').hasError('required') && !form.get('amount').hasError('notNumber')">
+                    Amount must be larger than or equal to 1.
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="form.get('amount').hasError('notNumber') && !form.get('amount').hasError('required')">
+                    Amount must be a number.
+                  </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['amount']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-6">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('jurisdiction').invalid &&
+                     form.get('jurisdiction').touched && form.get('jurisdiction').selectWasOpened}">
+                  <label class="form-item__label">ICO Jurisdiction*</label>
+                  <div class="form-item__select">
+                    <ng-select
+                      class="ang-select"
+                      [options]="countries"
+                      [multiple]="false"
+                      placeholder="Select ICO Jurisdiction"
+                      (closed)="closeSelect('jurisdiction')"
+                      formControlName="jurisdiction"
+                      [allowClear]="false">
+                    </ng-select>
+                  </div>
+                  <span class="form-item__hint">
+                      This field is required!
+                    </span>
+                  <app-server-error-msg [errorMsg]="serverErrors['jurisdiction']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-item">
+                  <label class="form-item__label">Tokens distribution</label>
+                  <textarea class="form-item__area"
+                            placeholder="Enter text"
+                            formControlName="tokensDistribution">
+                  </textarea>
+                  <app-server-error-msg [errorMsg]="serverErrors['tokensDistribution']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-item">
+                  <label class="form-item__label">Token Sales</label>
+                  <textarea class="form-item__area"
+                            placeholder="Enter text"
+                            formControlName="tokenSales">
+                  </textarea>
+                  <app-server-error-msg [errorMsg]="serverErrors['tokenSales']"></app-server-error-msg>
+                </div>
+              </div>
+              <div class="col-sm-12">
+                <div class="form-item">
+                  <label class="form-item__label">Accepts</label>
+                  <textarea class="form-item__area"
+                            placeholder="Enter text"
+                            formControlName="accepts">
+                  </textarea>
+                  <app-server-error-msg [errorMsg]="serverErrors['accepts']"></app-server-error-msg>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="form-section">
+            <h3 class="form-section__title">Tech</h3>
+            <div class="form-item">
+              <label class="form-item__label">Technical details</label>
+              <textarea class="form-item__area"
+                        placeholder="Enter text"
+                        formControlName="technicalDetails">
+              </textarea>
+              <app-server-error-msg [errorMsg]="serverErrors['technicalDetails']"></app-server-error-msg>
+            </div>
+            <div class="form-item">
+              <label class="form-item__label">The source code</label>
+              <textarea class="form-item__area"
+                        placeholder="Enter text"
+                        formControlName="sourceCode">
+              </textarea>
+              <app-server-error-msg [errorMsg]="serverErrors['sourceCode']"></app-server-error-msg>
+            </div>
+            <div class="form-item">
+              <label class="form-item__label">Proof of developer</label>
+              <textarea class="form-item__area"
+                        placeholder="Enter text"
+                        formControlName="proofOfDeveloper">
+              </textarea>
+              <app-server-error-msg [errorMsg]="serverErrors['proofOfDeveloper']"></app-server-error-msg>
+            </div>
+          </div>
+        </form>
+
+        <div class="form-section">
+          <app-team-members [team]="team" (changeTeam)="teamChange($event)"></app-team-members>
+        </div>
+        <div class="form-actions text-center">
+          <a href="javascript:void(0)" class="btn btn--secondary" (click)="cancel()">Cancel</a>
+          <a href="javascript:void(0)" class="btn btn--primary" (click)="save()">Save</a>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>

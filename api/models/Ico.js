@@ -5,8 +5,13 @@
  * @docs        :: http://sailsjs.org/documentation/concepts/models-and-orm/models
  */
 
-var enumScore = ["low", "medium", "hight"];
-var cryptoRandomString = require('crypto-random-string');
+const slug = require('slug');
+
+const {SCORE_LEVEL, ICO_STATUS, PROJECT_STAGE} = require('../const/ico');
+
+const SCORE_ENUM = Object.keys(SCORE_LEVEL);
+const STATUS = Object.keys(ICO_STATUS);
+const cryptoRandomString = require('crypto-random-string');
 
 module.exports = {
 
@@ -24,14 +29,15 @@ module.exports = {
     },
     slug: {
       type: "string",
-      unique: true
+      unique: true,
+      required: true
     },
     description: {
       type: "string"
     },
     status: {
       type: "string",
-      enum: ["upcoming", "ongoing", "closed"]
+      enum: STATUS
     },
     startDate: {
       type: "date"
@@ -40,27 +46,29 @@ module.exports = {
       type: "date"
     },
     image: {
-      type: "string"
+      model: "Img",
+      via: 'id'
     },
     projectStage: {
-      type: "string"
+      model: "IcoStage",
+      via: 'id'
     },
     hypeScore: {
       type: "string",
-      enum: enumScore
+      enum: SCORE_ENUM
     },
     riskScore: {
       type: "string",
-      enum: enumScore
+      enum: SCORE_ENUM
     },
     investScore: {
       type: "string",
-      enum: enumScore
+      enum: SCORE_ENUM
     },
     categories: {
       collection: 'IcoCategory',
       via: 'id'
-    },//need model
+    },
     founded: {
       type: "string"
     },
@@ -70,6 +78,9 @@ module.exports = {
     blog: {
       type: "string"
     },
+    whitepaper: {
+      type: "string"
+    },
     primaryGeography: {
       type: "string"
     },
@@ -77,14 +88,15 @@ module.exports = {
       type: "string"
     },
     similarProjects: {
-      collection: 'Ico',
-      via: 'id'
+      type: "string"
     },
     tokenType: {
-      type: "string"
+      model: "IcoTokenType",
+      via: 'id'
     },
     tokenTechnology: {
-      type: "string"
+      model: "IcoTokenTechnology",
+      via: 'id'
     },
     amount: {
       type: "integer"
@@ -99,9 +111,8 @@ module.exports = {
       type: "string"
     },
     accepts: {
-      collection: "Altcoin",
-      via: 'id'
-    }, //link to Altcoins
+      type: "string"
+    },
     technicalDetails: {
       type: "string"
     },
@@ -119,11 +130,64 @@ module.exports = {
       collection: "IcoSocial",
       via: 'id'
     },
-    followByUsers:{
+    followByUsers: {
       collection: 'user',
       via: 'altcoin',
       through: 'followedico'
+    },
+    isPremium: {
+      type: "boolean",
+      defaultsTo: false
+    },
+    premiumRank: {
+      type: "integer",
+      defaultsTo: 0
+    },
+    premiumDescription: {
+      type: "string"
+    },
+    industry: {
+      collection: "IcoIndustry",
+      via: 'id'
+    },
+    toJSON: function () {
+      let obj = this.toObject();
+
+      if (obj.startedW3c) {
+        obj.startDate = obj.startedW3c;
+      }
+      if (obj.endedW3c) {
+        obj.endDate = obj.endedW3c;
+      }
+      if (obj.tokenSupplyAmount) {
+        obj.amount = obj.tokenTargetAmount;
+      }
+
+      if (parseInt(obj.tokenType)) {
+        obj.tokenType = "";
+      }
+
+      if (obj.blockchainLink) {
+        obj.site = obj.blockchainLink;
+      }
+
+      if (obj.country) {
+        obj.primaryGeography = obj.country
+      }
+
+      return obj;
+
     }
+  },
+  beforeValidate: function (values, next) {
+    if (!values.slug) {
+      values.slug = slug(values.name);
+    }
+    next()
+  },
+  beforeCreate: function (values, next) {
+
+    next();
   }
 };
 

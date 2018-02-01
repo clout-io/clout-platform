@@ -34,7 +34,7 @@ module.exports.confirm = function (code, redirectUri) {
 module.exports.profile = function (token) {
   return new Promise(function (resolve, reject) {
     graph.setAccessToken(token);
-    graph.get("me?fields=id,name,email,picture.type(large)", function (err, res) {
+    graph.get("me?fields=id,name,first_name,last_name,email,picture.type(large)", function (err, res) {
       if (err) reject(err);
       resolve(res);
     });

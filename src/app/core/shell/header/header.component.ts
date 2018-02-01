@@ -1,7 +1,6 @@
-import { Component, OnInit, AfterViewInit, OnDestroy } from '@angular/core';
-import { AuthService, ApiService } from '../../../services';
+import {Component, OnInit, AfterViewInit, OnDestroy, ViewChild} from '@angular/core';
+import { AuthService, FeedService } from '../../../services';
 import { Router, NavigationEnd } from '@angular/router';
-
 
 @Component({
   selector: 'app-header',
@@ -9,6 +8,7 @@ import { Router, NavigationEnd } from '@angular/router';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
+  @ViewChild('hiddenCoinsDropdown') hiddenCoinsDropdown;
   currentUrl: string;
   userName: string;
   avatar: string;
@@ -17,12 +17,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   hashtagUrl = '/home/community/hashtag/';
   top$: any;
   mobileSearchVisible: boolean = false;
+  visibleAlphabeticalDropdown: boolean;
+
+  isAuthUser: boolean = false;
+  isAdmin: boolean;
 
   constructor(
     private auth: AuthService,
     private router: Router,
-    private apiService: ApiService
+    private feedService: FeedService
   ) {
+    this.isAdmin = this.auth.isAdmin();
     const name = window.localStorage.getItem('clout_user_username');
     this.avatar = window.localStorage.getItem('clout_user_avatar');
     this.userName = name ? name : null;
@@ -37,8 +42,17 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
       }
     });
 
-    this.top$ = this.apiService.get('/api/v1/altcoins/top?top=20')
-      .subscribe(responce => this.topList = responce.data);
+    const coinsName = this.router.url === '/icos' ? 'icos' : 'altcoins';
+    this.top$ = this.feedService.getTopCoins(coinsName, 30)
+      .subscribe(responce => {
+        this.topList = responce.data;
+      });
+
+    this.isAuthUser = this.isAuthorized();
+  }
+
+  isAuthorized() {
+    return Boolean(window.localStorage.getItem(this.auth.JWT));
   }
 
   ngAfterViewInit() {
@@ -75,6 +89,16 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
 
     };
 
+  }
+
+  showCoinsDropdown(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.hiddenCoinsDropdown.nativeElement.click();
+  }
+
+  showAlphabetCoinDropdown() {
+    this.visibleAlphabeticalDropdown = !this.visibleAlphabeticalDropdown;
   }
 
   setTitle() {

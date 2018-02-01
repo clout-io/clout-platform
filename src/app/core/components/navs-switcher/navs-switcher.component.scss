@@ -1,0 +1,52 @@
+@import "../../../../theme/theme-variables";
+
+/*
+Page Titles
+___________________________*/
+.page-title {
+  border-bottom: 1px solid $color-ac-border;
+  box-shadow: 0 1px 1px rgba($color-ac-shadow, .15);
+  padding: 25px 0;
+
+  h1 {
+    margin: 0;
+    padding: 0;
+    font-weight: 600;
+    font-size: $font-size-default;
+    line-height: $font-size-default + 10;
+    text-align: center;
+  }
+}
+
+/*
+Page Links
+___________________________*/
+.page-links {
+  text-align: center;
+  height: 75px;
+  margin: -25px 0;
+
+  a {
+    display: inline-block;
+    vertical-align: top;
+    height: 75px;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 75px;
+    padding: 0 15px;
+    border-bottom: 2px solid transparent;
+    color: $color-ac-text;
+    margin: 0 8px;
+    text-decoration: none;
+
+
+    &:hover {
+
+    }
+  }
+
+  .active {
+    color: $color-ac-text-alt;
+    border-color: $color-ac-link;
+  }
+}

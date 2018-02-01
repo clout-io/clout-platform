@@ -6,6 +6,9 @@
  */
 
 module.exports = {
-	
+  list: async function (req, res) {
+    let result = await IcoCategory.find();
+    return res.json(result);
+  }
 };
 

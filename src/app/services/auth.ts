@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router, CanActivate } from '@angular/router';
+import { Headers, Http, Response } from '@angular/http';
 import { Observable } from 'rxjs/Observable';
 import { ApiService } from './api';
 import 'rxjs/Rx';
@@ -12,12 +13,15 @@ export class AuthService implements CanActivate {
 
   constructor(
     private router: Router,
-    private api: ApiService
+    private api: ApiService,
+    private http: Http
   ) {
     const auth_token = window.localStorage.getItem(this.JWT);
     if (auth_token) {
       this.setToken(auth_token);
     }
+
+    this.checkUserAuthToken().subscribe(); //check user valid token
   }
 
   canActivate(): boolean {
@@ -38,10 +42,35 @@ export class AuthService implements CanActivate {
   }
 
   setUser(user: any) {
-    const {id, avatar, username} = user;
+    const {id, avatar, username, isAdmin} = user;
     window.localStorage.setItem('clout_user_id', id);
     window.localStorage.setItem('clout_user_avatar', avatar);
     window.localStorage.setItem('clout_user_username', username);
+    window.localStorage.setItem('clout_user_is_admin', isAdmin);
+  }
+
+  isAdmin() {
+    return Boolean(window.localStorage.getItem('clout_user_is_admin'));
+  }
+
+  checkUserAuthToken() {
+    return this.http.get(`${this.api.api_url}/${this.api.check_user}`, {headers: this.api.headers})
+      .do((res: any) => {
+        if (res.token) {
+          this.setToken(res.token);
+          this.setUser(res.user);
+        }
+      })
+      .map((res: any) => res)
+      .catch(this.checkError)
+  }
+
+  checkError = (err) => {
+    if (err.status == 401) {
+      this.api.deactivate();
+    }
+
+    return Observable.throw(err.json());
   }
 
   authenticate(credits): Observable<any> {

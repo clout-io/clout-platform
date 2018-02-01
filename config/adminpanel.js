@@ -178,6 +178,38 @@ module.exports.adminpanel = {
     Category: {
       title: 'Categories',
       model: 'Category'
-    }
+    },
+    IcoTokenTechnology: {
+      title: 'IcoTokenTechnology',
+      model: 'IcoTokenTechnology'
+    },
+    IcoTokenType: {
+      title: 'IcoTokenType',
+      model: 'IcoTokenType'
+    },
+    IcoStage: {
+      title: 'IcoStage',
+      model: 'IcoStage'
+    },
+    IcoIndustry: {
+      title: 'IcoIndustry',
+      model: 'IcoIndustry'
+    },
+    Role: {
+      title: 'Role',
+      model: 'Role'
+    },
+    Permission: {
+      title: 'Permission',
+      model: 'Permission'
+    },
+    Criteria: {
+      title: 'Criteria',
+      model: 'Criteria'
+    },
+    Model: {
+      title: 'Model',
+      model: 'Model'
+    },
   }
 };

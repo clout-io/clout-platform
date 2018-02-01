@@ -4,19 +4,26 @@
       <img src="{{feed?.owner?.avatar}}" onerror="this.src='../../../../../../../assets/user.svg'" alt="">
     </div>
     <div class="comments__details">
-      <strong>{{feed?.owner?.username}}</strong>
+      <strong>{{feed?.owner?.name}}</strong>
       <p>{{createDate}}</p>
     </div>
     <div class="comments__time">
-      <div class="dropdown" *ngIf="isOwner">
+      <div class="dropdown">
         <button class="dropdown-toggle" id="dropdownPostActions" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
           <i></i>
         </button>
         <div class="dropdown-menu" aria-labelledby="dropdownPostActions">
-          <a class="dropdown-item" (click)="delete()">Delete Post</a>
-          <a class="dropdown-item" (click)="edit()">Edit</a>
+          <a *ngIf="isOwner" class="dropdown-item" (click)="delete()">Delete Post</a>
+          <a *ngIf="isOwner" class="dropdown-item" (click)="edit()">Edit</a>
+          <a class="dropdown-item" (click)="shareFacebook($event)">Share Facebook</a>
+          <a *ngIf="showShareTwitter" class="dropdown-item" ceiboShare
+             [twitter]="twitterShareObj">Share Twitter</a>
         </div>
       </div>
+      <!--<button ceiboShare
+              [twitter]="{url:'',
+               text:'Checkout this awesome ng2 social share directive',
+               hashtags:'angular2, social, ceiboIT'}">Twitter</button>-->
     </div>
   </div>
   <app-post-head *ngIf="feed?.type === 'post' && editable"

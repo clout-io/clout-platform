@@ -43,6 +43,7 @@ module.exports.policies = {
   AltcoinController: {
     index: true,
     favorites: true,
+    alphabetList: true,
     sync: true,//temp
     history: true,
     info: true,
@@ -53,6 +54,8 @@ module.exports.policies = {
   IcoController: {
     index: true,
     info: true,
+    top: true,
+    alphabetList: true,
     sync: true,
     syncPhoto: true
   },
@@ -76,7 +79,8 @@ module.exports.policies = {
   },
   UserController: {
     resetPasswordRequest: true,
-    resetPassword: true
+    resetPassword: true,
+    profile: true
   },
   PressController: {
     index: true,
@@ -96,5 +100,24 @@ module.exports.policies = {
   },
   TrendingController: {
     index: true
+  },
+  IcoIndustryController: {
+    list: true,
+  },
+  IcoTokenTechnologyController: {
+    list: true,
+  },
+  IcoTokenTypeController: {
+    list: true,
+  },
+  IcoStageController: {
+    list: true,
+  },
+  IcoCategoryController: {
+    list: true,
+  },
+  CountryController: {
+    list: true
   }
+
 };

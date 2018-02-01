@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { FeedService } from '../../../../../../services';
+import { FacebookService } from 'ngx-facebook';
 import * as moment from 'moment';
 
 class Action {
@@ -18,13 +19,14 @@ export class FeedItemComponent implements OnInit {
   createDate: string = '';
   editable = false;
   isOwner: boolean;
+  twitterShareObj: any;
+  showShareTwitter = true;
 
   public imageSrc: string;
   public loadImgId: string;
 
-  constructor(
-    private feedService: FeedService,
-  ) { }
+  constructor(private feedService: FeedService,
+              private fb: FacebookService) {}
 
   ngOnInit() {
     this.showLinkData(true);
@@ -32,6 +34,8 @@ export class FeedItemComponent implements OnInit {
     this.isOwner = !!this.feed.owner ? this.getUserId() === this.feed.owner.id : false;
     const type = !!this.feed.type ? this.feed.type : 'post';
     this.feed.type = type;
+
+    this.parseInfoForTwitterSharing();
   }
 
   private showLinkData(show: boolean) {
@@ -48,6 +52,72 @@ export class FeedItemComponent implements OnInit {
     this.loadImgId = null;
   }
 
+  shareFacebook(): void {
+    let title = '';
+    let description = this.feed.text;
+    let imageUrl = this.feed.attachment.length ?
+      window.location.origin + this.feed.attachment[0].url : '';
+
+    if (this.feed.linkData) {
+      title = this.feed.linkData.ogTitle;
+      description = this.feed.linkData.ogDescription;
+      imageUrl = this.feed.linkData.ogImage.url;
+    }
+
+    if (this.feed.type === 'article') {
+      const regexImgTag = /<img.*?src="(.*?)"/;
+      const imgTag = regexImgTag.exec(this.feed.text);
+      if (imgTag) {
+        imageUrl = imgTag[1];
+      }
+      description = this.parseTextFromHtml(this.feed.text);
+    }
+
+    const defaultUrl = 'https://steemitimages.com/DQmPJPwNz2t9d6ZsoUo1cyvKGfWTE9VZ2kgogyzDYvSSbmq/image.png';
+    const ogObj = {
+      'og:url': this.getSocialRedirectUrl(),
+      'og:title': title,
+      'og:description': description,
+      'og:image': !!imageUrl.length ? imageUrl : defaultUrl
+    };
+
+    this.fb.ui({
+      method: 'share_open_graph',
+      action_type: 'og.shares',
+      display: 'popup',
+      action_properties: JSON.stringify({
+        object: ogObj
+      })
+    }).catch(() => {});
+  }
+
+  getSocialRedirectUrl(): string {
+    return window.location.origin + '/home/community/' + this.feed.id;
+  }
+
+  parseInfoForTwitterSharing(): void {
+    this.twitterShareObj = null;
+    let twitterText = this.parseTextFromHtml(this.feed.text) + ' ';
+    if (twitterText.length > 200) { twitterText = twitterText.slice(0, 200) + '... '; }
+    const twitterRedirectUrl = this.getSocialRedirectUrl();
+    this.twitterShareObj = {url: twitterRedirectUrl, text: twitterText, hashtags: ''};
+    //this.twitterHref = 'https://twitter.com/intent/tweet/?text=' + encodeURIComponent(twitterText) + '&url=' + this.twitterRedirectUrl;
+  }
+
+  reinitShareTwitterDirective() {
+    //fix directive bug with change url
+    this.showShareTwitter = false;
+    setTimeout(() => {
+      this.showShareTwitter = true;
+    }, 0);
+  }
+
+  parseTextFromHtml(str: string) {
+    const temporalDivElement = document.createElement('div');
+    temporalDivElement.innerHTML = str;
+    return temporalDivElement.textContent || temporalDivElement.innerText || '';
+  }
+
   onDoAction(action: Action) {
     switch (action.key) {
       case 'removeImage': this.removeImage(); break;
@@ -59,6 +129,10 @@ export class FeedItemComponent implements OnInit {
 
   editFlag(edit: boolean) {
     this.editable = edit;
+
+    if (!edit) {
+      this.reinitShareTwitterDirective();
+    }
   }
 
   getUserId(): string {
@@ -89,6 +163,7 @@ export class FeedItemComponent implements OnInit {
     this.removeImage();
     this.showLinkData(true);
     this.editFlag(false);
+    this.parseInfoForTwitterSharing();
   }
 
   save(params) {

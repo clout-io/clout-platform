@@ -19,7 +19,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
-        "styles.scss"
+        "styles.scss",
+        "../node_modules/flatpickr/dist/flatpickr.min.css",
+        "../node_modules/dragula/dist/dragula.css"
       ],
       "scripts": [
         "../node_modules/tinymce/tinymce.js",
