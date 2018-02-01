@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {IcosService} from '../../../services/icosService';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-add-ico',
@@ -8,7 +9,8 @@ import {IcosService} from '../../../services/icosService';
 })
 export class AddIcoComponent implements OnInit {
 
-  constructor(private icosService: IcosService) { }
+  constructor(private icosService: IcosService,
+              private router: Router) { }
 
   ngOnInit() {
   }
@@ -17,10 +19,12 @@ export class AddIcoComponent implements OnInit {
   }
 
   addIco(data) {
-    console.log('data', data);
     this.icosService.addIco(data).take(1)
       .subscribe(responce => {
-        console.log('responce', responce);
+        alert('New ICO was successfully saved!');
+        this.router.navigate(['/icos', 'all']);
+      }, error => {
+        alert('Something went wrong! Try again!');
       });
   }
 

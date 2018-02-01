@@ -7,9 +7,10 @@
     </div>
     <div class="coin-description__text">
       <h2>{{ico?.name}}</h2>
-      <p>
+      <p [innerHtml]="ico?.description"></p>
+      <!--<p>
         {{ico?.description}}
-      </p>
+      </p>-->
     </div>
   </div>
 
