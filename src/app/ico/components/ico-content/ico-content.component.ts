@@ -37,7 +37,7 @@ export class IcoContentComponent implements OnInit, OnDestroy {
           ico.imageUrl = '';
         } else if (typeof ico.image === 'string') {
           ico.imageUrl = ico.image;
-        } else if (typeof ico.image === 'object'){
+        } else if (typeof ico.image === 'object') {
           ico.imageUrl = environment.url + ico.image.url;
         }
 

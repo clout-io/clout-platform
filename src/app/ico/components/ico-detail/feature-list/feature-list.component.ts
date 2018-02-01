@@ -1,4 +1,5 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
+import {AuthService} from "../../../../services/auth";
 
 @Component({
   selector: 'app-feature-list',
@@ -6,6 +7,7 @@ import {Component, OnInit, Input, OnChanges} from '@angular/core';
   styleUrls: ['./feature-list.component.scss']
 })
 export class FeatureListComponent implements OnInit, OnChanges {
+  isAdmin: boolean;
   @Input() icoData;
   investScore: any;
   riskScore: any;
@@ -18,7 +20,7 @@ export class FeatureListComponent implements OnInit, OnChanges {
     'hight': 'HIGH'
   };
 
-  constructor() { }
+  constructor(private authService: AuthService) { }
 
   ngOnChanges(changes): void {
     if (!this.icoData) { return; }
@@ -30,5 +32,7 @@ export class FeatureListComponent implements OnInit, OnChanges {
     this.categories = this.icoData.categories.map(item => item.name).join(', ');
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.isAdmin = this.authService.isAdmin();
+  }
 }

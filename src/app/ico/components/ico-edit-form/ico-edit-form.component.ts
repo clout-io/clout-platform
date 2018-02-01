@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Output, EventEmitter, Renderer, ViewChild, ElementRef
+  Component, OnInit, Output, EventEmitter, Renderer, ViewChild, ElementRef, AfterViewInit
 } from '@angular/core';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { FeedService, IcosService } from '../../../services';
@@ -9,13 +9,14 @@ import { emptyValidator } from '../../../shared';
 import {BroadcastService} from '../../../services/broadcastService';
 import { FlatpickrOptions } from 'ng2-flatpickr/ng2-flatpickr';
 import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
+declare const $: any;
 
 @Component({
   selector: 'app-ico-edit-form',
   templateUrl: './ico-edit-form.component.html',
   styleUrls: ['./ico-edit-form.component.scss']
 })
-export class IcoEditFormComponent implements OnInit {
+export class IcoEditFormComponent implements OnInit, AfterViewInit {
   premiumForm: FormGroup;
   form: FormGroup;
   membersForm: FormGroup;
@@ -67,23 +68,23 @@ export class IcoEditFormComponent implements OnInit {
   currentYear = new Date().getFullYear();
 
   team = [{
-      id: "59f9d19798f3eerere0ad5c5c2f2c",
-      name: "Will Warren11",
-      role: "Co-founder & CEO",
+      id: '59f9d19798f3eerere0ad5c5c2f2c',
+      name: 'Will Warren11',
+      role: 'Co-founder & CEO',
       action: 1,
       order: 11,
     },
     {
-      id: "59f9d1qqwwww9798f3e0ad5c5c2f2c",
-      name: "Will Warren5",
-      role: "Co-founder & CEO",
+      id: '59f9d1qqwwww9798f3e0ad5c5c2f2c',
+      name: 'Will Warren5',
+      role: 'Co-founder & CEO',
       order: 5,
       action: 3,
     },
     {
-      id: "59f9d19edsdsd798f3e0ad5c5c2f2c",
-      name: "Will Warren8",
-      role: "Co-founder & CEO",
+      id: '59f9d19edsdsd798f3e0ad5c5c2f2c',
+      name: 'Will Warren8',
+      role: 'Co-founder & CEO',
       order: 8,
       action: 2,
     }
@@ -196,6 +197,11 @@ export class IcoEditFormComponent implements OnInit {
     this.socials = this.form.get('socials') as FormArray;
   }
 
+  ngAfterViewInit(): void {
+    console.log('after', $('#flatpickr'));
+    $('#flatpickr').find('input').attr('readonly', 'readonly');
+  }
+
   createSocialItem(): FormGroup {
     return this.formBuilder.group({
       link: ['', Validators.compose([Validators.required, emptyValidator(), isUrlValidator()])],
@@ -275,9 +281,9 @@ export class IcoEditFormComponent implements OnInit {
       }
     }
 
-    if (this.premiumForm.invalid || this.form.invalid || this.membersForm.invalid) {
+    /*if (this.premiumForm.invalid || this.form.invalid || this.membersForm.invalid) {
       return;
-    }
+    }*/
 
     const {image, premiumRank, isPremium, premiumDescription} = this.premiumForm.value;
     const {
