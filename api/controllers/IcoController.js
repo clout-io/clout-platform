@@ -66,7 +66,7 @@ module.exports = {
 
     try {
       let ico = await Ico.create(req.body);
-      ico = await Ico.findOne(ico.id).populate(["socials", "team", "categories"]);
+      ico = await Ico.findOne(ico.id).populate(["socials", "team", "categories", "image"]);
       return res.json(ico);
     } catch (e) {
       console.log(e)
@@ -119,11 +119,11 @@ module.exports = {
 
       _.extend(userCondition, filter);
 
-      followedIco = await Ico.find(userCondition).populate(["socials", "team"]);
+      followedIco = await Ico.find(userCondition).populate(["socials", "team", "image"]);
     }
     let resultData = {};
     try {
-      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team"]);
+      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team", "image"]);
     } catch (e) {
       return res.status(400).json(e);
     }

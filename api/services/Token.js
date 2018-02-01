@@ -31,6 +31,10 @@ module.exports.verify = async (token) => {
 
   let activity = await UserActivity.findOne({token: token}).populate("user");
 
+  if (!activity) {
+    return [false, null];
+  }
+
   if (!activity.isActive) {
     return [false, null];
   }

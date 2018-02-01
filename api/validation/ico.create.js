@@ -27,7 +27,7 @@ const customJoi = Joi.extend((joi) => ({
 const teamObjectSchema = Joi.object({
   role: Joi.string().min(1).max(80).trim().required(),
   name: Joi.string().min(1).max(80).trim().required(),
-  link: Joi.string().uri().min(1).max(40).trim().required(),
+  link: Joi.string().uri().min(1).max(40).trim(),
   order: Joi.number().integer().required(),
   status: Joi.string().valid(["active", "inactive"]),
   isDeleted: Joi.boolean()
@@ -75,6 +75,7 @@ module.exports = {
   tokensDistribution: Joi.string(),
   tokenSales: Joi.string(),
   accepts: Joi.string(),
+  similarProjects: Joi.string(),
 
   technicalDetails: Joi.string(),
   sourceCode: Joi.string(),

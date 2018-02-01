@@ -46,7 +46,8 @@ module.exports = {
       type: "date"
     },
     image: {
-      type: "string"
+      model: "Img",
+      via: 'id'
     },
     projectStage: {
       model: "IcoStage",
@@ -87,8 +88,7 @@ module.exports = {
       type: "string"
     },
     similarProjects: {
-      collection: 'Ico',
-      via: 'id'
+      type: "string"
     },
     tokenType: {
       model: "IcoTokenType",
@@ -111,8 +111,7 @@ module.exports = {
       type: "string"
     },
     accepts: {
-      collection: "Altcoin",
-      via: 'id'
+      type: "string"
     },
     technicalDetails: {
       type: "string"
@@ -147,7 +146,7 @@ module.exports = {
     premiumDescription: {
       type: "string"
     },
-    industry:{
+    industry: {
       collection: "IcoIndustry",
       via: 'id'
     }
