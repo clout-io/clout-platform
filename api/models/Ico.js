@@ -167,6 +167,14 @@ module.exports = {
         obj.tokenType = "";
       }
 
+      if (obj.blockchainLink) {
+        obj.site = obj.blockchainLink;
+      }
+
+      if (obj.country) {
+        obj.primaryGeography = obj.country
+      }
+
       return obj;
 
     }
