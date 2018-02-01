@@ -149,6 +149,26 @@ module.exports = {
     industry: {
       collection: "IcoIndustry",
       via: 'id'
+    },
+    toJSON: function () {
+      let obj = this.toObject();
+
+      if (obj.startedW3c) {
+        obj.startDate = obj.startedW3c;
+      }
+      if (obj.endedW3c) {
+        obj.endDate = obj.endedW3c;
+      }
+      if (obj.tokenSupplyAmount) {
+        obj.amount = obj.tokenTargetAmount;
+      }
+
+      if (parseInt(obj.tokenType)) {
+        obj.tokenType = "";
+      }
+
+      return obj;
+
     }
   },
   beforeValidate: function (values, next) {
