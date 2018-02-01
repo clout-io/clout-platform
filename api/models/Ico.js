@@ -46,7 +46,8 @@ module.exports = {
       type: "date"
     },
     image: {
-      type: "string"
+      model: "Img",
+      via: 'id'
     },
     projectStage: {
       model: "IcoStage",
@@ -87,8 +88,7 @@ module.exports = {
       type: "string"
     },
     similarProjects: {
-      collection: 'Ico',
-      via: 'id'
+      type: "string"
     },
     tokenType: {
       model: "IcoTokenType",
@@ -111,8 +111,7 @@ module.exports = {
       type: "string"
     },
     accepts: {
-      collection: "Altcoin",
-      via: 'id'
+      type: "string"
     },
     technicalDetails: {
       type: "string"
@@ -147,9 +146,37 @@ module.exports = {
     premiumDescription: {
       type: "string"
     },
-    industry:{
+    industry: {
       collection: "IcoIndustry",
       via: 'id'
+    },
+    toJSON: function () {
+      let obj = this.toObject();
+
+      if (obj.startedW3c) {
+        obj.startDate = obj.startedW3c;
+      }
+      if (obj.endedW3c) {
+        obj.endDate = obj.endedW3c;
+      }
+      if (obj.tokenSupplyAmount) {
+        obj.amount = obj.tokenTargetAmount;
+      }
+
+      if (parseInt(obj.tokenType)) {
+        obj.tokenType = "";
+      }
+
+      if (obj.blockchainLink) {
+        obj.site = obj.blockchainLink;
+      }
+
+      if (obj.country) {
+        obj.primaryGeography = obj.country
+      }
+
+      return obj;
+
     }
   },
   beforeValidate: function (values, next) {
