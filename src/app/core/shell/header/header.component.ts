@@ -20,12 +20,14 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
   visibleAlphabeticalDropdown: boolean;
 
   isAuthUser: boolean = false;
+  isAdmin: boolean;
 
   constructor(
     private auth: AuthService,
     private router: Router,
     private feedService: FeedService
   ) {
+    this.isAdmin = this.auth.isAdmin();
     const name = window.localStorage.getItem('clout_user_username');
     this.avatar = window.localStorage.getItem('clout_user_avatar');
     this.userName = name ? name : null;

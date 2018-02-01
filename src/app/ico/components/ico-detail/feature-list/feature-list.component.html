@@ -29,7 +29,8 @@
     <app-social-networks *ngIf="icoData" [icoData]="icoData"></app-social-networks>
     <app-links *ngIf="icoData" [icoData]="icoData"></app-links>
     <div>
-      <a class="coin-details__share-subscribe btn btn--primary-outline edit-ico-btn"
+      <a *ngIf="isAdmin"
+         class="coin-details__share-subscribe btn btn--primary-outline edit-ico-btn"
          [routerLink]="['/ico/edit']" [queryParams]="{id: icoData?.id}">
         Edit
       </a>

@@ -145,5 +145,6 @@ export class ApiService {
     this.apiHelper.removeItemFromLocalStorage('clout_user_avatar');
     this.apiHelper.removeItemFromLocalStorage('clout_user_username');
     this.apiHelper.removeItemFromLocalStorage('clout_user_id');
+    this.apiHelper.removeItemFromLocalStorage('clout_user_is_admin');
   }
 }

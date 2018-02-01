@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {IcosService} from '../../../services/icosService';
 import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth';
 
 @Component({
   selector: 'app-add-ico',
@@ -10,7 +11,8 @@ import {Router} from '@angular/router';
 export class AddIcoComponent implements OnInit {
 
   constructor(private icosService: IcosService,
-              private router: Router) { }
+              private router: Router,
+              private authService: AuthService) { }
 
   ngOnInit() {
   }
@@ -19,6 +21,8 @@ export class AddIcoComponent implements OnInit {
   }
 
   addIco(data) {
+    if (!this.authService.isAdmin()) { return; }
+
     this.icosService.addIco(data).take(1)
       .subscribe(responce => {
         alert('New ICO was successfully saved!');
