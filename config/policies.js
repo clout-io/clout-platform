@@ -57,8 +57,7 @@ module.exports.policies = {
     top: true,
     alphabetList: true,
     sync: true,
-    syncPhoto: true,
-    create: ['isAuthorized', 'PermissionPolicy']
+    syncPhoto: true
   },
   SwaggerController: {
     '*': true
