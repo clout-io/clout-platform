@@ -424,6 +424,7 @@
             <div class="row">
               <div class="col-sm-6">
                 <div class="form-item"
+                     id="flatpickr"
                      [ngClass]="{'form-item--error': form.get('startDate').invalid && form.get('startDate').touched}">
                   <label class="form-item__label">ICO Date*</label>
                   <div class="dates-input-group" id="range-date-wrap">
@@ -437,6 +438,7 @@
                       class="range-last form-item__field"
                       id="secondRangeInput"
                       formControlName="endDate"
+                      readonly
                       placeholder="MM/DD/YY">
                   </div>
                   <div class="validation-group">
