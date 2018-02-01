@@ -10,3 +10,4 @@ export * from './comment-list';
 export * from './follow-btn/follow-btn.component';
 export * from './loader-line/loader-line.component';
 export * from './reset-password/reset-password.component';
+export * from './filter-sidebar/filter-sidebar.component';

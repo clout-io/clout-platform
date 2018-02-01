@@ -263,6 +263,7 @@
               <div class="form-item" formArrayName="socials">
                 <label class="form-item__label">Links</label>
                 <div class="team-item link-item"
+                     [ngClass]="{'form-item--error': item['controls']['link'].touched && item['controls']['link'].invalid}"
                      *ngFor="let item of form.get('socials')['controls']; let i = index;">
                   <div [formGroupName]="i">
                     <div class="team-group links-group">
@@ -305,9 +306,14 @@
                       <!--<span class="input_invalid"
                             *ngIf="item['controls']['name'].untouched || item['controls']['name'].valid">
                       </span>-->
-                      <span class="input_invalid"
-                            *ngIf="item['controls']['link'].touched && item['controls']['link'].invalid">
+                      <span class="form-item__hint"
+                            *ngIf="item['controls']['link'].touched && item['controls']['link'].hasError('required')">
                         This field is required!
+                      </span>
+                      <span class="form-item__hint"
+                            *ngIf="item['controls']['link'].touched && item['controls']['link'].hasError('urlNotValid')
+                            && !item['controls']['link'].hasError('required')">
+                        This link is not valid!
                       </span>
                       <div class="fake-block"></div>
                     </div>
@@ -317,26 +323,50 @@
             </div>
             <div class="row">
               <div class="col-sm-6">
-                <div class="form-item">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('site').touched && form.get('site').invalid}">
                   <label class="form-item__label">ICO Website</label>
                   <input type="text" class="form-item__field"
                          formControlName="site" placeholder="Enter Website link">
+                  <span class="form-item__hint" *ngIf="form.get('site').hasError('required')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('site').hasError('required') && form.get('site').hasError('urlNotValid')">
+                    ICO Website link is not valid!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['site']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('whitepaper').touched && form.get('whitepaper').invalid}">
                   <label class="form-item__label">Whitepaper</label>
                   <input type="text" class="form-item__field"
                          formControlName="whitepaper" placeholder="Enter Whitepaper link">
+                  <span class="form-item__hint" *ngIf="form.get('whitepaper').hasError('required')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('whitepaper').hasError('required') && form.get('whitepaper').hasError('urlNotValid')">
+                    Whitepaper link is not valid!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['whitepaper']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
-                <div class="form-item">
+                <div class="form-item"
+                     [ngClass]="{'form-item--error' : form.get('blog').touched && form.get('blog').invalid}">
                   <label class="form-item__label">Blog</label>
                   <input type="text" class="form-item__field"
                          formControlName="blog" placeholder="Enter Blog link">
+                  <span class="form-item__hint" *ngIf="form.get('blog').hasError('required')">
+                    This field is required!
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('blog').hasError('required') && form.get('blog').hasError('urlNotValid')">
+                    Blog link is not valid!
+                  </span>
                   <app-server-error-msg [errorMsg]="serverErrors['blog']"></app-server-error-msg>
                 </div>
               </div>
@@ -470,8 +500,13 @@
                   <span class="form-item__hint" *ngIf="form.get('amount').hasError('required')">
                     This field is required!
                   </span>
-                  <span class="form-item__hint" *ngIf="!form.get('amount').hasError('required')">
+                  <span class="form-item__hint"
+                        *ngIf="!form.get('amount').hasError('required') && !form.get('amount').hasError('notNumber')">
                     Amount must be larger than or equal to 1.
+                  </span>
+                  <span class="form-item__hint"
+                        *ngIf="form.get('amount').hasError('notNumber') && !form.get('amount').hasError('required')">
+                    Amount must be a number.
                   </span>
                   <app-server-error-msg [errorMsg]="serverErrors['amount']"></app-server-error-msg>
                 </div>

@@ -8,6 +8,7 @@ import { Ng2FlatpickrComponent } from 'ng2-flatpickr/ng2-flatpickr';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PercentPipe, AlphabeticCoinsPipe } from './../pipes';
+import { NouisliderModule } from 'ng2-nouislider';
 
 // components
 import {
@@ -27,7 +28,8 @@ import {
   FollowBtnComponent,
   LoaderLineComponent,
   ResetPasswordComponent,
-  NavsSwitcherComponent
+  NavsSwitcherComponent,
+  FilterSidebarComponent
 } from './components';
 import {
   CommentItemComponent
@@ -41,7 +43,8 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     RouterModule,
     FormsModule,
     ReactiveFormsModule,
-    OwlModule
+    OwlModule,
+    NouisliderModule
   ],
   declarations: [
     HeaderComponent,
@@ -63,11 +66,13 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     AutomaticGetDataByUrlDirective,
     CoinsAlphabeticDropdownComponent,
     NavsSwitcherComponent,
-    Ng2FlatpickrComponent
+    Ng2FlatpickrComponent,
+    FilterSidebarComponent
   ],
   exports: [
     FormsModule,
     ReactiveFormsModule,
+    NouisliderModule,
     CommentListComponent,
     ModalComponent,
     FollowBtnComponent,
@@ -76,7 +81,8 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     AutomaticGetDataByUrlDirective,
     NavsSwitcherComponent,
     ResetInputBtnComponent,
-    Ng2FlatpickrComponent
+    Ng2FlatpickrComponent,
+    FilterSidebarComponent
   ]
 })
 export class CoreModule { }

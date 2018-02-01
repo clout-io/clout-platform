@@ -58,7 +58,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
       if (isFirst) {
         this.meta = responce.meta;
         this.icoList = responce.data;
-        !this.icoId  && this.router.navigate(['/icos', !status ? 'all' : this.route.snapshot.params.status, R.head(this.icoList).id], {queryParams : this.route.snapshot.queryParams});
+        !this.icoId && !!this.icoList.length && this.router.navigate(['/icos', !status ? 'all' : this.route.snapshot.params.status, R.head(this.icoList).id], {queryParams : this.route.snapshot.queryParams});
       } else {
         if (responce.meta.nextPage !== this.meta.nextPage) {
           this.meta = responce.meta;

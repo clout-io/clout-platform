@@ -33,7 +33,14 @@ export class IcoContentComponent implements OnInit, OnDestroy {
 
     this.apiService.get(`/${this.apiService.ico}/${id}`)
       .subscribe(ico => {
-        ico.imageUrl = environment.url + ico.image['url'];
+        if (!ico.image) {
+          ico.imageUrl = '';
+        } else if (typeof ico.image === 'string') {
+          ico.imageUrl = ico.image;
+        } else if (typeof ico.image === 'object'){
+          ico.imageUrl = environment.url + ico.image.url;
+        }
+
         this.ico = ico;
         //this.ico['description'] =  $(this.ico['description']).text();
       }, eror => this.router.navigate(['all']));

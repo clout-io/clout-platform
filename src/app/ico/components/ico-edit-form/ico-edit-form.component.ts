@@ -4,7 +4,7 @@ import {
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { FeedService, IcosService } from '../../../services';
 import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
-import { multiSelectEmptyValidator } from '../../../shared';
+import { multiSelectEmptyValidator, isNumberValidator, isUrlValidator } from '../../../shared';
 import { emptyValidator } from '../../../shared';
 import {BroadcastService} from '../../../services/broadcastService';
 import { FlatpickrOptions } from 'ng2-flatpickr/ng2-flatpickr';
@@ -166,9 +166,9 @@ export class IcoEditFormComponent implements OnInit {
       industry: [''],
       status: [''],
       founded: ['', [Validators.required, Validators.max(this.currentYear)]],
-      site: [''],
-      whitepaper: [''],
-      blog: [''],
+      site: ['', Validators.compose([Validators.required, isUrlValidator()])],
+      whitepaper: ['', Validators.compose([Validators.required, isUrlValidator()])],
+      blog: ['', Validators.compose([Validators.required, isUrlValidator()])],
       features: [''],
       tokensDistribution: [''],
       tokenSales: [''],
@@ -181,7 +181,7 @@ export class IcoEditFormComponent implements OnInit {
       endDate: ['', [Validators.required]],
       primaryGeography: ['', Validators.required],
       jurisdiction: ['', Validators.required],
-      amount: ['', [Validators.required, emptyValidator(), Validators.min(1)]],
+      amount: ['', [Validators.required, emptyValidator(), Validators.min(1), isNumberValidator()]],
       categories: ['', [Validators.required, multiSelectEmptyValidator()]],
       socials: this.formBuilder.array([ this.createSocialItem() ])
     });
@@ -198,7 +198,7 @@ export class IcoEditFormComponent implements OnInit {
 
   createSocialItem(): FormGroup {
     return this.formBuilder.group({
-      link: ['', [Validators.required, emptyValidator()]],
+      link: ['', Validators.compose([Validators.required, emptyValidator(), isUrlValidator()])],
       type: ['other']
     });
   }
@@ -262,8 +262,9 @@ export class IcoEditFormComponent implements OnInit {
     Object.keys(this.form.controls).forEach(key => {
       this.serverErrors[key] = `${key} is required!`;
     });*/
-    console.log(this.premiumForm);
-    console.log(this.form);
+    console.log(this.premiumForm, 'this.premiumForm', this.premiumForm.valid);
+    console.log(this.form, 'this.form', this.form.valid);
+    console.log(this.membersForm, 'this.membersForm', this.membersForm.valid);
     this.setFormFieldsAsTouched(this.premiumForm.controls);
     this.setFormFieldsAsTouched(this.form.controls);
     this.setGroupFieldsAsTouched();
@@ -272,6 +273,10 @@ export class IcoEditFormComponent implements OnInit {
       if (this.form.controls['startDate'].value.length === 2) {
         this.form.controls['endDate'].setErrors(null);
       }
+    }
+
+    if (this.premiumForm.invalid || this.form.invalid || this.membersForm.invalid) {
+      return;
     }
 
     const {image, premiumRank, isPremium, premiumDescription} = this.premiumForm.value;
