@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
-import { ApiService, BroadcastService } from '../../../services';
+import { BroadcastService, IcosService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
-import { environment } from '../../../../environments/environment';
 import * as R from 'ramda';
 declare const $: any;
 
@@ -27,7 +26,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @Input() selected: boolean = false;
 
-  constructor(private apiService: ApiService,
+  constructor(private icosService: IcosService,
               private broadcastService: BroadcastService,
               private route: ActivatedRoute,
               private router: Router) { }
@@ -52,9 +51,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
     const status = R.contains(this.route.snapshot.params.status, this.DEFAULT_STATUS) ? { status: this.route.snapshot.params.status } : false;
     const filter = JSON.stringify(Object.assign({}, (status ? status : {}), this.route.snapshot.queryParams));
 
-    const url = `/${this.apiService.icos}?page=${nextPage}&per_page=${perPage}&sortType=asc&filter=${filter}`;
-    this.apiService.get(url).subscribe(responce => {
-      responce.data.map(item => item.imageUrl = environment.url + item.image);
+    this.icosService.getIcosList(nextPage, perPage, filter).subscribe(responce => {
       if (isFirst) {
         this.meta = responce.meta;
         this.icoList = responce.data;

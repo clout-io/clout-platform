@@ -1,9 +1,6 @@
 import { Component, OnInit,  OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../../services';
-import { environment } from '../../../../environments/environment';
-declare const $;
-
+import { IcosService } from '../../../services';
 
 @Component({
   selector: 'app-ico-content',
@@ -16,7 +13,9 @@ export class IcoContentComponent implements OnInit, OnDestroy {
 
   private subRoute: any;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private icosService: IcosService) {
     this.subRoute = this.route.params.subscribe(params => {
       if (params['id']) {
         this.icoId = params['id']; // (+) converts string 'id' to a number
@@ -28,22 +27,11 @@ export class IcoContentComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   loadCoin(id) {
-    if (!id)
-      return false;
+    if (!id) { return; }
 
-    this.apiService.get(`/${this.apiService.ico}/${id}`)
-      .subscribe(ico => {
-        if (!ico.image) {
-          ico.imageUrl = '';
-        } else if (typeof ico.image === 'string') {
-          ico.imageUrl = ico.image;
-        } else if (typeof ico.image === 'object') {
-          ico.imageUrl = environment.url + ico.image.url;
-        }
-
-        this.ico = ico;
-        //this.ico['description'] =  $(this.ico['description']).text();
-      }, eror => this.router.navigate(['all']));
+    this.icosService.getIco(id)
+      .subscribe(ico => this.ico = ico,
+          error => this.router.navigate(['all']));
   }
 
   ngOnDestroy(): void {

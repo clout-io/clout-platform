@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ApiService } from './api';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/Rx';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class IcosService {
@@ -37,6 +38,27 @@ export class IcosService {
 
   addIco(options: any): Observable<any> {
     return this.api.post(`${this.path}/ico`, options);
+  }
+
+  getIcosList(nextPage: number, perPage: number, filter: string): Observable<any> {
+    const url = `${this.path}/icos?page=${nextPage}&per_page=${perPage}&sortType=asc&filter=${filter}`;
+    return this.api.get(url)
+      .do(responce => responce.data.map(ico => this.setIcoImageUrl(ico)));
+  }
+
+  getIco(id: string): Observable<any> {
+    return this.api.get(`${this.path}/ico/${id}`)
+      .do(ico => this.setIcoImageUrl(ico));
+  }
+
+  private setIcoImageUrl(ico: any): void {
+    if (!ico.image) {
+      ico.imageUrl = '';
+    } else if (typeof ico.image === 'string') {
+      ico.imageUrl = ico.image;
+    } else if (typeof ico.image === 'object') {
+      ico.imageUrl = environment.url + ico.image.url;
+    }
   }
 
 }

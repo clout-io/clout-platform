@@ -281,9 +281,9 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
       }
     }
 
-    /*if (this.premiumForm.invalid || this.form.invalid || this.membersForm.invalid) {
+    if (this.premiumForm.invalid || this.form.invalid || this.membersForm.invalid) {
       return;
-    }*/
+    }
 
     const {image, premiumRank, isPremium, premiumDescription} = this.premiumForm.value;
     const {
