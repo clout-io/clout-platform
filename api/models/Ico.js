@@ -175,6 +175,10 @@ module.exports = {
         obj.primaryGeography = obj.country
       }
 
+      if (!obj.image) {
+        obj.image = obj.outImage;
+      }
+
       return obj;
 
     }
