@@ -195,5 +195,21 @@ module.exports.adminpanel = {
       title: 'IcoIndustry',
       model: 'IcoIndustry'
     },
+    Role: {
+      title: 'Role',
+      model: 'Role'
+    },
+    Permission: {
+      title: 'Permission',
+      model: 'Permission'
+    },
+    Criteria: {
+      title: 'Criteria',
+      model: 'Criteria'
+    },
+    Model: {
+      title: 'Model',
+      model: 'Model'
+    },
   }
 };

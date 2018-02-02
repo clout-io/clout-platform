@@ -67,7 +67,7 @@ module.exports = {
     },
     lastLogin: {
       type: "datetime",
-      datetime:true
+      datetime: true
     },
     socialNetworks: {
       collection: 'SocialNetwork',
@@ -146,6 +146,15 @@ module.exports = {
     activities: {
       collection: 'UserActivity',
       via: 'user'
+    },
+    roles: {
+      collection: 'Role',
+      via: 'users',
+      dominant: true
+    },
+    permissions: {
+      collection: "Permission",
+      via: "user"
     },
 
     toJSON: function () {

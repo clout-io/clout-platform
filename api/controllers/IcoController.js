@@ -357,7 +357,7 @@ module.exports = {
         var path = sails.config.appPath + "/public/ico/" + item.slug + ".png";
 
         File.download(url, path, function (data) {
-          item.image = "/media/ico/" + item.slug + ".png";
+          item.outImage = "/media/ico/" + item.slug + ".png";
 
           item.save(function (err) {
             if (err) return res.json(400, err);
