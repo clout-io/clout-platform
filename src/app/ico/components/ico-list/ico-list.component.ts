@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit, Input } from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit, Input, OnChanges, SimpleChanges} from '@angular/core';
 import { BroadcastService, IcosService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as R from 'ramda';
@@ -32,8 +32,11 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => { this.icoId = params['id']; });
-    this.loadCoinList(true);
+    this.sub = this.route.params.subscribe(params => {
+      this.icoId = params['id'];
+      this.loadCoinList(true);
+    });
+    //this.loadCoinList(true);
 
     this.follow$ = this.broadcastService.subscribe('follow', coin => {
       coin.isFollow = !coin.isFollow;
@@ -93,6 +96,6 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.follow$.unsubscribe();
+    if (this.follow$) { this.follow$.unsubscribe(); }
   }
 }
