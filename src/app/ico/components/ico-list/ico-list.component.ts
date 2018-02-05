@@ -1,4 +1,4 @@
-import {Component, OnInit, OnDestroy, AfterViewInit, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, OnInit, OnDestroy, AfterViewInit, Input} from '@angular/core';
 import { BroadcastService, IcosService } from '../../../services';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as R from 'ramda';
@@ -15,7 +15,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   @Input() selectedId: string;
 
   private sub: any;
-  private icoId: string;
+  private icoSlug: string;
   private DEFAULT_TAB: string = 'all';
   private DEFAULT_STATUS: any = [ 'closed', 'upcoming', 'ongoing' ];
 
@@ -33,8 +33,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
 
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
-      this.icoId = params['id'];
-      //this.loadCoinList(true);
+      this.icoSlug = params['slug'];
     });
     this.loadCoinList(true);
 
@@ -58,7 +57,9 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
       if (isFirst) {
         this.meta = responce.meta;
         this.icoList = responce.data;
-        !this.icoId && !!this.icoList.length && this.router.navigate(['/icos', !status ? 'all' : this.route.snapshot.params.status, R.head(this.icoList).id], {queryParams : this.route.snapshot.queryParams});
+        !this.icoSlug && !!this.icoList.length && this.router.navigate(['/icos', !status ? 'all' :
+          this.route.snapshot.params.status, R.head(this.icoList).slug],
+          {queryParams : this.route.snapshot.queryParams});
       } else {
         if (responce.meta.nextPage !== this.meta.nextPage) {
           this.meta = responce.meta;

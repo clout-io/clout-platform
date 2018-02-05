@@ -15,7 +15,7 @@ export class IcoItemComponent implements OnInit {
   ngOnInit() {}
 
   selectItem() {
-    this.notify.emit(this.ico.id);
+    this.notify.emit(this.ico.slug);
   }
 
 }

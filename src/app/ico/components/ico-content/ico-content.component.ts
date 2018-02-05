@@ -9,7 +9,7 @@ import { IcosService } from '../../../services';
 })
 export class IcoContentComponent implements OnInit, OnDestroy {
   ico: any;
-  icoId: string;
+  icoSlug: string;
 
   private subRoute: any;
 
@@ -17,19 +17,19 @@ export class IcoContentComponent implements OnInit, OnDestroy {
               private router: Router,
               private icosService: IcosService) {
     this.subRoute = this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.icoId = params['id']; // (+) converts string 'id' to a number
-        this.loadCoin(this.icoId);
+      if (params['slug']) {
+        this.icoSlug = params['slug'];
+        this.loadCoin(this.icoSlug);
       }
     });
   }
 
   ngOnInit() {}
 
-  loadCoin(id) {
-    if (!id) { return; }
+  loadCoin(slug) {
+    if (!slug) { return; }
 
-    this.icosService.getIco(id)
+    this.icosService.getIco(slug)
       .subscribe(ico => this.ico = ico,
           error => this.router.navigate(['all']));
   }

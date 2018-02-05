@@ -18,7 +18,7 @@ const routes: Routes = CoreRoute.withShell([
     children: [
       { path: '', redirectTo: 'all/', pathMatch: 'full'},
       { path: ':status', component: IcoContentComponent },
-      { path: ':status/:id', component: IcoContentComponent }
+      { path: ':status/:slug', component: IcoContentComponent }
     ]
   },
   { path: 'ico/add', component: AddIcoComponent },
