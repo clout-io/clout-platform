@@ -12,7 +12,7 @@ import {
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
-  { path: '', redirectTo: '/icos', pathMatch: 'full' },
+  { path: '', redirectTo: '/icos/all', pathMatch: 'full' },
   {
     path: 'icos', component: IcoComponent, data: {title: 'ICOs'},
     children: [
@@ -23,7 +23,7 @@ const routes: Routes = CoreRoute.withShell([
   },
   { path: 'ico/add', component: AddIcoComponent },
   { path: 'ico/edit', component: EditIcoComponent },
-  { path: '**', redirectTo: 'icos'}
+  //{ path: '**', redirectTo: 'icos'}
 ]);
 
 @NgModule({
