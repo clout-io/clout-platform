@@ -34,9 +34,9 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   ngOnInit() {
     this.sub = this.route.params.subscribe(params => {
       this.icoId = params['id'];
-      this.loadCoinList(true);
+      //this.loadCoinList(true);
     });
-    //this.loadCoinList(true);
+    this.loadCoinList(true);
 
     this.follow$ = this.broadcastService.subscribe('follow', coin => {
       coin.isFollow = !coin.isFollow;
