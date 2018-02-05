@@ -972,6 +972,13 @@ ___________________________*/
       margin: 0;
       margin-bottom: 18px;
     }
+
+    .more-or-less-btn {
+      display: inline-block;
+      color: $color-ac-link;
+      float: right;
+      margin-right: 30px
+    }
   }
 }
 
