@@ -12,7 +12,7 @@ module.exports.routes = [
           'application/json'
         ],
         tags: [
-          'user'
+          'User'
         ],
         parameters: [{in: "query", name: "code"}]
       }
@@ -30,7 +30,7 @@ module.exports.routes = [
         'application/json'
       ],
       tags: [
-        'user'
+        'User'
       ],
       parameters: [{
         in: "body", name: "data", schema: {
@@ -79,7 +79,7 @@ module.exports.routes = [
         'application/json'
       ],
       tags: [
-        'user'
+        'User'
       ],
       parameters: [
         {
@@ -115,7 +115,7 @@ module.exports.routes = [
       summary: 'Retrieve url for SingIn/SingUp',
       description: 'SingIn user',
       tags: [
-        'user'
+        'User'
       ]
     }
   }
@@ -129,7 +129,7 @@ module.exports.routes = [
       summary: 'SingIn/SingUp user',
       description: 'SingIn user',
       tags: [
-        'user'
+        'User'
       ],
       parameters: [
         {in: "query", name: "code"},
@@ -147,7 +147,7 @@ module.exports.routes = [
       summary: 'SingIn/SingUp user',
       description: 'SingIn user with access token',
       tags: [
-        'user'
+        'User'
       ],
       parameters: [
         {in: "query", name: "accessToken"}
