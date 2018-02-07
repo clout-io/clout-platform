@@ -220,8 +220,6 @@ module.exports = {
       permissions = [permissions];
     }
 
-    console.log("!!!!!", permissions)
-
 
     // look up the model id based on the model name for each permission, and change it to an id
     ok = ok.then(function () {
