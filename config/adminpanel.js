@@ -48,7 +48,22 @@ module.exports.adminpanel = {
           activationCode: false,
           id: false,
           createdAt: false,
-          updatedAt: false
+          updatedAt: false,
+          roles: {
+            displayField: 'name'
+          },
+        }
+      },
+      add: {
+        fields: {
+          password: false,
+          activationCode: false,
+          id: false,
+          createdAt: false,
+          updatedAt: false,
+          roles: {
+            displayField: 'name'
+          },
         }
       }
     },
@@ -220,6 +235,20 @@ module.exports.adminpanel = {
           permissions: false,
           users: false,
         }
+      },
+      add: {
+        fields: {
+          permissions: false,
+          users: false,
+        }
+      },
+      edit: {
+        fields: {
+          permissions: false,
+          users: {
+            displayField: 'email'
+          },
+        }
       }
     },
     Permission: {
@@ -246,7 +275,7 @@ module.exports.adminpanel = {
           role: {
             displayField: 'name'
           },
-          user: {
+          users: {
             displayField: 'email'
           },
         },
@@ -259,7 +288,7 @@ module.exports.adminpanel = {
           role: {
             displayField: 'name'
           },
-          user: {
+          users: {
             displayField: 'email'
           },
         },
