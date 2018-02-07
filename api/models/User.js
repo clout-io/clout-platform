@@ -210,6 +210,11 @@ module.exports = {
       })
     })
   },
+  afterCreate: function (values, next) {
+    PermissionService.addUsersToRole(values.email, 'User').then(function () {
+      next()
+    });
+  },
   comparePassword: async (password, user, cb) => {
     bcrypt.compare(password, user.password, function (err, match) {
       if (err) cb(err);

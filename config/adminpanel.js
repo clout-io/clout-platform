@@ -21,7 +21,24 @@ module.exports.adminpanel = {
           uploadedPhoto: false,
           followedAltcoins: false,
           followedIcos: false,
-          likes: false
+          likes: false,
+          phone: false,
+          site: false,
+          skype: false,
+          linkedin: false,
+          tweeter: false,
+          facebook: false,
+          country: false,
+          city: false,
+          state: false,
+          street: false,
+          suite: false,
+          activities: false,
+          roles: {
+            displayField: 'name'
+          },
+          permissions: false,
+          avatar: false
         }
       },
 
@@ -31,7 +48,22 @@ module.exports.adminpanel = {
           activationCode: false,
           id: false,
           createdAt: false,
-          updatedAt: false
+          updatedAt: false,
+          roles: {
+            displayField: 'name'
+          },
+        }
+      },
+      add: {
+        fields: {
+          password: false,
+          activationCode: false,
+          id: false,
+          createdAt: false,
+          updatedAt: false,
+          roles: {
+            displayField: 'name'
+          },
         }
       }
     },
@@ -197,11 +229,70 @@ module.exports.adminpanel = {
     },
     Role: {
       title: 'Role',
-      model: 'Role'
+      model: 'Role',
+      list: {
+        fields: {
+          permissions: false,
+          users: false,
+        }
+      },
+      add: {
+        fields: {
+          permissions: false,
+          users: false,
+        }
+      },
+      edit: {
+        fields: {
+          permissions: false,
+          users: {
+            displayField: 'email'
+          },
+        }
+      }
     },
     Permission: {
       title: 'Permission',
-      model: 'Permission'
+      model: 'Permission',
+      list: {
+        fields: {
+          model: {
+            displayField: 'name'
+          },
+          role: {
+            displayField: 'name'
+          },
+          user: {
+            displayField: 'email'
+          },
+        },
+      },
+      add: {
+        fields: {
+          model: {
+            displayField: 'name'
+          },
+          role: {
+            displayField: 'name'
+          },
+          users: {
+            displayField: 'email'
+          },
+        },
+      },
+      edit: {
+        fields: {
+          model: {
+            displayField: 'name'
+          },
+          role: {
+            displayField: 'name'
+          },
+          users: {
+            displayField: 'email'
+          },
+        },
+      }
     },
     Criteria: {
       title: 'Criteria',

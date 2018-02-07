@@ -6,8 +6,6 @@ module.exports = async function (req, res, next) {
     method: req.method,
     user: req.user
   };
-  console.log(req.options)
-
 
   if (req.options.unknownModel) {
     return next();

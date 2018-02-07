@@ -1,13 +1,13 @@
-var Agenda = require('agenda');
+const Agenda = require('agenda');
 
 
-module.exports = function myHook(sails) {
+module.exports = function cronHook(sails) {
   function initTasks(cb) {
-    var mongoConnectionString = 'mongodb://127.0.0.1/agenda';
-    var agenda = new Agenda({db: {address: mongoConnectionString}});
+    let mongoConnectionString = 'mongodb://127.0.0.1/agenda';
+    let agenda = new Agenda({db: {address: mongoConnectionString}});
 
     sails.log.debug("Loading periodic tasks....");
-    var tasks = sails.config.schedule.tasks;
+    let tasks = sails.config.schedule.tasks;
     agenda.defaultConcurrency(2);
 
 
