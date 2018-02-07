@@ -78,9 +78,6 @@ module.exports = {
   findModelPermissions: function (options) {
     let action = PermissionService.getMethod(options.method);
 
-    //console.log('findModelPermissions options', options)
-    //console.log('findModelPermissions action', action)
-
     return User.findOne(options.user.id)
       .populate('roles')
       .then(function (user) {
@@ -211,12 +208,19 @@ module.exports = {
    */
   createRole: function (options) {
 
-    var ok = Promise.resolve();
-    var permissions = options.permissions;
+    let ok = Promise.resolve();
+    let permissions = options.permissions;
 
+    if (!permissions) {
+      return ok.then(function (users) {
+        return Role.findOrCreate(options);
+      });
+    }
     if (!_.isArray(permissions)) {
       permissions = [permissions];
     }
+
+    console.log("!!!!!", permissions)
 
 
     // look up the model id based on the model name for each permission, and change it to an id
@@ -245,7 +249,7 @@ module.exports = {
     });
 
     ok = ok.then(function (users) {
-      return Role.create(options);
+      return Role.findOrCreate(options);
     });
 
     return ok;
@@ -293,7 +297,7 @@ module.exports = {
     }));
 
     ok = ok.then(function () {
-      return Permission.create(permissions);
+      return Permission.findOrCreate(permissions, permissions);
     });
 
     return ok;

@@ -21,7 +21,24 @@ module.exports.adminpanel = {
           uploadedPhoto: false,
           followedAltcoins: false,
           followedIcos: false,
-          likes: false
+          likes: false,
+          phone: false,
+          site: false,
+          skype: false,
+          linkedin: false,
+          tweeter: false,
+          facebook: false,
+          country: false,
+          city: false,
+          state: false,
+          street: false,
+          suite: false,
+          activities: false,
+          roles: {
+            displayField: 'name'
+          },
+          permissions: false,
+          avatar: false
         }
       },
 
@@ -197,11 +214,56 @@ module.exports.adminpanel = {
     },
     Role: {
       title: 'Role',
-      model: 'Role'
+      model: 'Role',
+      list: {
+        fields: {
+          permissions: false,
+          users: false,
+        }
+      }
     },
     Permission: {
       title: 'Permission',
-      model: 'Permission'
+      model: 'Permission',
+      list: {
+        fields: {
+          model: {
+            displayField: 'name'
+          },
+          role: {
+            displayField: 'name'
+          },
+          user: {
+            displayField: 'email'
+          },
+        },
+      },
+      add: {
+        fields: {
+          model: {
+            displayField: 'name'
+          },
+          role: {
+            displayField: 'name'
+          },
+          user: {
+            displayField: 'email'
+          },
+        },
+      },
+      edit: {
+        fields: {
+          model: {
+            displayField: 'name'
+          },
+          role: {
+            displayField: 'name'
+          },
+          user: {
+            displayField: 'email'
+          },
+        },
+      }
     },
     Criteria: {
       title: 'Criteria',
