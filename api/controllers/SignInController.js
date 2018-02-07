@@ -48,7 +48,7 @@ module.exports = {
       return res.json(400, Errors.build(e.invalidAttributes, Errors.ERROR_VALIDATION))
     }
 
-    let user = await User.findOne({email: email, isActive: true});
+    let user = await User.findOne({email: email, isActive: true}).populate("roles");
 
 
     if (!user) {

@@ -51,6 +51,8 @@ module.exports = {
       token: response.access_token
     });
 
+    user = await User.findOne({email: email, isActive: true}).populate("roles");
+
     let updatedUser, token;
     [updatedUser, token] = await Token.generate(user, req);
 
