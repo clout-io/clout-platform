@@ -10,8 +10,8 @@ function signHmacSha384(key, str) {
 const privateKey = '2a45a131-6d42-492c-8a90-d2fb3b383db1';
 const publicKey = '2936572d-a285-4194-aeac-bfb2be1c16fe';
 
-module.exports.getAllIco = function (callback) {
-  let body = {page: 1};
+module.exports.getIcoList = function (page = 0) {
+  let body = {page: page};
   let sig = signHmacSha384(privateKey, JSON.stringify(body));
   let options = {
     uri: 'https://icobench.com/api/v1/icos/all',
@@ -24,11 +24,5 @@ module.exports.getAllIco = function (callback) {
     json: true
   };
 
-  rp(options)
-    .then(function (repos) {
-      console.log('Icos', repos);
-    })
-    .catch(function (err) {
-      console.log(err)
-    });
+  return rp(options);
 };

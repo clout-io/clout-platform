@@ -89,7 +89,6 @@
     "rxjs": "^5.4.1",
     "sails": "^0.12.14",
     "sails-hook-adminpanel": "^1.0.15",
-    "sails-hook-autoreload": "^0.14.3",
     "sails-hook-orm": "^1.0.9",
     "sails-hook-responsetime": "^1.0.7",
     "sails-hook-slugs": "^2.1.0",
