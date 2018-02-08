@@ -1,4 +1,5 @@
 const Agenda = require('agenda');
+const icoBench = require('../../tasks/ico.icobench.sync');
 
 
 module.exports = function cronHook(sails) {
@@ -17,6 +18,10 @@ module.exports = function cronHook(sails) {
         agenda.every(tasks[task].cron, tasks[task].name);
         sails.log.debug(task, "was init.")
       });
+
+      agenda.define(icoBench.name, icoBench.options, icoBench.task);
+      agenda.every(icoBench.cron, icoBench.name);
+      sails.log.debug(icoBench.name, "was init.");
 
       agenda.start();
       cb();
