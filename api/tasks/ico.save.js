@@ -5,8 +5,7 @@ module.exports = function (agenda) {
     options = {priority: "default"};
 
   agenda.define(name, options, function (job, done) {
-    console.log("icoSave work");
-    // console.log(job.attrs.data.)
+    sails.log.debug(name, "work");
 
     job.attrs.data.icos.results.map(function (ico) {
       let icoSlug = slug(ico.name).toLowerCase();
@@ -23,6 +22,7 @@ module.exports = function (agenda) {
           preIcoEnd: ico.dates.preIcoEnd,
           outImage: "/media/ico/" + icoSlug + ".png"
         }).exec(function createFindCB(error, createdOrFoundRecords) {
+          sails.log.debug("saved event from page :", icoSlug);
         })
       });
 

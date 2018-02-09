@@ -9,6 +9,7 @@ module.exports = function (agenda) {
     let pages = result.pages;
 
     for (let i = 0; i < pages; i++) {
+      sails.log.debug("Fetch page: ", i);
       let r = await icoBenchAPI.getIcoList(page = i);
       agenda.now('icoSave', {icos: r});
     }
