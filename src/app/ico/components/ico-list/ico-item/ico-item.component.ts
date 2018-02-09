@@ -7,7 +7,7 @@ import {Component, OnInit, Input, Output, EventEmitter} from '@angular/core';
 })
 export class IcoItemComponent implements OnInit {
   @Input() ico;
-  @Input() selectedId;
+  @Input() slug;
   @Output() notify = new EventEmitter();
 
   constructor() { }
@@ -17,5 +17,4 @@ export class IcoItemComponent implements OnInit {
   selectItem() {
     this.notify.emit(this.ico.slug);
   }
-
 }

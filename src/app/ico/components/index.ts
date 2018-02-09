@@ -8,3 +8,4 @@ export * from './ico-list';
 export * from './search';
 export * from './ico-select';
 export * from './foo.directive';
+export * from './ico-status';
