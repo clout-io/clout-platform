@@ -19,86 +19,87 @@
 
 module.exports.policies = {
 
-  /***************************************************************************
-   *                                                                          *
-   * Default policy for all controllers and actions (`true` allows public     *
-   * access)                                                                  *
-   *                                                                          *
-   ***************************************************************************/
+    /***************************************************************************
+     *                                                                          *
+     * Default policy for all controllers and actions (`true` allows public     *
+     * access)                                                                  *
+     *                                                                          *
+     ***************************************************************************/
 
-  '*': ['isAuthorized'],
-  SignInController: {
-    index: true
-  },
-  SocialController: {
-    facebookAuth: true,
-    facebookUrl: true,
-    facebookMobileAuth: true
-  },
+    '*': ['isAuthorized'],
+    SignInController: {
+        index: true
+    },
+    PaymentController: {
+        charge: true
+    },
+    SocialController: {
+        facebookAuth: true,
+        facebookUrl: true,
+        facebookMobileAuth: true
+    },
 
-  SignUpController: {
-    index: true,
-    activate: true
-  },
-  AltcoinController: {
-    index: true,
-    favorites: true,
-    alphabetList: true,
-    sync: true,//temp
-    history: true,
-    info: true,
-    top: true,
-    syncPhoto: true,
-    syncHistory: true
-  },
-  IcoController: {
-    index: true,
-    info: true,
-    top:true,
-    alphabetList: true,
-    sync: true,
-    syncPhoto: true
-  },
-  SwaggerController: {
-    '*': true
-  },
-  AdminController: {
-    login: true
-  },
-  CommentController: {
-    list: true
-  },
-  ImgController: {
-    getPhoto: true,
-    getIcoPhoto:
-      true
-  },
-  PostController: {
-    index: true,
-    single: true
-  },
-  UserController: {
-    resetPasswordRequest: true,
-    resetPassword: true,
-    profile: true
-  },
-  PressController: {
-    index: true,
-    sync:
-      true
-  },
-  CategoryController: {
-    index: true
+    SignUpController: {
+        index: true,
+        activate: true
+    },
+    AltcoinController: {
+        index: true,
+        favorites: true,
+        alphabetList: true,
+        sync: true, //temp
+        history: true,
+        info: true,
+        top: true,
+        syncPhoto: true,
+        syncHistory: true
+    },
+    IcoController: {
+        index: true,
+        info: true,
+        top: true,
+        alphabetList: true,
+        sync: true,
+        syncPhoto: true
+    },
+    SwaggerController: {
+        '*': true
+    },
+    AdminController: {
+        login: true
+    },
+    CommentController: {
+        list: true
+    },
+    ImgController: {
+        getPhoto: true,
+        getIcoPhoto: true
+    },
+    PostController: {
+        index: true,
+        single: true
+    },
+    UserController: {
+        resetPasswordRequest: true,
+        resetPassword: true,
+        profile: true
+    },
+    PressController: {
+        index: true,
+        sync: true
+    },
+    CategoryController: {
+        index: true
 
-  },
-  TagController: {
-    search: true
-  },
-  UrlController: {
-    ogInfo: true,
-    redirect: true
-  },
-  TrendingController: {
-    index: true
-  }
+    },
+    TagController: {
+        search: true
+    },
+    UrlController: {
+        ogInfo: true,
+        redirect: true
+    },
+    TrendingController: {
+        index: true
+    }
 };
