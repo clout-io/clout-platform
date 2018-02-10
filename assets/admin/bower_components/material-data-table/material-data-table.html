@@ -1,0 +1,179 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="../paper-material/paper-material.html">
+
+<dom-module id="material-data-table">
+    <style>
+        :host {
+            display: block;
+            overflow: auto;
+            --table-border-color: #e5e5e5;
+        }
+
+        :host > ::content table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 3px;
+            border: 1px solid var(--table-border-color);
+        }
+
+        :host > ::content table thead th,
+        :host > ::content table thead th a {
+            white-space: nowrap;
+        }
+
+        :host > ::content table thead th,
+        :host > ::content table thead th a,
+        :host > ::content table tfoot td,
+        :host > ::content table tfoot td a
+        {
+            @apply(--paper-font-common-base)
+
+            padding: 0 24px;
+            font-size: 13px;
+            font-weight: 400;
+            line-height: 56px;
+            text-transform: capitalize;
+            cursor: pointer;
+            color: rgba(0, 0, 0, 0.54);
+        }
+
+        :host > ::content table thead th a {
+            text-decoration: none;
+        }
+
+        :host > ::content table thead th.active {
+            color: rgba(0, 0, 0, 0.87);
+        }
+
+        :host > ::content table td, :host > ::content table th {
+            padding: 12px 24px;
+        }
+
+        :host > ::content table td.tags {
+            font-size: 11px;
+            line-height: 16px;
+            font-weight: 400;
+        }
+
+        :host > ::content table tbody iron-icon{
+            color: rgba(0, 0, 0, 0.54);
+        }
+
+        :host > ::content table [actions],
+        :host > ::content table .actions {
+            white-space: nowrap;
+        }
+
+        :host > ::content table [actions] a,
+        :host > ::content table .actions a {
+            color: rgba(0, 0, 0, 0.54);
+            font-size: 18px;
+            text-decoration: none;
+        }
+
+        :host > ::content table tbody td {
+            border-bottom: 1px solid;
+            border-bottom-color: var(--table-border-color);
+        }
+
+        :host > ::content table th {
+            @apply(- -paper-font-body1);
+            color: var(--secondary-text-color);
+            text-align: left;
+            border-bottom: 1px solid;
+            border-bottom-color: var(--table-border-color);
+        }
+
+        :host > ::content table tfoot td.pagination {
+            text-align: right;
+        }
+
+        :host > ::content table tfoot td {
+            @apply(- -paper-font-body1);
+            color: var(--secondary-text-color);
+            text-align: left;
+            border-top: 1px solid;
+            border-top-color: var(--table-border-color);
+        }
+
+        :host > ::content table tbody tr {
+            cursor: pointer;
+            overflow: hidden;
+            height: 48px;
+        }
+
+        :host > ::content table tbody tr:first-child {
+            margin-top: 8px;
+        }
+
+        :host > ::content table element-action-menu::shadow iron-icon {
+            color: #e0e0e0;
+            margin: 0 4px;
+            width: 18px;
+            height: 18px;
+        }
+
+        :host > ::content table tr:hover element-action-menu::shadow iron-icon,
+        :host > ::content table :focus element-action-menu::shadow iron-icon,
+        :host > ::content table element-action-menu::shadow a:focus iron-icon {
+            color: #616161;
+        }
+
+        :host > ::content table .secondary {
+            overflow: hidden;
+            color: #606060;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 400px;
+        }
+
+        :host > ::content table tbody tr td {
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        :host > ::content table tbody tr:hover,
+        :host > ::content table tbody tr.selected:hover {
+            background: #EEEEEE;
+        }
+
+        :host > ::content table tbody tr.selected {
+            background: #F5F5F5;
+        }
+
+        :host > ::content table a {
+            font-weight: bold;
+        }
+
+        :host > ::content table a,
+        :host > ::content tableiron-icon {
+            cursor: pointer;
+        }
+
+        [size=xs] :host > ::content table.secondary {
+            display: none;
+        }
+
+        :host > ::content table .main {
+            white-space: nowrap;
+            font-weight: 400;
+            font-size: 13px;
+        }
+
+        :host > ::content table .secondary {
+            color: var(--secondary-text-color);
+            line-height: 24px;
+        }
+    </style>
+
+    <template>
+        <content></content>
+    </template>
+
+    <script>
+        Polymer({
+            is: 'material-data-table'
+        });
+    </script>
+</dom-module>

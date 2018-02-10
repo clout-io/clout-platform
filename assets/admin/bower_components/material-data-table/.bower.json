@@ -1,0 +1,38 @@
+{
+  "name": "material-data-table",
+  "version": "1.0.1",
+  "authors": [
+    "Konstantin Zolotarev <konstantin.zolotarev@gmail.com>"
+  ],
+  "description": "Table styling for Polymer",
+  "main": "material-data-table.html",
+  "keywords": [
+    "table",
+    "polymer",
+    "material"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "polymer": "~1.0.5",
+    "paper-material": "PolymerElements/paper-material#^1.0.0",
+    "paper-styles": "PolymerElements/paper-styles#^1.0.0",
+    "iron-icons": "PolymerElements/iron-icons#^1.0.0"
+  },
+  "homepage": "https://github.com/konstantinzolotarev/material-data-table",
+  "_release": "1.0.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.0.1",
+    "commit": "0739e19542249d7a53bbb9964831b204aa4d45f1"
+  },
+  "_source": "https://github.com/konstantinzolotarev/material-data-table.git",
+  "_target": "*",
+  "_originalSource": "material-data-table"
+}
