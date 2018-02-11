@@ -26,3 +26,20 @@ module.exports.getIcoList = function (page = 0) {
 
   return rp(options);
 };
+
+module.exports.getIco = function (id) {
+  let body = {};
+  let sig = signHmacSha384(privateKey, JSON.stringify(body));
+  let options = {
+    uri: 'https://icobench.com/api/v1/ico/' + id,
+    method: 'POST',
+    headers: {
+      'X-ICObench-Key': publicKey,
+      'X-ICObench-Sig': sig
+    },
+    body: body,
+    json: true
+  };
+
+  return rp(options);
+};
