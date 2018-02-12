@@ -1,5 +1,5 @@
 module.exports = function (agenda) {
-  let cron = "*/24 * * * *",
+  let cron = "*/6 * * * *",
     name = "icoBench",
     options = {
       priority: "default"
