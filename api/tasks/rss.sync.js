@@ -1,3 +1,9 @@
+const moment = require('moment');
+const async = require('async');
+const cheerio = require('cheerio');
+const parser = require('rss-parser');
+const ogs = require('open-graph-scraper');
+
 module.exports = function (agenda) {
   let cron = "*/5 * * * *",
     name = "syncRss",
