@@ -21,6 +21,7 @@ import {
   RangeComponent,
   // ICO container
   IcoContentComponent,
+  IcoStatusComponent,
   // ICO detail
   IcoDetailComponent,
   IcoSelectComponent,
@@ -68,6 +69,7 @@ import {
     RangeComponent,
     // ICO container
     IcoContentComponent,
+    IcoStatusComponent,
     // ICO detail
     IcoDetailComponent,
     IcoSelectComponent,

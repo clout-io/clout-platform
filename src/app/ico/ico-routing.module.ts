@@ -7,18 +7,21 @@ import { CoreRoute } from '../core/core.route';
 import { IcoComponent } from './ico.component';
 import {
   IcoContentComponent,
+  IcoStatusComponent,
   EditIcoComponent,
   AddIcoComponent
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
-  { path: '', redirectTo: '/icos/all', pathMatch: 'full' },
+  { path: '', redirectTo: '/icos/all/', pathMatch: 'full' },
   {
     path: 'icos', component: IcoComponent, data: {title: 'ICOs'},
     children: [
       { path: '', redirectTo: 'all/', pathMatch: 'full'},
-      { path: ':status', component: IcoContentComponent },
-      { path: ':status/:slug', component: IcoContentComponent }
+      { path: ':status', component: IcoStatusComponent,
+        children: [
+          { path: ':slug', component: IcoContentComponent }
+      ]},
     ]
   },
   { path: 'ico/add', component: AddIcoComponent },

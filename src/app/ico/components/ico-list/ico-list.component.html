@@ -1,7 +1,7 @@
 <div id="altcoin-list-sticky">
   <ul class="coin-list" id="altcoin-list-scroll" style="height: 90vh;">
     <app-ico-item *ngFor="let ico of icoList" [ico]="ico"
-                  [selectedId]="selectedId" (notify)="onNotify($event)">
+                  [slug]="slug" (notify)="onNotify($event)">
     </app-ico-item>
   </ul>
 </div>

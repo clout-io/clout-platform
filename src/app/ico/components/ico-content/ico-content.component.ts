@@ -1,6 +1,6 @@
 import { Component, OnInit,  OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IcosService } from '../../../services';
+import { IcosService, BroadcastService } from '../../../services';
 
 @Component({
   selector: 'app-ico-content',
@@ -9,17 +9,21 @@ import { IcosService } from '../../../services';
 })
 export class IcoContentComponent implements OnInit, OnDestroy {
   ico: any;
-  icoSlug: string;
 
   private subRoute: any;
 
   constructor(private route: ActivatedRoute,
               private router: Router,
-              private icosService: IcosService) {
+              private icosService: IcosService,
+              private broadcastService: BroadcastService) {
+
     this.subRoute = this.route.params.subscribe(params => {
       if (params['slug']) {
-        this.icoSlug = params['slug'];
-        this.loadCoin(this.icoSlug);
+        this.updateSelectedIco(params['slug']);
+        this.loadCoin(params['slug']);
+      } else {
+        this.updateSelectedIco(false);
+        this.router.navigate(['/icos/all', '']);
       }
     });
   }
@@ -27,11 +31,17 @@ export class IcoContentComponent implements OnInit, OnDestroy {
   ngOnInit() {}
 
   loadCoin(slug) {
-    if (!slug) { return; }
+    if (!slug) { this.updateSelectedIco(false); return; }
 
     this.icosService.getIco(slug)
-      .subscribe(ico => this.ico = ico,
-          error => this.router.navigate(['all']));
+      .subscribe(ico => {
+        this.ico = ico;
+        this.updateSelectedIco(slug);
+      }, error => this.router.navigate(['all']));
+  }
+
+  updateSelectedIco(slug) {
+    this.broadcastService.broadcast('updateSelectedIco', slug);
   }
 
   ngOnDestroy(): void {
