@@ -1,6 +1,7 @@
 const Agenda = require('agenda');
 const icoBench = require('../tasks/ico.icobench.sync');
 const saveIco = require('../tasks/ico.save');
+const syncRss = require('../tasks/rss.sync');
 
 
 let mongoConnectionString = 'mongodb://127.0.0.1/agenda';
@@ -16,6 +17,7 @@ let init = function (cb) {
   agenda.on('ready', function () {
     icoBench(agenda);
     saveIco(agenda);
+    syncRss(agenda);
     sails.log.debug("Periodic tasks is load.");
     cb();
   });
