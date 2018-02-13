@@ -47,6 +47,7 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   updateList(status) {
+    this.slug = false;
     const filter = R.contains(status, this.DEFAULT_STATUS) ? { status: status } : false;
     filter || status == this.DEFAULT_TAB ? this.loadCoinList(true) : this.toDefaultTab();
   }

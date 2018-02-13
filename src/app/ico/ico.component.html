@@ -1,7 +1,19 @@
 <div class="ico-component">
   <app-navs-switcher [createFor]="'icos'"></app-navs-switcher>
   <div class="container">
-    <!--<app-filters></app-filters>-->
-    <router-outlet></router-outlet>
+    <div class="ico-grid-content">
+      <aside class="ico-grid-aside">
+        <input type="checkbox" id="toggle-side-filters">
+        <label class="toggle-side-filters" for="toggle-side-filters">
+          <span>Show</span>
+          <span>Hide</span>
+          Filters
+        </label>
+        <app-filter-sidebar></app-filter-sidebar>
+      </aside>
+      <main class="ico-grid-main">
+        <router-outlet></router-outlet>
+      </main>
+    </div>
   </div>
 </div>
