@@ -116,8 +116,12 @@ module.exports = function (agenda) {
           let currentDate = new Date();
 
 
-          if (icoBody.endDate && new Date(icoBody.endDate) > currentDate) {
+          if (icoBody.endDate && new Date(icoBody.endDate) >= currentDate && new Date(icoBody.startDate) <= currentDate) {
             icoBody.status = ICO_STATUS.ongoing;
+          }
+
+          if (icoBody.startDate && new Date(icoBody.startDate) > currentDate) {
+            icoBody.status = ICO_STATUS.upcoming;
           }
 
           if (icoBody.endDate && new Date(icoBody.endDate) < currentDate) {
@@ -140,7 +144,7 @@ module.exports = function (agenda) {
               createdIco.team.add(team);
               await createdIco.save();
             } catch (e) {
-              console.log(e)
+              // console.log(e)
             }
 
             sails.log.debug("Saved :", icoSlug);
