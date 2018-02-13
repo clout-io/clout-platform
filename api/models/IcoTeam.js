@@ -9,7 +9,7 @@ module.exports = {
 
   attributes: {
     role: {type: "string"},
-    name: {type: "string"},
+    name: {type: "string", unique: true},
     link: {type: "string"},
     status: {type: "string"},
     order: {type: "integer"}

@@ -39,6 +39,12 @@ module.exports = {
       type: "string",
       enum: STATUS
     },
+    preIcoStart: {
+      type: "date"
+    },
+    preIcoEnd: {
+      type: "date"
+    },
     startDate: {
       type: "date"
     },
@@ -185,7 +191,7 @@ module.exports = {
   },
   beforeValidate: function (values, next) {
     if (!values.slug) {
-      values.slug = slug(values.name);
+      values.slug = slug(values.name).toLowerCase();
     }
     next()
   },
