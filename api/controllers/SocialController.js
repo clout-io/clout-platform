@@ -115,13 +115,17 @@ module.exports = {
 
     let user = await User.updateOrCreate({email: email}, userData);
 
-    await SocialNetwork.updateOrCreate({socialId: profileData.id, user: user.id}, {
-      socialId: profileData.id,
-      user: user.id,
-      socialData: profileData,
-      type: "facebook",
-      token: response.access_token
-    });
+    try {
+      await SocialNetwork.updateOrCreate({socialId: profileData.id, user: user.id}, {
+        socialId: profileData.id,
+        user: user.id,
+        socialData: profileData,
+        type: "facebook",
+        token: response.access_token
+      });
+    } catch (e) {
+      return res.json(400, Errors.build({"message": "This social network connected to other account."}, Errors.ERROR_VALIDATION))
+    }
 
     let updatedUser, token;
     [updatedUser, token] = await Token.generate(user, req);
