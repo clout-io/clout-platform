@@ -128,7 +128,7 @@ module.exports = {
       delete conditions.categories;
     }
     try {
-      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team", "image", "categories"]);
+      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team", "image"]);
     } catch (e) {
       return res.status(400).json(e);
     }
