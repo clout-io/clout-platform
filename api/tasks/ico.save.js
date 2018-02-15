@@ -17,7 +17,6 @@ module.exports = function (agenda) {
 
         let icoSlug = slug(ico.name).toLowerCase();
         sails.log.debug("Received :", icoSlug);
-
         let path = sails.config.appPath + "/public/ico/" + icoSlug + ".png";
 
         File.download(ico.logo, path, async function (data) {
@@ -37,6 +36,11 @@ module.exports = function (agenda) {
           }
           if (isDate(ico.dates.preIcoEnd)) {
             icoBody.preIcoEnd = ico.dates.preIcoEnd;
+          }
+          if (ico.raised > 0) {
+            icoBody.amount = ico.raised;
+          } else {
+            icoBody.amount = 0;
           }
 
           let detailInfo = await icoBenchAPI.getIco(ico.id);
@@ -107,6 +111,7 @@ module.exports = function (agenda) {
             icoBody.categories = createdCategories.map(function (item) {
               return item.id;
             })
+            icoBody.categoriesList = icoBody.categories;
           }
 
 

@@ -69,7 +69,6 @@ module.exports = {
       ico = await Ico.findOne(ico.id).populate(["socials", "team", "categories", "image"]);
       return res.json(ico);
     } catch (e) {
-      console.log(e)
       return res.status(400).json(e);
     }
   },
@@ -122,8 +121,14 @@ module.exports = {
       followedIco = await Ico.find(userCondition).populate(["socials", "team", "image"]);
     }
     let resultData = {};
+    console.log(conditions);
+
+    if(conditions.categories){
+      conditions.categoriesList = conditions.categories;
+      delete conditions.categories;
+    }
     try {
-      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team", "image"]);
+      resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team", "image", "categories"]);
     } catch (e) {
       return res.status(400).json(e);
     }
