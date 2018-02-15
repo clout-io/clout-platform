@@ -15,9 +15,10 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   public icoList: Array<any>;
   private slug: any = false;
 
-  private subSlug: any;
-  private subRoute: any;
+  private subSlug$: any;
+  private subRoute$: any;
   private follow$;
+  private filterCategories$;
 
   @Output() isEmpty = new EventEmitter();
 
@@ -33,8 +34,10 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
               private router: Router) { }
 
   ngOnInit() {
-    this.subSlug = this.broadcastService.subscribe('updateSelectedIco', (slug) => this.slug = slug );
-    this.subRoute = this.route.params.subscribe(params => { if (params['status']) this.updateList(params['status']); });
+    this.subSlug$ = this.broadcastService.subscribe('updateSelectedIco', (slug) => this.slug = slug );
+    this.subRoute$ = this.route.params.subscribe(params => {
+      if (params['status']) this.updateList(params['status']);
+    });
 
     this.follow$ = this.broadcastService.subscribe('follow', coin => {
       coin.isFollow = !coin.isFollow;
@@ -43,6 +46,14 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
         const followedElement = this.icoList.splice(index, 1);
         this.icoList.unshift(...followedElement);
       }
+    });
+
+    this.filterCategories$ = this.broadcastService.subscribe('filterCategories', categories => {
+      this.loadCoinList(true, () => {
+        if (!!this.icoList.length) {
+          this.onNotify(this.icoList[0].slug);
+        }
+      });
     });
   }
 
@@ -61,10 +72,14 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
     this.isEmpty.emit(isEmpty);
   }
 
-  loadCoinList(isFirst = false) {
+  loadCoinList(isFirst = false, callback?: any) {
     const { nextPage, perPage } = isFirst ? this.DEFAULT_META : this.meta;
     const status = R.contains(this.route.snapshot.params.status, this.DEFAULT_STATUS) ? { status: this.route.snapshot.params.status } : false;
-    const filter = JSON.stringify(Object.assign({}, (status ? status : {}), this.route.snapshot.queryParams));
+    const preFilter = {status: status ? status : {}};
+    const categories = this.icosService.getCategoriesFilter();
+    if (categories && categories.length) { preFilter['categories'] = {categories: categories}; }
+    const filter = JSON.stringify(Object.assign({}, preFilter.status, preFilter['categories'],
+      this.route.snapshot.queryParams));
 
     this.icosService.getIcosList(nextPage, perPage, filter).subscribe(responce => {
       if (isFirst) {
@@ -88,6 +103,8 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
           this.icoList = R.concat(this.icoList, responce.data);
         }
       }
+
+      if (callback) { callback(); }
     }, error => this.router.navigate(['/icos', !status ? 'all' : this.route.snapshot.params.status, '']));
   }
 
@@ -119,8 +136,9 @@ export class IcoListComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.subSlug && this.subSlug.unsubscribe();
-    this.subRoute && this.subRoute.unsubscribe();
+    this.subSlug$ && this.subSlug$.unsubscribe();
+    this.subRoute$ && this.subRoute$.unsubscribe();
     if (this.follow$) { this.follow$.unsubscribe(); }
+    if (this.filterCategories$) { this.filterCategories$.unsubscribe(); }
   }
 }

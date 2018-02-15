@@ -1,139 +1,186 @@
 <div class="widget">
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">Sort by</h4>
-    <div class="custom-select-item">
-      <select>
-        <option>Name</option>
-        <option>Value</option>
-        <option>Price</option>
-        <option>Feedback</option>
-      </select>
+  <form [formGroup]="filtersForm">
+    <!--<div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">Sort by</h4>
+      <div class="custom-select-item">
+        <select>
+          <option>Name</option>
+          <option>Value</option>
+          <option>Price</option>
+          <option>Feedback</option>
+        </select>
+      </div>
+    </div>-->
+    <div class="search-item">
+      <h4 class="widget__title widget__title--alt">Categories</h4>
+      <div formArrayName="categories"
+           *ngFor="let item of filtersForm.get('categories').controls; let i = index;">
+        <div *ngIf="i < limitCategoriesTo" [formGroupName]="i" class="custom-checkbox">
+          <input type="checkbox" id="{{'checkbox-category' + i}}"
+                 formControlName="{{item.controls.checkbox.value.id}}">
+          <label for="{{'checkbox-category' + i}}">{{item.controls.checkbox.value.name}}</label>
+        </div>
+      </div>
+      <div *ngIf="filtersForm.get('categories').controls.length > 0" class="more-less-btn">
+        <a href="javascript:void(0)" (click)="moreOrLessCategories()">
+          {{limitCategoriesTo === LIMIT_CATEGORIES ? 'More' : 'Less'}}
+        </a>
+      </div>
     </div>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">Industry</h4>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-00">
-      <label for="checkbox-00">Crypto Investments</label>
+    <!--<div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">ICO Amount</h4>
+      <div id="range-slider"></div>
+      <nouislider [connect]="true" [min]="0" [max]="10000" [step]="1"
+                  [formControl]="filtersForm.controls.single"
+                  (ngModelChange)="sliderChange($event)"
+                  [tooltips]="true">
+      </nouislider>
+    </div>-->
+    <!--<div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">Industry</h4>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-00">
+        <label for="checkbox-00">Crypto Investments</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-01">
+        <label for="checkbox-01">Tradiitonal Investments</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-02">
+        <label for="checkbox-02">Web & Mobile</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-03">
+        <label for="checkbox-03">Banking & Finance</label>
+      </div>
     </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-01">
-      <label for="checkbox-01">Tradiitonal Investments</label>
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">Industry</h4>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-00">
+        <label for="checkbox-00">Crypto Investments</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-01">
+        <label for="checkbox-01">Tradiitonal Investments</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-02">
+        <label for="checkbox-02">Web & Mobile</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-03">
+        <label for="checkbox-03">Banking & Finance</label>
+      </div>
     </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-02">
-      <label for="checkbox-02">Web & Mobile</label>
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">ICO Amount</h4>
+      <div id="range-slider"></div>
+      &lt;!&ndash;<nouislider [connect]="true" [min]="0" [max]="10000" [step]="1" [(ngModel)]="initialPosition" (ngModelChange)="sliderChange($event)" [tooltips]="true"></nouislider>&ndash;&gt;
+      <nouislider [connect]="true" [min]="0" [max]="10000" [step]="1" (ngModelChange)="sliderChange($event)" [tooltips]="true"></nouislider>
     </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-03">
-      <label for="checkbox-03">Banking & Finance</label>
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">ICO Dates</h4>
+      <div class="input-group" id="range-date-wrap">
+        <ng2-flatpickr [config]="defaultOptions"></ng2-flatpickr>
+        <input type="text" class="range-last" id="secondRangeInput">
+      </div>
     </div>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">ICO Amount</h4>
-    <div id="range-slider"></div>
-    <nouislider [connect]="true" [min]="0" [max]="10000" [step]="1" [(ngModel)]="initialPosition" (ngModelChange)="sliderChange($event)" [tooltips]="true"></nouislider>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">ICO Dates</h4>
-    <div class="input-group" id="range-date-wrap">
-      <ng2-flatpickr [config]="defaultOptions"></ng2-flatpickr>
-      <input type="text" class="range-last" id="secondRangeInput">
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">Primary Geography</h4>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-50">
+        <label for="checkbox-50">China & Asia</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-51">
+        <label for="checkbox-51">Europe</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-52">
+        <label for="checkbox-52">North America</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-53">
+        <label for="checkbox-53">South America</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-54">
+        <label for="checkbox-54">Australia</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-55">
+        <label for="checkbox-55">Africa</label>
+      </div>
     </div>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">Primary Geography</h4>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-50">
-      <label for="checkbox-50">China & Asia</label>
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">Token Technology</h4>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-40">
+        <label for="checkbox-40">ERC20</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-41">
+        <label for="checkbox-41">OmniLayer</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-42">
+        <label for="checkbox-42">Other</label>
+      </div>
     </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-51">
-      <label for="checkbox-51">Europe</label>
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">Token Type</h4>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-30">
+        <label for="checkbox-30">App token</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-31">
+        <label for="checkbox-31">Equity token</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-32">
+        <label for="checkbox-32">App+Equity</label>
+      </div>
     </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-52">
-      <label for="checkbox-52">North America</label>
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">ICO Jurisdiction</h4>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-20">
+        <label for="checkbox-20">Singapore</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-21">
+        <label for="checkbox-21">UK</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-22">
+        <label for="checkbox-22">Swiss</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-23">
+        <label for="checkbox-23">Estonia</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-24">
+        <label for="checkbox-24">Other</label>
+      </div>
     </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-53">
-      <label for="checkbox-53">South America</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-54">
-      <label for="checkbox-54">Australia</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-55">
-      <label for="checkbox-55">Africa</label>
-    </div>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">Token Technology</h4>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-40">
-      <label for="checkbox-40">ERC20</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-41">
-      <label for="checkbox-41">OmniLayer</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-42">
-      <label for="checkbox-42">Other</label>
-    </div>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">Token Type</h4>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-30">
-      <label for="checkbox-30">App token</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-31">
-      <label for="checkbox-31">Equity token</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-32">
-      <label for="checkbox-32">App+Equity</label>
-    </div>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">ICO Jurisdiction</h4>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-20">
-      <label for="checkbox-20">Singapore</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-21">
-      <label for="checkbox-21">UK</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-22">
-      <label for="checkbox-22">Swiss</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-23">
-      <label for="checkbox-23">Estonia</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-24">
-      <label for="checkbox-24">Other</label>
-    </div>
-  </div>
-  <div class="search-item">
-    <h4 class="widget__title widget__title--alt">Project Stage</h4>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-10">
-      <label for="checkbox-10">Idea</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-11">
-      <label for="checkbox-11">Prototype</label>
-    </div>
-    <div class="custom-checkbox">
-      <input type="checkbox" id="checkbox-12">
-      <label for="checkbox-12">Useable Product</label>
-    </div>
-  </div>
+    <div class="search-item">
+      <h4 class="widget__title widget__title&#45;&#45;alt">Project Stage</h4>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-10">
+        <label for="checkbox-10">Idea</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-11">
+        <label for="checkbox-11">Prototype</label>
+      </div>
+      <div class="custom-checkbox">
+        <input type="checkbox" id="checkbox-12">
+        <label for="checkbox-12">Useable Product</label>
+      </div>
+    </div>-->
+  </form>
 </div>
