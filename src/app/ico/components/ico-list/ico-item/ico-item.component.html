@@ -1,5 +1,5 @@
 <li class="coin-list-item">
-  <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico?.id === selectedId}">
+  <a href="javascript:void(0)" (click)="selectItem()" [ngClass]="{'active': ico?.slug === slug}">
     <div class="coin-list-item__img">
       <img src="{{ico.imageUrl}}"
            onerror="this.src='../../../../assets/defaultCoin.png'" alt="">

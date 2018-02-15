@@ -165,6 +165,12 @@ module.exports = {
       delete obj.confirmPassword;
       delete obj.email;
 
+      if (obj.roles) {
+        obj.roles = obj.roles.map(function (role) {
+          return role.name;
+        })
+      }
+
       obj.name = obj.firstName + " " + obj.lastName;
       if (_.isEmpty(obj.name.trim())) {
         obj.name = "@" + obj.username;
@@ -209,6 +215,11 @@ module.exports = {
         next();
       })
     })
+  },
+  afterCreate: function (values, next) {
+    PermissionService.addUsersToRole(values.email, 'User').then(function () {
+      next()
+    });
   },
   comparePassword: async (password, user, cb) => {
     bcrypt.compare(password, user.password, function (err, match) {

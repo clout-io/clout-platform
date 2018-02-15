@@ -78,9 +78,6 @@ module.exports = {
   findModelPermissions: function (options) {
     let action = PermissionService.getMethod(options.method);
 
-    //console.log('findModelPermissions options', options)
-    //console.log('findModelPermissions action', action)
-
     return User.findOne(options.user.id)
       .populate('roles')
       .then(function (user) {
@@ -211,9 +208,14 @@ module.exports = {
    */
   createRole: function (options) {
 
-    var ok = Promise.resolve();
-    var permissions = options.permissions;
+    let ok = Promise.resolve();
+    let permissions = options.permissions;
 
+    if (!permissions) {
+      return ok.then(function (users) {
+        return Role.findOrCreate(options);
+      });
+    }
     if (!_.isArray(permissions)) {
       permissions = [permissions];
     }
@@ -245,7 +247,7 @@ module.exports = {
     });
 
     ok = ok.then(function (users) {
-      return Role.create(options);
+      return Role.findOrCreate(options);
     });
 
     return ok;
@@ -293,7 +295,7 @@ module.exports = {
     }));
 
     ok = ok.then(function () {
-      return Permission.create(permissions);
+      return Permission.findOrCreate(permissions, permissions);
     });
 
     return ok;
@@ -302,23 +304,23 @@ module.exports = {
   /**
    * add one or more users to a particular role
    * TODO should this work with multiple roles?
-   * @param usernames {string or string array} - list of names of users
+   * @param email {string or string array} - list of emails of users
    * @param rolename {string} - the name of the role that the users should be added to
    */
-  addUsersToRole: function (usernames, rolename) {
-    if (_.isEmpty(usernames)) {
+  addUsersToRole: function (email, rolename) {
+    if (_.isEmpty(email)) {
       return Promise.reject(new Error('One or more usernames must be provided'));
     }
 
-    if (!_.isArray(usernames)) {
-      usernames = [usernames];
+    if (!_.isArray(email)) {
+      email = [email];
     }
 
     return Role.findOne({
       name: rolename
     }).populate('users').then(function (role) {
       return User.find({
-        username: usernames
+        email: email
       }).then(function (users) {
         role.users.add(_.pluck(users, 'id'));
         return role.save();

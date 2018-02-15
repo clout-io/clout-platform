@@ -37,8 +37,12 @@ module.exports.http = {
       if (!token) {
         return next()
       }
-
-      let [encodedToken, user] = await Token.verify(token);
+      let [encodedToken, user] = [null, null];
+      try {
+        [encodedToken, user] = await Token.verify(token);
+      } catch (e) {
+        return next()
+      }
       if (!encodedToken) return next();
       if (user) {
         req.user = user.toJSON();

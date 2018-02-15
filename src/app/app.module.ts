@@ -42,6 +42,8 @@ import { AppComponent } from './app.component';
     FeedModule,
     AltcoinModule,
     IcoModule,
+    FeedModule,
+    AltcoinModule,
     // base routing modules
     AppRoutingModule,
     HttpModule,

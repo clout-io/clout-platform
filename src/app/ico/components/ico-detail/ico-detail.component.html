@@ -7,10 +7,16 @@
     </div>
     <div class="coin-description__text">
       <h2>{{ico?.name}}</h2>
-      <p [innerHtml]="ico?.description"></p>
-      <!--<p>
-        {{ico?.description}}
-      </p>-->
+      <div>
+        <p [innerHtml]="description"></p>
+        <div *ngIf="descriptionLength > MAX_TEXT_LENGTH_SHOW">
+          <a class="more-or-less-btn"
+             href="javascript:void(0)"
+             (click)="moreOrLess()">
+            {{hideOverflow ? 'more >>' : '<< less'}}
+          </a>
+        </div>
+      </div>
     </div>
   </div>
 

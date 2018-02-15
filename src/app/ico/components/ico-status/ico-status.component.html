@@ -1,0 +1,13 @@
+<div class="empty-text" *ngIf="empty"><span>No result found!</span></div>
+<div class="main-components content"  [ngClass]="{'hidden-empty': empty}">
+  <!-- <app-search></app-search> -->
+  <!--<app-filter-sidebar></app-filter-sidebar>-->
+
+  <div class="content__list">
+    <app-ico-list (isEmpty)="onIsEmpty($event)"></app-ico-list>
+  </div>
+
+  <div class="content__main">
+    <router-outlet></router-outlet>
+  </div>
+</div>

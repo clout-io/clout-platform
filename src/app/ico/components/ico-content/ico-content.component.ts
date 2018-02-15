@@ -1,9 +1,6 @@
 import { Component, OnInit,  OnDestroy, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ApiService } from '../../../services';
-import { environment } from '../../../../environments/environment';
-declare const $;
-
+import { IcosService, BroadcastService } from '../../../services';
 
 @Component({
   selector: 'app-ico-content',
@@ -12,38 +9,39 @@ declare const $;
 })
 export class IcoContentComponent implements OnInit, OnDestroy {
   ico: any;
-  icoId: string;
 
   private subRoute: any;
 
-  constructor(private apiService: ApiService, private route: ActivatedRoute, private router: Router) {
+  constructor(private route: ActivatedRoute,
+              private router: Router,
+              private icosService: IcosService,
+              private broadcastService: BroadcastService) {
+
     this.subRoute = this.route.params.subscribe(params => {
-      if (params['id']) {
-        this.icoId = params['id']; // (+) converts string 'id' to a number
-        this.loadCoin(this.icoId);
+      if (params['slug']) {
+        this.updateSelectedIco(params['slug']);
+        this.loadCoin(params['slug']);
+      } else {
+        this.updateSelectedIco(false);
+        this.router.navigate(['/icos/all', '']);
       }
     });
   }
 
   ngOnInit() {}
 
-  loadCoin(id) {
-    if (!id)
-      return false;
+  loadCoin(slug) {
+    if (!slug) { this.updateSelectedIco(false); return; }
 
-    this.apiService.get(`/${this.apiService.ico}/${id}`)
+    this.icosService.getIco(slug)
       .subscribe(ico => {
-        if (!ico.image) {
-          ico.imageUrl = '';
-        } else if (typeof ico.image === 'string') {
-          ico.imageUrl = ico.image;
-        } else if (typeof ico.image === 'object') {
-          ico.imageUrl = environment.url + ico.image.url;
-        }
-
         this.ico = ico;
-        //this.ico['description'] =  $(this.ico['description']).text();
-      }, eror => this.router.navigate(['all']));
+        this.updateSelectedIco(slug);
+      }, error => this.router.navigate(['all']));
+  }
+
+  updateSelectedIco(slug) {
+    this.broadcastService.broadcast('updateSelectedIco', slug);
   }
 
   ngOnDestroy(): void {

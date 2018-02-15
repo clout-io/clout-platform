@@ -169,7 +169,7 @@ module.exports = {
   },
 
   info: async (req, res) => {
-    let user = await User.findOne({id: req.user.id});
+    let user = await User.findOne({id: req.user.id}).populate("roles");
     return res.json(user)
   },
 };

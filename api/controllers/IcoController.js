@@ -69,7 +69,6 @@ module.exports = {
       ico = await Ico.findOne(ico.id).populate(["socials", "team", "categories", "image"]);
       return res.json(ico);
     } catch (e) {
-      console.log(e)
       return res.status(400).json(e);
     }
   },
@@ -122,6 +121,12 @@ module.exports = {
       followedIco = await Ico.find(userCondition).populate(["socials", "team", "image"]);
     }
     let resultData = {};
+    console.log(conditions);
+
+    if(conditions.categories){
+      conditions.categoriesList = conditions.categories;
+      delete conditions.categories;
+    }
     try {
       resultData = await pager.paginate(Ico, conditions, currentPage, perPage, ["socials", "team", "image"]);
     } catch (e) {
@@ -137,96 +142,39 @@ module.exports = {
     return res.json(resultData)
   },
 
-  info: function (req, res) {
-    var objectId = req.param("id");
-
-    async.parallel(
-      [function (callback) {
-        Ico.findOne({id: objectId}).populateAll().then(function (ico) {
-          callback(null, ico);
-        }).catch(function (error) {
-          callback(error);
-        })
-
-      },
-        function (callback) {
-          Like.count({objectId: objectId}).populateAll().then(function (count) {
-            callback(null, count);
-          }).catch(function (error) {
-            callback(error);
-          })
-        },
-        function (callback) {
-          Comment.count({root: objectId}).then(function (count) {
-            callback(null, count);
-          }).catch(function (error) {
-            callback(error);
-          })
-        },
-        function (callback) {
-          if (!req.user) {
-            callback(null, false);
-          } else {
-            Like.count({objectId: objectId, owner: req.user.id}).then(function (count) {
-              callback(null, count > 0);
-            }).catch(function (error) {
-              callback(error);
-            })
-          }
-        },
-        function (callback) {
-          Votes.count(objectId).then(function (data) {
-            callback(null, data)
-          }, function (err) {
-            callback(err)
-          })
-        },
-        function (callback) {
-          if (!req.user) {
-            callback(null, false);
-          } else {
-            Vote.findOne({objectId: objectId, owner: req.user.id}).then(function (vote) {
-              if (vote) {
-                callback(null, vote.vote);
-              } else {
-                callback(null, false)
-              }
-            }).catch(function (error) {
-              callback(error);
-            })
-          }
-        },
-        function (callback) {
-          if (req.user) {
-            FollowedIco.count({ico: objectId, user: req.user.id}).then(function (count) {
-              callback(null, count > 0)
-            })
-          } else {
-            callback(null, false);
-          }
-        }
-      ],
-      function (err, result) {
-        if (err) return res.json(400, Errors.build(err, Errors.ERROR_UNKNOWN));
-        var ico = result[0];
-        if (!ico) return res.json(404, Errors.build(err, Errors.ERROR_NOT_FOUND));
-        var count = result[1];
-        var comments = result[2];
-        var isLiked = result[3];
-        var votes = result[4];
-        var voted = result[5];
-        var isFollow = result[6] || false;
-        ico.likes = count || 0;
-        ico.comments = comments || 0;
-        ico.isLiked = isLiked;
-        ico.votes = votes;
-        ico.voted = voted;
-        ico.isFollow = isFollow;
-        res.json(ico);
+  info: async function (req, res) {
+    let idOrSlug = req.param("id");
+    let ico = await Ico.findOne({
+        or: [{id: idOrSlug}, {slug: idOrSlug}]
       }
-    )
-  }
-  ,
+    ).populateAll();
+
+    let objectId = ico.id;
+
+
+    if (!ico) return res.json(404, Errors.build({}, Errors.ERROR_NOT_FOUND));
+
+    let count = await Like.count({objectId: objectId}).populateAll();
+    let comments = await Comment.count({root: objectId});
+
+    let isLiked = false;
+    let voted = false;
+    let isFollow = false;
+    if (req.user) {
+      isLiked = await Like.count({objectId: objectId, owner: req.user.id});
+      voted = await Vote.findOne({objectId: objectId, owner: req.user.id});
+      isFollow = await FollowedIco.count({ico: objectId, user: req.user.id});
+    }
+
+    let votes = await Votes.count(objectId);
+    ico.likes = count || 0;
+    ico.comments = comments || 0;
+    ico.isLiked = isLiked;
+    ico.votes = votes;
+    ico.voted = voted;
+    ico.isFollow = isFollow;
+    return res.json(ico);
+  },
 
 
   search: async (req, res) => {
@@ -357,7 +305,7 @@ module.exports = {
         var path = sails.config.appPath + "/public/ico/" + item.slug + ".png";
 
         File.download(url, path, function (data) {
-          item.image = "/media/ico/" + item.slug + ".png";
+          item.outImage = "/media/ico/" + item.slug + ".png";
 
           item.save(function (err) {
             if (err) return res.json(400, err);

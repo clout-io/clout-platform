@@ -39,6 +39,12 @@ module.exports = {
       type: "string",
       enum: STATUS
     },
+    preIcoStart: {
+      type: "date"
+    },
+    preIcoEnd: {
+      type: "date"
+    },
     startDate: {
       type: "date"
     },
@@ -68,6 +74,9 @@ module.exports = {
     categories: {
       collection: 'IcoCategory',
       via: 'id'
+    },
+    categoriesList: {
+      type: "array"
     },
     founded: {
       type: "string"
@@ -175,13 +184,17 @@ module.exports = {
         obj.primaryGeography = obj.country
       }
 
+      if (!obj.image) {
+        obj.image = obj.outImage;
+      }
+
       return obj;
 
     }
   },
   beforeValidate: function (values, next) {
     if (!values.slug) {
-      values.slug = slug(values.name);
+      values.slug = slug(values.name).toLowerCase();
     }
     next()
   },

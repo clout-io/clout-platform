@@ -21,7 +21,13 @@ module.exports = async (req, res, next) => {
     return res.json(401, {err: 'No Authorization header was found'});
   }
 
-  let [encodedToken, user] = await Token.verify(token);
+  let [encodedToken, user] = [null, null];
+  try {
+    [encodedToken, user] = await Token.verify(token);
+  } catch (e) {
+    return res.json(401, {err: 'Invalid Token!'});
+  }
+
   if (!encodedToken) return res.json(401, {err: 'Invalid Token!'});
 
   req.token = encodedToken;

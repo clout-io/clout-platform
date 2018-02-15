@@ -1,5 +1,4 @@
 import {Component, OnInit, Input, OnChanges} from '@angular/core';
-import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-ico-detail',
@@ -8,20 +7,33 @@ import {environment} from '../../../../environments/environment';
 })
 export class IcoDetailComponent implements OnInit, OnChanges {
   @Input() ico: any;
+  hideOverflow: boolean;
+  description: string;
+  descriptionLength: number;
+  MAX_TEXT_LENGTH_SHOW = 256;
 
   constructor() { }
 
   ngOnChanges(): void {
     if (!this.ico) { return; }
 
-    if (!this.ico.image) {
-      this.ico.imageUrl = '';
-    } else if (typeof this.ico.image === 'string') {
-      this.ico.imageUrl = this.ico.image;
-    } else if (typeof this.ico.image === 'object') {
-      this.ico.imageUrl = environment.url + this.ico.image.url;
-    }
+    const div = document.createElement('div');
+    div.innerHTML = this.ico.description;
+    const descriptionText = div.textContent || div.innerText;
+    this.descriptionLength = descriptionText.length;
+    this.hideOverflow = descriptionText.length > this.MAX_TEXT_LENGTH_SHOW;
+    this.setDescription();
   }
 
   ngOnInit() {}
+
+  moreOrLess(): void {
+    this.hideOverflow = !this.hideOverflow;
+    this.setDescription();
+  }
+
+  setDescription(): void {
+    this.description = this.hideOverflow ?
+      this.ico.description.slice(0, this.MAX_TEXT_LENGTH_SHOW) + '...' : this.ico.description;
+  }
 }

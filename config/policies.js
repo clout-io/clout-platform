@@ -18,15 +18,7 @@
 
 
 module.exports.policies = {
-
-  /***************************************************************************
-   *                                                                          *
-   * Default policy for all controllers and actions (`true` allows public     *
-   * access)                                                                  *
-   *                                                                          *
-   ***************************************************************************/
-
-  '*': ['isAuthorized'],
+  '*': ['isAuthorized', 'PermissionPolicy'],
   SignInController: {
     index: true
   },
@@ -44,7 +36,7 @@ module.exports.policies = {
     index: true,
     favorites: true,
     alphabetList: true,
-    sync: true,//temp
+    sync: true,
     history: true,
     info: true,
     top: true,
@@ -84,12 +76,10 @@ module.exports.policies = {
   },
   PressController: {
     index: true,
-    sync:
-      true
+    sync: true
   },
   CategoryController: {
     index: true
-
   },
   TagController: {
     search: true
