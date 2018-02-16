@@ -4,6 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoreRoute } from '../core/core.route';
 
 // components
+
 import { IcoComponent } from './ico.component';
 import {
   IcoContentComponent,
