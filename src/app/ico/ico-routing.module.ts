@@ -13,11 +13,11 @@ import {
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
-  { path: '', redirectTo: '/icos/all/', pathMatch: 'full' },
+  { path: '', redirectTo: '/icos/ongoing/', pathMatch: 'full' },
   {
     path: 'icos', component: IcoComponent, data: {title: 'ICOs'},
     children: [
-      { path: '', redirectTo: 'all/', pathMatch: 'full'},
+      { path: '', redirectTo: 'ongoing/', pathMatch: 'full'},
       { path: ':status', component: IcoStatusComponent,
         children: [
           { path: ':slug', component: IcoContentComponent }

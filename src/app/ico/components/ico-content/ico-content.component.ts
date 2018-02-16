@@ -23,7 +23,7 @@ export class IcoContentComponent implements OnInit, OnDestroy {
         this.loadCoin(params['slug']);
       } else {
         this.updateSelectedIco(false);
-        this.router.navigate(['/icos/all', '']);
+        this.router.navigate(['/icos/ongoing', '']);
       }
     });
   }
@@ -37,7 +37,7 @@ export class IcoContentComponent implements OnInit, OnDestroy {
       .subscribe(ico => {
         this.ico = ico;
         this.updateSelectedIco(slug);
-      }, error => this.router.navigate(['all']));
+      }, error => this.router.navigate(['ongoing']));
   }
 
   updateSelectedIco(slug) {
