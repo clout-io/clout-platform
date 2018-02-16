@@ -1,0 +1,45 @@
+@import "../../../../theme/theme-variables";
+.container.pricing-plan {
+    max-width: 768px;
+    margin: 0 auto;
+    width: 100%;
+    padding: 30px 0;
+    h2 {
+        color: black;
+    }
+    .pricing-plan-boxes {
+        margin-top: 20px;
+        .pricing-box {
+            min-height: 380px;
+            border: 1px solid $color-primary;
+            border-radius: 10px;
+            >span:first-child {
+                font-size: 36px;
+                margin-top: 20px;
+                display: block;
+                text-align: center;
+            }
+            >span:nth-child(2) {
+                display: block;
+                font-size: 18px;
+                text-align: center;
+                margin-bottom: 20px;
+            }
+            .plan-content {
+                padding: 0 25px;
+                ul {
+                    li {
+                        padding: 5px 0;
+                        display: block;
+                    }
+                }
+                .form-actions {
+                    .btn {
+                        margin: 15px 0;
+                        width: 100%;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -4,12 +4,14 @@ import { RouterModule, Routes } from '@angular/router';
 import { CoreRoute } from '../core/core.route';
 
 // components
+
 import { IcoComponent } from './ico.component';
 import {
   IcoContentComponent,
   IcoStatusComponent,
   EditIcoComponent,
-  AddIcoComponent
+  AddIcoComponent,
+  PricingPlanComponent,
 } from './components';
 
 const routes: Routes = CoreRoute.withShell([
@@ -24,6 +26,7 @@ const routes: Routes = CoreRoute.withShell([
       ]},
     ]
   },
+  { path: 'ico/pricing-plan', component: PricingPlanComponent },
   { path: 'ico/add', component: AddIcoComponent },
   { path: 'ico/edit', component: EditIcoComponent },
   //{ path: '**', redirectTo: 'icos'}
