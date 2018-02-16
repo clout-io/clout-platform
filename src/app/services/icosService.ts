@@ -8,9 +8,19 @@ import { environment } from '../../environments/environment';
 export class IcosService {
   path = '/api/v1';
 
+  categoriesFilter = [];
+
   constructor(
     private api: ApiService,
   ) {}
+
+  setCategoriesFilter(categories: any) {
+    this.categoriesFilter = categories;
+  }
+
+  getCategoriesFilter() {
+    return this.categoriesFilter;
+  }
 
   getFiltersStage(): Observable<any> {
     return this.api.get(`${this.path}/ico/filters/stage`);
@@ -40,8 +50,8 @@ export class IcosService {
     return this.api.post(`${this.path}/ico`, options);
   }
 
-  getIcosList(nextPage: number, perPage: number, filter: string): Observable<any> {
-    const url = `${this.path}/icos?page=${nextPage}&per_page=${perPage}&sortType=asc&filter=${filter}`;
+  getIcosList(nextPage: number, perPage: number, filter: string, categories?: any): Observable<any> {
+    let url = `${this.path}/icos?page=${nextPage}&per_page=${perPage}&sortType=asc&filter=${filter}`;
     return this.api.get(url)
       .do(responce => responce.data.map(ico => this.setIcoImageUrl(ico)));
   }

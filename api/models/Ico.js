@@ -75,6 +75,9 @@ module.exports = {
       collection: 'IcoCategory',
       via: 'id'
     },
+    categoriesList: {
+      type: "array"
+    },
     founded: {
       type: "string"
     },

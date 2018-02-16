@@ -42,10 +42,10 @@ export class AuthService implements CanActivate {
   }
 
   setUser(user: any) {
-    const {id, avatar, username, isAdmin} = user;
+    const {id, avatar, name, isAdmin} = user;
     window.localStorage.setItem('clout_user_id', id);
     window.localStorage.setItem('clout_user_avatar', avatar);
-    window.localStorage.setItem('clout_user_username', username);
+    window.localStorage.setItem('clout_user_username', name);
     window.localStorage.setItem('clout_user_is_admin', isAdmin);
   }
 
