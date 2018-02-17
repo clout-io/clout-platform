@@ -52,14 +52,6 @@
                         border: 1px solid $color-primary;
                         color: $color-primary;
                     }
-                    &:hover {
-                        border-radius: $border-radius;
-                        color: $color-primary;
-                        background-color: white;
-                    }
-                    .btn--secondary {
-                        color: $color-primary;
-                    }
                 }
             }
         }
