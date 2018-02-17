@@ -6,19 +6,44 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pricing-plan.component.scss']
 })
 export class PricingPlanComponent implements OnInit {
-  premiumPlan = 'selected';
-  regularPlan = '';
+  public header: any;
+  public pricingPlans: Array<any>;
+  public selected: any;
   constructor() { }
 
   ngOnInit() {
+    this.pricingPlans = [
+      {
+        type: 'premium',
+        price: '$25/month',
+        features: [
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.',
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.',
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.',
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.',
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.'
+        ],
+        button: 'Get Started'
+      },
+      {
+        type: 'regular',
+        price: 'Free',
+        features: [
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.',
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.',
+          'Lorem, ipsum dolor sit amet consectetur adipisicing.'
+        ],
+        button: 'Get Started'
+      }
+    ];
+    this.selected = this.pricingPlans[0].type;
+    this.header = {
+      title: 'Pricing Plans',
+      description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum.'
+    };
   }
-  selectPlan(planType: string) {
-    if (planType === 'premium') {
-      this.premiumPlan = 'selected';
-      this.regularPlan = '';
-    } else {
-      this.premiumPlan = '';
-      this.regularPlan = 'selected';
-    }
+
+  selectPlan(type) {
+    this.selected = type;
   }
 }

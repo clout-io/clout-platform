@@ -48,6 +48,7 @@ import {
   FooDirective,
   ServerErrorMsgComponent,
   // pricing
+  PricingBoxComponent,
   PricingPlanComponent
 } from './components';
 @NgModule({
@@ -95,6 +96,7 @@ import {
     IcoTabComponent,
     TechTabComponent,
     TeamTabComponent,
+    PricingBoxComponent,
     PricingPlanComponent
   ]
 })
