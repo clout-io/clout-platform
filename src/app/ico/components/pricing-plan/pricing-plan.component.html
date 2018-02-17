@@ -5,11 +5,12 @@
     </div>
     <div class="row pricing-plan-boxes">
         <div class="col-md-6">
-            <div class="pricing-box">
-                <span>Premium</span>
-                <span>$25/mo</span>
-                <hr>
+            <div class="pricing-box {{premiumPlan}}" (click)="selectPlan('premium')">
+                <span class="plan-type">Premium</span>
+                <span class="price">$25/mo</span>
+
                 <div class="plan-content">
+                    <hr>
                     <ul>
                         <li>
                             <i class="fa fa-check fa-lg"></i>
@@ -39,11 +40,12 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="pricing-box">
-                <span>Regular</span>
-                <span>Free</span>
-                <hr>
+            <div class="pricing-box {{regularPlan}}" (click)="selectPlan('regular')">
+                <span class="plan-type">Regular</span>
+                <span class="price">Free</span>
+
                 <div class="plan-content">
+                    <hr>
                     <ul>
                         <li>
                             <i class="fa fa-check fa-lg"></i>

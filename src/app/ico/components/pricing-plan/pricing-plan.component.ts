@@ -6,10 +6,21 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./pricing-plan.component.scss']
 })
 export class PricingPlanComponent implements OnInit {
-
+  premiumPlan : string;
+  regularPlan : string;
   constructor() { }
 
   ngOnInit() {
+    this.premiumPlan = 'selected';
+    this.regularPlan = '';
   }
-
+  selectPlan(planType: string) {
+    if(planType === 'premium') {
+      this.premiumPlan = 'selected';
+      this.regularPlan = '';
+    } else {
+      this.premiumPlan = '';
+      this.regularPlan = 'selected';
+    }
+  }
 }
