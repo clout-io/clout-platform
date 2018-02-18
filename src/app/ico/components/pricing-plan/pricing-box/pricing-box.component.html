@@ -1,0 +1,16 @@
+<div class="pricing-box" [ngClass]="{'selected' : selected === plan.type}">
+    <span class="plan-type">{{plan.type}}</span>
+    <span class="price">{{plan.price}}</span>
+    <div class="plan-content">
+        <hr>
+        <ul>
+            <li *ngFor="let feature of plan.features">
+                <i class="fa fa-check fa-lg"></i>
+                <span>{{feature}}</span>
+            </li>
+        </ul>
+        <div class="form-actions text-center">
+            <a href="javascript:void(0)" class="btn btn--primary" (click)="save()">{{plan.button}}</a>
+        </div>
+    </div>
+</div>
