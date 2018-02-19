@@ -2,8 +2,8 @@
   <h3 class="form-section__title">Team</h3>
   <div class="form-item">
     <label class="form-item__label">Team Members</label>
-    <ul [formGroup]="membersForm" [dragula]='"team-items"' [dragulaModel]="membersForm.get('items').controls">
-      <div class="team-item" formArrayName="items" *ngFor="let item of membersForm.get('items').controls; let i = index;">
+    <ul [formGroup]="membersForm" [dragula]='"team-items"' [dragulaModel]="membersForm.get('items')['controls']">
+      <div class="team-item" formArrayName="items" *ngFor="let item of membersForm.get('items')['controls']; let i = index;">
         <div class="team-group" [formGroupName]="i">
           <div class="form-item__dots"></div>
           <input formControlName="role"
@@ -45,12 +45,12 @@
           </a>
           <a href="javascript:void(0)"
              class="team-action__add"
-             *ngIf="i === (membersForm.get('items').controls.length - 1)"
+             *ngIf="i === (membersForm.get('items')['controls'].length - 1)"
              (click)="addItem()">
           </a>
           <a href="javascript:void(0)"
              class="team-action__fake"
-             *ngIf="i !== (membersForm.get('items').controls.length - 1)">
+             *ngIf="i !== (membersForm.get('items')['controls'].length - 1)">
           </a>
         </div>
         <div class="team-group links-group validation-inputs-group">
@@ -67,8 +67,8 @@
           </span>
           <div class="fake-block"></div>
         </div>
-        <!--<div class="team-action" [ngClass]="{'only-add-action': membersForm.get('items').controls.length == 1 }">
-          <a *ngIf="membersForm.get('items').controls.length > 1" href="javascript:void(0);" (click)="deleteItem(i)" class="team-action__remove"></a>
+        <!--<div class="team-action" [ngClass]="{'only-add-action': membersForm.get('items')['controls'].length == 1 }">
+          <a *ngIf="membersForm.get('items')['controls'].length > 1" href="javascript:void(0);" (click)="deleteItem(i)" class="team-action__remove"></a>
           <a href="javascript:void(0);" (click)="addItem()" class="team-action__add"></a>
         </div>-->
       </div>

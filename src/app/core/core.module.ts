@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 
 import { OwlModule } from 'ng2-owl-carousel';
-import { Ng2FlatpickrComponent } from 'ng2-flatpickr/ng2-flatpickr';
 
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -66,7 +65,6 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     AutomaticGetDataByUrlDirective,
     CoinsAlphabeticDropdownComponent,
     NavsSwitcherComponent,
-    Ng2FlatpickrComponent,
     FilterSidebarComponent
   ],
   exports: [
@@ -81,7 +79,6 @@ import { AutomaticGetDataByUrlDirective } from '../directives/automatic-get-data
     AutomaticGetDataByUrlDirective,
     NavsSwitcherComponent,
     ResetInputBtnComponent,
-    Ng2FlatpickrComponent,
     FilterSidebarComponent
   ]
 })

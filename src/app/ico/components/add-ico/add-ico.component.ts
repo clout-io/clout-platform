@@ -17,7 +17,7 @@ export class AddIcoComponent implements OnInit {
   ngOnInit() {
   }
 
-  cancel() {
+  cancel(event) {
   }
 
   addIco(data) {

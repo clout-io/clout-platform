@@ -23,7 +23,6 @@ import {
   IcosService
 } from './services';
 
-import { NumberSeparator } from './pipes';
 import { HttpModule } from '@angular/http';
 import { FacebookService } from 'ngx-facebook';
 // components
@@ -54,7 +53,6 @@ import { AppComponent } from './app.component';
     ApiService,
     ApiHelperService,
     BroadcastService,
-    NumberSeparator,
     ModalService,
     CommentService,
     FollowService,

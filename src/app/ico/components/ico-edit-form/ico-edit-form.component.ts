@@ -7,8 +7,8 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { multiSelectEmptyValidator, isNumberValidator, isUrlValidator } from '../../../shared';
 import { emptyValidator } from '../../../shared';
 import {BroadcastService} from '../../../services/broadcastService';
-import { FlatpickrOptions } from 'ng2-flatpickr/ng2-flatpickr';
 import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
+import flatpickr from 'flatpickr/dist/flatpickr.js';
 declare const $: any;
 
 @Component({
@@ -109,7 +109,7 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
     allSelected: 'Select Category',
   };
 
-  datepickerOptions: FlatpickrOptions = {
+  datepickerOptions = {
     dateFormat: 'm/d/Y',
     mode: 'range',
     plugins: [rangePlugin({ input: '#secondRangeInput' })]
@@ -122,6 +122,9 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
               private formBuilder: FormBuilder) {}
 
   ngOnInit() {
+    console.log("LLL", flatpickr);
+    flatpickr('#firstRangeInput', this.datepickerOptions);
+
     this.icosService.getFiltersStage().take(1)
       .subscribe(res => this.projectStages = res.map(item => { return {value: item.id, label: item.name}; }));
 
@@ -240,7 +243,7 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
     if (toDelete) { this.socials.removeAt(index); }
   }
 
-  updateCategoryTitle(): void {
+  updateCategoryTitle(event): void {
     this.broadcastService.broadcast('updateCategoryTitle');
   }
 

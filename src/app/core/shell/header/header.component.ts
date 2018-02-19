@@ -97,7 +97,7 @@ export class HeaderComponent implements OnInit, AfterViewInit, OnDestroy {
     this.hiddenCoinsDropdown.nativeElement.click();
   }
 
-  showAlphabetCoinDropdown() {
+  showAlphabetCoinDropdown(event) {
     this.visibleAlphabeticalDropdown = !this.visibleAlphabeticalDropdown;
   }
 

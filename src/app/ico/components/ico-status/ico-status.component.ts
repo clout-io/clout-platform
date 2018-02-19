@@ -6,7 +6,7 @@ import { Component, OnInit,  OnDestroy, Input } from '@angular/core';
   styleUrls: ['./ico-status.component.scss']
 })
 export class IcoStatusComponent implements OnInit, OnDestroy {
-  private empty: boolean = false;
+  empty: boolean = false;
 
   constructor() {}
 

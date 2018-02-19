@@ -86,7 +86,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('projectStage').touched &&
-                     form.get('projectStage').invalid  && form.get('projectStage').selectWasOpened}">
+                     form.get('projectStage').invalid  && form.get('projectStage')['selectWasOpened']}">
                   <label class="form-item__label">Project Stage*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -108,7 +108,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('hypeScore').touched &&
-                     form.get('hypeScore').invalid && form.get('hypeScore').selectWasOpened}">
+                     form.get('hypeScore').invalid && form.get('hypeScore')['selectWasOpened']}">
                   <label class="form-item__label">Hype Score*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -130,7 +130,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('riskScore').touched
-                     && form.get('riskScore').invalid && form.get('riskScore').selectWasOpened}">
+                     && form.get('riskScore').invalid && form.get('riskScore')['selectWasOpened']}">
                   <label class="form-item__label">Risk Score*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -152,7 +152,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('investScore').touched
-                     && form.get('investScore').invalid && form.get('investScore').selectWasOpened}">
+                     && form.get('investScore').invalid && form.get('investScore')['selectWasOpened']}">
                   <label class="form-item__label">Invest Score*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -174,12 +174,12 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [class.form-item--error]="form.get('categories').touched &&
-                     form.get('categories').invalid && form.get('categories').selectWasOpened"
+                     form.get('categories').invalid && form.get('categories')['selectWasOpened']"
                      #categoryMultiSelect>
                   <label class="form-item__label">Category*</label>
                   <ss-multiselect-dropdown
                     [class.placeholder-text]="form.get('categories').touched &&
-                    form.get('categories').invalid && form.get('categories').selectWasOpened"
+                    form.get('categories').invalid && form.get('categories')['selectWasOpened']"
                     appFoo [options]="categories"
                     [texts]="multiTexts"
                     [settings]="multiSettings"
@@ -199,7 +199,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('founded').touched
-                     && form.get('founded').invalid && form.get('founded').selectWasOpened}">
+                     && form.get('founded').invalid && form.get('founded')['selectWasOpened']}">
                   <label class="form-item__label">Founded*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -378,7 +378,7 @@
               <div class="col-sm-12">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('primaryGeography').invalid &&
-                     form.get('primaryGeography').touched && form.get('primaryGeography').selectWasOpened}">
+                     form.get('primaryGeography').touched && form.get('primaryGeography')['selectWasOpened']}">
                   <label class="form-item__label">Primary Geography*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -428,11 +428,25 @@
                      [ngClass]="{'form-item--error': form.get('startDate').invalid && form.get('startDate').touched}">
                   <label class="form-item__label">ICO Date*</label>
                   <div class="dates-input-group" id="range-date-wrap">
-                    <ng2-flatpickr
+                    <!--<ng2-flatpickr
                       [config]="datepickerOptions"
                       formControlName="startDate"
                       placeholder="MM/DD/YY">
                     </ng2-flatpickr>
+                    <input
+                      type="text"
+                      class="range-last form-item__field"
+                      id="secondRangeInput"
+                      formControlName="endDate"
+                      readonly
+                      placeholder="MM/DD/YY">-->
+                    <input
+                      type="text"
+                      class="form-item__field"
+                      id="firstRangeInput"
+                      formControlName="startDate"
+                      readonly
+                      placeholder="MM/DD/YY">
                     <input
                       type="text"
                       class="range-last form-item__field"
@@ -516,7 +530,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('jurisdiction').invalid &&
-                     form.get('jurisdiction').touched && form.get('jurisdiction').selectWasOpened}">
+                     form.get('jurisdiction').touched && form.get('jurisdiction')['selectWasOpened']}">
                   <label class="form-item__label">ICO Jurisdiction*</label>
                   <div class="form-item__select">
                     <ng-select

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FlatpickrOptions } from 'ng2-flatpickr/ng2-flatpickr';
 import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
 import {FormBuilder, FormGroup, FormArray, Validators, FormControl} from '@angular/forms';
 import {IcosService} from '../../../services/icosService';
@@ -17,7 +16,7 @@ export class FilterSidebarComponent implements OnInit {
   lastCheckedCategories = [];
   initialPosition = [0, 5000];
 
-  defaultOptions: FlatpickrOptions = {
+  defaultOptions = {
     dateFormat: 'm/d/Y',
     mode: 'range',
     plugins: [rangePlugin({ input: '#secondRangeInput' })]

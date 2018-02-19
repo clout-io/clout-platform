@@ -12,10 +12,10 @@ export class EditIcoComponent implements OnInit {
   ngOnInit() {
   }
 
-  cancel() {
+  cancel(event) {
   }
 
-  editIco() {
+  editIco(event) {
 
   }
 
