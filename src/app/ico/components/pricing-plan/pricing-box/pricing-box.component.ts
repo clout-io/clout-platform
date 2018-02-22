@@ -33,7 +33,7 @@ export class PricingBoxComponent implements OnInit {
       token: function (token: any) {
         // You can access the token ID with `token.id`.
         // Get the token ID to your server-side code for use
-        // add permission
+        // Todo use post to charge user 
       }
     });
 
