@@ -52,7 +52,7 @@ export class FeedItemComponent implements OnInit {
     this.loadImgId = null;
   }
 
-  shareFacebook(): void {
+  shareFacebook(event): void {
     let title = '';
     let description = this.feed.text;
     let imageUrl = this.feed.attachment.length ?

@@ -17,18 +17,50 @@ export class AddIcoComponent implements OnInit {
   ngOnInit() {
   }
 
-  cancel() {
+  cancel(event) {
   }
 
   addIco(data) {
     if (!this.authService.isAdmin()) { return; }
 
-    this.icosService.addIco(data).take(1)
+    const {sendData, form, membersForm, premiumForm} = data;
+
+    this.icosService.addIco(sendData).take(1)
       .subscribe(responce => {
         alert('New ICO was successfully saved!');
         this.router.navigate(['/icos', 'all']);
-      }, error => {
-        alert('Something went wrong! Try again!');
+      }, errors => {
+        window.scrollTo(0, 0);
+        if (errors.invalidAttributes) {
+          if (errors.invalidAttributes.slug
+            && errors.invalidAttributes.slug[0] && errors.invalidAttributes.slug[0].rule === 'unique') {
+            let message = errors.invalidAttributes.slug[0].message;
+            message = message.replace('\`slug\`', 'name');
+            form.controls.name.setErrors({'serverError': message});
+          }
+          Object.keys(errors.invalidAttributes).forEach(key => {
+            if (typeof form.value[key] !== 'undefined') {
+              if (errors.invalidAttributes[key] && errors.invalidAttributes[key][0]) {
+                form.controls[key].setErrors({'serverError': errors.invalidAttributes[key][0].message});
+              }
+            }
+            if (typeof premiumForm.value[key] !== 'undefined') {
+              if (errors.invalidAttributes[key] && errors.invalidAttributes[key][0]) {
+                premiumForm.controls[key].setErrors({'serverError': errors.invalidAttributes[key][0].message});
+              }
+            }
+          });
+        } /*else {
+          Object.keys(errors).forEach((key, value) => {
+            if (typeof form.value[key] !== 'undefined') {
+              form.controls[key].setErrors({'serverError': errors[key]});
+            }
+            if (typeof premiumForm.value[key] !== 'undefined') {
+              premiumForm.controls[key].setErrors({'serverError': errors[key]});
+            }
+          });
+        }*/
+        setTimeout(() => { alert('Something went wrong! Try again!'); }, 200);
       });
   }
 
