@@ -11,7 +11,7 @@
                (click)="triggerToInput()">
             </a>
             <span>Logo required!</span>
-            <app-server-error-msg [errorMsg]="serverErrors['image']"></app-server-error-msg>
+            <app-server-error-msg [control]="premiumForm.controls['image']"></app-server-error-msg>
             <div style="height: 0px">
               <input accept="image/gif, image/jpeg, image/png" type="file"
                      (change)="handleUpload($event)" #uploadIcoLogo style="visibility: hidden; height: 0px; width: 100%"/>
@@ -24,7 +24,7 @@
                 <input type="checkbox" formControlName="isPremium">
                 <i></i>
               </label>
-              <app-server-error-msg [errorMsg]="serverErrors['isPremium']"></app-server-error-msg>
+              <app-server-error-msg [control]="premiumForm.controls['isPremium']"></app-server-error-msg>
             </div>
           </div>
           <div class="form-item">
@@ -37,14 +37,14 @@
                 [allowClear]="false">
               </ng-select>
             </div>
-            <app-server-error-msg [errorMsg]="serverErrors['premiumRank']"></app-server-error-msg>
+            <app-server-error-msg [control]="premiumForm.controls['premiumRank']"></app-server-error-msg>
           </div>
           <div class="form-item">
             <textarea class="form-item__area"
                       placeholder="Notes"
                       formControlName="premiumDescription">
             </textarea>
-            <app-server-error-msg [errorMsg]="serverErrors['premiumDescription']"></app-server-error-msg>
+            <app-server-error-msg [control]="premiumForm.controls['premiumDescription']"></app-server-error-msg>
           </div>
         </form>
       </div>
@@ -61,10 +61,11 @@
                      class="form-item__field"
                      placeholder="Enter ICO Name"
                      formControlName="name">
-              <span class="form-item__hint" *ngIf="form.get('name').invalid && form.get('name').touched">
+              <span class="form-item__hint" *ngIf="form.get('name').invalid &&
+              form.get('name').hasError('required') && form.get('name').touched">
                 This field is required!
               </span>
-              <app-server-error-msg [errorMsg]="serverErrors['name']"></app-server-error-msg>
+              <app-server-error-msg [control]="form.controls['name']"></app-server-error-msg>
               <app-reset-input-btn [inputField]="form.get('name')"></app-reset-input-btn>
             </div>
             <div class="form-item"
@@ -74,10 +75,11 @@
                         placeholder="Enter Description"
                         formControlName="description">
               </textarea>
-              <span class="form-item__hint" *ngIf="form.get('description').invalid && form.get('description').touched">
+              <span class="form-item__hint" *ngIf="form.get('description').invalid
+               && form.get('description').hasError('required') && form.get('description').touched">
                 This field is required!
               </span>
-              <app-server-error-msg [errorMsg]="serverErrors['description']"></app-server-error-msg>
+              <app-server-error-msg [control]="form.controls['description']"></app-server-error-msg>
             </div>
           </div>
           <div class="form-section">
@@ -86,7 +88,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('projectStage').touched &&
-                     form.get('projectStage').invalid  && form.get('projectStage').selectWasOpened}">
+                     form.get('projectStage').invalid  && form.get('projectStage')['selectWasOpened']}">
                   <label class="form-item__label">Project Stage*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -102,13 +104,13 @@
                   <span class="form-item__hint">
                     This field is required!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['projectStage']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['projectStage']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('hypeScore').touched &&
-                     form.get('hypeScore').invalid && form.get('hypeScore').selectWasOpened}">
+                     form.get('hypeScore').invalid && form.get('hypeScore')['selectWasOpened']}">
                   <label class="form-item__label">Hype Score*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -124,13 +126,13 @@
                   <span class="form-item__hint">
                     This field is required!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['hypeScore']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['hypeScore']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('riskScore').touched
-                     && form.get('riskScore').invalid && form.get('riskScore').selectWasOpened}">
+                     && form.get('riskScore').invalid && form.get('riskScore')['selectWasOpened']}">
                   <label class="form-item__label">Risk Score*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -146,13 +148,13 @@
                   <span class="form-item__hint">
                     This field is required!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['riskScore']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['riskScore']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('investScore').touched
-                     && form.get('investScore').invalid && form.get('investScore').selectWasOpened}">
+                     && form.get('investScore').invalid && form.get('investScore')['selectWasOpened']}">
                   <label class="form-item__label">Invest Score*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -168,18 +170,18 @@
                   <span class="form-item__hint">
                     This field is required!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['investScore']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['investScore']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [class.form-item--error]="form.get('categories').touched &&
-                     form.get('categories').invalid && form.get('categories').selectWasOpened"
+                     form.get('categories').invalid && form.get('categories')['selectWasOpened']"
                      #categoryMultiSelect>
                   <label class="form-item__label">Category*</label>
                   <ss-multiselect-dropdown
                     [class.placeholder-text]="form.get('categories').touched &&
-                    form.get('categories').invalid && form.get('categories').selectWasOpened"
+                    form.get('categories').invalid && form.get('categories')['selectWasOpened']"
                     appFoo [options]="categories"
                     [texts]="multiTexts"
                     [settings]="multiSettings"
@@ -193,13 +195,13 @@
                   <span class="form-item__hint">
                     This field is required!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['categories']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['categories']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('founded').touched
-                     && form.get('founded').invalid && form.get('founded').selectWasOpened}">
+                     && form.get('founded').invalid && form.get('founded')['selectWasOpened']}">
                   <label class="form-item__label">Founded*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -220,7 +222,7 @@
                         *ngIf="form.get('founded').hasError('max')">
                     This field must be less or equal to {{currentYear}}
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['founded']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['founded']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -236,7 +238,7 @@
                       [allowClear]="false">
                     </ng-select>
                   </div>
-                  <app-server-error-msg [errorMsg]="serverErrors['industry']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['industry']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -252,7 +254,7 @@
                       [allowClear]="false">
                     </ng-select>
                   </div>
-                  <app-server-error-msg [errorMsg]="serverErrors['status']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['status']"></app-server-error-msg>
                 </div>
               </div>
             </div>
@@ -261,7 +263,7 @@
             <h3 class="form-section__title">Contact info</h3>
             <div class="form-section" *ngIf="!!socials.length">
               <div class="form-item" formArrayName="socials">
-                <label class="form-item__label">Links</label>
+                <label class="form-item__label">Links*</label>
                 <div class="team-item link-item"
                      [ngClass]="{'form-item--error': item['controls']['link'].touched && item['controls']['link'].invalid}"
                      *ngFor="let item of form.get('socials')['controls']; let i = index;">
@@ -325,7 +327,7 @@
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('site').touched && form.get('site').invalid}">
-                  <label class="form-item__label">ICO Website</label>
+                  <label class="form-item__label">ICO Website*</label>
                   <input type="text" class="form-item__field"
                          formControlName="site" placeholder="Enter Website link">
                   <span class="form-item__hint" *ngIf="form.get('site').hasError('required')">
@@ -335,13 +337,13 @@
                         *ngIf="!form.get('site').hasError('required') && form.get('site').hasError('urlNotValid')">
                     ICO Website link is not valid!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['site']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['site']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('whitepaper').touched && form.get('whitepaper').invalid}">
-                  <label class="form-item__label">Whitepaper</label>
+                  <label class="form-item__label">Whitepaper*</label>
                   <input type="text" class="form-item__field"
                          formControlName="whitepaper" placeholder="Enter Whitepaper link">
                   <span class="form-item__hint" *ngIf="form.get('whitepaper').hasError('required')">
@@ -351,13 +353,13 @@
                         *ngIf="!form.get('whitepaper').hasError('required') && form.get('whitepaper').hasError('urlNotValid')">
                     Whitepaper link is not valid!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['whitepaper']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['whitepaper']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('blog').touched && form.get('blog').invalid}">
-                  <label class="form-item__label">Blog</label>
+                  <label class="form-item__label">Blog*</label>
                   <input type="text" class="form-item__field"
                          formControlName="blog" placeholder="Enter Blog link">
                   <span class="form-item__hint" *ngIf="form.get('blog').hasError('required')">
@@ -367,7 +369,7 @@
                         *ngIf="!form.get('blog').hasError('required') && form.get('blog').hasError('urlNotValid')">
                     Blog link is not valid!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['blog']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['blog']"></app-server-error-msg>
                 </div>
               </div>
             </div>
@@ -378,7 +380,7 @@
               <div class="col-sm-12">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('primaryGeography').invalid &&
-                     form.get('primaryGeography').touched && form.get('primaryGeography').selectWasOpened}">
+                     form.get('primaryGeography').touched && form.get('primaryGeography')['selectWasOpened']}">
                   <label class="form-item__label">Primary Geography*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -394,7 +396,7 @@
                   <span class="form-item__hint">
                     This field is required!
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['primaryGeography']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['primaryGeography']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-12">
@@ -404,7 +406,7 @@
                             placeholder="Enter Features"
                             formControlName="features">
                   </textarea>
-                  <app-server-error-msg [errorMsg]="serverErrors['features']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['features']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-12">
@@ -414,7 +416,7 @@
                             placeholder="Enter Similar Projects"
                             formControlName="similarProjects">
                   </textarea>
-                  <app-server-error-msg [errorMsg]="serverErrors['similarProjects']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['similarProjects']"></app-server-error-msg>
                 </div>
               </div>
             </div>
@@ -428,17 +430,20 @@
                      [ngClass]="{'form-item--error': form.get('startDate').invalid && form.get('startDate').touched}">
                   <label class="form-item__label">ICO Date*</label>
                   <div class="dates-input-group" id="range-date-wrap">
-                    <ng2-flatpickr
-                      [config]="datepickerOptions"
-                      formControlName="startDate"
-                      placeholder="MM/DD/YY">
-                    </ng2-flatpickr>
                     <input
                       type="text"
-                      class="range-last form-item__field"
+                      class="form-item__field"
+                      id="firstRangeInput"
+                      formControlName="startDate"
+                      [readonly]="'readonly'"
+                      placeholder="MM/DD/YY">
+                    <input
+                      type="text"
+                      class="form-item__field"
                       id="secondRangeInput"
                       formControlName="endDate"
-                      readonly
+                      [readonly]="'readonly'"
+                      #endDate
                       placeholder="MM/DD/YY">
                   </div>
                   <div class="validation-group">
@@ -454,8 +459,8 @@
                     </div>
                   </div>
                   <div class="validation-group">
-                    <app-server-error-msg [errorMsg]="serverErrors['startDate']"></app-server-error-msg>
-                    <app-server-error-msg [errorMsg]="serverErrors['endDate']"></app-server-error-msg>
+                    <app-server-error-msg [control]="form.controls['startDate']"></app-server-error-msg>
+                    <app-server-error-msg [control]="form.controls['endDate']"></app-server-error-msg>
                   </div>
                 </div>
               </div>
@@ -472,7 +477,7 @@
                       [allowClear]="false">
                     </ng-select>
                   </div>
-                  <app-server-error-msg [errorMsg]="serverErrors['tokenType']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['tokenType']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -488,7 +493,7 @@
                       [allowClear]="false">
                     </ng-select>
                   </div>
-                  <app-server-error-msg [errorMsg]="serverErrors['tokenTechnology']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['tokenTechnology']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
@@ -510,13 +515,13 @@
                         *ngIf="form.get('amount').hasError('notNumber') && !form.get('amount').hasError('required')">
                     Amount must be a number.
                   </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['amount']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['amount']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-6">
                 <div class="form-item"
                      [ngClass]="{'form-item--error' : form.get('jurisdiction').invalid &&
-                     form.get('jurisdiction').touched && form.get('jurisdiction').selectWasOpened}">
+                     form.get('jurisdiction').touched && form.get('jurisdiction')['selectWasOpened']}">
                   <label class="form-item__label">ICO Jurisdiction*</label>
                   <div class="form-item__select">
                     <ng-select
@@ -532,7 +537,7 @@
                   <span class="form-item__hint">
                       This field is required!
                     </span>
-                  <app-server-error-msg [errorMsg]="serverErrors['jurisdiction']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['jurisdiction']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-12">
@@ -542,7 +547,7 @@
                             placeholder="Enter text"
                             formControlName="tokensDistribution">
                   </textarea>
-                  <app-server-error-msg [errorMsg]="serverErrors['tokensDistribution']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['tokensDistribution']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-12">
@@ -552,7 +557,7 @@
                             placeholder="Enter text"
                             formControlName="tokenSales">
                   </textarea>
-                  <app-server-error-msg [errorMsg]="serverErrors['tokenSales']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['tokenSales']"></app-server-error-msg>
                 </div>
               </div>
               <div class="col-sm-12">
@@ -562,7 +567,7 @@
                             placeholder="Enter text"
                             formControlName="accepts">
                   </textarea>
-                  <app-server-error-msg [errorMsg]="serverErrors['accepts']"></app-server-error-msg>
+                  <app-server-error-msg [control]="form.controls['accepts']"></app-server-error-msg>
                 </div>
               </div>
             </div>
@@ -575,7 +580,7 @@
                         placeholder="Enter text"
                         formControlName="technicalDetails">
               </textarea>
-              <app-server-error-msg [errorMsg]="serverErrors['technicalDetails']"></app-server-error-msg>
+              <app-server-error-msg [control]="form.controls['technicalDetails']"></app-server-error-msg>
             </div>
             <div class="form-item">
               <label class="form-item__label">The source code</label>
@@ -583,7 +588,7 @@
                         placeholder="Enter text"
                         formControlName="sourceCode">
               </textarea>
-              <app-server-error-msg [errorMsg]="serverErrors['sourceCode']"></app-server-error-msg>
+              <app-server-error-msg [control]="form.controls['sourceCode']"></app-server-error-msg>
             </div>
             <div class="form-item">
               <label class="form-item__label">Proof of developer</label>
@@ -591,7 +596,7 @@
                         placeholder="Enter text"
                         formControlName="proofOfDeveloper">
               </textarea>
-              <app-server-error-msg [errorMsg]="serverErrors['proofOfDeveloper']"></app-server-error-msg>
+              <app-server-error-msg [control]="form.controls['proofOfDeveloper']"></app-server-error-msg>
             </div>
           </div>
         </form>

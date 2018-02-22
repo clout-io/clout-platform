@@ -1,5 +1,5 @@
 import {
-  Component, OnInit, Output, EventEmitter, Renderer, ViewChild, ElementRef, AfterViewInit
+  Component, OnInit, Output, EventEmitter, Renderer, ViewChild, ElementRef
 } from '@angular/core';
 import { IMultiSelectOption, IMultiSelectSettings, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 import { FeedService, IcosService } from '../../../services';
@@ -7,16 +7,15 @@ import { FormBuilder, FormGroup, FormArray, Validators } from '@angular/forms';
 import { multiSelectEmptyValidator, isNumberValidator, isUrlValidator } from '../../../shared';
 import { emptyValidator } from '../../../shared';
 import {BroadcastService} from '../../../services/broadcastService';
-import { FlatpickrOptions } from 'ng2-flatpickr/ng2-flatpickr';
 import rangePlugin from 'flatpickr/dist/plugins/rangePlugin';
-declare const $: any;
+import flatpickr from 'flatpickr/dist/flatpickr.js';
 
 @Component({
   selector: 'app-ico-edit-form',
   templateUrl: './ico-edit-form.component.html',
   styleUrls: ['./ico-edit-form.component.scss']
 })
-export class IcoEditFormComponent implements OnInit, AfterViewInit {
+export class IcoEditFormComponent implements OnInit {
   premiumForm: FormGroup;
   form: FormGroup;
   membersForm: FormGroup;
@@ -25,7 +24,7 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
   @Output() onSave = new EventEmitter();
   @ViewChild('uploadIcoLogo') uploadIcoLogo: ElementRef;
   @ViewChild('categoryMultiSelect') categoryMultiSelect: ElementRef;
-  serverErrors = {};
+  @ViewChild('endDate') endDateRef: ElementRef;
   imageSrc: string;
   scores: Array<any> = [
     {value: 'low', label: 'LOW'},
@@ -109,7 +108,7 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
     allSelected: 'Select Category',
   };
 
-  datepickerOptions: FlatpickrOptions = {
+  datepickerOptions = {
     dateFormat: 'm/d/Y',
     mode: 'range',
     plugins: [rangePlugin({ input: '#secondRangeInput' })]
@@ -122,6 +121,8 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
               private formBuilder: FormBuilder) {}
 
   ngOnInit() {
+    flatpickr('#firstRangeInput', this.datepickerOptions); //init flatpickr on date input
+
     this.icosService.getFiltersStage().take(1)
       .subscribe(res => this.projectStages = res.map(item => { return {value: item.id, label: item.name}; }));
 
@@ -197,11 +198,6 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
     this.socials = this.form.get('socials') as FormArray;
   }
 
-  ngAfterViewInit(): void {
-    console.log('after', $('#flatpickr'));
-    $('#flatpickr').find('input').attr('readonly', 'readonly');
-  }
-
   createSocialItem(): FormGroup {
     return this.formBuilder.group({
       link: ['', Validators.compose([Validators.required, emptyValidator(), isUrlValidator()])],
@@ -240,7 +236,7 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
     if (toDelete) { this.socials.removeAt(index); }
   }
 
-  updateCategoryTitle(): void {
+  updateCategoryTitle(event): void {
     this.broadcastService.broadcast('updateCategoryTitle');
   }
 
@@ -256,29 +252,17 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
   }
 
   teamChange(data) {
-    console.log('new team', data.teams);
-    console.log('form', data.form);
     this.membersForm = data.form;
   }
 
   save() {
-    /*Object.keys(this.premiumForm.controls).forEach(key => {
-      this.serverErrors[key] = `${key} is required!`;
-    });
-    Object.keys(this.form.controls).forEach(key => {
-      this.serverErrors[key] = `${key} is required!`;
-    });*/
-    console.log(this.premiumForm, 'this.premiumForm', this.premiumForm.valid);
-    console.log(this.form, 'this.form', this.form.valid);
-    console.log(this.membersForm, 'this.membersForm', this.membersForm.valid);
     this.setFormFieldsAsTouched(this.premiumForm.controls);
     this.setFormFieldsAsTouched(this.form.controls);
     this.setGroupFieldsAsTouched();
 
     if (this.form.controls['startDate'].valid) {
-      if (this.form.controls['startDate'].value.length === 2) {
-        this.form.controls['endDate'].setErrors(null);
-      }
+      const value = this.endDateRef.nativeElement.value;
+      this.form.controls['endDate'].patchValue(value);
     }
 
     if (this.premiumForm.invalid || this.form.invalid || this.membersForm.invalid) {
@@ -289,14 +273,14 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
     const {
       name, description, primaryGeography, amount, jurisdiction, status, projectStage, hypeScore, riskScore,
       investScore, founded, tokenType, tokenTechnology, industry, site, whitepaper, blog, features,
-      tokensDistribution, tokenSales, accepts, similarProjects, technicalDetails, sourceCode, proofOfDeveloper
+      startDate, endDate, tokensDistribution, tokenSales, accepts, similarProjects, technicalDetails, sourceCode, proofOfDeveloper
     } = this.form.value;
 
     const data = {
       name, description, status, image, projectStage, hypeScore, riskScore, investScore, founded,
       site, blog, whitepaper, primaryGeography, features, similarProjects, tokenType, tokenTechnology,
-      amount, jurisdiction, tokensDistribution, tokenSales, accepts, sourceCode, technicalDetails,
-      isPremium, premiumRank, premiumDescription, industry, proofOfDeveloper
+      startDate, endDate, amount, jurisdiction, tokensDistribution, tokenSales, accepts, sourceCode,
+      technicalDetails, isPremium, premiumRank, premiumDescription, industry, proofOfDeveloper
     };
     let categories = this.form.value.categories.filter(item => item.trim().length > 1);
     categories = categories.map(item => {
@@ -304,8 +288,8 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
       if (flagIndex !== -1) { return item.slice(flagIndex + 4); }
       return item;
     });
-    const sD = this.form.value.startDate[0],
-      eD = this.form.value.startDate[1];
+    const sD = new Date(this.form.value.startDate),
+      eD = new Date(this.form.value.endDate);
 
     if (sD && eD) {
       data['startDate'] = `${sD.getMonth() + 1}/${sD.getDate()}/${sD.getFullYear()}`;
@@ -327,9 +311,12 @@ export class IcoEditFormComponent implements OnInit, AfterViewInit {
       sendData[key] = value;
     });
 
-    console.log('data', data);
-    console.log('sendData', sendData);
-    this.onSave.emit(sendData);
+    this.onSave.emit({
+      sendData,
+      form: this.form,
+      membersForm: this.membersForm,
+      premiumForm: this.premiumForm
+    });
   }
 
   setFormFieldsAsTouched(formControls: any): void {

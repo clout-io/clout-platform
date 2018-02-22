@@ -3134,29 +3134,17 @@ ___________________________*/
   .dates-input-group {
     max-width: 100%;
     display: flex;
+    height: 45px;
 
     input {
       width: 100%;
       outline: none;
       border: 1px solid #EFEFEF;
       padding: 7px 10px 5px 13px;
-    }
 
-    ng2-flatpickr {
-      width: 50%;
-      outline: none;
-
-      input {
-        border-right: 0;
-        border-radius: $border-radius - 1 0 0 $border-radius - 1;
-        padding: 11px 14px;;
+      &:last-child {
+        border-left: none;
       }
-    }
-
-    .range-last {
-      width: 50%;
-      border-radius: 0 $border-radius - 1 $border-radius - 1 0;
-      padding: 11px 14px;
     }
   }
 

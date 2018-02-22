@@ -16,14 +16,13 @@
           <a *ngIf="isOwner" class="dropdown-item" (click)="delete()">Delete Post</a>
           <a *ngIf="isOwner" class="dropdown-item" (click)="edit()">Edit</a>
           <a class="dropdown-item" (click)="shareFacebook($event)">Share Facebook</a>
-          <a *ngIf="showShareTwitter" class="dropdown-item" ceiboShare
-             [twitter]="twitterShareObj">Share Twitter</a>
+          <a class="dropdown-item twitter-share-button"
+             href="{{'https://twitter.com/intent/tweet?text='+twitterShareObj.text+'&url='+twitterShareObj.url}}"
+             onclick="window.open(this.href ,'Twitter', 'height=285,width=550,resizable=1');return false;">
+            Share Twitter
+          </a>
         </div>
       </div>
-      <!--<button ceiboShare
-              [twitter]="{url:'',
-               text:'Checkout this awesome ng2 social share directive',
-               hashtags:'angular2, social, ceiboIT'}">Twitter</button>-->
     </div>
   </div>
   <app-post-head *ngIf="feed?.type === 'post' && editable"
