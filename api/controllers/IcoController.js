@@ -66,7 +66,6 @@ module.exports = {
 
     try {
       let ico = await Ico.create(req.body);
-      ico = await Ico.findOne(ico.id).populate(["socials", "team", "categories", "image"]);
       return res.json(ico);
     } catch (e) {
       return res.status(400).json(e);
