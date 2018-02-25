@@ -10,5 +10,5 @@ export const environment = {
   //url: 'http://haumea.bvblogic.net:8103'
   //url: 'http://10.100.0.124:1337'
   url: 'http://vm103.bvblogic.net',
-  // url: 'http://localhost:1337',
+  // url: 'http://127.0.0.1:1337',
 };

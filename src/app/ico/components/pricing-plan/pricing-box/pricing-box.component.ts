@@ -1,6 +1,7 @@
 import {Component, OnInit, Input, EventEmitter} from '@angular/core';
 import { environment } from '../../../../../environments/environment';
-
+import { PaymentService} from '../../../../services/paymentService';
+import { Headers, Http, Response } from '@angular/http';
 @Component({
   selector: 'app-pricing-box',
   templateUrl: './pricing-box.component.html',
@@ -10,7 +11,10 @@ export class PricingBoxComponent implements OnInit {
   @Input() plan;
   @Input() selected;
 
-  constructor() { }
+  constructor(
+      private paymentService: PaymentService, 
+      private http: Http
+  ) { }
 
   ngOnInit() {}
   /* params planType: string
@@ -26,14 +30,26 @@ export class PricingBoxComponent implements OnInit {
   }
 
   /*return display stripe payment modal for clout*/
+  /**
+   * @returns void
+   */
   paymentModal(): void {
+    const servicePay = this.paymentService;
+    const url = '/api/vi/payment/charge';
     var handler = (<any>window).StripeCheckout.configure({
       key: environment.stripePublicKey,
       locale: 'auto',
       token: function (token: any) {
-        // You can access the token ID with `token.id`.
-        // Get the token ID to your server-side code for use
-        // Todo use post to charge user 
+
+        const sendData = {
+          stripeToken: token.id,
+          email: token.email
+        }
+
+        servicePay.payment(sendData).take(1)
+        .subscribe(response => {
+          //action for saving
+        });
       }
     });
 
