@@ -1,0 +1,11 @@
+<div class="container pricing-plan">
+    <div class="text-center">
+        <h2>{{header.title}}</h2>
+        <span>{{header.description}}</span>
+    </div>
+    <div class="row pricing-plan-boxes">
+        <div class="col-md-{{12/pricingPlans.length}}" *ngFor="let plan of pricingPlans">
+            <app-pricing-box [plan]="plan" [selected]="selected" (click)="selectPlan(plan.type)"></app-pricing-box>
+        </div>
+    </div>
+</div>

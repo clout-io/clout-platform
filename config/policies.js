@@ -18,96 +18,98 @@
 
 
 module.exports.policies = {
-  '*': ['isAuthorized', 'PermissionPolicy'],
-  SignInController: {
-    index: true
-  },
-  SocialController: {
-    facebookAuth: true,
-    facebookUrl: true,
-    facebookMobileAuth: true
-  },
+    '*': ['isAuthorized', 'PermissionPolicy'],
+    SignInController: {
+        index: true
+    },
+    SocialController: {
+        facebookAuth: true,
+        facebookUrl: true,
+        facebookMobileAuth: true
+    },
 
-  SignUpController: {
-    index: true,
-    activate: true
-  },
-  AltcoinController: {
-    index: true,
-    favorites: true,
-    alphabetList: true,
-    sync: true,
-    history: true,
-    info: true,
-    top: true,
-    syncPhoto: true,
-    syncHistory: true
-  },
-  IcoController: {
-    index: true,
-    info: true,
-    top: true,
-    alphabetList: true,
-    sync: true,
-    syncPhoto: true
-  },
-  SwaggerController: {
-    '*': true
-  },
-  AdminController: {
-    login: true
-  },
-  CommentController: {
-    list: true
-  },
-  ImgController: {
-    getPhoto: true,
-    getIcoPhoto:
-      true
-  },
-  PostController: {
-    index: true,
-    single: true
-  },
-  UserController: {
-    resetPasswordRequest: true,
-    resetPassword: true,
-    profile: true
-  },
-  PressController: {
-    index: true,
-    sync: true
-  },
-  CategoryController: {
-    index: true
-  },
-  TagController: {
-    search: true
-  },
-  UrlController: {
-    ogInfo: true,
-    redirect: true
-  },
-  TrendingController: {
-    index: true
-  },
-  IcoIndustryController: {
-    list: true,
-  },
-  IcoTokenTechnologyController: {
-    list: true,
-  },
-  IcoTokenTypeController: {
-    list: true,
-  },
-  IcoStageController: {
-    list: true,
-  },
-  IcoCategoryController: {
-    list: true,
-  },
-  CountryController: {
-    list: true
-  }
+    SignUpController: {
+        index: true,
+        activate: true
+    },
+    AltcoinController: {
+        index: true,
+        favorites: true,
+        alphabetList: true,
+        sync: true,
+        history: true,
+        info: true,
+        top: true,
+        syncPhoto: true,
+        syncHistory: true
+    },
+    IcoController: {
+        index: true,
+        info: true,
+        top: true,
+        alphabetList: true,
+        sync: true,
+        syncPhoto: true
+    },
+    SwaggerController: {
+        '*': true
+    },
+    AdminController: {
+        login: true
+    },
+    CommentController: {
+        list: true
+    },
+    ImgController: {
+        getPhoto: true,
+        getIcoPhoto: true
+    },
+    PostController: {
+        index: true,
+        single: true
+    },
+    PaymentController: {
+        charge: true,
+    },
+    UserController: {
+        resetPasswordRequest: true,
+        resetPassword: true,
+        profile: true
+    },
+    PressController: {
+        index: true,
+        sync: true
+    },
+    CategoryController: {
+        index: true
+    },
+    TagController: {
+        search: true
+    },
+    UrlController: {
+        ogInfo: true,
+        redirect: true
+    },
+    TrendingController: {
+        index: true
+    },
+    IcoIndustryController: {
+        list: true,
+    },
+    IcoTokenTechnologyController: {
+        list: true,
+    },
+    IcoTokenTypeController: {
+        list: true,
+    },
+    IcoStageController: {
+        list: true,
+    },
+    IcoCategoryController: {
+        list: true,
+    },
+    CountryController: {
+        list: true
+    }
 
 };

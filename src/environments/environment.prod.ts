@@ -1,5 +1,7 @@
+
 export const environment = {
   production: true,
   port: 8000,
-  url: 'http://vm103.bvblogic.net'
+  url: 'http://vm103.bvblogic.net',
+  stripePublicKey: process.env.STRIPE_PUBLIC_KEY
 };

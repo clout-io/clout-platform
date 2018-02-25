@@ -20,7 +20,8 @@ import {
   CommentService,
   FollowService,
   FeedService,
-  IcosService
+  IcosService,
+  PaymentService
 } from './services';
 
 import { HttpModule } from '@angular/http';
@@ -57,7 +58,8 @@ import { AppComponent } from './app.component';
     CommentService,
     FollowService,
     FeedService,
-    IcosService
+    IcosService,
+    PaymentService
   ],
   bootstrap: [AppComponent]
 })

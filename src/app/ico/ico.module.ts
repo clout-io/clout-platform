@@ -46,7 +46,10 @@ import {
   // search
   SearchComponent,
   FooDirective,
-  ServerErrorMsgComponent
+  ServerErrorMsgComponent,
+  // pricing
+  PricingBoxComponent,
+  PricingPlanComponent
 } from './components';
 @NgModule({
   imports: [
@@ -92,7 +95,9 @@ import {
     ProjectTabComponent,
     IcoTabComponent,
     TechTabComponent,
-    TeamTabComponent
+    TeamTabComponent,
+    PricingBoxComponent,
+    PricingPlanComponent
   ]
 })
 export class IcoModule { }
